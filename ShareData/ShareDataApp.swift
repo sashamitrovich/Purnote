@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ShareDataApp: App {
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BookList().environmentObject(Data())
         }
     }
 }
