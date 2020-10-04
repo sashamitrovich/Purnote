@@ -15,25 +15,18 @@ struct BookList: View {
             List {
                 ForEach(data.book) { book in
                     NavigationLink(destination: BookDetail(book: book)) {
-//                        Text(book.title)
                         ListRow(book: book)
                     }
-                    
-                    
                 }
             }.navigationBarTitle("Notes")
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button(action: {
-                        print("Edit button was tapped")
-                    }) {
-                        Image(systemName: "square.and.pencil")
-                    }
-                }
-            }
+            .navigationBarItems(trailing: NavigationLink(destination: NewBook(), label: { Image(systemName: "square.and.pencil") }
+            ).isDetailLink(true)
+            )
         }
     }
 }
+
+
 
 struct BookList_Previews: PreviewProvider {
     static var previews: some View {
