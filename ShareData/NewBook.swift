@@ -15,7 +15,8 @@ struct NewBook: View {
         VStack {
             Text(data.book[data.book.count-1].id.uuidString)
             TextEditor(text: $data.book[data.book.count-1].title)
-        }.onAppear(perform: {
+        }
+        .onAppear(perform: {
             data.book.append(Book())
         }).onDisappear(perform: {
             if data.book[data.book.count-1].title == "" {

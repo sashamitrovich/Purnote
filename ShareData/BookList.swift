@@ -17,12 +17,17 @@ struct BookList: View {
                     NavigationLink(destination: BookDetail(book: book)) {
                         ListRow(book: book)
                     }
-                }
-            }.navigationBarTitle("Notes")
+                }.onDelete(perform: deleteItems)
+            }
+            .navigationBarTitle("Notes")
             .navigationBarItems(trailing: NavigationLink(destination: NewBook(), label: { Image(systemName: "square.and.pencil") }
             ).isDetailLink(true)
             )
         }
+    }
+    
+    func deleteItems(at offsets: IndexSet) {
+        data.book.remove(atOffsets: offsets)
     }
 }
 

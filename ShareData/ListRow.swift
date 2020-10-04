@@ -9,16 +9,27 @@ import SwiftUI
 
 struct ListRow: View {
     var book: Book
+    
+
     var body: some View {
+        
         VStack(alignment: .leading) {
-            Text(book.id.uuidString)
-                .fontWeight(.heavy)
+            Text(dateToString(date: book.date))
+                .fontWeight(.light)
                 .multilineTextAlignment(.leading)
             Text(book.title)
-                .font(.title)
+                .font(.title2)
         }
-        .frame(width: 300.0, height: 70.0)
+        .frame(width: 300.0, alignment: .leading)
         
+    }
+    
+    // need to format the date
+    func dateToString( date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: Date())
     }
 }
 

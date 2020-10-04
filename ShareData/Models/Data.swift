@@ -13,16 +13,18 @@ struct Book: Identifiable, Equatable {
     }
     
     var id = UUID()
-    var title: String=""
+    var title: String
+    var date: Date
     
-    fileprivate init(title:String) {
-        self.id=UUID()
+    fileprivate init(title:String) {        
+        self.init()
         self.title = title
     }
     
     init() {
         self.id=UUID()
         self.title = ""
+        self.date = Date()
     }
 }
 
