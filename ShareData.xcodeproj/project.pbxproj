@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3228B238252B396E00674B0D /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3228B237252B396E00674B0D /* NotesList.swift */; };
 		324117E72528979F00D85220 /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324117E62528979F00D85220 /* ListRow.swift */; };
 		324117ED25290D4700D85220 /* NewBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324117EC25290D4700D85220 /* NewBook.swift */; };
 		32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B42252767DB0031CADD /* ShareDataApp.swift */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3228B237252B396E00674B0D /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesList.swift; sourceTree = "<group>"; };
+		3228B23A252B42B600674B0D /* ShareData.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareData.entitlements; sourceTree = "<group>"; };
 		324117E62528979F00D85220 /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		324117EC25290D4700D85220 /* NewBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBook.swift; sourceTree = "<group>"; };
 		32731B3F252767DB0031CADD /* ShareData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareData.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +63,7 @@
 		32731B41252767DB0031CADD /* ShareData */ = {
 			isa = PBXGroup;
 			children = (
+				3228B23A252B42B600674B0D /* ShareData.entitlements */,
 				32731B52252767EC0031CADD /* Models */,
 				32731B42252767DB0031CADD /* ShareDataApp.swift */,
 				32731B46252767DE0031CADD /* Assets.xcassets */,
@@ -69,6 +73,7 @@
 				32731B5A252886140031CADD /* BookDetail.swift */,
 				324117E62528979F00D85220 /* ListRow.swift */,
 				324117EC25290D4700D85220 /* NewBook.swift */,
+				3228B237252B396E00674B0D /* NotesList.swift */,
 			);
 			path = ShareData;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				324117E72528979F00D85220 /* ListRow.swift in Sources */,
 				32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */,
 				324117ED25290D4700D85220 /* NewBook.swift in Sources */,
+				3228B238252B396E00674B0D /* NotesList.swift in Sources */,
 				32731B54252768040031CADD /* Data.swift in Sources */,
 				32731B5B252886140031CADD /* BookDetail.swift in Sources */,
 			);
@@ -291,7 +297,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ShareData/ShareData.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ShareData/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -301,7 +309,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ShareData;
+				MARKETING_VERSION = 0.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -313,7 +322,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ShareData/ShareData.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ShareData/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -323,7 +334,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ShareData;
+				MARKETING_VERSION = 0.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -13,7 +13,7 @@ struct NewBook: View {
     
     var body: some View {
         VStack {
-            Text(data.book[data.book.count-1].id.uuidString)
+            Text(data.book[data.book.count-1].id)
             TextEditor(text: $data.book[data.book.count-1].title)
         }
         .onAppear(perform: {
