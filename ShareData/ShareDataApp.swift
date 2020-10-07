@@ -13,8 +13,7 @@ struct ShareDataApp: App {
     
     var body: some Scene {
         WindowGroup {
-            BookList().environmentObject(Data())
-//            NotesList()
+            NoteList().environmentObject(Data())
         }
     }
 }

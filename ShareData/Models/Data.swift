@@ -7,69 +7,78 @@
 
 import Foundation
 
-struct Book: Identifiable, Equatable {
-    static func == (lhs: Book, rhs: Book) -> Bool {
-        return lhs.title == rhs.title
+extension Date {
+    func currentTimeMillis() -> Int64 {
+        return Int64(self.timeIntervalSince1970 * 1000)
     }
     
-    var id: String
-    var title: String
-    var date: Date
-    
-    fileprivate init(title:String) {        
-        self.init()
-        self.title = title
-    }
-    
-    init() {
-        self.id=UUID().uuidString
-        self.title = ""
-        self.date = Date()
-    }
-    
-    init(id:String, title:String) {
-        self.id=id
-        self.title=title
-        self.date = Date()
+    func toString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter.string(from: self)
     }
 }
 
 
-class Data: ObservableObject {
-    @Published var book : [Book]
-    
-    let fm = FileManager.default
-    
-    func addBook(title: String) ->  Book {
-        let newBook = Book (title: title)
-        book.append(newBook)
-        return newBook
+struct Note: Identifiable, Equatable {
+    static func == (lhs: Note, rhs: Note) -> Bool {
+        return lhs.content == rhs.content
     }
     
-    func addBook(newBook: Book) {
-        book.append(newBook)
+    var id: Int64
+    var content: String
+    var date: Date
+    var isLocal: Bool = true
+    
+    fileprivate init(title:String) {        
+        self.init()
+        self.content = title
     }
     
     init() {
-        
-        
-        book=[]
-        book.append(Book(title: "Great Expectations"))
-        book.append(Book(title: "Catcher in the Rye"))
-        book.append(Book(title: "The Post Office"))
-        
-        let urls:[URL] = listFiles()
-        
-        urls.forEach { url in
-            
-            do {
-                try book.append(Book(id: url.relativeString, title: String(contentsOf: url, encoding: .utf8) ))
-            }
-            catch {
-                /* error handling here */
-                print("Unexpected error: \(error).")
-                
-            }
+        let currentDate: Date = Date()
+        self.id=currentDate.currentTimeMillis()
+        self.content = ""
+        self.date = currentDate
+    }
+    
+    fileprivate init(content:String, date:Date, path:String, isLocal:Bool?) {
+        self.id=Int64(path.hash)
+        self.content=content
+        self.date=date
+        self.isLocal=isLocal ?? true
+    }
+    
+}
+
+
+class Data: ObservableObject {
+    @Published var note : [Note]
+    
+    let concurrentQueue = DispatchQueue(label: "mitrovic.concurrent.queue", attributes: .concurrent)
+    
+    
+    let fm = FileManager.default
+    
+    private func addNote(title: String) ->  Note {
+        let newNote = Note (title: title)
+        note.append(newNote)
+        return newNote
+    }
+    
+    func addSaveNote(newNote: Note) {
+        saveNote(note: newNote)
+        note.append(newNote)            
+    }
+    
+    func addNote(newNote: Note) {
+        note.append(newNote)
+    }
+    
+    func delayWithSeconds(trseconds: Double, completion: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + trseconds) {
+            completion()
         }
     }
     
@@ -95,22 +104,111 @@ class Data: ObservableObject {
         return tryURL
     }
     
-    func listFiles () -> [URL] {
-        var files:[String]=[]
-        var urls:[URL]=[]
+    func addNote(url: URL) {
+        do {
+            
+            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.absoluteString, isLocal: true)
+            
+            note.append(newNote)
+        }
+        catch {
+            /* error handling here */
+            print("Unexpected error: \(error).")
+        }
+    }
+    
+    init() {
+        var urls:[URL] = []
         
-        let keys:[URLResourceKey]=[ URLResourceKey.nameKey, URLResourceKey.creationDateKey, URLResourceKey.contentModificationDateKey, URLResourceKey.fileSizeKey]
+        note=[]
+        //        note.append(Note(title: "Great Expectations"))
+        //        note.append(Note(title: "Catcher in the Rye"))
+        //        note.append(Note(title: "The Post Office"))
+        //        note.append(Note(title: "99m Habits of Mildly Successaful People Who Strive For More"))
         
+        urls = listFiles()
+        
+        for (index,url) in urls.enumerated() {
+            
+            if !url.hasDirectoryPath {
+                
+                if url.absoluteString.contains(".icloud") {
+                    // we want the iCloud item to download in the background
+                    // so let's do this in a Thread
+                    
+                    
+                    do {
+                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.absoluteString, isLocal: false))
+                    }
+                    catch {
+                        /* error handling here */
+                        print("Unexpected error: \(error).")
+                    }
+                    
+                    //                    concurrentQueue.async { [self] in
+                    //
+                    //                        // start downloading item
+                    ////                        do
+                    ////                        {
+                    ////                            try fm.startDownloadingUbiquitousItem(at: url)
+                    ////                        }
+                    ////                        catch {
+                    ////                            /* error handling here */
+                    ////                            print("Unexpected error: \(error).")
+                    ////                        }
+                    //
+                    //                        // wait for item to download
+                    //
+                    ////                        while fm.value(forKey: NSMetadataUbiquitousItemDownloadingStatusKey) as! String != NSMetadataUbiquitousItemDownloadingStatusDownloaded {
+                    ////                            delayWithSeconds(trseconds: 1) {
+                    ////                                print("still downloading")
+                    ////                            }
+                    ////                        }
+                    ////
+                    ////                        self.note[index].isLocal=true
+                    //                    }
+                }
+                
+                else {
+                    // it's a local file
+                    addNote(url: url)
+                }
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    private func saveNote(note: Note) {
+        let tryUrl = getDocumentsPath()
+        
+        let documentURL = tryUrl.appendingPathComponent(String(note.id))
+            .appendingPathExtension("txt")
         
         do {
-            //            try  files=fm.contentsOfDirectory(atPath: getDocumentsPath().path)
-            try urls=fm.contentsOfDirectory(at: getDocumentsPath(), includingPropertiesForKeys: keys)
+            try note.content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
         }
         catch {
             // failed
             print("Unexpected error: \(error).")
         }
-
+    }
+    
+    
+    func listFiles () -> [URL] {
+        var urls:[URL]=[]
+        
+        
+        do {
+            try urls=fm.contentsOfDirectory(at: getDocumentsPath(), includingPropertiesForKeys:nil)
+            print(urls.count)
+        }
+        catch {
+            // failed
+            print("Unexpected error: \(error).")
+        }
         
         return urls
     }

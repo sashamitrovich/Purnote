@@ -8,34 +8,33 @@
 import SwiftUI
 
 struct ListRow: View {
-    var book: Book
+    var note: Note
     
 
     var body: some View {
         
-        VStack(alignment: .leading) {
-            Text(dateToString(date: book.date))
-                .fontWeight(.light)
-                .multilineTextAlignment(.leading)
-            Text(book.title)
-                .font(.title2)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(note.date.toString())
+                    .fontWeight(.light)
+                    .multilineTextAlignment(.leading)
+                Text(note.content)
+                    .font(.title2)
+                    .frame(alignment: .leading)
+                       .lineLimit(1)
+                
+            }
+            .frame(width: 300.0, alignment: .leading)
+            Text(String(note.isLocal))
         }
-        .frame(width: 300.0, alignment: .leading)
         
     }
     
-    // need to format the date
-    func dateToString( date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter.string(from: Date())
-    }
 }
 
 struct ListRow_Previews: PreviewProvider {
     static var previews: some View {
         let data = Data()
-        ListRow(book: data.book[1])
+        ListRow(note: data.note[0])
     }
 }
