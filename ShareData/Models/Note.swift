@@ -18,6 +18,7 @@ struct Note: Identifiable, Equatable {
     var date: Date
     var isLocal: Bool = true
     var url: URL
+    var isDownloading = false
     
     init() {
         self.id=""

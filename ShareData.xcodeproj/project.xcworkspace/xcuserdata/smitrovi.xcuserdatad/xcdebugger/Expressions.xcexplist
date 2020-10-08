@@ -3,6 +3,70 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "NotesList.__preview__listFiles():NotesList.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in NewBook.body.getter:NewBook.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "data.book.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in NewBook.body.getter:NewBook.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "newBook">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DownloadiCloudItemView.download(note:):DownloadiCloudItemView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "FileManager.default.attributesOfItem(atPath: note.url.path)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Data.init():Data.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "url.absoluteString">
+            </PersistentString>
+            <PersistentString
+               value = "fm.isUbiquitousItem(at: url)">
+            </PersistentString>
+            <PersistentString
+               value = "url.absoluteString.contains(&quot;.icloud&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "note[0].date.toString()">
+            </PersistentString>
+            <PersistentString
+               value = "url.dataRepresentation">
+            </PersistentString>
+            <PersistentString
+               value = "url.path">
+            </PersistentString>
+            <PersistentString
+               value = "url.relativeString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Data.listFiles():Data.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "fm.attributesOfItem(atPath: urls[1].path)  ">
+            </PersistentString>
+            <PersistentString
+               value = "urls[1].resourceValues(forKeys: [ URLResourceKey.nameKey, URLResourceKey.fileSizeKey, URLResourceKey.creationDateKey]).creationDate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Data.addNote(url:):Data.swift">
          <PersistentStrings>
             <PersistentString
@@ -32,27 +96,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in Data.init():Data.swift">
+         contextName = "closure #1 in DownloadiCloudItemView.download():DownloadiCloudItemView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "url.hasDirectoryPath">
-            </PersistentString>
-            <PersistentString
-               value = "data.note">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "NotesList.__preview__listFiles():NotesList.swift">
-      </ContextState>
-      <ContextState
-         contextName = "Note.init(content:date:path:isLocal:):Note.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in DownloadiCloudItemView.download(note:):DownloadiCloudItemView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "FileManager.default.attributesOfItem(atPath: note.url.path)">
+               value = "data.note[index]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -68,21 +115,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Data.listFiles():Data.swift">
+         contextName = "closure #1 in Data.init():Data.swift">
          <PersistentStrings>
             <PersistentString
-               value = "fm.attributesOfItem(atPath: urls[1].path)  ">
+               value = "url.hasDirectoryPath">
             </PersistentString>
             <PersistentString
-               value = "urls[1].resourceValues(forKeys: [ URLResourceKey.nameKey, URLResourceKey.fileSizeKey, URLResourceKey.creationDateKey]).creationDate">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in NewBook.body.getter:NewBook.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "data.book.count">
+               value = "data.note">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -90,38 +129,7 @@
          contextName = "NotesList.listFiles():NotesList.swift">
       </ContextState>
       <ContextState
-         contextName = "Data.init():Data.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "url.absoluteString">
-            </PersistentString>
-            <PersistentString
-               value = "fm.isUbiquitousItem(at: url)">
-            </PersistentString>
-            <PersistentString
-               value = "url.absoluteString.contains(&quot;.icloud&quot;)">
-            </PersistentString>
-            <PersistentString
-               value = "note[0].date.toString()">
-            </PersistentString>
-            <PersistentString
-               value = "url.dataRepresentation">
-            </PersistentString>
-            <PersistentString
-               value = "url.path">
-            </PersistentString>
-            <PersistentString
-               value = "url.relativeString">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #2 in NewBook.body.getter:NewBook.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "newBook">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "Note.init(content:date:path:isLocal:):Note.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
