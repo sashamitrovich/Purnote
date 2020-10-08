@@ -25,9 +25,7 @@ struct ListRow: View {
                 
             }
             .frame(width: 300.0, alignment: .leading)
-            Text(String(note.isLocal))
         }
-        
     }
     
 }

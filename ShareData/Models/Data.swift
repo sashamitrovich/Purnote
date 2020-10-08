@@ -21,37 +21,6 @@ extension Date {
 }
 
 
-struct Note: Identifiable, Equatable {
-    static func == (lhs: Note, rhs: Note) -> Bool {
-        return lhs.content == rhs.content
-    }
-    
-    var id: Int64
-    var content: String
-    var date: Date
-    var isLocal: Bool = true
-    
-    fileprivate init(title:String) {        
-        self.init()
-        self.content = title
-    }
-    
-    init() {
-        let currentDate: Date = Date()
-        self.id=currentDate.currentTimeMillis()
-        self.content = ""
-        self.date = currentDate
-    }
-    
-    fileprivate init(content:String, date:Date, path:String, isLocal:Bool?) {
-        self.id=Int64(path.hash)
-        self.content=content
-        self.date=date
-        self.isLocal=isLocal ?? true
-    }
-    
-}
-
 
 class Data: ObservableObject {
     @Published var note : [Note]
@@ -61,11 +30,6 @@ class Data: ObservableObject {
     
     let fm = FileManager.default
     
-    private func addNote(title: String) ->  Note {
-        let newNote = Note (title: title)
-        note.append(newNote)
-        return newNote
-    }
     
     func addSaveNote(newNote: Note) {
         saveNote(note: newNote)
@@ -107,7 +71,7 @@ class Data: ObservableObject {
     func addNote(url: URL) {
         do {
             
-            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.absoluteString, isLocal: true)
+            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url)
             
             note.append(newNote)
         }
@@ -118,9 +82,15 @@ class Data: ObservableObject {
     }
     
     init() {
+        note=[]
+        refresh()
+    }
+    
+    func refresh() {
+        note=[]
         var urls:[URL] = []
         
-        note=[]
+        
         //        note.append(Note(title: "Great Expectations"))
         //        note.append(Note(title: "Catcher in the Rye"))
         //        note.append(Note(title: "The Post Office"))
@@ -128,7 +98,7 @@ class Data: ObservableObject {
         
         urls = listFiles()
         
-        for (index,url) in urls.enumerated() {
+        for (_,url) in urls.enumerated() {
             
             if !url.hasDirectoryPath {
                 
@@ -138,37 +108,14 @@ class Data: ObservableObject {
                     
                     
                     do {
-                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.absoluteString, isLocal: false))
+                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: false, url: url))
                     }
                     catch {
                         /* error handling here */
                         print("Unexpected error: \(error).")
                     }
-                    
-                    //                    concurrentQueue.async { [self] in
-                    //
-                    //                        // start downloading item
-                    ////                        do
-                    ////                        {
-                    ////                            try fm.startDownloadingUbiquitousItem(at: url)
-                    ////                        }
-                    ////                        catch {
-                    ////                            /* error handling here */
-                    ////                            print("Unexpected error: \(error).")
-                    ////                        }
-                    //
-                    //                        // wait for item to download
-                    //
-                    ////                        while fm.value(forKey: NSMetadataUbiquitousItemDownloadingStatusKey) as! String != NSMetadataUbiquitousItemDownloadingStatusDownloaded {
-                    ////                            delayWithSeconds(trseconds: 1) {
-                    ////                                print("still downloading")
-                    ////                            }
-                    ////                        }
-                    ////
-                    ////                        self.note[index].isLocal=true
-                    //                    }
+                   
                 }
-                
                 else {
                     // it's a local file
                     addNote(url: url)
@@ -176,9 +123,7 @@ class Data: ObservableObject {
             }
             
         }
-        
     }
-    
     
     
     private func saveNote(note: Note) {

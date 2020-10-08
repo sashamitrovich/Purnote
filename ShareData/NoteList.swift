@@ -15,8 +15,13 @@ struct NoteList: View {
         NavigationView {
             List {
                 ForEach(data.note) { note in
-                    NavigationLink(destination: NoteDetail(note: note)) {
-                        ListRow(note: note)
+                    if note.isLocal {
+                        NavigationLink(destination: NoteDetail(note: note)) {
+                            ListRow(note: note)
+                        }
+                    }
+                    else {
+                        DownloadiCloudItemView(note: note)
                     }
                 }.onDelete(perform: deleteItems)
             }

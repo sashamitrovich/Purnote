@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		324117E72528979F00D85220 /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324117E62528979F00D85220 /* ListRow.swift */; };
 		324117ED25290D4700D85220 /* NewNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324117EC25290D4700D85220 /* NewNote.swift */; };
+		325DF5F4252EFC2D0017E03C /* DownloadiCloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DF5F3252EFC2D0017E03C /* DownloadiCloudItemView.swift */; };
+		325DF5F7252EFCF40017E03C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325DF5F6252EFCF40017E03C /* Note.swift */; };
 		32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B42252767DB0031CADD /* ShareDataApp.swift */; };
 		32731B47252767DE0031CADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32731B46252767DE0031CADD /* Assets.xcassets */; };
 		32731B4A252767DE0031CADD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32731B49252767DE0031CADD /* Preview Assets.xcassets */; };
@@ -21,6 +23,8 @@
 		3228B23A252B42B600674B0D /* ShareData.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareData.entitlements; sourceTree = "<group>"; };
 		324117E62528979F00D85220 /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		324117EC25290D4700D85220 /* NewNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNote.swift; sourceTree = "<group>"; };
+		325DF5F3252EFC2D0017E03C /* DownloadiCloudItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadiCloudItemView.swift; sourceTree = "<group>"; };
+		325DF5F6252EFCF40017E03C /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		32731B3F252767DB0031CADD /* ShareData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32731B42252767DB0031CADD /* ShareDataApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDataApp.swift; sourceTree = "<group>"; };
 		32731B46252767DE0031CADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 				32731B5A252886140031CADD /* NoteDetail.swift */,
 				324117E62528979F00D85220 /* ListRow.swift */,
 				324117EC25290D4700D85220 /* NewNote.swift */,
+				325DF5F3252EFC2D0017E03C /* DownloadiCloudItemView.swift */,
 			);
 			path = ShareData;
 			sourceTree = "<group>";
@@ -87,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				32731B53252768040031CADD /* Data.swift */,
+				325DF5F6252EFCF40017E03C /* Note.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,7 +167,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32731B5825287FCB0031CADD /* NoteList.swift in Sources */,
+				325DF5F4252EFC2D0017E03C /* DownloadiCloudItemView.swift in Sources */,
 				324117E72528979F00D85220 /* ListRow.swift in Sources */,
+				325DF5F7252EFCF40017E03C /* Note.swift in Sources */,
 				32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */,
 				324117ED25290D4700D85220 /* NewNote.swift in Sources */,
 				32731B54252768040031CADD /* Data.swift in Sources */,
