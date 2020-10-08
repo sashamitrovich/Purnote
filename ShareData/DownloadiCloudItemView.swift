@@ -21,7 +21,7 @@ struct DownloadiCloudItemView: View {
         HStack {
             Text(text)
                 .frame(width: 300.0, alignment: .leading)
-            if data.note[index].isDownloading {
+            if index<data.note.count && data.note[index].isDownloading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle.init())
             }
             else {

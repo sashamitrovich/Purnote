@@ -33,7 +33,19 @@ struct NoteList: View {
     }
     
     func deleteItems(at offsets: IndexSet) {
+        
+        for offset in offsets.enumerated() {
+            do {
+                try FileManager.default.trashItem(at: data.note[offset.offset].url, resultingItemURL: nil)
+            }
+            catch {
+                // failed
+                print("Unexpected error: \(error).")
+            }
+           
+        }
         data.note.remove(atOffsets: offsets)
+        
     }
 }
 

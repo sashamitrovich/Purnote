@@ -33,10 +33,10 @@
          contextName = "Data.init():Data.swift">
          <PersistentStrings>
             <PersistentString
-               value = "url.absoluteString">
+               value = "url.path">
             </PersistentString>
             <PersistentString
-               value = "fm.isUbiquitousItem(at: url)">
+               value = "url.relativeString">
             </PersistentString>
             <PersistentString
                value = "url.absoluteString.contains(&quot;.icloud&quot;)">
@@ -45,13 +45,24 @@
                value = "note[0].date.toString()">
             </PersistentString>
             <PersistentString
+               value = "url.absoluteString">
+            </PersistentString>
+            <PersistentString
+               value = "fm.isUbiquitousItem(at: url)">
+            </PersistentString>
+            <PersistentString
                value = "url.dataRepresentation">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Data.saveNote(note:):Data.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteList.deleteItems(at:):NoteList.swift">
+         <PersistentStrings>
             <PersistentString
-               value = "url.path">
-            </PersistentString>
-            <PersistentString
-               value = "url.relativeString">
+               value = "data.note[offset.offset].url.absoluteString">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -79,7 +90,7 @@
                value = "note">
             </PersistentString>
             <PersistentString
-               value = "(fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date).toString()">
+               value = "newNote.date.toString()">
             </PersistentString>
             <PersistentString
                value = "url.path">
@@ -91,7 +102,7 @@
                value = "String(decoding: fm.contents(atPath: url.path)!, as: UTF8.self)">
             </PersistentString>
             <PersistentString
-               value = "newNote.date.toString()">
+               value = "(fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date).toString()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

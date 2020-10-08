@@ -52,7 +52,7 @@ struct NewNote: View {
             //            }
             //
             if newNote.content != "" {
-                data.addSaveNote(newNote: newNote)
+                data.addSaveNote(newNote: &newNote)
             }
         })
     }

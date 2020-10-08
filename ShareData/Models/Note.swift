@@ -21,7 +21,7 @@ struct Note: Identifiable, Equatable {
     var isDownloading = false
     
     init() {
-        self.id=""
+        self.id=String(Date().currentTimeMillis())
         self.content=""
         self.date=Date()
         self.isLocal=true

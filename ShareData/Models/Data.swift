@@ -31,8 +31,8 @@ class Data: ObservableObject {
     let fm = FileManager.default
     
     
-    func addSaveNote(newNote: Note) {
-        saveNote(note: newNote)
+    func addSaveNote(newNote: inout Note) {
+        saveNote(note: &newNote)
         note.append(newNote)            
     }
     
@@ -126,7 +126,8 @@ class Data: ObservableObject {
     }
     
     
-    private func saveNote(note: Note) {
+    private func saveNote(note: inout Note) {
+
         let tryUrl = getDocumentsPath()
         
         let documentURL = tryUrl.appendingPathComponent(String(note.id))
@@ -139,6 +140,7 @@ class Data: ObservableObject {
             // failed
             print("Unexpected error: \(error).")
         }
+        note.url=documentURL
     }
     
     
