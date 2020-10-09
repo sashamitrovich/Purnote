@@ -32,7 +32,7 @@ struct ListRow: View {
 
 struct ListRow_Previews: PreviewProvider {
     static var previews: some View {
-        let data = Data()
-        ListRow(note: data.note[0])
+        let data = DataManager()
+        ListRow(note: data.notes[0])
     }
 }

@@ -75,6 +75,31 @@
             <PersistentString
                value = "urls[1].resourceValues(forKeys: [ URLResourceKey.nameKey, URLResourceKey.fileSizeKey, URLResourceKey.creationDateKey]).creationDate">
             </PersistentString>
+            <PersistentString
+               value = "fm.subpaths(atPath: getDocumentsPath().path)">
+            </PersistentString>
+            <PersistentString
+               value = "fm.contentsOfDirectory(at: getDocumentsPath(), includingPropertiesForKeys:nil)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DataManager.refresh():DataManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "rootUrl.path">
+            </PersistentString>
+            <PersistentString
+               value = "currentUrl.path">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DataManager.folderUp(folder:):DataManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentUrl.path">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -138,6 +163,14 @@
       </ContextState>
       <ContextState
          contextName = "NotesList.listFiles():NotesList.swift">
+      </ContextState>
+      <ContextState
+         contextName = "DataManager.listFiles():DataManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "getDocumentsPath().path">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "Note.init(content:date:path:isLocal:):Note.swift">

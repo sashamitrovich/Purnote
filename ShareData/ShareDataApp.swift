@@ -14,7 +14,7 @@ struct ShareDataApp: App {
     var body: some Scene {
         WindowGroup {
             NoteList()  
-                .environmentObject(Data())
+                .environmentObject(DataManager())
         }
     }
 }

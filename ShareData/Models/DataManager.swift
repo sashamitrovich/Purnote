@@ -21,9 +21,11 @@ extension Date {
 }
 
 
-
-class Data: ObservableObject {
-    @Published var note : [Note]
+class DataManager: ObservableObject {
+    @Published var notes : [Note]
+    @Published var folders : [Folder]
+    private var currentUrl = URL(fileURLWithPath: "")
+    private var rootUrl = URL(fileURLWithPath: "")
     
     let concurrentQueue = DispatchQueue(label: "mitrovic.concurrent.queue", attributes: .concurrent)
     
@@ -33,11 +35,11 @@ class Data: ObservableObject {
     
     func addSaveNote(newNote: inout Note) {
         saveNote(note: &newNote)
-        note.append(newNote)            
+        notes.append(newNote)            
     }
     
     func addNote(newNote: Note) {
-        note.append(newNote)
+        notes.append(newNote)
     }
     
     func delayWithSeconds(trseconds: Double, completion: @escaping () -> ()) {
@@ -46,13 +48,24 @@ class Data: ObservableObject {
         }
     }
     
-    func getDocumentsPath() -> URL {
-        var tryURL: URL!
-        
+    func folderUp(folder: String) {
+        currentUrl.appendPathComponent(folder)
+        refresh()
+    }
+    
+    func folderDown() {
+        currentUrl.deleteLastPathComponent()
+        refresh()
+    }
+    
+    func getRootPath() -> URL {
+
+        var tryURL : URL!
         
         // First get the URL for the default ubiquity container for this app
         if let containerURL = fm.url(forUbiquityContainerIdentifier: nil) {
             tryURL = containerURL.appendingPathComponent("Documents")
+            
             do {
                 if (fm.fileExists(atPath: tryURL.path, isDirectory: nil) == false) {
                     try  fm.createDirectory(at: tryURL, withIntermediateDirectories: true, attributes: nil)
@@ -71,9 +84,9 @@ class Data: ObservableObject {
     func addNote(url: URL) {
         do {
             
-            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url)
+            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
             
-            note.append(newNote)
+            notes.append(newNote)
         }
         catch {
             /* error handling here */
@@ -82,19 +95,21 @@ class Data: ObservableObject {
     }
     
     init() {
-        note=[]
+        notes=[]
+        folders=[]
+        rootUrl = getRootPath()
+        currentUrl = rootUrl
         refresh()
     }
     
     func refresh() {
-        note=[]
+        notes=[]
+        folders=[]
+        
+        if currentUrl.path != rootUrl.path {
+            folders.append(Folder(id: ".."))
+        }
         var urls:[URL] = []
-        
-        
-        //        note.append(Note(title: "Great Expectations"))
-        //        note.append(Note(title: "Catcher in the Rye"))
-        //        note.append(Note(title: "The Post Office"))
-        //        note.append(Note(title: "99m Habits of Mildly Successaful People Who Strive For More"))
         
         urls = listFiles()
         
@@ -108,7 +123,7 @@ class Data: ObservableObject {
                     
                     
                     do {
-                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: false, url: url))
+                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: false, url: url, type: .Note))
                     }
                     catch {
                         /* error handling here */
@@ -122,15 +137,20 @@ class Data: ObservableObject {
                 }
             }
             
+            else {
+                // also add folders
+                if url.lastPathComponent != ".Trash" {
+                    addFolder(id: url.lastPathComponent)
+                }
+
+            }
         }
     }
     
     
     private func saveNote(note: inout Note) {
-
-        let tryUrl = getDocumentsPath()
         
-        let documentURL = tryUrl.appendingPathComponent(String(note.id))
+        let documentURL = currentUrl.appendingPathComponent(String(note.id))
             .appendingPathExtension("txt")
         
         do {
@@ -147,9 +167,9 @@ class Data: ObservableObject {
     func listFiles () -> [URL] {
         var urls:[URL]=[]
         
-        
+
         do {
-            try urls=fm.contentsOfDirectory(at: getDocumentsPath(), includingPropertiesForKeys:nil)
+            try urls=fm.contentsOfDirectory(at: currentUrl, includingPropertiesForKeys:nil)
             print(urls.count)
         }
         catch {
@@ -160,4 +180,7 @@ class Data: ObservableObject {
         return urls
     }
     
+    func addFolder(id: String) {
+        folders.append(Folder(id: id))
+    }
 }

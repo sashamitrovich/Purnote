@@ -21,8 +21,8 @@ import SwiftUI
 //}
 
 struct NewNote: View {
-    @EnvironmentObject var data: Data
-//    @State var newNote: Note
+    @EnvironmentObject var data: DataManager
+    //    @State var newNote: Note
     @State var newNote: Note
     
     
@@ -31,26 +31,14 @@ struct NewNote: View {
             //            TextEditor(text: $data.note[data.note.count-1].title)
             
             TextEditor(text: $newNote.content)
-            
-            
-            //            ResponderTextField(isFirstResponder: true ) {
-            //                uiView in
-            //                uiView.placeholder="text here"
-            //            }
-            //            Text(data.note[data.note.count-1].id)
+
             
         }
         .onAppear(perform: {
-//            data.note.append(Note())
-            newNote=Note()
-            
-        }
+            newNote=Note(type: .Note)
+            }
         )
         .onDisappear(perform: {
-            //            if data.note[data.note.count-1].title == "" {
-            //                data.note.remove(at: data.note.count-1)
-            //            }
-            //
             if newNote.content != "" {
                 data.addSaveNote(newNote: &newNote)
             }
@@ -59,9 +47,9 @@ struct NewNote: View {
 }
 
 struct NewNote_Previews: PreviewProvider {
-    @State static var newNote = Note()    
+    @State static var newNote = Note(type: .Folder)
     static var previews: some View {
-        let newNote = Note()
-        NewNote(newNote: newNote).environmentObject(Data())
+        let newNote = Note(type: .Folder)
+        NewNote(newNote: newNote).environmentObject(DataManager())
     }
 }

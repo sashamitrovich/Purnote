@@ -14,10 +14,12 @@
 		32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B42252767DB0031CADD /* ShareDataApp.swift */; };
 		32731B47252767DE0031CADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32731B46252767DE0031CADD /* Assets.xcassets */; };
 		32731B4A252767DE0031CADD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32731B49252767DE0031CADD /* Preview Assets.xcassets */; };
-		32731B54252768040031CADD /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B53252768040031CADD /* Data.swift */; };
+		32731B54252768040031CADD /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B53252768040031CADD /* DataManager.swift */; };
 		32731B5825287FCB0031CADD /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B5725287FCB0031CADD /* NoteList.swift */; };
 		32731B5B252886140031CADD /* NoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B5A252886140031CADD /* NoteDetail.swift */; };
 		327F37542530315D00754250 /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 327F37532530315D00754250 /* SwiftUIRefresh */; };
+		327F37572530A96800754250 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F37562530A96800754250 /* Item.swift */; };
+		327F375A2530ADFA00754250 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F37592530ADFA00754250 /* Folder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +33,11 @@
 		32731B46252767DE0031CADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32731B49252767DE0031CADD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32731B4B252767DE0031CADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32731B53252768040031CADD /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		32731B53252768040031CADD /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		32731B5725287FCB0031CADD /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
 		32731B5A252886140031CADD /* NoteDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetail.swift; sourceTree = "<group>"; };
+		327F37562530A96800754250 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		327F37592530ADFA00754250 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +97,10 @@
 		32731B52252767EC0031CADD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				32731B53252768040031CADD /* Data.swift */,
+				32731B53252768040031CADD /* DataManager.swift */,
 				325DF5F6252EFCF40017E03C /* Note.swift */,
+				327F37562530A96800754250 /* Item.swift */,
+				327F37592530ADFA00754250 /* Folder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -175,12 +181,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				32731B5825287FCB0031CADD /* NoteList.swift in Sources */,
+				327F375A2530ADFA00754250 /* Folder.swift in Sources */,
+				327F37572530A96800754250 /* Item.swift in Sources */,
 				325DF5F4252EFC2D0017E03C /* DownloadiCloudItemView.swift in Sources */,
 				324117E72528979F00D85220 /* ListRow.swift in Sources */,
 				325DF5F7252EFCF40017E03C /* Note.swift in Sources */,
 				32731B43252767DB0031CADD /* ShareDataApp.swift in Sources */,
 				324117ED25290D4700D85220 /* NewNote.swift in Sources */,
-				32731B54252768040031CADD /* Data.swift in Sources */,
+				32731B54252768040031CADD /* DataManager.swift in Sources */,
 				32731B5B252886140031CADD /* NoteDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

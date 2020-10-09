@@ -8,7 +8,9 @@
 import Foundation
 
 
-struct Note: Identifiable, Equatable {
+struct Note: Identifiable, Equatable, Item {
+    var type: ItemType
+    
     static func == (lhs: Note, rhs: Note) -> Bool {
         return lhs.content == rhs.content
     }
@@ -20,20 +22,22 @@ struct Note: Identifiable, Equatable {
     var url: URL
     var isDownloading = false
     
-    init() {
+    init(type: ItemType) {
         self.id=String(Date().currentTimeMillis())
         self.content=""
         self.date=Date()
         self.isLocal=true
         self.url=URL(fileURLWithPath: "")
+        self.type = type
     }
     
-    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL) {
+    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL, type: ItemType) {
         self.id=path
         self.content=content
         self.date=date
         self.isLocal=isLocal ?? true
         self.url = url
+        self.type = type
     }
     
 }

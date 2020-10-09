@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct NoteDetail: View {
-    @EnvironmentObject var data: Data
+    @EnvironmentObject var data: DataManager
     var note: Note
     
     var noteIndex: Int {
-        data.note.firstIndex(where: { $0.id == note.id })!
+        data.notes.firstIndex(where: { $0.id == note.id })!
     }
     
     var body: some View {
-        TextEditor(text: $data.note[self.noteIndex].content )
+        TextEditor(text: $data.notes[self.noteIndex].content )
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
-        let data = Data()
-        NoteDetail(note:data.note[0]).environmentObject(data)
+        let data = DataManager()
+        NoteDetail(note:data.notes[0]).environmentObject(data)
     }
 }
