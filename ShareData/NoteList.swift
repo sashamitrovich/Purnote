@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftUIRefresh // big thanks to https://github.com/siteline/SwiftUIRefresh
 
 struct NoteList: View {
     @EnvironmentObject var data: Data
+    @State private var isShowing = false
     
     var body: some View {
-        
+     
         NavigationView {
             List {
                 ForEach(data.note.indices, id: \.self) { index in
@@ -24,6 +26,12 @@ struct NoteList: View {
                         DownloadiCloudItemView(index: index)
                     }
                 }.onDelete(perform: deleteItems)
+            }.pullToRefresh(isShowing: $isShowing) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    data.refresh()
+                    isShowing = false
+ 
+                     }
             }
             .navigationBarTitle("Notes")
             .navigationBarItems(trailing: NavigationLink(destination: NewNote(newNote: Note()), label: { Image(systemName: "square.and.pencil") }

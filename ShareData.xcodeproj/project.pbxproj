@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		32731B54252768040031CADD /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B53252768040031CADD /* Data.swift */; };
 		32731B5825287FCB0031CADD /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B5725287FCB0031CADD /* NoteList.swift */; };
 		32731B5B252886140031CADD /* NoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32731B5A252886140031CADD /* NoteDetail.swift */; };
+		327F37542530315D00754250 /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 327F37532530315D00754250 /* SwiftUIRefresh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327F37542530315D00754250 /* SwiftUIRefresh in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +115,9 @@
 			dependencies = (
 			);
 			name = ShareData;
+			packageProductDependencies = (
+				327F37532530315D00754250 /* SwiftUIRefresh */,
+			);
 			productName = ShareData;
 			productReference = 32731B3F252767DB0031CADD /* ShareData.app */;
 			productType = "com.apple.product-type.application";
@@ -140,6 +145,9 @@
 				Base,
 			);
 			mainGroup = 32731B36252767DB0031CADD;
+			packageReferences = (
+				327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
+			);
 			productRefGroup = 32731B40252767DB0031CADD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -368,6 +376,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/timbersoftware/SwiftUIRefresh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		327F37532530315D00754250 /* SwiftUIRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
+			productName = SwiftUIRefresh;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 32731B37252767DB0031CADD /* Project object */;
 }
