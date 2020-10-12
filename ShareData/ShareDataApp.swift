@@ -9,11 +9,12 @@ import SwiftUI
 
 @main
 struct ShareDataApp: App {
-    
+//    @EnvironmentObject var data : DataManager
     
     var body: some Scene {
+        
         WindowGroup {
-            NoteList()  
+            NoteList()
                 .environmentObject(DataManager())
         }
     }

@@ -20,7 +20,7 @@ import SwiftUI
 //    }
 //}
 
-struct NewNote: View {
+struct NoteNew: View {
     @EnvironmentObject var data: DataManager
     //    @State var newNote: Note
     @State var newNote: Note
@@ -50,6 +50,6 @@ struct NewNote_Previews: PreviewProvider {
     @State static var newNote = Note(type: .Folder)
     static var previews: some View {
         let newNote = Note(type: .Folder)
-        NewNote(newNote: newNote).environmentObject(DataManager())
+        NoteNew(newNote: newNote).environmentObject(DataManager())
     }
 }

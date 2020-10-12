@@ -11,27 +11,21 @@ import SwiftUIRefresh // big thanks to https://github.com/siteline/SwiftUIRefres
 struct NoteList: View {
     @EnvironmentObject var data: DataManager
     @State private var isShowing = false
+
     
     var body: some View {
         
         NavigationView {
             List {
-                ForEach(data.folders.indices, id:\.self) { index in
-                    Button(data.folders[index].id) {
-                        
-                        if data.folders[index].id != ".." {
-                            data.folderUp(folder: data.folders[index].id)
-                        }
-                        else {
-                            data.folderDown()
-                        }
-                  
+                ForEach(data.folders) { folder in
+                    Button( folder.id) {
+                        data.refresh(url: folder.url)
                     }
                 }
                 
                 ForEach(data.notes.indices, id: \.self) { index in
                     if data.notes[index].isLocal  {
-                        NavigationLink(destination: NoteDetail(note: data.notes[index])) {
+                        NavigationLink(destination: NoteEdit(note: data.notes[index])) {
                             ListRow(note: data.notes[index])
                         }
                     }
@@ -46,15 +40,15 @@ struct NoteList: View {
                     
                 }
             }
-            .navigationBarTitle("Notes")
+            .navigationBarTitle(data.getCurrentUrl().lastPathComponent)
             .navigationBarItems(trailing:
                 HStack {
                     Button(action: {}) {Image(systemName: "plus.rectangle.on.folder")}
                     Spacer(minLength: 15)
                                         
-                    NavigationLink(destination: NewNote(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil") }
-                                        ).isDetailLink(true)
-                    }
+                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil") }
+                    ).isDetailLink(true)
+                }
                                 
             )
         }
@@ -81,6 +75,7 @@ struct NoteList: View {
 
 struct NoteList_Previews: PreviewProvider {
     static var previews: some View {
-        NoteList().environmentObject(DataManager())
+        NoteList()
+            .environmentObject(DataManager())
     }
 }

@@ -15,5 +15,6 @@ enum ItemType {
 protocol Item {
     var type: ItemType { get set}
     var id: String { get set}
+    var url: URL { get set }
     
 }

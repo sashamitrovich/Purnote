@@ -22,12 +22,12 @@ extension Date {
 
 
 class DataManager: ObservableObject {
-    @Published var notes : [Note]
+    @Published  var notes : [Note] 
     @Published var folders : [Folder]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
-    
-    let concurrentQueue = DispatchQueue(label: "mitrovic.concurrent.queue", attributes: .concurrent)
+        
+    let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
     
     
     let fm = FileManager.default
@@ -48,18 +48,8 @@ class DataManager: ObservableObject {
         }
     }
     
-    func folderUp(folder: String) {
-        currentUrl.appendPathComponent(folder)
-        refresh()
-    }
-    
-    func folderDown() {
-        currentUrl.deleteLastPathComponent()
-        refresh()
-    }
-    
     func getRootPath() -> URL {
-
+        
         var tryURL : URL!
         
         // First get the URL for the default ubiquity container for this app
@@ -99,16 +89,22 @@ class DataManager: ObservableObject {
         folders=[]
         rootUrl = getRootPath()
         currentUrl = rootUrl
-        refresh()
+        refresh(url: self.currentUrl)
     }
     
-    func refresh() {
+    func refresh(url: URL? = nil) {
         notes=[]
         folders=[]
         
-        if currentUrl.path != rootUrl.path {
-            folders.append(Folder(id: ".."))
+        
+        if (url != nil) {
+            currentUrl = url ?? currentUrl
         }
+        
+        if (currentUrl.path != rootUrl.path) {
+            folders.append(Folder(id: "..", url: currentUrl.deletingLastPathComponent()))
+        }
+        
         var urls:[URL] = []
         
         urls = listFiles()
@@ -129,7 +125,7 @@ class DataManager: ObservableObject {
                         /* error handling here */
                         print("Unexpected error: \(error).")
                     }
-                   
+                    
                 }
                 else {
                     // it's a local file
@@ -140,9 +136,9 @@ class DataManager: ObservableObject {
             else {
                 // also add folders
                 if url.lastPathComponent != ".Trash" {
-                    addFolder(id: url.lastPathComponent)
+                    addFolder(id: url.lastPathComponent, url: url)
                 }
-
+                
             }
         }
     }
@@ -163,11 +159,22 @@ class DataManager: ObservableObject {
         note.url=documentURL
     }
     
+    func updateNote(index: Int) {
+        let documentURL = notes[index].url
+        
+        do {
+            try notes[index].content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
+        }
+        catch {
+            // failed
+            print("Unexpected error: \(error).")
+        }
+    }
     
     func listFiles () -> [URL] {
         var urls:[URL]=[]
         
-
+        
         do {
             try urls=fm.contentsOfDirectory(at: currentUrl, includingPropertiesForKeys:nil)
             print(urls.count)
@@ -180,7 +187,12 @@ class DataManager: ObservableObject {
         return urls
     }
     
-    func addFolder(id: String) {
-        folders.append(Folder(id: id))
+    func addFolder(id: String, url: URL) {
+        folders.append(Folder(id: id, url: url))
     }
+    
+    func getCurrentUrl() -> URL {
+        return currentUrl
+    }
+    
 }
