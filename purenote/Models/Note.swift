@@ -22,6 +22,7 @@ struct Note: Identifiable, Equatable, Item {
     var url: URL
     var isDownloading = false
     var label = ""
+    var isPinned = false
     
     init(type: ItemType) {
         self.id=String(Date().currentTimeMillis())
@@ -32,13 +33,14 @@ struct Note: Identifiable, Equatable, Item {
         self.type = type
     }
     
-    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL, type: ItemType, label: String! = "") {
+    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL, type: ItemType, label: String! = "", isPinned: Bool! = false) {
         self.id=path
         self.content=content
         self.date=date
         self.isLocal=isLocal ?? true
         self.url = url
         self.type = type
+        self.isPinned = isPinned
         
         if (id.contains(".icloud")) {
             self.label = self.id

@@ -40,11 +40,35 @@ struct NoteList: View {
 
                                 }
                 }
+            
                 
                 ForEach(data.notes.indices, id: \.self) { index in
                     if data.notes[index].isLocal  {
-                        NavigationLink(destination: NoteEdit(note: data.notes[index])) {
-                            ListRow(note: data.notes[index])
+                        
+                        HStack {
+                            NavigationLink(destination: NoteEdit(note: data.notes[index])) {
+//                                ListRow(note: data.notes[index])
+                                ListRow(index: index).environmentObject(self.data)
+                            }
+                            if ( (data.pinnedUrl != nil && data.pinnedUrl.path != data.notes[index].url.path) || data.pinnedUrl == nil) {
+                                
+                                Button(action: {
+                                    data.pinnedUrl = data.notes[index].url
+                                    data.notes.insert(data.notes.remove(at: index), at: 0)
+                                }, label: {
+                                    Image(systemName: "pin")
+                                }).buttonStyle(PlainButtonStyle())
+                            }
+                            else {
+                                Button(action: {
+//                                    data.pinnedUrl = data.notes[index].url
+//                                    data.notes.insert(data.notes.remove(at: index), at: 0)
+                                    print("some action")
+                                }, label: {
+                                    Image(systemName: "star.fill")
+                                }).buttonStyle(PlainButtonStyle())
+                            }
+                     
                         }
                     }
                     else {
@@ -70,8 +94,9 @@ struct NoteList: View {
                                 
             )
         }
+        // so that we can have an up-to-date list of items when the user brings the app back to the foreground
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification), perform: { _ in
-            data.refresh() // so that we can have an up-to-date list of items when the user brings the app back to the foreground
+            data.refresh()
         })
     }
     

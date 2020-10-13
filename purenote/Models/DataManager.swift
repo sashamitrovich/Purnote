@@ -26,6 +26,7 @@ class DataManager: ObservableObject {
     @Published var folders : [Folder]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
+    @Published var pinnedUrl: URL!
         
     let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
     
@@ -74,9 +75,17 @@ class DataManager: ObservableObject {
     func addNote(url: URL) {
         do {
             
-            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
             
-            notes.append(newNote)
+            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note, isPinned: pinnedUrl != nil && pinnedUrl.path == url.path ? true : false)
+            
+            if newNote.isPinned {
+                // because it's pinned
+                notes.insert(newNote, at: 0)
+            }
+            else {
+                notes.append(newNote)
+            }
+
         }
         catch {
             /* error handling here */
@@ -87,6 +96,7 @@ class DataManager: ObservableObject {
     init() {
         notes=[]
         folders=[]
+        pinnedUrl = nil
         rootUrl = getRootPath()
         currentUrl = rootUrl
         refresh(url: self.currentUrl)
@@ -129,6 +139,7 @@ class DataManager: ObservableObject {
                 }
                 else {
                     // it's a local file
+                
                     addNote(url: url)
                 }
             }
@@ -194,5 +205,20 @@ class DataManager: ObservableObject {
     func getCurrentUrl() -> URL {
         return currentUrl
     }
+    
+    func pin(url: URL) {
+//        self.pinnedUrl = url
+        
+//        var pinnedIndex: Int {
+//            notes.firstIndex(where: { $0.url.path == url.path }) ?? 0
+//        }
+        
+//        let pinnedNote = notes.remove(at: pinnedIndex)
+//        _ = notes.removeLast()
+        //notes.insert(pinnedNote, at: 0)
+        
+        print("for debugging")
+    }
+    
     
 }

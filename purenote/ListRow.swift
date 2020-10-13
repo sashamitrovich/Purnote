@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ListRow: View {
-    var note: Note
+    @EnvironmentObject var data: DataManager
+//    var note: Note
+    var index: Int
     
     
     var body: some View {
@@ -16,27 +18,44 @@ struct ListRow: View {
         HStack {
             VStack(alignment: .leading) {
                 
-                Text(note.date.toString())
-                    .fontWeight(.light)
-                    .multilineTextAlignment(.leading)
-                Text(note.url.lastPathComponent).fontWeight(.thin)
-                    .multilineTextAlignment(.trailing)
-                
-                Text(note.content)
-                    .font(.title2)
-                    .frame(alignment: .leading)
-                    .lineLimit(1)
+//                Text(note.date.toString())
+//                    .fontWeight(.light)
+//                    .multilineTextAlignment(.leading)
+//                Text(note.url.lastPathComponent).fontWeight(.thin)
+//                    .multilineTextAlignment(.trailing)
+//
+//                Text(note.content)
+//                    .font(.title2)
+//                    .frame(alignment: .leading)
+//                    .lineLimit(1)
+                if (index < data.notes.count) {
+                    Text(data.notes[index].date.toString())
+                        .fontWeight(.light)
+                        .multilineTextAlignment(.leading)
+                    Text(data.notes[index].url.lastPathComponent).fontWeight(.thin)
+                        .multilineTextAlignment(.trailing)
+                    
+                    Text(data.notes[index].content)
+                        .font(.title2)
+                        .frame(alignment: .leading)
+                        .lineLimit(1)
+                }
+
                 
             }
-            .frame(width: 300.0, alignment: .leading)
+            .frame(/* width: 270,*/ alignment: .leading)
+         
         }
     }
     
 }
 
-struct ListRow_Previews: PreviewProvider {
-    static var previews: some View {
-        //        let data = DataManager()
-        ListRow(note: Note(content: "This is a nice looking note. Always wanted to write one like it.", date: Date(), path: "/notes/trips", isLocal: true, url: URL(fileURLWithPath: "/notes/trips/mynote.txt"), type: .Note))
-    }
-}
+//struct ListRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let data = DataManager()
+//        data.notes.append(Note(content: "This is a nice looking note. Always wanted to write one like it.", date: Date(), path: "/notes/trips", isLocal: true, url: URL(fileURLWithPath: "/notes/trips/mynote.txt"), type: ItemType.Note))
+////        ListRow(note: Note(content: "This is a nice looking note. Always wanted to write one like it.", date: Date(), path: "/notes/trips", isLocal: true, url: URL(fileURLWithPath: "/notes/trips/mynote.txt"), type: .Note))
+//        
+//       retun ListRow(index: 0).environmentObject(DataManager())
+//    }
+//}
