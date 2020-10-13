@@ -21,6 +21,24 @@ struct NoteList: View {
                     Button( folder.id) {
                         data.refresh(url: folder.url)
                     }
+                    
+                    Button(action: {
+                                    print("Share tapped!")
+                                }) {
+                                    HStack {
+                                        Image(systemName: "square.and.arrow.up")
+                                            .font(.title)
+                                        Text("Share")
+                                            .fontWeight(.semibold)
+                                            .font(.title)
+                                    }
+                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                    .padding()
+                                    .foregroundColor(.white)
+                                    .background(LinearGradient(gradient: Gradient(colors: [Color("DarkGreen"), Color("LightGreen")]), startPoint: .leading, endPoint: .trailing))
+                                    .cornerRadius(40)
+                                    .padding(.horizontal, 20)
+                                }
                 }
                 
                 ForEach(data.notes.indices, id: \.self) { index in
