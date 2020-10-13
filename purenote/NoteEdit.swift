@@ -17,9 +17,9 @@ struct NoteEdit: View {
 
     var body: some View {
         VStack {
-            TextEditor(text: $data.notes[noteIndex].content)
+            TextEditor(text: $note.content)
         }.onDisappear(perform: {
-            data.updateNote(index: noteIndex)
+            data.updateNote(note: note)
         })
     }
 }

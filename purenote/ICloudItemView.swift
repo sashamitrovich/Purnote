@@ -10,28 +10,23 @@ import SwiftUI
 struct ICloudItemView: View {
     @EnvironmentObject var data: DataManager
     
-    var index: Int = 0
-    
-    @State var text : String = "Tap to download note"
-
+//    var index: Int = 0
+    @State var note : Note
     
     var body: some View {
         HStack {
             
-            if index < data.notes.count {
-                Text(data.notes[index].label)
+            
+                Text(note.label)
                     .frame(width: 300.0, alignment: .leading)
-                if index<data.notes.count && data.notes[index].isDownloading {
+                if note.isDownloading {
                     ProgressView().progressViewStyle(CircularProgressViewStyle.init())
                 }
                 else {
                 Image(systemName: "icloud.and.arrow.down")
                 }
-            }
-
-
         }.onTapGesture() {
-            data.notes[index].isDownloading = true
+            note.isDownloading = true
             download()
 
         }
@@ -45,7 +40,7 @@ struct ICloudItemView: View {
             data.delayWithSeconds(trseconds: 3, completion: {print("waiting")})
             // start downloading item
             do {
-                try FileManager.default.startDownloadingUbiquitousItem(at: data.notes[index].url)
+                try FileManager.default.startDownloadingUbiquitousItem(at: note.url)
                 
             }
             catch {
@@ -58,10 +53,10 @@ struct ICloudItemView: View {
             // wait for item to download
             
             // Delete the "." which is at the beginning of the icloud file name
-            var lastPathComponent = data.notes[index].url.lastPathComponent
+            var lastPathComponent = note.url.lastPathComponent
             lastPathComponent.removeFirst()
             // Get folder path without the last component
-            let folderPath = data.notes[index].url.deletingLastPathComponent().path
+            let folderPath = note.url.deletingLastPathComponent().path
             // Create the downloaded file path
             let downloadedFilePath = folderPath + "/" + lastPathComponent.replacingOccurrences(of: ".icloud", with: "")
             var isDownloaded = false
@@ -78,7 +73,7 @@ struct ICloudItemView: View {
 
             
             do {
-                data.notes[index].content = try String(contentsOf: URL(fileURLWithPath: downloadedFilePath), encoding: String.Encoding.utf8)
+                note.content = try String(contentsOf: URL(fileURLWithPath: downloadedFilePath), encoding: String.Encoding.utf8)
             }
             catch {
                 /* error handling here */
@@ -86,15 +81,15 @@ struct ICloudItemView: View {
             }
             
             do {
-                data.notes[index].date = try FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as! Date
+                note.date = try FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as! Date
             }
             catch {
                 /* error handling here */
                 print("Unexpected error: \(error).")
             }
  
-            data.notes[index].url = URL(fileURLWithPath: downloadedFilePath)
-            data.notes[index].isLocal = true;
+            note.url = URL(fileURLWithPath: downloadedFilePath)
+            note.isLocal = true;
 
             
         }
