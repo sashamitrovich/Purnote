@@ -12,7 +12,7 @@ struct NoteEdit: View {
     @State var note: Note
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id })!
+        data.notes.firstIndex(where: { $0.id == note.id }) ?? 0
     }
 
     var body: some View {

@@ -18,26 +18,28 @@ struct NoteList: View {
         NavigationView {
             List {
                 ForEach(data.folders) { folder in
-                    Button( folder.id) {
-                        data.refresh(url: folder.url)
-                    }
+//                    Button( folder.id) {
+//
+//                    }
                     
                     Button(action: {
-                                    print("Share tapped!")
+                        data.refresh(url: folder.url)
                                 }) {
                                     HStack {
-                                        Image(systemName: "square.and.arrow.up")
-                                            .font(.title)
-                                        Text("Share")
+                                        if (folder.id == "..") {
+                                            Image(systemName: "arrowshape.turn.up.left")
+                                                .font(.title2)
+                                        }
+                                        else {
+                                            Image(systemName: "folder")
+                                                .font(.title2)
+                                        }
+                              
+                                        Text(folder.id)
                                             .fontWeight(.semibold)
-                                            .font(.title)
+                                            .font(.title2)
                                     }
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(LinearGradient(gradient: Gradient(colors: [Color("DarkGreen"), Color("LightGreen")]), startPoint: .leading, endPoint: .trailing))
-                                    .cornerRadius(40)
-                                    .padding(.horizontal, 20)
+
                                 }
                 }
                 
@@ -61,15 +63,18 @@ struct NoteList: View {
             .navigationBarTitle(data.getCurrentUrl().lastPathComponent)
             .navigationBarItems(trailing:
                 HStack {
-                    Button(action: {}) {Image(systemName: "plus.rectangle.on.folder")}
+                    Button(action: {}) {Image(systemName: "plus.rectangle.on.folder").font(.title2)}
                     Spacer(minLength: 15)
                                         
-                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil") }
+                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil").font(.title2) }
                     ).isDetailLink(true)
                 }
                                 
             )
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification), perform: { _ in
+            data.refresh() // so that we can have an up-to-date list of items when the user brings the app back to the foreground
+        })
     }
     
     func deleteItems(at offsets: IndexSet) {
