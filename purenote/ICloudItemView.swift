@@ -17,15 +17,19 @@ struct ICloudItemView: View {
     
     var body: some View {
         HStack {
+            
+            if index < data.notes.count {
+                Text(data.notes[index].label)
+                    .frame(width: 300.0, alignment: .leading)
+                if index<data.notes.count && data.notes[index].isDownloading {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle.init())
+                }
+                else {
+                Image(systemName: "icloud.and.arrow.down")
+                }
+            }
 
-            Text(data.notes[index].label)
-                .frame(width: 300.0, alignment: .leading)
-            if index<data.notes.count && data.notes[index].isDownloading {
-                ProgressView().progressViewStyle(CircularProgressViewStyle.init())
-            }
-            else {
-            Image(systemName: "icloud.and.arrow.down")
-            }
+
         }.onTapGesture() {
             data.notes[index].isDownloading = true
             download()

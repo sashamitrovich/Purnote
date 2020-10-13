@@ -19,7 +19,7 @@
 		328F2CE72535A9720053D6EC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525025359F7200A67FCF /* Item.swift */; };
 		328F2CE82535A9720053D6EC /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525125359F7200A67FCF /* Folder.swift */; };
 		328F2CE92535A9720053D6EC /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525225359F7200A67FCF /* Note.swift */; };
-		328F2CED2535A99D0053D6EC /* DownloadiCloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F2CEC2535A99D0053D6EC /* DownloadiCloudItemView.swift */; };
+		328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */; };
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -37,7 +37,7 @@
 		3220525A25359F8000A67FCF /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		3220525B25359F8000A67FCF /* FolderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderRow.swift; sourceTree = "<group>"; };
 		3220525C25359F8000A67FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		328F2CEC2535A99D0053D6EC /* DownloadiCloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadiCloudItemView.swift; sourceTree = "<group>"; };
+		328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudItemView.swift; sourceTree = "<group>"; };
 		328F2CF02535A9F20053D6EC /* purenote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = purenote.entitlements; sourceTree = "<group>"; };
 		32EAC58625350C49000EE69F /* purenote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = purenote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				328F2CF02535A9F20053D6EC /* purenote.entitlements */,
-				328F2CEC2535A99D0053D6EC /* DownloadiCloudItemView.swift */,
+				328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */,
 				3220525B25359F8000A67FCF /* FolderRow.swift */,
 				3220525C25359F8000A67FCF /* Info.plist */,
 				3220525A25359F8000A67FCF /* ListRow.swift */,
@@ -200,7 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				328F2CE62535A9720053D6EC /* DataManager.swift in Sources */,
-				328F2CED2535A99D0053D6EC /* DownloadiCloudItemView.swift in Sources */,
+				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
 				328F2CE72535A9720053D6EC /* Item.swift in Sources */,
 				328F2CE82535A9720053D6EC /* Folder.swift in Sources */,
 				328F2CE92535A9720053D6EC /* Note.swift in Sources */,

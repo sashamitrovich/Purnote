@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-//struct ResponderTextField: UIViewRepresentable {
-//
-//    typealias TheUIView = UITextField
-//    var isFirstResponder: Bool
-//    var configuration = { (view: TheUIView) in }
-//
-//    func makeUIView(context: UIViewRepresentableContext<Self>) -> TheUIView { TheUIView() }
-//    func updateUIView(_ uiView: TheUIView, context: UIViewRepresentableContext<Self>) {
-//        _ = isFirstResponder ? uiView.becomeFirstResponder() : uiView.resignFirstResponder()
-//        configuration(uiView)
-//    }
-//}
-
 struct NoteNew: View {
     @EnvironmentObject var data: DataManager
     //    @State var newNote: Note
@@ -28,7 +15,6 @@ struct NoteNew: View {
     
     var body: some View {
         VStack {
-            //            TextEditor(text: $data.note[data.note.count-1].title)
             
             TextEditor(text: $newNote.content)
 

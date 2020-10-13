@@ -18,9 +18,7 @@ struct NoteList: View {
         NavigationView {
             List {
                 ForEach(data.folders) { folder in
-//                    Button( folder.id) {
-//
-//                    }
+
                     
                     Button(action: {
                         data.refresh(url: folder.url)
@@ -50,7 +48,7 @@ struct NoteList: View {
                         }
                     }
                     else {
-                        DownloadiCloudItemView(index: index)
+                        ICloudItemView(index: index).environmentObject(self.data)
                     }
                 }.onDelete(perform: deleteItems)
             }.pullToRefresh(isShowing: $isShowing) {
