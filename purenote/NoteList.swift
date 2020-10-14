@@ -123,7 +123,7 @@ struct NoteList: View {
         
         for offset in offsets.enumerated() {
             do {
-                try FileManager.default.trashItem(at: data.notes[offset.offset].url, resultingItemURL: nil)
+                try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
             }
             catch {
                 // failed

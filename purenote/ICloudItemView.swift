@@ -10,30 +10,33 @@ import SwiftUI
 struct ICloudItemView: View {
     @EnvironmentObject var data: DataManager
     
-//    var index: Int = 0
+    var noteIndex: Int {
+        data.notes.firstIndex(where: { $0.id == note.id }) ?? 0
+    }
+    
     @State var note : Note
     
     var body: some View {
         HStack {
             
             
-                Text(note.label)
-                    .frame(width: 300.0, alignment: .leading)
-                if note.isDownloading {
-                    ProgressView().progressViewStyle(CircularProgressViewStyle.init())
-                }
-                else {
+            Text(note.label)
+                .frame(width: 300.0, alignment: .leading)
+            if note.isDownloading {
+                ProgressView().progressViewStyle(CircularProgressViewStyle.init())
+            }
+            else {
                 Image(systemName: "icloud.and.arrow.down")
-                }
+            }
         }.onTapGesture() {
             note.isDownloading = true
             download()
-
+            
         }
     }
     
     func download() {
-    
+        
         data.concurrentQueue.async { [self] in
             
             
@@ -62,18 +65,18 @@ struct ICloudItemView: View {
             var isDownloaded = false
             // Create a loop until isDownloaded is true
             while !isDownloaded {
-              // Check if the file is downloaded
+                // Check if the file is downloaded
                 if FileManager.default.fileExists(atPath: downloadedFilePath) {
-                isDownloaded = true
-              }
+                    isDownloaded = true
+                }
             }
             
             // now we can display it as a local file
             
-
+            
             
             do {
-                note.content = try String(contentsOf: URL(fileURLWithPath: downloadedFilePath), encoding: String.Encoding.utf8)
+                data.notes[noteIndex].content = try String(contentsOf: URL(fileURLWithPath: downloadedFilePath), encoding: String.Encoding.utf8)
             }
             catch {
                 /* error handling here */
@@ -81,16 +84,18 @@ struct ICloudItemView: View {
             }
             
             do {
-                note.date = try FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as! Date
+                data.notes[noteIndex].date = try FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as! Date
             }
             catch {
                 /* error handling here */
                 print("Unexpected error: \(error).")
             }
- 
-            note.url = URL(fileURLWithPath: downloadedFilePath)
-            note.isLocal = true;
-
+            
+            data.notes[noteIndex].url = URL(fileURLWithPath: downloadedFilePath)
+//            note.isLocal = true;
+            data.notes[noteIndex].isLocal = true
+            note.isDownloading = false;
+            
             
         }
     }
