@@ -52,3 +52,8 @@ struct Note: Identifiable, Equatable, Item {
     }
     
 }
+
+
+extension Note {
+    static let sampleNote1 = Note (content: "This is a nice looking note. Always wanted to write one like it.", date: Date(), path: "/notes/trips", isLocal: true, url: URL(fileURLWithPath: "/notes/trips/mynote.txt"), type: .Note)
+}

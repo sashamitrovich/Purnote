@@ -102,8 +102,8 @@ struct ICloudItemView: View {
 }
 
 
-//struct testView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DownloadiCloudItemView(index: 0).environmentObject(DataManager())
-//    }
-//}
+struct testView_Previews: PreviewProvider {
+    static var previews: some View {
+        ICloudItemView(note: Note.sampleNote1)
+    }
+}
