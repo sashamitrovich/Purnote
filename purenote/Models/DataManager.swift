@@ -170,11 +170,11 @@ class DataManager: ObservableObject {
         note.url=documentURL
     }
     
-    func updateNote(note : Note) {
-        let documentURL = note.url
+    func updateNote(index : Int) {
+        let documentURL = notes[index].url
         
         do {
-            try note.content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
+            try notes[index].content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
         }
         catch {
             // failed

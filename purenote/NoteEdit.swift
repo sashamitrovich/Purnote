@@ -12,14 +12,14 @@ struct NoteEdit: View {
     @State var note: Note
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id }) ?? 0
+        data.notes.firstIndex(where: { $0.id == note.id })!
     }
 
     var body: some View {
         VStack {
-            TextEditor(text: $note.content)
+            TextEditor(text: $data.notes[noteIndex].content)
         }.onDisappear(perform: {
-            data.updateNote(note: note)
+            data.updateNote(index: noteIndex)
         })
     }
 }

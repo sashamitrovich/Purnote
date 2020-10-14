@@ -12,7 +12,6 @@ struct NoteList: View {
     @EnvironmentObject var data: DataManager
     @State private var isShowing = false
     
-    
     var body: some View {
         
         NavigationView {
@@ -24,7 +23,10 @@ struct NoteList: View {
                         }
                         
                         Button(action: {
-                            print("unpin action")
+                            withAnimation {
+                                unpin()
+                            }
+                            
                         }, label: {
                             Image(systemName: "star.fill")
                         }).buttonStyle(PlainButtonStyle())
@@ -51,16 +53,16 @@ struct NoteList: View {
                         }
                     }
                 }
-                                
+                
                 ForEach(data.notes) { note in
                     if note.isLocal  {
                         
                         HStack {
-                            NavigationLink(destination: NoteEdit(note: note)) {
+                            NavigationLink(destination: NoteEdit(note: note).environmentObject(self.data)) {
                                 ListRow(note: note).environmentObject(self.data)
                             }
                             
-                            Button(action: {
+                            Button(action: { withAnimation  {
                                 guard data.pinned.count <= 1 else {
                                     print ("Unexpected size of data.pinned")
                                     return
@@ -69,13 +71,13 @@ struct NoteList: View {
                                 if (data.pinned.count == 1) {
                                     unpin()
                                 }
-
-      
+                                
+                                
                                 
                                 data.notes.removeAll(where: { $0.url.path == note.url.path })
                                 data.pinned.append(note)
                                 
-                            }, label: {
+                            } }, label: {
                                 Image(systemName: "pin.fill")
                             }).buttonStyle(PlainButtonStyle())
                         }
@@ -92,13 +94,16 @@ struct NoteList: View {
             }
             .navigationBarTitle(data.getCurrentUrl().lastPathComponent)
             .navigationBarItems(trailing:
-                HStack {
-                    Button(action: {}) {Image(systemName: "plus.rectangle.on.folder").font(.title2)}
-                    Spacer(minLength: 15)
+                                    HStack {
+                                        Button(action: {}) {
+                                            Image(systemName: "plus.rectangle.on.folder").font(.title2)
+                                            
+                                        }
+                                        Spacer(minLength: 15)
                                         
-                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil").font(.title2) }
+                                        NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil").font(.title2) }
                                         ).isDetailLink(true)
-                }
+                                    }
             )
         }
         // so that we can have an up-to-date list of items when the user brings the app back to the foreground
