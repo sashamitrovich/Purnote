@@ -20,6 +20,7 @@
 		328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */; };
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
+		4B337C55253856290094A19F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C54253856290094A19F /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B337C54253856290094A19F /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				3220525025359F7200A67FCF /* Item.swift */,
 				3220525125359F7200A67FCF /* Folder.swift */,
 				3220525225359F7200A67FCF /* Note.swift */,
+				4B337C54253856290094A19F /* SampleData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
+				4B337C55253856290094A19F /* SampleData.swift in Sources */,
 				3220524B25359E5600A67FCF /* NoteList.swift in Sources */,
 				3220525825359F7700A67FCF /* NoteNew.swift in Sources */,
 			);

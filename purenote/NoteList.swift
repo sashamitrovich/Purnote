@@ -31,7 +31,8 @@ struct NoteList: View {
                             Image(systemName: "star.fill")
                         }).buttonStyle(PlainButtonStyle())
                     }
-                }
+                }.background(Color.accentColor)
+            
                 
                 ForEach(data.folders) { folder in
                     Button(action: {
@@ -88,7 +89,7 @@ struct NoteList: View {
                 }.onDelete(perform: deleteItems)
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    data.refresh()
+                    data.refresh(url: data.getCurrentUrl())
                     isShowing = false
                 }
             }
@@ -108,7 +109,7 @@ struct NoteList: View {
         }
         // so that we can have an up-to-date list of items when the user brings the app back to the foreground
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification), perform: { _ in
-            data.refresh()
+            data.refresh(url: data.getCurrentUrl())
         })
     }
     

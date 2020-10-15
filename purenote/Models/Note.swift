@@ -9,7 +9,7 @@ import Foundation
 
 
 struct Note: Identifiable, Equatable, Item {
-    var type: ItemType
+    var type: ItemType = .Note
     
     static func == (lhs: Note, rhs: Note) -> Bool {
         return lhs.content == rhs.content
@@ -32,7 +32,7 @@ struct Note: Identifiable, Equatable, Item {
         self.type = type
     }
     
-    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL, type: ItemType, label: String! = "") {
+    init(content:String, date:Date, path:String, isLocal:Bool?, url: URL, type: ItemType! = .Note, label: String! = "") {
         self.id=path
         self.content=content
         self.date=date

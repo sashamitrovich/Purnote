@@ -24,9 +24,9 @@ struct NoteEdit: View {
     }
 }
 
-//struct NoteDetail_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        NoteDetail(index: 0).environmentObject(DataManager())
-//    }
-//}
+struct NoteDetail_Previews: PreviewProvider {
+    static var previews: some View {
+
+        NoteEdit(note: Note.sampleNote1)
+    }
+}

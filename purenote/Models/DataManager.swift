@@ -21,10 +21,11 @@ extension Date {
 }
 
 
+
 class DataManager: ObservableObject {
-    @Published  var notes : [Note] 
-    @Published var folders : [Folder]
-    @Published var pinned : [Note]
+    @Published  var notes : [Note] = DataManager.sampleNotes
+    @Published var folders : [Folder] = DataManager.sampleFolders
+    @Published var pinned : [Note] = DataManager.samplePinned
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
     
@@ -69,6 +70,7 @@ class DataManager: ObservableObject {
             }
         } else {
             print("ERROR: Cannot get ubiquity container")
+            tryURL = URL(fileURLWithPath: "")
         }
         return tryURL
     }
@@ -90,22 +92,25 @@ class DataManager: ObservableObject {
     }
     
     init() {
-        notes=[]
-        folders=[]
-        pinned = []
+//        notes=[]
+//        folders=[]
+//        pinned = []
         rootUrl = getRootPath()
         currentUrl = rootUrl
         refresh(url: self.currentUrl)
     }
     
-    func refresh(url: URL? = nil) {
+    func refresh(url: URL) {
+
+        
+        // because we don't have access to iCLoud
+        if (url.path=="/") {
+            return
+        }
+        
+        
         notes=[]
         folders=[]
-        
-        
-        if (url != nil) {
-            currentUrl = url ?? currentUrl
-        }
         
         if (currentUrl.path != rootUrl.path) {
             folders.append(Folder(id: "..", url: currentUrl.deletingLastPathComponent()))
