@@ -21,6 +21,11 @@
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
 		4B337C55253856290094A19F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C54253856290094A19F /* SampleData.swift */; };
+		4B337C58253861B20094A19F /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C57253861B20094A19F /* MenuView.swift */; };
+		4B337C5B253861F50094A19F /* PinnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C5A253861F50094A19F /* PinnedView.swift */; };
+		4B367DDD253864B800619115 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDC253864B800619115 /* NoteView.swift */; };
+		4B367DE02538668600619115 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDF2538668600619115 /* RootView.swift */; };
+		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +46,11 @@
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B337C54253856290094A19F /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		4B337C57253861B20094A19F /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		4B337C5A253861F50094A19F /* PinnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedView.swift; sourceTree = "<group>"; };
+		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +116,11 @@
 				32EAC58C25350C4A000EE69F /* Assets.xcassets */,
 				32EAC59125350C4A000EE69F /* Info.plist */,
 				32EAC58E25350C4A000EE69F /* Preview Content */,
+				4B337C57253861B20094A19F /* MenuView.swift */,
+				4B337C5A253861F50094A19F /* PinnedView.swift */,
+				4B367DDC253864B800619115 /* NoteView.swift */,
+				4B367DDF2538668600619115 /* RootView.swift */,
+				4BC9D9F12538A43800966AD9 /* FolderView.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -197,6 +212,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				328F2CE62535A9720053D6EC /* DataManager.swift in Sources */,
+				4B337C58253861B20094A19F /* MenuView.swift in Sources */,
+				4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
 				328F2CE72535A9720053D6EC /* Item.swift in Sources */,
 				328F2CE82535A9720053D6EC /* Folder.swift in Sources */,
@@ -205,8 +222,11 @@
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
 				4B337C55253856290094A19F /* SampleData.swift in Sources */,
+				4B337C5B253861F50094A19F /* PinnedView.swift in Sources */,
 				3220524B25359E5600A67FCF /* NoteList.swift in Sources */,
+				4B367DDD253864B800619115 /* NoteView.swift in Sources */,
 				3220525825359F7700A67FCF /* NoteNew.swift in Sources */,
+				4B367DE02538668600619115 /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +356,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -346,7 +366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.6;
+				MARKETING_VERSION = 0.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -361,7 +381,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -371,7 +391,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.6;
+				MARKETING_VERSION = 0.0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

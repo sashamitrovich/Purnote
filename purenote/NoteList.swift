@@ -16,77 +16,17 @@ struct NoteList: View {
         
         NavigationView {
             List {
-                ForEach(data.pinned) { pinnedNote in
-                    HStack {
-                        NavigationLink(destination: NoteEdit(note: pinnedNote)) {
-                            ListRow(note: pinnedNote).environmentObject(self.data)
-                        }
-                        
-                        Button(action: {
-                            withAnimation {
-                                unpin()
-                            }
-                            
-                        }, label: {
-                            Image(systemName: "star.fill")
-                        }).buttonStyle(PlainButtonStyle())
-                    }
-                }.background(Color.accentColor)
-            
+                Text("Pinned")
+                    .font(.largeTitle)
+                PinnedView()
                 
-                ForEach(data.folders) { folder in
-                    Button(action: {
-                        data.refresh(url: folder.url)
-                    }) {
-                        HStack {
-                            if (folder.id == "..") {
-                                Image(systemName: "arrowshape.turn.up.left")
-                                    .font(.title2)
-                            }
-                            else {
-                                Image(systemName: "folder")
-                                    .font(.title2)
-                            }
-                            
-                            Text(folder.id)
-                                .fontWeight(.semibold)
-                                .font(.title2)
-                        }
-                    }
-                }
+                Text("Folders").font(.largeTitle)
+                FolderView()
+        
                 
-                ForEach(data.notes) { note in
-                    if note.isLocal  {
-                        
-                        HStack {
-                            NavigationLink(destination: NoteEdit(note: note).environmentObject(self.data)) {
-                                ListRow(note: note).environmentObject(self.data)
-                            }
-                            
-                            Button(action: { withAnimation  {
-                                guard data.pinned.count <= 1 else {
-                                    print ("Unexpected size of data.pinned")
-                                    return
-                                }
-                                
-                                if (data.pinned.count == 1) {
-                                    unpin()
-                                }
-                                
-                                
-                                
-                                data.notes.removeAll(where: { $0.url.path == note.url.path })
-                                data.pinned.append(note)
-                                
-                            } }, label: {
-                                Image(systemName: "pin.fill")
-                            }).buttonStyle(PlainButtonStyle())
-                        }
-                    }
-                    else {
-                        ICloudItemView(note : note).environmentObject(self.data)
-                    }
-                }.onDelete(perform: deleteItems)
+                Text("Notes").font(.largeTitle)
+                    NoteView()
+
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     data.refresh(url: data.getCurrentUrl())
@@ -106,40 +46,17 @@ struct NoteList: View {
                                         ).isDetailLink(true)
                                     }
             )
+            
         }
+        
+        
         // so that we can have an up-to-date list of items when the user brings the app back to the foreground
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification), perform: { _ in
             data.refresh(url: data.getCurrentUrl())
         })
     }
-    
-    func unpin() {
         
-        // need to put back the note in the notes[]
-        if data.pinned[0].url.deletingLastPathComponent().path == data.getCurrentUrl().path {
-            data.notes.append(data.pinned.removeFirst())
-        }
-        // no need because it doesn't belong to this folder
-        else {
-            data.pinned.removeFirst()
-        }
-    }
-    
-    func deleteItems(at offsets: IndexSet) {
-        
-        for offset in offsets.enumerated() {
-            do {
-                try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
-            }
-            catch {
-                // failed
-                print("Unexpected error: \(error).")
-            }
-            
-        }
-        data.notes.remove(atOffsets: offsets)
-        
-    }
+
 }
 
 

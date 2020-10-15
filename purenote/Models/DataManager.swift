@@ -23,9 +23,9 @@ extension Date {
 
 
 class DataManager: ObservableObject {
-    @Published  var notes : [Note] = DataManager.sampleNotes
-    @Published var folders : [Folder] = DataManager.sampleFolders
-    @Published var pinned : [Note] = DataManager.samplePinned
+    @Published  var notes : [Note]
+    @Published var folders : [Folder]
+    @Published var pinned : [Note]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
     
@@ -92,25 +92,30 @@ class DataManager: ObservableObject {
     }
     
     init() {
-//        notes=[]
-//        folders=[]
-//        pinned = []
+        notes=[]
+        folders=[]
+        pinned = []
         rootUrl = getRootPath()
         currentUrl = rootUrl
         refresh(url: self.currentUrl)
     }
     
     func refresh(url: URL) {
-
+        self.currentUrl = url
         
         // because we don't have access to iCLoud
+        // demo mode
         if (url.path=="/") {
+            pinned = DataManager.samplePinned
+            notes = DataManager.sampleNotes
+            folders = DataManager.sampleFolders
             return
         }
         
         
         notes=[]
         folders=[]
+       
         
         if (currentUrl.path != rootUrl.path) {
             folders.append(Folder(id: "..", url: currentUrl.deletingLastPathComponent()))
@@ -211,6 +216,16 @@ class DataManager: ObservableObject {
         return currentUrl
     }
 
-    
+    func unpin() {
+        
+        // need to put back the note in the notes[]
+        if pinned[0].url.deletingLastPathComponent().path == getCurrentUrl().path {
+            notes.append(pinned.removeFirst())
+        }
+        // no need because it doesn't belong to this folder
+        else {
+            pinned.removeFirst()
+        }
+    }
     
 }

@@ -25,9 +25,7 @@ struct ListRow: View {
                     .font(.title2)
                     .frame(alignment: .leading)
                     .lineLimit(1)
-            }
-            .frame(/* width: 270,*/ alignment: .leading)
-            
+            }                        
         }
     }
     
@@ -39,7 +37,6 @@ struct ListRow_Previews: PreviewProvider {
     static var previews: some View {
         
         ListRow(note: Note.sampleNote1)
-        
-//        ListRow(note: Note(content: "This is a nice looking note. Always wanted to write one like it.", date: Date(), path: "/notes/trips", isLocal: true, url: URL(fileURLWithPath: "/notes/trips/mynote.txt"), type: .Note))
+    
     }
 }

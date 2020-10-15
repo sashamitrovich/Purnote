@@ -37,10 +37,10 @@ struct ICloudItemView: View {
     
     func download() {
         
-        data.concurrentQueue.async { [self] in
+
             
             
-            data.delayWithSeconds(trseconds: 3, completion: {print("waiting")})
+//            data.delayWithSeconds(trseconds: 3, completion: {print("waiting")})
             // start downloading item
             do {
                 try FileManager.default.startDownloadingUbiquitousItem(at: note.url)
@@ -92,12 +92,13 @@ struct ICloudItemView: View {
             }
             
             data.notes[noteIndex].url = URL(fileURLWithPath: downloadedFilePath)
+            data.notes[noteIndex].id = data.notes[noteIndex].url.lastPathComponent
 //            note.isLocal = true;
             data.notes[noteIndex].isLocal = true
             note.isDownloading = false;
             
             
-        }
+        
     }
 }
 

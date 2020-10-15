@@ -9,15 +9,27 @@ import SwiftUI
 
 struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
-    @State var note: Note
+    var fromPinned:Bool
+    var note: Note
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id })!
+        if fromPinned == true {
+            return data.pinned.firstIndex(where: { $0.id == note.id })!
+        }
+        else {
+            return data.notes.firstIndex(where: { $0.id == note.id })!
+        }
     }
 
     var body: some View {
         VStack {
-            TextEditor(text: $data.notes[noteIndex].content)
+            if fromPinned == true {
+                TextEditor(text: $data.pinned[noteIndex].content)
+            }
+            else {
+                TextEditor(text: $data.notes[noteIndex].content)
+            }
+
         }.onDisappear(perform: {
             data.updateNote(index: noteIndex)
         })
@@ -27,6 +39,6 @@ struct NoteEdit: View {
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
 
-        NoteEdit(note: Note.sampleNote1)
+        NoteEdit(fromPinned: false, note: Note.sampleNote1 )
     }
 }
