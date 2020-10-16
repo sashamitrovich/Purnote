@@ -16,7 +16,7 @@ struct NoteView: View {
                 if note.isLocal  {
                     
                     HStack {
-                        NavigationLink(destination: NoteEdit(fromPinned: false,  note: note).environmentObject(self.data)) {
+                        NavigationLink(destination: NoteEdit(note: note).environmentObject(self.data)) {
                             ListRow(note: note).environmentObject(self.data)
                         }
                     }

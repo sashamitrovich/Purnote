@@ -9,28 +9,39 @@ import SwiftUI
 
 struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
-    var fromPinned:Bool
     var note: Note
     
     var noteIndex: Int {
-            return data.notes.firstIndex(where: { $0.id == note.id })!
-
+        data.notes.firstIndex(where: { $0.id == note.id })!
     }
 
     var body: some View {
         VStack {
 
-                TextEditor(text: $data.notes[noteIndex].content)
+            TextEditor(text: $data.notes[noteIndex].content)
            
         }.onDisappear(perform: {
-            data.updateNote(index: noteIndex)
+            updateNote()
         })
+    }
+    
+    func updateNote() {
+        
+        let documentURL = self.data.notes[noteIndex].url
+        
+        do {
+            try self.data.notes[noteIndex].content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
+        }
+        catch {
+            // failed
+            print("Unexpected error, failed to update note: \(error).")
+        }
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
 
-        NoteEdit(fromPinned: false, note: Note.sampleNote1 )
+        NoteEdit(note: Note.sampleNote1 ).environmentObject(DataManager())
     }
 }

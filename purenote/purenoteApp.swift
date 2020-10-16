@@ -12,9 +12,8 @@ struct ShareDataApp: App {
 //    @EnvironmentObject var data : DataManager
     
     var body: some Scene {
-        
         WindowGroup {
-            RootView()
+            RootView(data: DataManager())
                 .environmentObject(DataManager())
         }
     }

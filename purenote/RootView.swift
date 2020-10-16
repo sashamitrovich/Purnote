@@ -9,12 +9,15 @@ import SwiftUI
 import SwiftUIRefresh
 
 struct RootView: View {
-    @EnvironmentObject var data: DataManager
+//    @EnvironmentObject var data: DataManager
+    var  data: DataManager
     @State private var isShowing = false
     
     var body: some View {
         NavigationView {
-            MenuView().navigationBarItems(trailing:
+            MenuView(data: data)
+//                .environmentObject(data)
+                .navigationBarItems(trailing:
                                                 HStack {
                                                     Button(action: {}) {
                                                         Image(systemName: "plus.rectangle.on.folder").font(.title2)
@@ -43,6 +46,6 @@ struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView().environmentObject(DataManager())
+        RootView(data: DataManager()).environmentObject(DataManager())
     }
 }

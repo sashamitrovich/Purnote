@@ -10,18 +10,22 @@ import SwiftUI
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
-    @EnvironmentObject var data: DataManager
+//    @EnvironmentObject var data: DataManager
+    var data: DataManager
+    
+    
     
     var body: some View {
         List {
-            FolderView()
-            NoteView()
+            FolderView().environmentObject(data)
+            NoteView().environmentObject(data)
         }.navigationBarTitle(Text("Purenote"), displayMode: .automatic)
+       
     }
 }
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView().environmentObject(DataManager())
+        MenuView(data: DataManager()).environmentObject(DataManager())
     }
 }

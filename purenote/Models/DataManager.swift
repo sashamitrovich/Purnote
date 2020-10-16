@@ -90,11 +90,17 @@ class DataManager: ObservableObject {
         }
     }
     
-    init() {
+    init(url: URL? = nil) {
         notes=[]
         folders=[]
         rootUrl = getRootPath()
-        currentUrl = rootUrl
+        if (url == nil) {
+            self.currentUrl = rootUrl
+        }
+        else {
+            self.currentUrl = url!
+        }
+    
         refresh(url: self.currentUrl)
     }
     
@@ -113,10 +119,6 @@ class DataManager: ObservableObject {
         notes=[]
         folders=[]
        
-        
-        if (currentUrl.path != rootUrl.path) {
-            folders.append(Folder(id: "..", url: currentUrl.deletingLastPathComponent()))
-        }
         
         var urls:[URL] = []
         
@@ -173,17 +175,6 @@ class DataManager: ObservableObject {
         note.url=documentURL
     }
     
-    func updateNote(index : Int) {
-        let documentURL = notes[index].url
-        
-        do {
-            try notes[index].content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
-        }
-        catch {
-            // failed
-            print("Unexpected error: \(error).")
-        }
-    }
     
     func listFiles () -> [URL] {
         var urls:[URL]=[]
@@ -209,6 +200,4 @@ class DataManager: ObservableObject {
         return currentUrl
     }
 
-   
-    
 }
