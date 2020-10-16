@@ -13,23 +13,15 @@ struct NoteEdit: View {
     var note: Note
     
     var noteIndex: Int {
-        if fromPinned == true {
-            return data.pinned.firstIndex(where: { $0.id == note.id })!
-        }
-        else {
             return data.notes.firstIndex(where: { $0.id == note.id })!
-        }
+
     }
 
     var body: some View {
         VStack {
-            if fromPinned == true {
-                TextEditor(text: $data.pinned[noteIndex].content)
-            }
-            else {
-                TextEditor(text: $data.notes[noteIndex].content)
-            }
 
+                TextEditor(text: $data.notes[noteIndex].content)
+           
         }.onDisappear(perform: {
             data.updateNote(index: noteIndex)
         })

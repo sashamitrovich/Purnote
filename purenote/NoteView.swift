@@ -19,24 +19,6 @@ struct NoteView: View {
                         NavigationLink(destination: NoteEdit(fromPinned: false,  note: note).environmentObject(self.data)) {
                             ListRow(note: note).environmentObject(self.data)
                         }
-                        
-                        Button(action: { withAnimation  {
-                            guard data.pinned.count <= 1 else {
-                                print ("Unexpected size of data.pinned")
-                                return
-                            }
-                            
-                            if (data.pinned.count == 1) {
-                                
-                                data.unpin() // this will also add it to the (normal) notes[]
-                            }
-                            
-                            data.notes.removeAll(where: { $0.url.path == note.url.path })                            
-data.pinned.append(note)
-                            
-                        } }, label: {
-                            Image(systemName: "pin.fill")
-                        }).buttonStyle(PlainButtonStyle())
                     }
                 }
                 else {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
-		3220524B25359E5600A67FCF /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524A25359E5600A67FCF /* NoteList.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
 		3220525D25359F8000A67FCF /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525A25359F8000A67FCF /* ListRow.swift */; };
@@ -22,7 +21,6 @@
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
 		4B337C55253856290094A19F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C54253856290094A19F /* SampleData.swift */; };
 		4B337C58253861B20094A19F /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C57253861B20094A19F /* MenuView.swift */; };
-		4B337C5B253861F50094A19F /* PinnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C5A253861F50094A19F /* PinnedView.swift */; };
 		4B367DDD253864B800619115 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDC253864B800619115 /* NoteView.swift */; };
 		4B367DE02538668600619115 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDF2538668600619115 /* RootView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
@@ -30,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
-		3220524A25359E5600A67FCF /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		3220525025359F7200A67FCF /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		3220525125359F7200A67FCF /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
@@ -47,7 +44,6 @@
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B337C54253856290094A19F /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		4B337C57253861B20094A19F /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		4B337C5A253861F50094A19F /* PinnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedView.swift; sourceTree = "<group>"; };
 		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
@@ -111,13 +107,11 @@
 				3220525525359F7700A67FCF /* NoteEdit.swift */,
 				3220525325359F7700A67FCF /* NoteNew.swift */,
 				3220524E25359F7200A67FCF /* Models */,
-				3220524A25359E5600A67FCF /* NoteList.swift */,
 				3220524225359E1E00A67FCF /* purenoteApp.swift */,
 				32EAC58C25350C4A000EE69F /* Assets.xcassets */,
 				32EAC59125350C4A000EE69F /* Info.plist */,
 				32EAC58E25350C4A000EE69F /* Preview Content */,
 				4B337C57253861B20094A19F /* MenuView.swift */,
-				4B337C5A253861F50094A19F /* PinnedView.swift */,
 				4B367DDC253864B800619115 /* NoteView.swift */,
 				4B367DDF2538668600619115 /* RootView.swift */,
 				4BC9D9F12538A43800966AD9 /* FolderView.swift */,
@@ -222,8 +216,6 @@
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
 				4B337C55253856290094A19F /* SampleData.swift in Sources */,
-				4B337C5B253861F50094A19F /* PinnedView.swift in Sources */,
-				3220524B25359E5600A67FCF /* NoteList.swift in Sources */,
 				4B367DDD253864B800619115 /* NoteView.swift in Sources */,
 				3220525825359F7700A67FCF /* NoteNew.swift in Sources */,
 				4B367DE02538668600619115 /* RootView.swift in Sources */,

@@ -28,14 +28,3 @@ extension DataManager {
         return folders
     }
 }
-
-extension DataManager {
-    static var samplePinned : [Note] {
-        var pinned: [Note] = []
-        
-        pinned.append(Note(content: "I have pinned this note", date: Date(), path: "/notes/sample-pinned-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/sample-pinned-note.txt")))
-        
-        return pinned
-        
-    }
-}

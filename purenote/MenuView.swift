@@ -14,7 +14,6 @@ struct MenuView: View {
     
     var body: some View {
         List {
-            PinnedView()
             FolderView()
             NoteView()
         }.navigationBarTitle(Text("Purenote"), displayMode: .automatic)
