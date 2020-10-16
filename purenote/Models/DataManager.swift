@@ -37,7 +37,7 @@ class DataManager: ObservableObject {
     
     func addSaveNote(newNote: inout Note) {
         saveNote(note: &newNote)
-        notes.append(newNote)            
+        notes.append(newNote)
     }
     
     func addNote(newNote: Note) {

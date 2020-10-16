@@ -16,7 +16,7 @@ struct NoteNew: View {
     var body: some View {
         VStack {
             
-            TextEditor(text: $newNote.content)
+            TextEditor(text: $newNote.content).environmentObject(self.data)
 
             
         }

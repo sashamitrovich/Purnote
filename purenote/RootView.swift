@@ -25,7 +25,7 @@ struct RootView: View {
                                                     }
                                                     Spacer(minLength: 15)
                                                     
-                                                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)), label: { Image(systemName: "square.and.pencil").font(.title2) }
+                                                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)).environmentObject(self.data), label: { Image(systemName: "square.and.pencil").font(.title2) }
                                                     ).isDetailLink(true)
                                                 }
             )
