@@ -16,24 +16,6 @@ struct RootView: View {
     var body: some View {
         NavigationView {
             MenuView(data: data)
-//                .environmentObject(data)
-                .navigationBarItems(trailing:
-                                                HStack {
-                                                    Button(action: {}) {
-                                                        Image(systemName: "plus.rectangle.on.folder").font(.title2)
-                                                        
-                                                    }
-                                                    Spacer(minLength: 15)
-                                                    
-                                                    NavigationLink(destination: NoteNew(newNote: Note(type: .Note)).environmentObject(self.data), label: { Image(systemName: "square.and.pencil").font(.title2) }
-                                                    ).isDetailLink(true)
-                                                }
-            )
-        }.pullToRefresh(isShowing: $isShowing) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl())
-                isShowing = false
-            }
         }
     }
     
