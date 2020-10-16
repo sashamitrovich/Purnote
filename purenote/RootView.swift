@@ -13,9 +13,12 @@ struct RootView: View {
     var  data: DataManager
     @State private var isShowing = false
     
+    @State var mdText = " # A cool title"
+    
     var body: some View {
         NavigationView {
             MenuView(data: data)
+        
         }
     }
     

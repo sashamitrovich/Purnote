@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Parma
 
 struct NoteView: View {
     @EnvironmentObject var data: DataManager
@@ -16,7 +17,14 @@ struct NoteView: View {
                 if note.isLocal  {
                     
                     HStack {
-                        NavigationLink(destination: NoteEdit(note: note).environmentObject(self.data)) {
+                        
+                        NavigationLink(destination:
+//                                        NoteEdit(note: note)
+                                        ScrollView{
+                                            Parma(note.content)
+                                        }
+               
+                                        .environmentObject(self.data)) {
                             ListRow(note: note).environmentObject(self.data)
                         }
                     }
