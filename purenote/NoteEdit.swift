@@ -12,13 +12,14 @@ struct NoteEdit: View {
     var note: Note
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id })!
+        data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
     }
 
     var body: some View {
         VStack {
-
-            TextEditor(text: $data.notes[noteIndex].content)
+            if (noteIndex != Int.max) { // super ugly workaround, let's hope a user doesn't reach Int.max notes because that one will not be displayed
+                TextEditor(text: $data.notes[noteIndex].content)
+            }
            
         }.onDisappear(perform: {
             updateNote()

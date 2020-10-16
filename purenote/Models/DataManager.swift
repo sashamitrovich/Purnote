@@ -182,7 +182,6 @@ class DataManager: ObservableObject {
         
         do {
             try urls=fm.contentsOfDirectory(at: currentUrl, includingPropertiesForKeys:nil)
-            print(urls.count)
         }
         catch {
             // failed

@@ -50,10 +50,7 @@ struct FolderView: View {
             self.selectedUrl
         }, set: {
             print("Folder with URL \(String(describing: $0)) chosen")
-            self.selectedUrl = $0
-//            self.data.refresh(url: self.selectedUrl!)
-        
-            
+            self.selectedUrl = $0            
         })
         return binding
     }

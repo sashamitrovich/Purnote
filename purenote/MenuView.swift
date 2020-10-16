@@ -19,7 +19,7 @@ struct MenuView: View {
         List {
             FolderView().environmentObject(data)
             NoteView().environmentObject(data)
-        }.navigationBarTitle(Text("Purenote"), displayMode: .automatic)
+        }.navigationBarTitle(Text(data.getCurrentUrl().lastPathComponent), displayMode: .automatic)
        
     }
 }
