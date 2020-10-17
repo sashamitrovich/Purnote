@@ -12,36 +12,18 @@ struct FolderView: View {
     @State private var selectedUrl: URL?
     
     var body: some View {
-        ForEach(data.folders) { folder in
-            
-            HStack {
-                NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
-                               tag: folder.url, selection: self.customBinding()) {
-                    Text(folder.id)
-                                            .fontWeight(.semibold)
-                                            .font(.title2)
+        
+    
+            ForEach(data.folders) { folder in
+                
+                HStack {
+                    NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
+                                   tag: folder.url, selection: self.customBinding()) {
+                        Text(folder.id)
+                                                .fontWeight(.semibold)
+                                                .font(.title3)
+                    }
                 }
-            }
-            
-//            Button(action: {
-//                data.refresh(url: folder.url)
-//            }) {
-//                HStack {
-//                    if (folder.id == "..") {
-//                        Image(systemName: "arrowshape.turn.up.left")
-//                            .font(.title2)
-//                    }
-//                    else {
-//                        Image(systemName: "folder")
-//                            .font(.title2)
-//                    }
-//
-//                    Text(folder.id)
-//                        .fontWeight(.semibold)
-//                        .font(.title2)
-//                }
-//            }
-            
         }
     }
     

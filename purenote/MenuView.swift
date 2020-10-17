@@ -17,7 +17,10 @@ struct MenuView: View {
     
     var body: some View {
         List {
-            FolderView().environmentObject(data)
+            Text("Folders").font(.title2).frame(maxWidth: .infinity, alignment: .leading).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            FolderView().environmentObject(data).padding(.bottom, 5.0)
+            
+            Text("Notes").font(.title2).frame(maxWidth: .infinity, alignment: .leading).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)       
             NoteView().environmentObject(data)
         }.navigationBarTitle(Text(data.getCurrentUrl().lastPathComponent), displayMode: .automatic)
         .navigationBarItems(trailing:
@@ -39,6 +42,7 @@ struct MenuView: View {
             }
         }
     }
+    
 }
 
 struct MenuView_Previews: PreviewProvider {
