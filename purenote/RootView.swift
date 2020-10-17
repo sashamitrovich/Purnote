@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftUIRefresh
 
 struct RootView: View {
-//    @EnvironmentObject var data: DataManager
     var  data: DataManager
     @State private var isShowing = false
     

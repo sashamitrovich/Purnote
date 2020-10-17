@@ -11,7 +11,17 @@ extension DataManager {
     static var sampleNotes : [Note] {
         
         var notes : [Note] = []
-        notes.append(Note(content: "This is a sample note", date: Date(), path: "/notes/sample-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/sample-note.txt")))
+        notes.append(Note(content:
+"""
+# News swagger and the crazy nightkfkfkfkf
+
+## my list
+* one
+* bullet
+
+Just some plain text
+
+""", date: Date(), path: "/notes/sample-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/sample-note.txt")))
         notes.append(Note(content: "This is a sample iCloud note", date: Date(), path: "/notes/icloud-note.txt", isLocal: false, url: URL(fileURLWithPath: "/notes/.icloud-note.txt.icloud")))
         notes.append(Note(content: "My notes about our meeting on 27.07.2020", date: Date(), path: "/notes/meeting-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/meeting-note.txt")))
         return notes
@@ -26,5 +36,15 @@ extension DataManager {
         folders.append(Folder(id: "Meetings", url: URL(fileURLWithPath: "/notes/meetings")))
         
         return folders
+    }
+}
+
+extension DataManager {
+    static func sampleDataManager() -> DataManager {
+        let dataManager = DataManager()
+        dataManager.notes = DataManager.sampleNotes
+        dataManager.folders = DataManager.sampleFolders
+        
+        return dataManager
     }
 }

@@ -20,7 +20,6 @@
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
 		4B1B14892539ED4100B5F0D8 /* HTMLStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B14882539ED4100B5F0D8 /* HTMLStringView.swift */; };
-		4B1B14952539F17100B5F0D8 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 4B1B14942539F17100B5F0D8 /* MarkdownView */; };
 		4B1B149D2539F3C700B5F0D8 /* Parma in Frameworks */ = {isa = PBXBuildFile; productRef = 4B1B149C2539F3C700B5F0D8 /* Parma */; };
 		4B337C55253856290094A19F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C54253856290094A19F /* SampleData.swift */; };
 		4B337C58253861B20094A19F /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C57253861B20094A19F /* MenuView.swift */; };
@@ -60,7 +59,6 @@
 			files = (
 				4B1B149D2539F3C700B5F0D8 /* Parma in Frameworks */,
 				322052622535A5B500A67FCF /* SwiftUIRefresh in Frameworks */,
-				4B1B14952539F17100B5F0D8 /* MarkdownView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +150,6 @@
 			name = purenote;
 			packageProductDependencies = (
 				322052612535A5B500A67FCF /* SwiftUIRefresh */,
-				4B1B14942539F17100B5F0D8 /* MarkdownView */,
 				4B1B149C2539F3C700B5F0D8 /* Parma */,
 			);
 			productName = purenote;
@@ -187,7 +184,6 @@
 			mainGroup = 32731B36252767DB0031CADD;
 			packageReferences = (
 				327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
-				4B1B14932539F17100B5F0D8 /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				4B1B149B2539F3C700B5F0D8 /* XCRemoteSwiftPackageReference "Parma" */,
 			);
 			productRefGroup = 32731B40252767DB0031CADD /* Products */;
@@ -435,14 +431,6 @@
 				minimumVersion = 0.0.3;
 			};
 		};
-		4B1B14932539F17100B5F0D8 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/keitaoouchi/MarkdownView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.1;
-			};
-		};
 		4B1B149B2539F3C700B5F0D8 /* XCRemoteSwiftPackageReference "Parma" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dasautoooo/Parma";
@@ -458,11 +446,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
 			productName = SwiftUIRefresh;
-		};
-		4B1B14942539F17100B5F0D8 /* MarkdownView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4B1B14932539F17100B5F0D8 /* XCRemoteSwiftPackageReference "MarkdownView" */;
-			productName = MarkdownView;
 		};
 		4B1B149C2539F3C700B5F0D8 /* Parma */ = {
 			isa = XCSwiftPackageProductDependency;
