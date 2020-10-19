@@ -25,8 +25,8 @@
 		4B337C58253861B20094A19F /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C57253861B20094A19F /* MenuView.swift */; };
 		4B367DDD253864B800619115 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDC253864B800619115 /* NoteView.swift */; };
 		4B367DE02538668600619115 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDF2538668600619115 /* RootView.swift */; };
-		4B5609F2253D7E480050C211 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5609F1253D7E470050C211 /* NavView.swift */; };
-		4B5609F6253D7EB70050C211 /* NavLinksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5609F5253D7EB70050C211 /* NavLinksView.swift */; };
+		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
+		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +51,8 @@
 		4B337C57253861B20094A19F /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		4B5609F1253D7E470050C211 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
-		4B5609F5253D7EB70050C211 /* NavLinksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavLinksView.swift; sourceTree = "<group>"; };
+		4BC41065253DB00000AC8293 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +92,7 @@
 		32731B36252767DB0031CADD = {
 			isa = PBXGroup;
 			children = (
+				4BC41064253DAFF200AC8293 /* extensions */,
 				4B5609F0253D7E2D0050C211 /* playground */,
 				32EAC58725350C49000EE69F /* purenote */,
 				32731B40252767DB0031CADD /* Products */,
@@ -140,10 +141,17 @@
 		4B5609F0253D7E2D0050C211 /* playground */ = {
 			isa = PBXGroup;
 			children = (
-				4B5609F1253D7E470050C211 /* NavView.swift */,
-				4B5609F5253D7EB70050C211 /* NavLinksView.swift */,
 			);
 			path = playground;
+			sourceTree = "<group>";
+		};
+		4BC41064253DAFF200AC8293 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4BC41065253DB00000AC8293 /* Image.swift */,
+				4BC4106D253DB92300AC8293 /* View.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,15 +236,15 @@
 			files = (
 				328F2CE62535A9720053D6EC /* DataManager.swift in Sources */,
 				4B337C58253861B20094A19F /* MenuView.swift in Sources */,
-				4B5609F6253D7EB70050C211 /* NavLinksView.swift in Sources */,
 				4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
+				4BC4106E253DB92300AC8293 /* View.swift in Sources */,
 				328F2CE72535A9720053D6EC /* Item.swift in Sources */,
 				328F2CE82535A9720053D6EC /* Folder.swift in Sources */,
 				328F2CE92535A9720053D6EC /* Note.swift in Sources */,
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
-				4B5609F2253D7E480050C211 /* NavView.swift in Sources */,
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
+				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
 				4B337C55253856290094A19F /* SampleData.swift in Sources */,
 				4B1B14892539ED4100B5F0D8 /* HTMLStringView.swift in Sources */,

@@ -16,31 +16,39 @@ struct NoteView: View {
         
   
             ForEach(data.notes) { note in
-                if note.isLocal  {
-                    
-                    HStack {
-                        
-                        NavigationLink(destination:
-                                        VStack {
-                                            if self.isEditing {
-                                                editView(note: note)
-                                            }
-                                            else {
-                                                readView(note: note)
-                                            }
-                                        }
-//                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
-                                        .environmentObject(self.data)) {
-                            ListRow(note: note).environmentObject(self.data)
-                        }
-//                        .frame(alignment: .leading)
-                    }
-                }
-                else {
-                    ICloudItemView(note : note).environmentObject(self.data)
-                }
+                conditionalView(note: note)
+
             }.onDelete(perform: deleteItems).padding(.leading, 5.0)    
         
+    }
+    
+    // how to return HStack or VStack as a view
+    // https://stackoverflow.com/a/59663108/1393362
+    func conditionalView(note: Note) -> AnyView {
+        if note.isLocal  {
+            
+            return AnyView( HStack {
+                
+                NavigationLink(destination:
+                                VStack {
+                                    if self.isEditing {
+                                        editView(note: note)
+                                    }
+                                    else {
+                                        readView(note: note)
+                                    }
+                                }
+                                //                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
+                                .environmentObject(self.data)) {
+                    ListRow(note: note).environmentObject(self.data)
+                }
+                //                        .frame(alignment: .leading)
+            }.frame(maxWidth: .infinity, alignment: .leading))
+        }
+        else {
+            return AnyView(ICloudItemView(note : note).environmentObject(self.data)
+                .frame(maxWidth: .infinity, alignment: .leading))
+        }
     }
     
     func readView(note: Note) -> some View {

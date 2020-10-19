@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
@@ -13,24 +15,42 @@ struct FolderView: View {
     
     var body: some View {
         
-    
-            ForEach(data.folders) { folder in
-                
-                HStack {
-                    NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
-                                   tag: folder.url, selection: self.customBinding()) {
+        ScrollView {
+            LazyVStack{
+                    ForEach(data.folders) { folder in
                         
-                        HStack {
-                            Image(systemName: "folder")
-                            Text(folder.id)
-                                .fontWeight(.semibold)
-                                .font(.title3)
+                        VStack {
+                            HStack {
+                                NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
+                                               tag: folder.url, selection: self.customBinding()) {
+                                    
+                                    HStack {
+                                        Image(systemName: "folder")
+                                            // my own modest Image extension
+                                            // inspired by
+                                            // https://stackoverflow.com/a/59974025/1393362
+                                            .systemTeal()
+                                        Text(folder.id)
+                                            .fontWeight(.semibold)
+                                            .font(.title3)
+                                            .foregroundColor(Color(UIColor.label))
+                                    }.padding(.leading, 6.0).padding(.top, 6).padding(.bottom,6)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    
+                                }
+                            }
+                            .background(Color(UIColor.systemGray3), alignment: .leading)
+                            .cornerRadius(5)
+                            
+                            Spacer(minLength: 6)
                         }
                     }
-                }
-        }
-//            .listRowBackground(Color.red)
+            }
+        }.showIf(condition: data.folders.count > 0)
     }
+    
+    
     
     func customBinding() -> Binding<URL?> {
         let binding = Binding<URL?>(get: {
