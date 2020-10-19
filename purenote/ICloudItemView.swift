@@ -27,7 +27,7 @@ struct ICloudItemView: View {
                 ProgressView().progressViewStyle(CircularProgressViewStyle.init())
             }
             else {
-                Image(systemName: "icloud.and.arrow.down")
+                Image(systemName: "icloud.and.arrow.down").frame(alignment: .trailing)
             }
         }.onTapGesture() {
             

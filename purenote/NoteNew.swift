@@ -9,26 +9,65 @@ import SwiftUI
 
 struct NoteNew: View {
     @EnvironmentObject var data: DataManager
-    //    @State var newNote: Note
+    @Binding var isEditing: Bool
     @State var newNote: Note
     
     
+    
     var body: some View {
-        VStack {
-            
-            TextEditor(text: $newNote.content).environmentObject(self.data)
+        
+        NavigationView {
+            VStack {
+                
 
-            
-        }
-        .onAppear(perform: {
-            newNote=Note(type: .Note)
+                // because no support for placeholder
+                // inspired by: https://lostmoa.com/blog/AddPlaceholderTextToSwiftUITextEditor/
+                ZStack(alignment: .topLeading) {
+
+
+                    TextEditor(text: $newNote.content)
+                        .padding(4)
+                        .navigationBarItems(trailing:  Button(action: {
+                                                                print ("done new note")
+                            if newNote.content != "" {
+                                data.addSaveNote(newNote: &newNote)
+                            }
+                            self.isEditing = false
+                            
+                            
+                        }) {
+                            Text("Done").font(.title2)
+                        })
+                    
+                    if newNote.content == "" {
+                        Text("Type your new note here")
+                                                .foregroundColor(Color(UIColor.placeholderText))
+                                                .padding(.horizontal, 8)
+                                                .padding(.vertical, 12)
+                    }
+                    
+                }                    .navigationBarItems(trailing:  Button(action: {
+                    print ("done new note")
+                    if newNote.content != "" {
+                        data.addSaveNote(newNote: &newNote)
+                    }
+                    self.isEditing = false
+                    
+                    
+                }) {
+                    Text("Done").font(.title2)
+                })
+
+                
             }
+            .onAppear(perform: {
+                newNote=Note(type: .Note)
+                }
         )
-        .onDisappear(perform: {
-            if newNote.content != "" {
-                data.addSaveNote(newNote: &newNote)
-            }
-        })
+        }
+//        .onDisappear(perform: {
+//           
+//        })
     }
 }
 
@@ -36,6 +75,6 @@ struct NewNote_Previews: PreviewProvider {
     @State static var newNote = Note(type: .Folder)
     static var previews: some View {
         let newNote = Note(type: .Folder)
-        NoteNew(newNote: newNote).environmentObject(DataManager())
+        NoteNew(isEditing: .constant(true), newNote: newNote).environmentObject(DataManager())
     }
 }

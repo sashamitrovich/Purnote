@@ -16,9 +16,7 @@ struct RootView: View {
     
     var body: some View {
         NavigationView {
-            MenuView(data: data)
-//          NavLinksView()
-           
+            MenuView(data: data)           
         }
     }
     

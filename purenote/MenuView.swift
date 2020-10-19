@@ -12,6 +12,8 @@ import SwiftUI
 struct MenuView: View {
     var data: DataManager
     @State private var isShowing = false
+    @State var showingNewFolder = false
+    @State var isCreatingNewNote = false
     
     
     var body: some View {
@@ -20,16 +22,36 @@ struct MenuView: View {
             NoteView().environmentObject(data)
         }
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
-                .navigationBarItems(trailing:
+        .navigationBarItems(trailing:
                                         HStack {
-                                            Button(action: {}) {
+                                            Button(action: {
+                                                self.showingNewFolder.toggle()
+                                            }) {
                                                 Image(systemName: "plus.rectangle.on.folder").systemTeal().font(.title2)
                                                 
+                                            }.sheet(isPresented: $showingNewFolder) {
+                                               
+                                                NewFolderView(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
+                                                    .environmentObject(data)
+                                       
                                             }
-//                                            Spacer(minLength: 15)
+
+                                            Button(action: {
+                                                self.isCreatingNewNote.toggle()
+                                            }) {
+                                                Image(systemName: "square.and.pencil").systemTeal().font(.title2)
+                                                
+                                            }.sheet(isPresented: $isCreatingNewNote) {
+                                                
+                                                NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                                                    .environmentObject(data)
+                                                
+                                            }
                                             
-                                            NavigationLink(destination: NoteNew(newNote: Note(type: .Note)).environmentObject(self.data), label: { Image(systemName: "square.and.pencil").systemTeal().font(.title2) }
-                                            ).isDetailLink(true)
+                                
+                                            
+//                                            NavigationLink(destination: NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note)).environmentObject(self.data), label: { Image(systemName: "square.and.pencil").systemTeal().font(.title2) }
+//                                            ).isDetailLink(true)
                                         }
                 )
                 // because we want to remove the default padding that the navigationBarItems creates

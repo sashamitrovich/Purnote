@@ -13,12 +13,38 @@ struct NoteView: View {
     @State private var isEditing = false
     
     var body: some View {
-        
-  
-            ForEach(data.notes) { note in
-                conditionalView(note: note)
-
-            }.onDelete(perform: deleteItems).padding(.leading, 5.0)    
+                
+        ForEach(data.notes) { note in
+            
+//            conditionalView(note: note)
+            VStack {
+               
+                    NavigationLink(destination:
+                                    ScrollView {
+                                        Parma(note.content, render: MyRender())
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                        .padding(.leading, 5.0)
+                                        .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
+                                            Image(systemName: "pencil").font(.title2)
+                                            
+                                        }.sheet(isPresented: $isEditing) {
+                                            
+                                            NoteEdit(isEditing: $isEditing, note: note)
+                                                .environmentObject(data)
+                                            
+                                        })
+                                        //                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
+                                            .environmentObject(self.data)
+                                    }) {
+                        ListRow(note: note).environmentObject(self.data)
+                    }.showIf(condition: note.isLocal)
+               
+                
+                ICloudItemView(note : note).environmentObject(self.data)
+                    .frame(maxWidth: .infinity, alignment: .leading).showIf(condition: !note.isLocal)
+            }
+            
+        }.onDelete(perform: deleteItems).padding(.leading, 5.0)
         
     }
     
@@ -27,67 +53,51 @@ struct NoteView: View {
     func conditionalView(note: Note) -> AnyView {
         if note.isLocal  {
             
-            return AnyView( HStack {
+            return AnyView( LazyVStack {
                 
-                NavigationLink(destination:
-                                VStack {
-                                    if self.isEditing {
-                                        editView(note: note)
-                                    }
-                                    else {
-                                        readView(note: note)
-                                    }
-                                }
-                                //                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
-                                .environmentObject(self.data)) {
-                    ListRow(note: note).environmentObject(self.data)
-                }
+
                 //                        .frame(alignment: .leading)
             }.frame(maxWidth: .infinity, alignment: .leading))
         }
         else {
             return AnyView(ICloudItemView(note : note).environmentObject(self.data)
-                .frame(maxWidth: .infinity, alignment: .leading))
+                            .frame(maxWidth: .infinity, alignment: .leading))
         }
     }
     
     func readView(note: Note) -> some View {
         return ScrollView{
-                Parma(note.content, render: MyRender())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 5.0)
-                    .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
+            Parma(note.content, render: MyRender())
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 5.0)
+                .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
                     Image(systemName: "pencil").font(.title2)
                     
+                }.sheet(isPresented: $isEditing) {
+                    
+                    NewFolderView(showSheetView: $isEditing, url: data.getCurrentUrl())
+                        .environmentObject(data)
+                    
                 })
-           
         }
     }
     
-    func editView(note: Note) -> some View {
-        return  NoteEdit(note: note)
-            .padding(.top)
-            .navigationBarItems(trailing:  Button(action: {isEditing = false}) {
-            Text("Done").font(.title2)
-        })
-    }
-
-
-func deleteItems(at offsets: IndexSet) {
     
-    for offset in offsets.enumerated() {
-        do {
-            try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
+    func deleteItems(at offsets: IndexSet) {
+        
+        for offset in offsets.enumerated() {
+            do {
+                try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
+            }
+            catch {
+                // failed
+                print("Failed to delete notes: \(error).")
+            }
+            
         }
-        catch {
-            // failed
-            print("Unexpected error: \(error).")
-        }
+        data.notes.remove(atOffsets: offsets)
         
     }
-    data.notes.remove(atOffsets: offsets)
-    
-}
 }
 
 struct NoteView_Previews: PreviewProvider {
@@ -105,22 +115,22 @@ struct MyRender: ParmaRenderable {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 4)
             })
-           
- 
+        
+        
     }
     
-//    func heading(level: HeadingLevel?, textView: Text) -> Text {
-//        switch level {
-//        case .one:
-//            return textView.font(.system(.largeTitle, design: .serif)).bold()
-//        case .two:
-//            return textView.font(.system(.title, design: .serif)).bold()
-//        case .three:
-//            return textView.font(.system(.title2)).bold()
-//        default:
-//            return textView.font(.system(.title3)).bold()
-//        }
-//    }
+    //    func heading(level: HeadingLevel?, textView: Text) -> Text {
+    //        switch level {
+    //        case .one:
+    //            return textView.font(.system(.largeTitle, design: .serif)).bold()
+    //        case .two:
+    //            return textView.font(.system(.title, design: .serif)).bold()
+    //        case .three:
+    //            return textView.font(.system(.title2)).bold()
+    //        default:
+    //            return textView.font(.system(.title3)).bold()
+    //        }
+    //    }
     
     func headingBlock(level: HeadingLevel?, view: AnyView) -> AnyView {
         switch level {
@@ -139,20 +149,20 @@ struct MyRender: ParmaRenderable {
         }
     }
     
-
     
-//    func listItem(view: AnyView) -> AnyView {
-//        let bullet = "•"
-//        return AnyView(
-//            VStack(alignment: .leading) {
-//                HStack(alignment: .top, spacing: 8) {
-//                    Text(bullet).frame(alignment: .leading)
-//                    view
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .fixedSize(horizontal: false, vertical: true)
-//                }
-//                .padding(.leading, 4)
-//            }
-//        )
-//    }
+    
+    //    func listItem(view: AnyView) -> AnyView {
+    //        let bullet = "•"
+    //        return AnyView(
+    //            VStack(alignment: .leading) {
+    //                HStack(alignment: .top, spacing: 8) {
+    //                    Text(bullet).frame(alignment: .leading)
+    //                    view
+    //                        .frame(maxWidth: .infinity, alignment: .leading)
+    //                        .fixedSize(horizontal: false, vertical: true)
+    //                }
+    //                .padding(.leading, 4)
+    //            }
+    //        )
+    //    }
 }
