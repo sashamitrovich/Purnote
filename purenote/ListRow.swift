@@ -14,7 +14,6 @@ struct ListRow: View {
         
         HStack {
             VStack(alignment: .leading) {
-                
                 Text(note.date.toString())
                     .fontWeight(.light)
                     .multilineTextAlignment(.leading)
@@ -23,7 +22,7 @@ struct ListRow: View {
                 
                 Text(note.content)
                     .font(.title2)
-                    .frame(alignment: .leading)
+//                    .frame(alignment: .leading)
                     .lineLimit(1)
             }                        
         }

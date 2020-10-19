@@ -10,19 +10,19 @@ import SwiftUI
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
-//    @EnvironmentObject var data: DataManager
     var data: DataManager
     @State private var isShowing = false
     
     
     var body: some View {
         List {
-            Text("Folders").font(.title2).frame(maxWidth: .infinity, alignment: .leading).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+     
             FolderView().environmentObject(data).padding(.bottom, 5.0)
-            
-            Text("Notes").font(.title2).frame(maxWidth: .infinity, alignment: .leading).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)       
+
             NoteView().environmentObject(data)
-        }.navigationBarTitle(Text(data.getCurrentUrl().lastPathComponent), displayMode: .automatic)
+        }
+        
+        .navigationBarTitle(Text(data.getCurrentUrl().lastPathComponent), displayMode: .automatic)
         .navigationBarItems(trailing:
                                 HStack {
                                     Button(action: {}) {
@@ -35,6 +35,7 @@ struct MenuView: View {
                                     ).isDetailLink(true)
                                 }
         )
+        .listStyle(PlainListStyle())
         .pullToRefresh(isShowing: $isShowing) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 data.refresh(url: data.getCurrentUrl())

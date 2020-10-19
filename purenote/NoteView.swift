@@ -28,17 +28,18 @@ struct NoteView: View {
                                             else {
                                                 readView(note: note)
                                             }
-                                        }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
+                                        }
+//                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
                                         .environmentObject(self.data)) {
                             ListRow(note: note).environmentObject(self.data)
-                        }.frame(alignment: .leading)
+                        }
+//                        .frame(alignment: .leading)
                     }
                 }
                 else {
                     ICloudItemView(note : note).environmentObject(self.data)
                 }
-            }.onDelete(perform: deleteItems).padding(.leading, 5.0)
-    
+            }.onDelete(perform: deleteItems).padding(.leading, 5.0)    
         
     }
     
@@ -46,6 +47,7 @@ struct NoteView: View {
         return ScrollView{
                 Parma(note.content, render: MyRender())
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 5.0)
                     .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
                     Image(systemName: "pencil").font(.title2)
                     
@@ -123,7 +125,9 @@ struct MyRender: ParmaRenderable {
                 }
             )
         default:
-            return AnyView(view.padding(.bottom, 4).frame(maxWidth: .infinity, alignment: .leading))
+            return AnyView(view.padding(.bottom, 4)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+            )
         }
     }
     

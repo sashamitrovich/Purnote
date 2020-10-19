@@ -19,12 +19,17 @@ struct FolderView: View {
                 HStack {
                     NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
                                    tag: folder.url, selection: self.customBinding()) {
-                        Text(folder.id)
-                                                .fontWeight(.semibold)
-                                                .font(.title3)
+                        
+                        HStack {
+                            Image(systemName: "folder")
+                            Text(folder.id)
+                                .fontWeight(.semibold)
+                                .font(.title3)
+                        }
                     }
                 }
         }
+//            .listRowBackground(Color.red)
     }
     
     func customBinding() -> Binding<URL?> {

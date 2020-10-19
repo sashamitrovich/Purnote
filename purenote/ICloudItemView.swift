@@ -22,7 +22,7 @@ struct ICloudItemView: View {
             
             
             Text(data.notes[noteIndex].label)
-                .frame(width: 300.0, alignment: .leading)
+//                .frame(width: 300.0, alignment: .leading)
             if data.notes[noteIndex].isDownloading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle.init())
             }
