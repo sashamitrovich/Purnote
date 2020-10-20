@@ -11,12 +11,15 @@ import SwiftUIRefresh
 struct RootView: View {
     var  data: DataManager
     @State private var isShowing = false
-    
-    @State var mdText = " # A cool title"
+    @State var searchText = ""
     
     var body: some View {
         NavigationView {
-            MenuView(data: data)           
+            VStack {
+                SearchBar(text: $searchText, placeholder: "Search your notes here")
+                MenuView(data: data.search(searchText: searchText))   
+            }
+                   
         }
     }
     

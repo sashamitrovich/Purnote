@@ -47,7 +47,6 @@ struct NoteNew: View {
                     }
                     
                 }                    .navigationBarItems(trailing:  Button(action: {
-                    print ("done new note")
                     if newNote.content != "" {
                         data.addSaveNote(newNote: &newNote)
                     }
@@ -65,9 +64,6 @@ struct NoteNew: View {
                 }
         )
         }
-//        .onDisappear(perform: {
-//           
-//        })
     }
 }
 

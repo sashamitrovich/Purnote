@@ -27,6 +27,8 @@ class DataManager: ObservableObject {
     @Published var folders : [Folder]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
+    private var searchText : String = ""
+    private var index: SearchIndex
     
     
     let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
@@ -34,6 +36,11 @@ class DataManager: ObservableObject {
     
     let fm = FileManager.default
     
+    func search(searchText: String) -> DataManager {
+        self.searchText = searchText
+        refresh(url: currentUrl)
+        return self
+    }
     
     func addSaveNote(newNote: inout Note) {
         saveNote(note: &newNote)
@@ -93,6 +100,7 @@ class DataManager: ObservableObject {
     init(url: URL? = nil) {
         notes=[]
         folders=[]
+        index = SearchIndex()
         rootUrl = getRootPath()
         if (url == nil) {
             self.currentUrl = rootUrl
@@ -100,7 +108,8 @@ class DataManager: ObservableObject {
         else {
             self.currentUrl = url!
         }
-    
+        
+        index.indexFolder(currentUrl: rootUrl)
         refresh(url: self.currentUrl)
     }
     
@@ -122,7 +131,13 @@ class DataManager: ObservableObject {
         
         var urls:[URL] = []
         
-        urls = listFiles()
+        if (searchText == "") {
+            urls = listFiles()
+        }
+        else {
+            urls = index.getSearchResultsAsUrls(phrase: searchText)
+        }
+        
         
         for (_,url) in urls.enumerated() {
             

@@ -14,15 +14,17 @@ struct MenuView: View {
     @State private var isShowing = false
     @State var showingNewFolder = false
     @State var isCreatingNewNote = false
+   
     
     
     var body: some View {
         List {
+            
             FolderView().environmentObject(data).padding(.bottom, 5.0)
             NoteView().environmentObject(data)
         }
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
-        .navigationBarItems(trailing:
+        .navigationBarItems(leading:
                                         HStack {
                                             Button(action: {
                                                 self.showingNewFolder.toggle()
@@ -35,21 +37,19 @@ struct MenuView: View {
                                                     .environmentObject(data)
                                        
                                             }
-                                            Spacer(minLength: 20)
-                                            Button(action: {
-                                                self.isCreatingNewNote.toggle()
-                                            }) {
-                                                Image(systemName: "square.and.pencil").systemOrange().font(.title)
-                                                
-                                            }.sheet(isPresented: $isCreatingNewNote) {
-                                                
-                                                NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
-                                                    .environmentObject(data)
-                                                
-                                            }
                                             
-                                        }
-                )
+                                        },
+                            trailing:  Button(action: {
+                                self.isCreatingNewNote.toggle()
+                            }) {
+                                Image(systemName: "square.and.pencil").systemOrange().font(.title)
+                                
+                            }.sheet(isPresented: $isCreatingNewNote) {
+                                
+                                NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                                    .environmentObject(data)
+                                
+                            })
                 // because we want to remove the default padding that the navigationBarItems creates
                 // https://stackoverflow.com/a/63225776/1393362
                 .listStyle(PlainListStyle())

@@ -40,7 +40,7 @@ struct FolderView: View {
                                 
                             }
                         }
-                        .background(Color(UIColor.systemGray3), alignment: .leading)
+                        .background(Color(UIColor.systemGray5), alignment: .leading)
                         .cornerRadius(5)
                         
                         Spacer(minLength: 6)
