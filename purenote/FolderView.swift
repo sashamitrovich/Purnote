@@ -29,7 +29,7 @@ struct FolderView: View {
                                         // my own modest Image extension
                                         // inspired by
                                         // https://stackoverflow.com/a/59974025/1393362
-                                        .systemTeal()
+                                        .systemOrange()
                                     Text(folder.id)
                                         .fontWeight(.semibold)
                                         .font(.title3)

@@ -27,7 +27,7 @@ struct MenuView: View {
                                             Button(action: {
                                                 self.showingNewFolder.toggle()
                                             }) {
-                                                Image(systemName: "plus.rectangle.on.folder").systemTeal().font(.title2)
+                                                Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
                                                 
                                             }.sheet(isPresented: $showingNewFolder) {
                                                
@@ -35,11 +35,11 @@ struct MenuView: View {
                                                     .environmentObject(data)
                                        
                                             }
-
+                                            Spacer(minLength: 20)
                                             Button(action: {
                                                 self.isCreatingNewNote.toggle()
                                             }) {
-                                                Image(systemName: "square.and.pencil").systemTeal().font(.title2)
+                                                Image(systemName: "square.and.pencil").systemOrange().font(.title)
                                                 
                                             }.sheet(isPresented: $isCreatingNewNote) {
                                                 
@@ -48,10 +48,6 @@ struct MenuView: View {
                                                 
                                             }
                                             
-                                
-                                            
-//                                            NavigationLink(destination: NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note)).environmentObject(self.data), label: { Image(systemName: "square.and.pencil").systemTeal().font(.title2) }
-//                                            ).isDetailLink(true)
                                         }
                 )
                 // because we want to remove the default padding that the navigationBarItems creates
