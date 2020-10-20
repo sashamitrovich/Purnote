@@ -17,37 +17,46 @@ struct FolderView: View {
         
         ScrollView {
             LazyVStack{
-                    ForEach(data.folders) { folder in
-                        
-                        VStack {
-                            HStack {
-                                NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
-                                               tag: folder.url, selection: self.customBinding()) {
-                                    
-                                    HStack {
-                                        Image(systemName: "folder")
-                                            // my own modest Image extension
-                                            // inspired by
-                                            // https://stackoverflow.com/a/59974025/1393362
-                                            .systemTeal()
-                                        Text(folder.id)
-                                            .fontWeight(.semibold)
-                                            .font(.title3)
-                                            .foregroundColor(Color(UIColor.label))
-                                    }.padding(.leading, 6.0).padding(.top, 6).padding(.bottom,6)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    
-                                }
+                ForEach(data.folders) { folder in
+                    
+                    VStack {
+                        HStack {
+                            NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
+                                           tag: folder.url, selection: self.customBinding()) {
+                                
+                                HStack {
+                                    Image(systemName: "folder")
+                                        // my own modest Image extension
+                                        // inspired by
+                                        // https://stackoverflow.com/a/59974025/1393362
+                                        .systemTeal()
+                                    Text(folder.id)
+                                        .fontWeight(.semibold)
+                                        .font(.title3)
+                                        .foregroundColor(Color(UIColor.label))
+                                }.padding(.leading, 6.0).padding(.top, 6).padding(.bottom,6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                
                             }
-                            .background(Color(UIColor.systemGray3), alignment: .leading)
-                            .cornerRadius(5)
-                            
-                            Spacer(minLength: 6)
                         }
+                        .background(Color(UIColor.systemGray3), alignment: .leading)
+                        .cornerRadius(5)
+                        
+                        Spacer(minLength: 6)
                     }
+                }
             }
         }.showIf(condition: data.folders.count > 0)
+        
+        
+        VStack {
+            HStack {
+                Text("Tap the")
+                Image(systemName: "folder.badge.plus")
+                Text("button to create a new folder")
+            }
+        }.showIf(condition: data.folders.count == 0)
     }
     
     

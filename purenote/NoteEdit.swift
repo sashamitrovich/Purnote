@@ -19,7 +19,8 @@ struct NoteEdit: View {
     var body: some View {
         NavigationView {
            
-                TextEditor(text: $note.content).showIf(condition: noteIndex != Int.max)  // super ugly workaround, let's hope a user doesn't reach Int.max notes because that one will not be displayed
+            TextEditor(text: $note.content)
+                .showIf(condition: noteIndex != Int.max)  // super ugly workaround, let's hope a user doesn't reach Int.max notes because that one will not be displayed
                     
                     .navigationBarItems(trailing:  Button(action: {
                         data.notes[noteIndex].content = note.content
@@ -30,8 +31,6 @@ struct NoteEdit: View {
                         Text("Done").font(.title2)
                     })
    
-        }.onDisappear() {
-            print ("note edit disappear action")
         }
     }
     

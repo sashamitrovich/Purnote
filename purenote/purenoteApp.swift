@@ -9,11 +9,13 @@ import SwiftUI
 
 @main
 struct ShareDataApp: App {
-//    @EnvironmentObject var data : DataManager
+    @AppStorage("shownSplashScreen") var shownSplashScreen = false
     
     var body: some Scene {
         WindowGroup {
-            RootView(data: DataManager())
+            Splash(shownSplashScreen: $shownSplashScreen).showIf(condition: !shownSplashScreen)
+            
+            RootView(data: DataManager()).showIf(condition: shownSplashScreen)
                 .environmentObject(DataManager())
         }
     }

@@ -25,6 +25,9 @@
 		4B337C58253861B20094A19F /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C57253861B20094A19F /* MenuView.swift */; };
 		4B367DDD253864B800619115 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDC253864B800619115 /* NoteView.swift */; };
 		4B367DE02538668600619115 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDF2538668600619115 /* RootView.swift */; };
+		4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */; };
+		4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A63253ED05300521ABF /* SplashSummary.swift */; };
+		4BB09A68253ED43600521ABF /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A67253ED43600521ABF /* Splash.swift */; };
 		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
 		4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* NewFolderView.swift */; };
@@ -52,6 +55,9 @@
 		4B337C57253861B20094A19F /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
+		4BB09A63253ED05300521ABF /* SplashSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashSummary.swift; sourceTree = "<group>"; };
+		4BB09A67253ED43600521ABF /* Splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
 		4BC41065253DB00000AC8293 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4BC41070253DBC2300AC8293 /* NewFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderView.swift; sourceTree = "<group>"; };
@@ -94,6 +100,7 @@
 		32731B36252767DB0031CADD = {
 			isa = PBXGroup;
 			children = (
+				4BB09A62253ED02E00521ABF /* splash */,
 				4BC41064253DAFF200AC8293 /* extensions */,
 				4B5609F0253D7E2D0050C211 /* playground */,
 				32EAC58725350C49000EE69F /* purenote */,
@@ -146,6 +153,16 @@
 			children = (
 			);
 			path = playground;
+			sourceTree = "<group>";
+		};
+		4BB09A62253ED02E00521ABF /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */,
+				4BB09A63253ED05300521ABF /* SplashSummary.swift */,
+				4BB09A67253ED43600521ABF /* Splash.swift */,
+			);
+			path = splash;
 			sourceTree = "<group>";
 		};
 		4BC41064253DAFF200AC8293 /* extensions */ = {
@@ -240,9 +257,12 @@
 				328F2CE62535A9720053D6EC /* DataManager.swift in Sources */,
 				4B337C58253861B20094A19F /* MenuView.swift in Sources */,
 				4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */,
+				4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
 				4BC4106E253DB92300AC8293 /* View.swift in Sources */,
 				328F2CE72535A9720053D6EC /* Item.swift in Sources */,
+				4BB09A68253ED43600521ABF /* Splash.swift in Sources */,
+				4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */,
 				328F2CE82535A9720053D6EC /* Folder.swift in Sources */,
 				328F2CE92535A9720053D6EC /* Note.swift in Sources */,
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
