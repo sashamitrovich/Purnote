@@ -18,4 +18,9 @@ extension View {
  
     }
     
+    func placeholderForegroundColor() -> some View {
+        return self
+            .foregroundColor(Color(UIColor.placeholderText))
+    }
+    
 }

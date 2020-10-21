@@ -55,7 +55,7 @@ struct FolderView: View {
                 Text("Tap the")
                 Image(systemName: "folder.badge.plus")
                 Text("button to create a new folder")
-            }
+            }.placeholderForegroundColor()
         }.showIf(condition: data.folders.count == 0)
     }
     

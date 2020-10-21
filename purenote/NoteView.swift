@@ -51,7 +51,7 @@ struct NoteView: View {
                 Text("Tap the")
                 Image(systemName: "square.and.pencil")
                 Text("button to create a new note")
-            }
+            }.placeholderForegroundColor()
         }.showIf(condition: data.notes.count == 0)
     }
     

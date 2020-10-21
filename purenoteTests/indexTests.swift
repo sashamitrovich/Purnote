@@ -62,12 +62,12 @@ class indexTests: XCTestCase {
     func testSearchPhrase() throws {
         let phrase = "beautiful day"
         
-        let index: Index = Index()
+        let index: SearchIndex = SearchIndex()
         let data = DataManager()
         
         index.indexFolder(currentUrl: data.getRootPath())
         
-        let results = index.searchPhrase(phrase: phrase)
+        _ = index.searchPhrase(phrase: phrase)
         
         print("did it find anything?")
     }
@@ -75,7 +75,7 @@ class indexTests: XCTestCase {
     func testSearchWord() throws {
         let word = "Beautiful"
         
-        let index: Index = Index()
+        let index: SearchIndex = SearchIndex()
         let data = DataManager()
         
         index.indexFolder(currentUrl: data.getRootPath())

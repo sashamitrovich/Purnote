@@ -12,7 +12,7 @@ struct ICloudItemView: View {
     @State var note : Note
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id }) ?? 0
+        data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
     }
     
 
@@ -21,15 +21,17 @@ struct ICloudItemView: View {
         HStack {
             
             
-            Text(data.notes[noteIndex].label)
-//                .frame(width: 300.0, alignment: .leading)
-            if data.notes[noteIndex].isDownloading {
+            Text(note.label)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            if note.isDownloading {
                 ProgressView().progressViewStyle(CircularProgressViewStyle.init())
             }
             else {
                 Image(systemName: "icloud.and.arrow.down").frame(alignment: .trailing)
             }
-        }.onTapGesture() {
+        }.showIf(condition: noteIndex != Int.max)
+        .onTapGesture() {
             
             
             
@@ -106,16 +108,15 @@ struct ICloudItemView: View {
         data.notes[noteIndex].id = data.notes[noteIndex].url.lastPathComponent
         //            note.isLocal = true;
         data.notes[noteIndex].isLocal = true
-        data.notes[noteIndex].isDownloading = false;
+        data.notes[noteIndex].isDownloading = false
         
         
         
     }
 }
 
-
-struct testView_Previews: PreviewProvider {
+struct ICloudItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ICloudItemView(note: Note.sampleNote1).environmentObject(DataManager())
+        ICloudItemView(note: Note.sampleNote1).environmentObject(DataManager.sampleDataManager())
     }
 }

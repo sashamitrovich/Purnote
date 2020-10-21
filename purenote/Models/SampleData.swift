@@ -23,7 +23,7 @@ Just some plain text
 
 """, date: Date(), path: "/notes/sample-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/sample-note.txt")))
         notes.append(Note(content: "This is a sample iCloud note", date: Date(), path: "/notes/icloud-note.txt", isLocal: false, url: URL(fileURLWithPath: "/notes/.icloud-note.txt.icloud")))
-        notes.append(Note(content: "My notes about our meeting on 27.07.2020", date: Date(), path: "/notes/meeting-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/meeting-note.txt")))
+        notes.append(Note(content: "My note about our meeting on 27.07.2020", date: Date(), path: "/notes/meeting-note.txt", isLocal: true, url: URL(fileURLWithPath: "/notes/meeting-note.txt")))
         notes.append(Note(content:
                             """
 # T

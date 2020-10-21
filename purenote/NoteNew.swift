@@ -28,7 +28,7 @@ struct NoteNew: View {
                     TextEditor(text: $newNote.content)
                         .padding(4)
                         .navigationBarItems(trailing:  Button(action: {
-                                                                print ("done new note")
+                                                                
                             if newNote.content != "" {
                                 data.addSaveNote(newNote: &newNote)
                             }
