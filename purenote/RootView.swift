@@ -10,15 +10,13 @@ import SwiftUIRefresh
 
 struct RootView: View {
     var  data: DataManager
-//    @State private var isShowing = false
-//    @State var searchText = ""
+
     
     var body: some View {
         NavigationView {
-            VStack {
-//                SearchBar(text: $searchText, placeholder: "Search your notes here")
+//            VStack {
                 MenuView(data: data)   
-            }
+//            }
                    
         }
     }
@@ -32,6 +30,6 @@ struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(data: DataManager()).environmentObject(DataManager())
+        RootView(data: DataManager.sampleDataManager()).environmentObject(DataManager.sampleDataManager())
     }
 }

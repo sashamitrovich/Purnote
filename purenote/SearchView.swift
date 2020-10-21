@@ -12,17 +12,19 @@ struct SearchView: View {
     var data: DataManager = DataManager()
     
     var body: some View {
-        VStack {
+        
+        Group {
             SearchBar(text: $searchText, placeholder: "Search your notes here")
-            NoteView().environmentObject(data.search(searchText: searchText))
+                                    
+            NoteView(isSearching: true).environmentObject(data.search(searchText: searchText))
                 .showIf(condition: searchText != "")
-            
-        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
     }
 }
 
+
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(searchText: .constant("note")).environmentObject(DataManager.sampleDataManager())
+        SearchView(searchText: .constant("")).environmentObject(DataManager.sampleDataManager())
     }
 }

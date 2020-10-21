@@ -26,6 +26,7 @@ struct MenuView: View {
                 .showIf(condition: !isSearching)
             NoteView().environmentObject(data)
                 .showIf(condition: !isSearching)
+            
         }
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
         .navigationBarItems(trailing:
@@ -69,11 +70,16 @@ struct MenuView: View {
         .listStyle(PlainListStyle())
         .pullToRefresh(isShowing: $isShowing) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl())
+                data.refresh(url: data.getCurrentUrl(), reindex: true)
                 isShowing = false
             }
         }
-        
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                data.refresh(url: data.getCurrentUrl(), reindex: true)
+                isShowing = false
+            }
+        }
     }
     
     func conditionalNavBarTitle(text: String) -> String {

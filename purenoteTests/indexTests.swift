@@ -32,10 +32,10 @@ class indexTests: XCTestCase {
 //        print ("should be indexed now")
         XCTAssertTrue(index.dict.count == 4)
         let HelloHash = "Hello".hash
-        XCTAssertTrue( (index.dict[HelloHash]!).count  == 2 )
+        XCTAssertTrue( index.dict[HelloHash] != nil && (index.dict[HelloHash]!).count  == 2 )
         
         let WorldHash = "World".hash
-        XCTAssertTrue( (index.dict[WorldHash]!).count  == 1 )
+        XCTAssertTrue( index.dict[HelloHash] != nil && (index.dict[WorldHash]!).count  == 1 )
         
         let AppleHash = "Apple".hash
         XCTAssertFalse( index.dict.keys.contains(AppleHash) )

@@ -49,8 +49,7 @@ struct NoteEdit: View {
 }
 
 struct NoteDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        let dataManager = DataManager.sampleDataManager()
-        NoteEdit(isEditing: .constant(true), note: dataManager.notes[0] ).environmentObject(DataManager.sampleDataManager())
+    static var previews: some View {        
+        NoteEdit(isEditing: .constant(true), note: Note.sampleNote1 ).environmentObject(DataManager.sampleDataManager())
     }
 }

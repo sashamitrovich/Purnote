@@ -113,7 +113,7 @@ class DataManager: ObservableObject {
         refresh(url: self.currentUrl)
     }
     
-    func refresh(url: URL) {
+    func refresh(url: URL, reindex: Bool = false) {
         self.currentUrl = url
         
         // because we don't have access to iCLoud
@@ -128,6 +128,9 @@ class DataManager: ObservableObject {
         notes=[]
         folders=[]
        
+        if reindex {
+            index.indexFolder(currentUrl: rootUrl)
+        }
         
         var urls:[URL] = []
         

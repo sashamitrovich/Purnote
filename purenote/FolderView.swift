@@ -65,7 +65,6 @@ struct FolderView: View {
         let binding = Binding<URL?>(get: {
             self.selectedUrl
         }, set: {
-            print("Folder with URL \(String(describing: $0)) chosen")
             self.selectedUrl = $0            
         })
         return binding

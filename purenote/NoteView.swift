@@ -11,12 +11,12 @@ import Parma
 struct NoteView: View {
     @EnvironmentObject var data: DataManager
     @State private var isEditing = false
+    var isSearching = false
     
     var body: some View {
                 
         ForEach(data.notes) { note in
             
-//            conditionalView(note: note)
             VStack {
                
                     NavigationLink(destination:
@@ -25,7 +25,7 @@ struct NoteView: View {
                                         .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(.leading, 5.0)
                                         .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
-                                            Image(systemName: "pencil").font(.title2)
+                                            Image(systemName: "pencil").systemOrange().font(.title2)
                                             
                                         }.sheet(isPresented: $isEditing) {
                                             
@@ -52,26 +52,12 @@ struct NoteView: View {
                 Image(systemName: "square.and.pencil")
                 Text("button to create a new note")
             }.placeholderForegroundColor()
-        }.showIf(condition: data.notes.count == 0)
+        }.showIf(condition: data.notes.count == 0 && !isSearching)
     }
     
     // how to return HStack or VStack as a view
     // https://stackoverflow.com/a/59663108/1393362
-    func conditionalView(note: Note) -> AnyView {
-        if note.isLocal  {
-            
-            return AnyView( LazyVStack {
-                
-
-                //                        .frame(alignment: .leading)
-            }.frame(maxWidth: .infinity, alignment: .leading))
-        }
-        else {
-            return AnyView(ICloudItemView(note : note).environmentObject(self.data)
-                            .frame(maxWidth: .infinity, alignment: .leading))
-        }
-    }
-    
+   
     func readView(note: Note) -> some View {
         return ScrollView{
             Parma(note.content, render: MyRender())

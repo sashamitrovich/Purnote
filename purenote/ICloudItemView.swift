@@ -10,12 +10,11 @@ import SwiftUI
 struct ICloudItemView: View {
     @EnvironmentObject var data: DataManager
     @State var note : Note
+    @State private var isDownloading = false
     
     var noteIndex: Int {
         data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
     }
-    
-
     
     var body: some View {
         HStack {
@@ -24,18 +23,16 @@ struct ICloudItemView: View {
             Text(note.label)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            if note.isDownloading {
-                ProgressView().progressViewStyle(CircularProgressViewStyle.init())
-            }
-            else {
-                Image(systemName: "icloud.and.arrow.down").frame(alignment: .trailing)
-            }
+            ProgressView().progressViewStyle(CircularProgressViewStyle.init()).showIf(condition: isDownloading)
+            
+            Image(systemName: "icloud.and.arrow.down").frame(alignment: .trailing)
+                .showIf(condition: !isDownloading)
+           
         }.showIf(condition: noteIndex != Int.max)
         .onTapGesture() {
+                        
+            isDownloading.toggle()
             
-            
-            
-            note.isDownloading = true
             DispatchQueue.main.async {
                
                 download()
@@ -104,12 +101,14 @@ struct ICloudItemView: View {
             print("Unexpected error: \(error).")
         }
         
-        data.notes[noteIndex].url = URL(fileURLWithPath: downloadedFilePath)
-        data.notes[noteIndex].id = data.notes[noteIndex].url.lastPathComponent
-        //            note.isLocal = true;
-        data.notes[noteIndex].isLocal = true
-        data.notes[noteIndex].isDownloading = false
-        
+//        data.notes[noteIndex].url = URL(fileURLWithPath: downloadedFilePath)
+//        let id = data.notes[noteIndex].url.lastPathComponent
+//        data.notes[noteIndex].id = id
+//
+//        note.id = id
+//        data.notes[noteIndex].isLocal = true
+//        data.notes[noteIndex].isDownloading = false
+        data.refresh(url: data.getCurrentUrl())
         
         
     }
