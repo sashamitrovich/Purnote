@@ -8,6 +8,6 @@
 import Foundation
 
 struct TestNote {
-    var path = "/notes/trip.txt"
+    var path = "/notes/trip.md"
     var content = "This is a note about out trip to France"
 }

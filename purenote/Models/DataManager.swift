@@ -181,7 +181,7 @@ class DataManager: ObservableObject {
     private func saveNote(note: inout Note) {
         
         let documentURL = currentUrl.appendingPathComponent(String(note.id))
-            .appendingPathExtension("txt")
+            .appendingPathExtension("md")
         
         do {
             try note.content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)

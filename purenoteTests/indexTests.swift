@@ -20,8 +20,8 @@ class indexTests: XCTestCase {
     func testAdd() throws {
         let index: SearchIndex = SearchIndex()
         var data: [TestNote]=[]
-        data.append(TestNote(path: "/trips/france.txt", content: "Hello World"))
-        data.append(TestNote(path: "/meetings/france.txt", content: "Hello my beatiful"))
+        data.append(TestNote(path: "/trips/france.md", content: "Hello World"))
+        data.append(TestNote(path: "/meetings/france.md", content: "Hello my beatiful"))
         
         
         
