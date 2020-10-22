@@ -10,6 +10,7 @@ import Parma
 
 struct NoteView: View {
     @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index : SearchIndex
     @State private var showSheetView = false
     var isSearching = false
     
@@ -74,6 +75,7 @@ struct NoteView: View {
             
         }
         data.notes.remove(atOffsets: offsets)
+        index.indexall()
         
     }
 }

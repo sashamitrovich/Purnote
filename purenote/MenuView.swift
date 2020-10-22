@@ -10,7 +10,8 @@ import SwiftUI
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
-    var data: DataManager
+    @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index: SearchIndex
     @State private var isShowing = false
     @State var showingNewFolder = false
     @State var isCreatingNewNote = false
@@ -18,10 +19,11 @@ struct MenuView: View {
     @State var searchText = ""
     
     
-    
     var body: some View {
         List {
-            SearchView(searchText: $searchText, data: data).showIf(condition: isSearching).environmentObject(data)
+            SearchView(searchText: $searchText).showIf(condition: isSearching)
+                .environmentObject(data)
+                .environmentObject(index)
             FolderView().environmentObject(data).padding(.bottom, 5.0)
                 .showIf(condition: !isSearching)
             NoteView().environmentObject(data)
@@ -32,7 +34,9 @@ struct MenuView: View {
         .navigationBarItems(trailing:
                                 HStack {
                                     Button(action: {
+                                        searchText = ""
                                         self.isSearching.toggle()
+                                        
                                     }) {
                                         Image(systemName: "magnifyingglass").systemOrange().font(.title)
                                     }
@@ -60,6 +64,7 @@ struct MenuView: View {
                                         
                                         NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
                                             .environmentObject(data)
+                                            .environmentObject(index)
                                         
                                     }
                                     
@@ -70,13 +75,15 @@ struct MenuView: View {
         .listStyle(PlainListStyle())
         .pullToRefresh(isShowing: $isShowing) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl(), reindex: true)
+                data.refresh(url: data.getCurrentUrl())
+                index.indexall()
                 isShowing = false
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl(), reindex: true)
+                data.refresh(url: data.getCurrentUrl())
+                index.indexall()
                 isShowing = false
             }
         }
@@ -95,6 +102,7 @@ struct MenuView: View {
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView(data: DataManager()).environmentObject(DataManager())
+        MenuView()
+            .environmentObject(DataManager.sampleDataManager())
     }
 }

@@ -9,23 +9,23 @@ import SwiftUI
 
 struct SearchView: View {
     @Binding var searchText: String
-    var data: DataManager
-//        = DataManager()
+    @EnvironmentObject var index: SearchIndex
+    @State var notes: [Note] = []
     
     var body: some View {
         
         Group {
             SearchBar(text: $searchText, placeholder: "Search your notes here")
-                                    
-            NoteView(isSearching: true).environmentObject(data.search(searchText: searchText))
-                .showIf(condition: searchText != "")
+            SearchResultsView(notes: index.search(phrase: searchText), searchText: $searchText)
+                .environmentObject(index)
         }
     }
 }
 
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView(searchText: .constant(""), data: DataManager.sampleDataManager()).environmentObject(DataManager.sampleDataManager())
-    }
-}
+//struct SearchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SearchView(searchText: .constant("text"))
+//            .environmentObject(DataManager.sampleDataManager())
+//            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/")))
+//    }
+//}

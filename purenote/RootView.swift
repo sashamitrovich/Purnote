@@ -10,12 +10,14 @@ import SwiftUIRefresh
 
 struct RootView: View {
     var  data: DataManager
-
+    @EnvironmentObject var index:SearchIndex
     
     var body: some View {
         NavigationView {
 //            VStack {
-                MenuView(data: data)   
+                MenuView()
+                    .environmentObject(index)
+                    .environmentObject(data)
 //            }
                    
         }
@@ -30,6 +32,6 @@ struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(data: DataManager.sampleDataManager()).environmentObject(DataManager.sampleDataManager())
+        RootView(data: DataManager.sampleDataManager()).environmentObject(DataManager(url: URL(fileURLWithPath: "/")))
     }
 }

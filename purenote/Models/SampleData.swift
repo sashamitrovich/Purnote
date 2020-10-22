@@ -74,7 +74,7 @@ extension DataManager {
 
 extension DataManager {
     static func sampleDataManager() -> DataManager {
-        let dataManager = DataManager()
+        let dataManager = DataManager(url: URL(fileURLWithPath: ""))
         dataManager.notes = DataManager.sampleNotes
         dataManager.folders = DataManager.sampleFolders
         

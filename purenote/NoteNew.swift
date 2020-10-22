@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteNew: View {
     @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index: SearchIndex
     @Binding var isEditing: Bool
     @State var newNote: Note
     
@@ -26,18 +27,6 @@ struct NoteNew: View {
                     
                     
                     TextEditor(text: $newNote.content)
-                        .padding(4)
-                        .navigationBarItems(trailing:  Button(action: {
-                            
-                            if newNote.content != "" {
-                                data.addSaveNote(newNote: &newNote)
-                            }
-                            self.isEditing = false
-                            
-                            
-                        }) {
-                            Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
-                        })
                     
                     if newNote.content == "" {
                         Text("Type your new note here")
@@ -50,6 +39,7 @@ struct NoteNew: View {
                 .navigationBarItems(trailing:  Button(action: {
                     if newNote.content != "" {
                         data.addSaveNote(newNote: &newNote)
+                        index.indexall()
                     }
                     self.isEditing = false
                     
@@ -72,6 +62,6 @@ struct NewNote_Previews: PreviewProvider {
     @State static var newNote = Note(type: .Folder)
     static var previews: some View {
         let newNote = Note(type: .Folder)
-        NoteNew(isEditing: .constant(true), newNote: newNote).environmentObject(DataManager())
+        NoteNew(isEditing: .constant(true), newNote: newNote).environmentObject(DataManager.sampleDataManager())
     }
 }

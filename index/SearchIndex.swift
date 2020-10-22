@@ -7,8 +7,16 @@
 
 import Foundation
 
-class SearchIndex {
-    init() {}
+
+class SearchIndex : ObservableObject {
+    var rootUrl: URL
+    var notes: [Note]
+    
+    init(rootUrl: URL) {
+        self.rootUrl = rootUrl
+        notes = []
+        indexall()
+    }
     
     public var dict: [Int: Set<String>] = [:]
     
@@ -31,6 +39,9 @@ class SearchIndex {
         return urls
     }
     public func getSearchResultsAsUrls(phrase: String) -> [URL] {
+        if phrase == "" {
+            return []
+        }
         let results = searchPhrase(phrase: phrase)
         var urls: [URL] = []
         for result in results
@@ -69,22 +80,22 @@ class SearchIndex {
 
     
     public func indexContent(content: String, path: String) {
+
+        // https://medium.com/@jacqschweiger/using-character-sets-in-swift-945b99ba17e
+        let tokens = content.lowercased().components(separatedBy: CharacterSet.punctuationCharacters.union(CharacterSet.whitespacesAndNewlines))
         
-        let tokens = content
-            .replacingOccurrences(of: ".", with: " ")
-            .replacingOccurrences(of: ",", with: " ")
-            .replacingOccurrences(of: "'", with: " ")
-            .replacingOccurrences(of: ":", with: " ")
-            .replacingOccurrences(of: ";", with: " ")
-            .replacingOccurrences(of: "?", with: " ")
-            .replacingOccurrences(of: "!", with: " ")
-            .replacingOccurrences(of: "-", with: " ")
-            .components(separatedBy: " ")
-        
+
+   
         
         for token in tokens {
-            addTerm(term: token, path: path)
+            if token != "" {
+                addTerm(term: token, path: path)
+            }
+            
         }
+    }
+    public func indexall() {
+        indexFolder(currentUrl: rootUrl)
     }
     
     public func indexFolder(currentUrl: URL ) {
@@ -124,5 +135,22 @@ class SearchIndex {
         
     }
     
-
+    public func search(phrase: String) -> [Note] {
+        var notes: [Note] = []
+        let urls = getSearchResultsAsUrls(phrase: phrase)
+        
+        for url in urls {
+            do {
+                try notes.append(Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: FileManager.default.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note))
+            }
+            catch {
+                /* error handling here */
+                print("Unexpected error adding note to search results: \(error).")
+            }
+        }
+        
+        return notes
+        
+    }
+    
 }

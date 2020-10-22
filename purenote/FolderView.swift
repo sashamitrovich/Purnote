@@ -21,7 +21,7 @@ struct FolderView: View {
                     
                     VStack {
                         HStack {
-                            NavigationLink(destination: MenuView(data: DataManager(url: folder.url)).environmentObject(self.data),
+                            NavigationLink(destination: MenuView().environmentObject(DataManager(url: folder.url)),
                                            tag: folder.url, selection: self.customBinding()) {
                                 
                                 HStack {
@@ -65,7 +65,7 @@ struct FolderView: View {
         let binding = Binding<URL?>(get: {
             self.selectedUrl
         }, set: {
-            self.selectedUrl = $0            
+            self.selectedUrl = $0
         })
         return binding
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index: SearchIndex
     @State var note: Note
     @Binding var showSheetView: Bool
     
@@ -45,12 +46,13 @@ struct NoteEdit: View {
             // failed
             print("Unexpected error, failed to update note: \(error).")
         }
+        index.indexall()
         self.showSheetView = false
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {        
-        NoteEdit(note: Note.sampleNote1, showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
+        NoteEdit(note: DataManager.sampleDataManager().notes[0], showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
     }
 }

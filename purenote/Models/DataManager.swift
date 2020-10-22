@@ -27,20 +27,12 @@ class DataManager: ObservableObject {
     @Published var folders : [Folder]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
-    private var searchText : String = ""
-    private var index: SearchIndex
-    
     
     let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
     
     
     let fm = FileManager.default
     
-    func search(searchText: String) -> DataManager {
-        self.searchText = searchText
-        refresh(url: currentUrl)
-        return self
-    }
     
     func addSaveNote(newNote: inout Note) {
         saveNote(note: &newNote)
@@ -57,29 +49,7 @@ class DataManager: ObservableObject {
         }
     }
     
-    func getRootPath() -> URL {
-        
-        var tryURL : URL!
-        
-        // First get the URL for the default ubiquity container for this app
-        if let containerURL = fm.url(forUbiquityContainerIdentifier: nil) {
-            tryURL = containerURL.appendingPathComponent("Documents")
-            
-            do {
-                if (fm.fileExists(atPath: tryURL.path, isDirectory: nil) == false) {
-                    try  fm.createDirectory(at: tryURL, withIntermediateDirectories: true, attributes: nil)
-                }
-                
-                
-            } catch {
-                print("ERROR: Cannot create /Documents on iCloud")
-            }
-        } else {
-            print("ERROR: Cannot get ubiquity container")
-            tryURL = URL(fileURLWithPath: "")
-        }
-        return tryURL
-    }
+
     
     func addNote(url: URL) {
         do {
@@ -97,23 +67,23 @@ class DataManager: ObservableObject {
         }
     }
     
-    init(url: URL? = nil) {
+    init(url: URL) {
         notes=[]
         folders=[]
-        index = SearchIndex()
-        rootUrl = getRootPath()
-        if (url == nil) {
-            self.currentUrl = rootUrl
-        }
-        else {
-            self.currentUrl = url!
-        }
-        
-        index.indexFolder(currentUrl: rootUrl)
+
+        self.currentUrl = url
+
         refresh(url: self.currentUrl)
     }
     
-    func refresh(url: URL, reindex: Bool = false) {
+    init(searchNotes: [Note]) {
+        notes=searchNotes
+        folders = []            
+    }
+    
+
+    
+    func refresh(url: URL) {
         self.currentUrl = url
         
         // because we don't have access to iCLoud
@@ -127,20 +97,8 @@ class DataManager: ObservableObject {
         
         notes=[]
         folders=[]
-       
-        if reindex {
-            index.indexFolder(currentUrl: rootUrl)
-        }
-        
-        var urls:[URL] = []
-        
-        if (searchText == "") {
-            urls = listFiles()
-        }
-        else {
-            urls = index.getSearchResultsAsUrls(phrase: searchText)
-        }
-        
+           
+        let urls:[URL] = listFiles()
         
         for (_,url) in urls.enumerated() {
             
