@@ -36,7 +36,6 @@ struct ICloudItemView: View {
             DispatchQueue.main.async {
                
                 download()
-                data.refresh(url: note.url.deletingLastPathComponent())
             
             }
             
@@ -56,10 +55,7 @@ struct ICloudItemView: View {
             print("Unexpected error: \(error).")
         }
         
-        
-        
-        
-        
+
         //
         //
         // wait for item to download
@@ -101,13 +97,6 @@ struct ICloudItemView: View {
             print("Unexpected error: \(error).")
         }
         
-//        data.notes[noteIndex].url = URL(fileURLWithPath: downloadedFilePath)
-//        let id = data.notes[noteIndex].url.lastPathComponent
-//        data.notes[noteIndex].id = id
-//
-//        note.id = id
-//        data.notes[noteIndex].isLocal = true
-//        data.notes[noteIndex].isDownloading = false
         data.refresh(url: data.getCurrentUrl())
         
         
@@ -116,6 +105,7 @@ struct ICloudItemView: View {
 
 struct ICloudItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ICloudItemView(note: Note.sampleNote1).environmentObject(DataManager.sampleDataManager())
+        ICloudItemView(note: DataManager.sampleDataManager().notes[0])
+            .environmentObject(DataManager.sampleDataManager())
     }
 }
