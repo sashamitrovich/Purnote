@@ -11,6 +11,7 @@ import Parma
 
 struct SearchResultsView: View {
     @EnvironmentObject var index: SearchIndex
+    @EnvironmentObject var data: DataManager
     @State private var showSheetView = false
     var notes: [Note]
     @Binding var searchText: String
@@ -45,12 +46,14 @@ struct SearchResultsView: View {
             }
             
         }
-        .onDelete(perform: deleteItems).padding(.leading, 5.0)
+//        .onDelete(perform: deleteItems).padding(.leading, 5.0)
     }
     
     func deleteItems(at offsets: IndexSet) {
         
+        var url: URL = URL(fileURLWithPath: "")
         for offset in offsets.enumerated() {
+            url = notes[offset.element].url
             do {
                 try FileManager.default.trashItem(at: notes[offset.element].url, resultingItemURL: nil)
             }
@@ -58,10 +61,8 @@ struct SearchResultsView: View {
                 // failed
                 print("Failed to delete notes: \(error).")
             }
-            
         }
-//        notes.remove(atOffsets: offsets)
-        
+
         index.indexall()
         let oldSearchText = searchText
         searchText=""

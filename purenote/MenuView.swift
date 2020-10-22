@@ -35,6 +35,7 @@ struct MenuView: View {
                                 HStack {
                                     Button(action: {
                                         searchText = ""
+                                        data.refresh(url: data.getCurrentUrl())
                                         self.isSearching.toggle()
                                         
                                     }) {
