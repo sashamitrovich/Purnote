@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ListRow: View {
-    @EnvironmentObject var data: DataManager
     var note: Note
     var body: some View {
         
@@ -22,7 +21,6 @@ struct ListRow: View {
                 
                 Text(note.content)
                     .font(.title2)
-//                    .frame(alignment: .leading)
                     .lineLimit(1)
             }                        
         }

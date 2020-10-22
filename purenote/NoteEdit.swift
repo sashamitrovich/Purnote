@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
-    @Binding var isEditing: Bool
     @State var note: Note
+    @Binding var showSheetView: Bool
     
     var noteIndex: Int {
         data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
@@ -25,10 +25,10 @@ struct NoteEdit: View {
                     .navigationBarItems(trailing:  Button(action: {
                         data.notes[noteIndex].content = note.content
                         updateNote()
-                        self.isEditing = false
+    
                         
                     }) {
-                        Text("Done").font(.title2)
+                        Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
                     })
    
         }
@@ -45,11 +45,12 @@ struct NoteEdit: View {
             // failed
             print("Unexpected error, failed to update note: \(error).")
         }
+        self.showSheetView = false
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {        
-        NoteEdit(isEditing: .constant(true), note: Note.sampleNote1 ).environmentObject(DataManager.sampleDataManager())
+        NoteEdit(note: Note.sampleNote1, showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
     }
 }

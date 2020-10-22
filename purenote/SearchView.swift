@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SearchView: View {
     @Binding var searchText: String
-    var data: DataManager = DataManager()
+    var data: DataManager
+//        = DataManager()
     
     var body: some View {
         
@@ -25,6 +26,6 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(searchText: .constant("")).environmentObject(DataManager.sampleDataManager())
+        SearchView(searchText: .constant(""), data: DataManager.sampleDataManager()).environmentObject(DataManager.sampleDataManager())
     }
 }

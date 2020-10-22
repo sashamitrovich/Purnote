@@ -13,6 +13,22 @@ struct NewFolderView: View {
     @Binding var showSheetView: Bool
 
     var url: URL
+    
+    fileprivate func createFolder() {
+        print ("creating new folder at:"+url.path)
+        let newUrl = url.appendingPathComponent(folderName)
+        do {
+            try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: false)
+        }
+        catch {
+            // failed
+            print("Failed to create directory: \(error).")
+        }
+        
+        data.refresh(url: url)
+        self.showSheetView = false
+    }
+    
     var body: some View {
         
         NavigationView {
@@ -24,18 +40,7 @@ struct NewFolderView: View {
             
             .navigationBarTitle(Text("Create New Folder"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
-                print ("creating new folder at:"+url.path)
-                let newUrl = url.appendingPathComponent(folderName)
-                do {
-                    try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: false)
-                }
-                catch {
-                    // failed
-                    print("Failed to create directory: \(error).")
-                }
-                
-                data.refresh(url: url)
-                self.showSheetView = false
+                createFolder()
                 
             }) {
                 Text("Save").bold()

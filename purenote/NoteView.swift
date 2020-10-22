@@ -10,7 +10,7 @@ import Parma
 
 struct NoteView: View {
     @EnvironmentObject var data: DataManager
-    @State private var isEditing = false
+    @State private var showSheetView = false
     var isSearching = false
     
     var body: some View {
@@ -24,16 +24,19 @@ struct NoteView: View {
                                         Parma(note.content, render: MyRender())
                                         .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(.leading, 5.0)
-                                        .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
-                                            Image(systemName: "pencil").systemOrange().font(.title2)
+                                            .navigationBarItems(trailing:  Button(action: {
+                                                                                    showSheetView.toggle()
+                                                
+                                            }) {
+                                                Text("Edit").font(.title2).foregroundColor(Color(UIColor.systemOrange))
                                             
-                                        }.sheet(isPresented: $isEditing) {
+                                        }.sheet(isPresented: $showSheetView) {
                                             
-                                            NoteEdit(isEditing: $isEditing, note: note)
+                                            NoteEdit(note: note, showSheetView: $showSheetView)
                                                 .environmentObject(data)
                                             
                                         })
-                                        //                                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 5.0)
+
                                             .environmentObject(self.data)
                                     }) {
                         ListRow(note: note).environmentObject(self.data)
@@ -57,24 +60,6 @@ struct NoteView: View {
     
     // how to return HStack or VStack as a view
     // https://stackoverflow.com/a/59663108/1393362
-   
-    func readView(note: Note) -> some View {
-        return ScrollView{
-            Parma(note.content, render: MyRender())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 5.0)
-                .navigationBarItems(trailing:  Button(action: {isEditing = true}) {
-                    Image(systemName: "pencil").font(.title2)
-                    
-                }.sheet(isPresented: $isEditing) {
-                    
-                    NewFolderView(showSheetView: $isEditing, url: data.getCurrentUrl())
-                        .environmentObject(data)
-                    
-                })
-        }
-    }
-    
     
     func deleteItems(at offsets: IndexSet) {
         
@@ -95,7 +80,7 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView().environmentObject(DataManager())
+        NoteView().environmentObject(DataManager.sampleDataManager())
     }
 }
 

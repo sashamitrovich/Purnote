@@ -19,16 +19,16 @@ struct NoteNew: View {
         NavigationView {
             VStack {
                 
-
+                
                 // because no support for placeholder
                 // inspired by: https://lostmoa.com/blog/AddPlaceholderTextToSwiftUITextEditor/
                 ZStack(alignment: .topLeading) {
-
-
+                    
+                    
                     TextEditor(text: $newNote.content)
                         .padding(4)
                         .navigationBarItems(trailing:  Button(action: {
-                                                                
+                            
                             if newNote.content != "" {
                                 data.addSaveNote(newNote: &newNote)
                             }
@@ -36,17 +36,18 @@ struct NoteNew: View {
                             
                             
                         }) {
-                            Text("Done").font(.title2)
+                            Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
                         })
                     
                     if newNote.content == "" {
                         Text("Type your new note here")
-                                                .foregroundColor(Color(UIColor.placeholderText))
-                                                .padding(.horizontal, 8)
-                                                .padding(.vertical, 12)
+                            .foregroundColor(Color(UIColor.placeholderText))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 12)
                     }
                     
-                }                    .navigationBarItems(trailing:  Button(action: {
+                }
+                .navigationBarItems(trailing:  Button(action: {
                     if newNote.content != "" {
                         data.addSaveNote(newNote: &newNote)
                     }
@@ -54,15 +55,15 @@ struct NoteNew: View {
                     
                     
                 }) {
-                    Text("Done").font(.title2)
+                    Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
                 })
-
+                
                 
             }
             .onAppear(perform: {
                 newNote=Note(type: .Note)
-                }
-        )
+            }
+            )
         }
     }
 }

@@ -59,9 +59,6 @@
 		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndex.swift; sourceTree = "<group>"; };
-		4B3EAEF0253EEA3C00CBCB2B /* indexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indexTests.swift; sourceTree = "<group>"; };
-		4B3EAEF2253EEA3C00CBCB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B3EAEFA253EEA7F00CBCB2B /* TestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModels.swift; sourceTree = "<group>"; };
 		4B3EAF00253F1F6C00CBCB2B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4B3EAF0A253F295100CBCB2B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
@@ -113,7 +110,6 @@
 				4BC41064253DAFF200AC8293 /* extensions */,
 				4B5609F0253D7E2D0050C211 /* playground */,
 				32EAC58725350C49000EE69F /* purenote */,
-				4B3EAEEF253EEA3C00CBCB2B /* purenoteTests */,
 				32731B40252767DB0031CADD /* Products */,
 				322052602535A5B500A67FCF /* Frameworks */,
 			);
@@ -166,16 +162,6 @@
 				4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */,
 			);
 			path = index;
-			sourceTree = "<group>";
-		};
-		4B3EAEEF253EEA3C00CBCB2B /* purenoteTests */ = {
-			isa = PBXGroup;
-			children = (
-				4B3EAEF0253EEA3C00CBCB2B /* indexTests.swift */,
-				4B3EAEF2253EEA3C00CBCB2B /* Info.plist */,
-				4B3EAEFA253EEA7F00CBCB2B /* TestModels.swift */,
-			);
-			path = purenoteTests;
 			sourceTree = "<group>";
 		};
 		4B5609F0253D7E2D0050C211 /* playground */ = {
