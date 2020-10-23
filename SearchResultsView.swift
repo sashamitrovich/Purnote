@@ -50,10 +50,9 @@ struct SearchResultsView: View {
     }
     
     func deleteItems(at offsets: IndexSet) {
-        
-        var url: URL = URL(fileURLWithPath: "")
+
         for offset in offsets.enumerated() {
-            url = notes[offset.element].url
+            
             do {
                 try FileManager.default.trashItem(at: notes[offset.element].url, resultingItemURL: nil)
             }

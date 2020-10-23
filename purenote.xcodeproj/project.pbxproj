@@ -27,6 +27,8 @@
 		4B34B6A025404CAB00B9A05E /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34B69F25404CAB00B9A05E /* SearchView.swift */; };
 		4B367DDD253864B800619115 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDC253864B800619115 /* NoteView.swift */; };
 		4B367DE02538668600619115 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B367DDF2538668600619115 /* RootView.swift */; };
+		4B3CAAF02542D8F4002019A3 /* iCloudConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */; };
+		4B3CAAF525430E12002019A3 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAF425430E12002019A3 /* Connection.swift */; };
 		4B3EAEE7253EE19100CBCB2B /* SearchIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */; };
 		4B3EAF04253F258B00CBCB2B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAF00253F1F6C00CBCB2B /* String.swift */; };
 		4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAF0A253F295100CBCB2B /* SearchBar.swift */; };
@@ -63,6 +65,8 @@
 		4B34B69F25404CAB00B9A05E /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		4B367DDC253864B800619115 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudConnection.swift; sourceTree = "<group>"; };
+		4B3CAAF425430E12002019A3 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndex.swift; sourceTree = "<group>"; };
 		4B3EAF00253F1F6C00CBCB2B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4B3EAF0A253F295100CBCB2B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 				3220525125359F7200A67FCF /* Folder.swift */,
 				3220525225359F7200A67FCF /* Note.swift */,
 				4B337C54253856290094A19F /* SampleData.swift */,
+				4B3CAAF425430E12002019A3 /* Connection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 				4BC41070253DBC2300AC8293 /* NewFolderView.swift */,
 				4B3EAF0A253F295100CBCB2B /* SearchBar.swift */,
 				4B34B69F25404CAB00B9A05E /* SearchView.swift */,
+				4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -280,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B3CAAF02542D8F4002019A3 /* iCloudConnection.swift in Sources */,
 				328F2CE62535A9720053D6EC /* DataManager.swift in Sources */,
 				4B337C58253861B20094A19F /* MenuView.swift in Sources */,
 				4B3EAF04253F258B00CBCB2B /* String.swift in Sources */,
@@ -306,6 +313,7 @@
 				4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */,
 				4B367DDD253864B800619115 /* NoteView.swift in Sources */,
 				3220525825359F7700A67FCF /* NoteNew.swift in Sources */,
+				4B3CAAF525430E12002019A3 /* Connection.swift in Sources */,
 				4B367DE02538668600619115 /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

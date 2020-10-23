@@ -112,7 +112,8 @@ class SearchIndex : ObservableObject {
         for url in urls {
             
             // it's not a directory or an icloud item, can index
-            if !url.hasDirectoryPath && !url.absoluteString.contains(".icloud") {
+            // it will index only .md files
+            if !url.hasDirectoryPath && !url.absoluteString.contains(".icloud") && url.absoluteString.contains(".md"){
                 
                 var content = ""
                 do {

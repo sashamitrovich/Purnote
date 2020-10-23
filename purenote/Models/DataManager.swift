@@ -43,7 +43,7 @@ class DataManager: ObservableObject {
         notes.append(newNote)
     }
     
-    func delayWithSeconds(trseconds: Double, completion: @escaping () -> ()) {
+    public static func delayWithSeconds(trseconds: Double, completion: @escaping () -> ()) {
         DispatchQueue.main.asyncAfter(deadline: .now() + trseconds) {
             completion()
         }
@@ -118,7 +118,7 @@ class DataManager: ObservableObject {
                     }
                     
                 }
-                else {
+                else if !url.absoluteString.contains(".icloud") && url.absoluteString.contains(".md") {
                     // it's a local file
                     
                     addNote(url: url)
