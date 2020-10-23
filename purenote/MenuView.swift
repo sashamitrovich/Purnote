@@ -21,7 +21,7 @@ struct MenuView: View {
     
     var body: some View {
         List {
-            SearchView(searchText: $searchText).showIf(condition: isSearching)
+            SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
                 .environmentObject(data)
                 .environmentObject(index)
             FolderView().environmentObject(data).padding(.bottom, 5.0)

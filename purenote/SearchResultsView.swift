@@ -70,8 +70,8 @@ struct SearchResultsView: View {
     }
 }
 
-//struct SearchResultsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SearchResultsView(data: DataManager.sampleDataManager())
-//    }
-//}
+struct SearchResultsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchResultsView(notes: DataManager.sampleNotes, searchText: .constant("note"))
+    }
+}

@@ -12,11 +12,18 @@ struct SearchView: View {
     @EnvironmentObject var index: SearchIndex
     @State var notes: [Note] = []
     @EnvironmentObject var data: DataManager
+    @Binding var isSearching: Bool
     
     var body: some View {
         
         Group {
-            SearchBar(text: $searchText, placeholder: "Search your notes here")
+            HStack {
+                SearchBar(text: $searchText, placeholder: "Search your notes here")
+                Button("Cancel", action: {
+                    isSearching.toggle()
+                })
+            }
+            
             SearchResultsView(notes: index.search(phrase: searchText), searchText: $searchText)
                 .environmentObject(index)
                 .environmentObject(data)
@@ -24,9 +31,10 @@ struct SearchView: View {
     }
 }
 
-//struct SearchView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SearchView(searchText: .constant("text"))
-//            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/")))
-//    }
-//}
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView(searchText: .constant("note"), isSearching: .constant(true))
+            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/")))
+            .environmentObject(DataManager.sampleDataManager())
+    }
+}

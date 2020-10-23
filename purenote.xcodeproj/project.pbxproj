@@ -67,6 +67,7 @@
 		4B367DDF2538668600619115 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudConnection.swift; sourceTree = "<group>"; };
 		4B3CAAF425430E12002019A3 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		4B3CAAF7254322FB002019A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndex.swift; sourceTree = "<group>"; };
 		4B3EAF00253F1F6C00CBCB2B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4B3EAF0A253F295100CBCB2B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -116,7 +117,7 @@
 		32731B36252767DB0031CADD = {
 			isa = PBXGroup;
 			children = (
-				4B262AB02541BA6000B2BD22 /* SearchResultsView.swift */,
+				4B3CAAF7254322FB002019A3 /* README.md */,
 				4B3EAEE5253EE17E00CBCB2B /* index */,
 				4BB09A62253ED02E00521ABF /* splash */,
 				4BC41064253DAFF200AC8293 /* extensions */,
@@ -138,6 +139,7 @@
 		32EAC58725350C49000EE69F /* purenote */ = {
 			isa = PBXGroup;
 			children = (
+				4B262AB02541BA6000B2BD22 /* SearchResultsView.swift */,
 				328F2CF02535A9F20053D6EC /* purenote.entitlements */,
 				328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */,
 				3220525C25359F8000A67FCF /* Info.plist */,
