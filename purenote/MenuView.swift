@@ -18,6 +18,9 @@ struct MenuView: View {
     @State var isSearching = false
     @State var searchText = ""
     
+    // because I want to avoid refreshing all the MenuViews that are instantiated
+    @State var isViewDisplayed = false
+    
     
     var body: some View {
         List {
@@ -83,10 +86,19 @@ struct MenuView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl())
-                index.indexall()
-                isShowing = false
+                if isViewDisplayed {
+                    data.refresh(url: data.getCurrentUrl())
+                    index.indexall()
+                    isShowing = false
+                }
+
             }
+        }
+        .onAppear() {
+            self.isViewDisplayed = true
+        }
+        .onDisappear() {
+            self.isViewDisplayed = false
         }
     }
     

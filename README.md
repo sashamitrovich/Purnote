@@ -1,11 +1,11 @@
-# Purenote
+# Purnote
 
-Purenote is a hobby iOS 14 app I built for the purpose of learning Swift and SwiftUI
+Purnote is a hobby iOS 14 app I built for the purpose of learning Swift and SwiftUI
 
 
 ## Features:
 
-* take your notes and they get directly saved to the iCloud Drive, in the directory called "purenote"
+* take your notes and they get directly saved to the iCloud Drive, in the directory called "purnote"
 * use the MarkDown notation for notes and they will be rendered by the App (thanks to  project https://github.com/dasautoooo/Parma by https://github.com/dasautoooo)
 * organize notes in folders
 * notes get automatically synced with your Mac

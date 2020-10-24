@@ -54,7 +54,7 @@
 		3220525C25359F8000A67FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudItemView.swift; sourceTree = "<group>"; };
 		328F2CF02535A9F20053D6EC /* purenote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = purenote.entitlements; sourceTree = "<group>"; };
-		32EAC58625350C49000EE69F /* purenote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = purenote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32EAC58625350C49000EE69F /* Purnote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Purnote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		32731B40252767DB0031CADD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32EAC58625350C49000EE69F /* purenote.app */,
+				32EAC58625350C49000EE69F /* Purnote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		32EAC58525350C49000EE69F /* purenote */ = {
+		32EAC58525350C49000EE69F /* Purnote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32EAC59225350C4A000EE69F /* Build configuration list for PBXNativeTarget "purenote" */;
+			buildConfigurationList = 32EAC59225350C4A000EE69F /* Build configuration list for PBXNativeTarget "Purnote" */;
 			buildPhases = (
 				32EAC58225350C49000EE69F /* Sources */,
 				32EAC58325350C49000EE69F /* Frameworks */,
@@ -223,13 +223,13 @@
 			);
 			dependencies = (
 			);
-			name = purenote;
+			name = Purnote;
 			packageProductDependencies = (
 				322052612535A5B500A67FCF /* SwiftUIRefresh */,
 				4B1B149C2539F3C700B5F0D8 /* Parma */,
 			);
 			productName = purenote;
-			productReference = 32EAC58625350C49000EE69F /* purenote.app */;
+			productReference = 32EAC58625350C49000EE69F /* Purnote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -249,7 +249,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 32731B3A252767DB0031CADD /* Build configuration list for PBXProject "purenote" */;
+			buildConfigurationList = 32731B3A252767DB0031CADD /* Build configuration list for PBXProject "Purnote" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -266,7 +266,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32EAC58525350C49000EE69F /* purenote */,
+				32EAC58525350C49000EE69F /* Purnote */,
 			);
 		};
 /* End PBXProject section */
@@ -374,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -429,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -446,18 +446,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = purenote/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
+				MARKETING_VERSION = 0.0.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purnote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -471,18 +471,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = purenote/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
+				MARKETING_VERSION = 0.0.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purnote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -492,7 +492,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		32731B3A252767DB0031CADD /* Build configuration list for PBXProject "purenote" */ = {
+		32731B3A252767DB0031CADD /* Build configuration list for PBXProject "Purnote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32731B4C252767DE0031CADD /* Debug */,
@@ -501,7 +501,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32EAC59225350C4A000EE69F /* Build configuration list for PBXNativeTarget "purenote" */ = {
+		32EAC59225350C4A000EE69F /* Build configuration list for PBXNativeTarget "Purnote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32EAC59325350C4A000EE69F /* Debug */,

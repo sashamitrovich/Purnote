@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Purenote</string>
+	<string>Purnote</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,14 +24,14 @@
 	<true/>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>iCloud.com.mitrovic.purenote</key>
+		<key>iCloud.com.mitrovic.purnote</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>purenote</string>
+			<string>purnote</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>None</string>
+			<string>Any</string>
 		</dict>
 	</dict>
 	<key>UIApplicationSceneManifest</key>

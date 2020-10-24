@@ -11,7 +11,7 @@ struct SplashSummary: View {
     var body: some View {
         VStack(alignment: .leading) {
             VStack {
-                Text("Purenote")
+                Text("Purnote")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
                     .foregroundColor(Color(UIColor.systemOrange))
