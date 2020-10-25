@@ -33,7 +33,7 @@ struct MenuView: View {
                 .showIf(condition: !isSearching)
             
         }
-        .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
+        .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .inline)
         .navigationBarItems(trailing:
                                 HStack {
                                     Button(action: {
@@ -45,7 +45,7 @@ struct MenuView: View {
                                         Image(systemName: "magnifyingglass").systemOrange().font(.title)
                                     }
                                         
-                                    Spacer(minLength: 10)
+                                    Spacer(minLength: 20)
                                     
                                     Button(action: {
                                         self.showingNewFolder.toggle()
@@ -58,7 +58,7 @@ struct MenuView: View {
                                             .environmentObject(data)
                                         
                                     }
-                                    Spacer(minLength: 10)
+                                    Spacer(minLength: 20)
                                     Button(action: {
                                         self.isCreatingNewNote.toggle()
                                     }) {
@@ -117,5 +117,7 @@ struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
         MenuView()
             .environmentObject(DataManager.sampleDataManager())
+            .environmentObject(SearchIndex.init(rootUrl: URL(fileURLWithPath: "/")))
     }
 }
+

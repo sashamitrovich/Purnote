@@ -19,6 +19,7 @@ struct SplashDetail: View {
                 .foregroundColor(Color(UIColor.orange))
                 .padding()
                 .accessibility(hidden: true)
+                .frame(width: 60)
             
             VStack(alignment: .leading) {
                 Text(title)
@@ -28,7 +29,7 @@ struct SplashDetail: View {
                 Text(subTitle)
                     .font(.body)
                     .foregroundColor(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                    //.fixedSize(horizontal: false, vertical: true)
             }
         }
     }

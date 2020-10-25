@@ -18,19 +18,18 @@ struct Splash: View {
          
             VStack(alignment: .center) {
                     
-//                Spacer()
-                SplashSummary().padding(.bottom, 30.0)
-//                Spacer()
+                SplashSummary()
+//                    .padding(.bottom, 30.0)
                 
                 if !iCloudConnectionNotAvailable {
                     Button(action: {
                         shownSplashScreen.toggle()
                     })
                     {
-                        Text("Continue").font(.title2)
+                        Text("OK").font(.title2)
                             .foregroundColor(Color.white)
                             .multilineTextAlignment(.center)
-                            .padding(.vertical, 2.0).padding(.horizontal, 58.0)
+                            .padding(.vertical, 10.0).padding(.horizontal, 78.0)
                             .background(Color(UIColor.systemOrange))
                             .cornerRadius(7)
                     }
@@ -38,14 +37,36 @@ struct Splash: View {
                 }                
                 else if iCloudConnectionNotAvailable {
                     VStack(alignment: .center) {
-                        Text("No iCloud Drive access")
-                            .font(.title2)
-                            .foregroundColor(.orange)
+                        HStack(alignment: .center) {
+                            Image(systemName: "xmark.octagon.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(Color(UIColor.red))
+                                .accessibility(hidden: true)
+                                .foregroundColor(.red)
+                            Text("Purnote can't access the iCloud Drive")
+                                .font(.headline)
+                                .multilineTextAlignment(.center)
+                        }.frame(width: 220)
+                        .padding()
+                        
+                        Text("To use Purnote please enable iCloud in your phone Settings and grant Purnote access to the iCloud Drive")
+                            .font(.callout)
                             .multilineTextAlignment(.center)
-                            .padding(.bottom, 20.0)
-                        Text("To use Purenote please enable iCloud in your phone Settings and grant Purenote access to the iCloud Drive")
-                            .multilineTextAlignment(.center)
-                            .frame(width:300)                        
+                            .frame(width:300)
+                            .padding()
+                        
+                        Button(action: {
+                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                        }) {
+                            Text("Open Settings").font(.title3)
+                                .foregroundColor(Color.white)
+                                .multilineTextAlignment(.center)
+                                .padding(.vertical, 7.0).padding(.horizontal, 28.0)
+                                .background(Color(UIColor.systemGray))
+                                .cornerRadius(7)
+                        }
+       
+                            
                     }
              
                 }

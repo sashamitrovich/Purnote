@@ -16,30 +16,34 @@ struct ICloudItemView: View {
         data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
     }
     
+    @ViewBuilder
     var body: some View {
         HStack {
             
             
             Text(note.label)
                 .frame(maxWidth: .infinity, alignment: .leading)
+              
             
-            ProgressView().progressViewStyle(CircularProgressViewStyle.init()).showIf(condition: isDownloading)
-            
-            Image(systemName: "icloud.and.arrow.down").frame(alignment: .trailing)
-                .showIf(condition: !isDownloading)
-           
-        }.showIf(condition: noteIndex != Int.max)
-        .onTapGesture() {
-                        
-            isDownloading.toggle()
-            
-            DispatchQueue.main.async {
-               
-                download()
-            
+            if self.isDownloading {
+                ProgressView().progressViewStyle(CircularProgressViewStyle.init())
             }
-            
-            
+            else {
+                Image(systemName: "icloud.and.arrow.down")
+                    .frame(alignment: .trailing)
+            }
+        }
+        .padding(.bottom, 10.0)
+        .padding(.top, 11.0)
+        .onTapGesture() {
+            if !isDownloading {
+                isDownloading.toggle()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    
+                    download()
+                }
+            }
         }
     }
     

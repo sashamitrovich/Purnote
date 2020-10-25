@@ -36,6 +36,7 @@
 		4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */; };
 		4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A63253ED05300521ABF /* SplashSummary.swift */; };
 		4BB09A68253ED43600521ABF /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A67253ED43600521ABF /* Splash.swift */; };
+		4BBE309F254591A4002AAE4A /* SplashTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBE309E254591A4002AAE4A /* SplashTest.swift */; };
 		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
 		4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* NewFolderView.swift */; };
@@ -75,6 +76,7 @@
 		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
 		4BB09A63253ED05300521ABF /* SplashSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashSummary.swift; sourceTree = "<group>"; };
 		4BB09A67253ED43600521ABF /* Splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
+		4BBE309E254591A4002AAE4A /* SplashTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTest.swift; sourceTree = "<group>"; };
 		4BC41065253DB00000AC8293 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4BC41070253DBC2300AC8293 /* NewFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		4B5609F0253D7E2D0050C211 /* playground */ = {
 			isa = PBXGroup;
 			children = (
+				4BBE309E254591A4002AAE4A /* SplashTest.swift */,
 			);
 			path = playground;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				4B3EAF04253F258B00CBCB2B /* String.swift in Sources */,
 				4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */,
 				4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */,
+				4BBE309F254591A4002AAE4A /* SplashTest.swift in Sources */,
 				4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
 				4BC4106E253DB92300AC8293 /* View.swift in Sources */,
@@ -446,7 +450,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -471,7 +475,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;

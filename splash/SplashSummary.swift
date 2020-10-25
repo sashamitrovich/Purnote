@@ -14,13 +14,22 @@ struct SplashSummary: View {
                 Text("Purnote")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
-                    .foregroundColor(Color(UIColor.systemOrange))
-            }.frame(maxWidth: .infinity, alignment:.center)
+                    .foregroundColor(Color(UIColor.systemOrange))                    
+            }
+            .frame(maxWidth: .infinity, alignment:.center)
+            .padding()
             
-            SplashDetail(title: "Folders", subTitle: "Keep your notes organized", image: Image(systemName: "folder"))
-            SplashDetail(title: "iCloud", subTitle: "Acces them anytime on your Mac", image: Image(systemName: "icloud"))
-            SplashDetail(title: "Markdown", subTitle: "Beatifully presented", image: Image(systemName: "list.bullet")).padding(.leading, 8.0)
-        }.padding(.horizontal)
+            
+            VStack(alignment:.leading) {
+                SplashDetail(title: "Folders", subTitle: "Keep your notes organized", image: Image(systemName: "folder"))
+                SplashDetail(title: "iCloud", subTitle: "Acces them anytime on your Mac", image: Image(systemName: "icloud"))
+                SplashDetail(title: "Markdown", subTitle: "Beatifully presented", image: Image(systemName: "list.bullet"))
+                    //.padding(.leading, 8.0)
+            }.padding()
+            
+          
+        }
+        .padding(.horizontal)
     }
 }
 
