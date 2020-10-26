@@ -33,7 +33,7 @@ struct MenuView: View {
                 .showIf(condition: !isSearching)
             
         }
-        .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .inline)
+        .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
         .navigationBarItems(trailing:
                                 HStack {
                                     Button(action: {
