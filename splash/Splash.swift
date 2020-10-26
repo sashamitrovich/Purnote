@@ -26,10 +26,11 @@ struct Splash: View {
                         shownSplashScreen.toggle()
                     })
                     {
-                        Text("OK").font(.title2)
+                        Text("Next").font(.title2)
+                            .fontWeight(.semibold)
                             .foregroundColor(Color.white)
                             .multilineTextAlignment(.center)
-                            .padding(.vertical, 10.0).padding(.horizontal, 78.0)
+                            .padding(.vertical, 8.0).padding(.horizontal, 78.0)
                             .background(Color(UIColor.systemOrange))
                             .cornerRadius(7)
                     }
@@ -39,7 +40,7 @@ struct Splash: View {
                     VStack(alignment: .center) {
                         HStack(alignment: .center) {
                             Image(systemName: "xmark.octagon.fill")
-                                .font(.largeTitle)
+                                .font(.title)
                                 .foregroundColor(Color(UIColor.red))
                                 .accessibility(hidden: true)
                                 .foregroundColor(.red)
@@ -59,10 +60,11 @@ struct Splash: View {
                             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                         }) {
                             Text("Open Settings").font(.title3)
+                                .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
                                 .multilineTextAlignment(.center)
-                                .padding(.vertical, 7.0).padding(.horizontal, 28.0)
-                                .background(Color(UIColor.systemGray))
+                                .padding(.vertical, 8.0).padding(.horizontal, 28.0)
+                                .background(Color(UIColor.systemOrange))
                                 .cornerRadius(7)
                         }
        
@@ -78,6 +80,7 @@ struct Splash: View {
 
 struct Splash_Previews: PreviewProvider {
     static var previews: some View {
+        Splash(shownSplashScreen: .constant(false), iCloudConnectionNotAvailable: false)
         Splash(shownSplashScreen: .constant(false), iCloudConnectionNotAvailable: true)
     }
 }

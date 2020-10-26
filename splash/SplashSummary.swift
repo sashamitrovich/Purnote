@@ -22,7 +22,7 @@ struct SplashSummary: View {
             
             VStack(alignment:.leading) {
                 SplashDetail(title: "Folders", subTitle: "Keep your notes organized", image: Image(systemName: "folder"))
-                SplashDetail(title: "iCloud", subTitle: "Acces them anytime on your Mac", image: Image(systemName: "icloud"))
+                SplashDetail(title: "iCloud", subTitle: "Access them anytime on any device", image: Image(systemName: "icloud"))
                 SplashDetail(title: "Markdown", subTitle: "Beatifully presented", image: Image(systemName: "list.bullet"))
                     //.padding(.leading, 8.0)
             }.padding()
