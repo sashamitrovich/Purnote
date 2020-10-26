@@ -49,7 +49,7 @@ struct Splash: View {
                         }.frame(width: 220)
                         .padding()
                         
-                        Text("To use Purnote please enable iCloud in your phone Settings and grant Purnote access to the iCloud Drive")
+                        Text("Please activate your iCloud Drive and grant Purnote access to the iCloud Drive")
                             .font(.callout)
                             .multilineTextAlignment(.center)
                             .frame(width:300)
