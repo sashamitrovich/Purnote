@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIRefresh
 
 struct RootView: View {
     var  data: DataManager
@@ -14,24 +13,24 @@ struct RootView: View {
     
     var body: some View {
         NavigationView {
-//            VStack {
+
                 MenuView()
                     .environmentObject(index)
                     .environmentObject(data)
-//            }
-                   
         }
     }
     
-    private var profileButton: some View {
-        Button(action: { }) {
-            Image(systemName: "person.crop.circle")
-        }
-    }
+//    private var profileButton: some View {
+//        Button(action: { }) {
+//            Image(systemName: "person.crop.circle")
+//        }
+//    }
 }
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(data: DataManager.sampleDataManager()).environmentObject(DataManager(url: URL(fileURLWithPath: "/")))
+        RootView(data: DataManager.sampleDataManager())
+            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/")))
+        
     }
 }

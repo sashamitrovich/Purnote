@@ -14,17 +14,15 @@ struct NoteEdit: View {
     @Binding var showSheetView: Bool
     
     var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
+        data.notes.firstIndex(where: { $0.id == note.id })!
     }
 
     var body: some View {
         NavigationView {
            
-            TextEditor(text: $note.content)
-                .showIf(condition: noteIndex != Int.max)  // super ugly workaround, let's hope a user doesn't reach Int.max notes because that one will not be displayed
-                    
+            TextEditor(text: $data.notes[noteIndex].content)
                     .navigationBarItems(trailing:  Button(action: {
-                        data.notes[noteIndex].content = note.content
+                                                                    
                         updateNote()
     
                         
@@ -46,6 +44,7 @@ struct NoteEdit: View {
             // failed
             print("Unexpected error, failed to update note: \(error).")
         }
+        data.refresh(url: data.getCurrentUrl())
         index.indexall()
         self.showSheetView = false
     }
@@ -53,6 +52,6 @@ struct NoteEdit: View {
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {        
-        NoteEdit(note: DataManager.sampleDataManager().notes[0], showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
+        NoteEdit(note: DataManager.sampleDataManager().notes[0] , showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
     }
 }

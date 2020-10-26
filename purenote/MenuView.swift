@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SwiftUIRefresh
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
@@ -78,11 +78,15 @@ struct MenuView: View {
         // https://stackoverflow.com/a/63225776/1393362
         .listStyle(PlainListStyle())
         .pullToRefresh(isShowing: $isShowing) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                data.refresh(url: data.getCurrentUrl())
-                index.indexall()
-                isShowing = false
+            if isViewDisplayed {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    data.refresh(url: data.getCurrentUrl())
+                    index.indexall()
+                    isShowing = false
+                }
             }
+            
+
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -96,6 +100,7 @@ struct MenuView: View {
         }
         .onAppear() {
             self.isViewDisplayed = true
+            data.refresh(url: data.getCurrentUrl())
         }
         .onDisappear() {
             self.isViewDisplayed = false

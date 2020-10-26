@@ -36,7 +36,8 @@ class DataManager: ObservableObject {
     
     func addSaveNote(newNote: inout Note) {
         saveNote(note: &newNote)
-        notes.append(newNote)
+//        notes.append(newNote)
+        notes.insert(newNote, at: 0)
     }
     
     func addNote(newNote: Note) {
@@ -133,6 +134,11 @@ class DataManager: ObservableObject {
                 
             }
         }
+        
+        notes.sort(by: { lhs, rhs in
+            return lhs.date > rhs.date    
+        })
+    
     }
     
     

@@ -35,7 +35,7 @@ struct SearchResultsView: View {
                                         }.sheet(isPresented: $showSheetView) {
                                             
                                             NoteEdit(note: note, showSheetView: $showSheetView)
-                                                .environmentObject(DataManager(searchNotes: notes))
+                                                .environmentObject(data)
                                             
                                         })
                                         

@@ -150,6 +150,9 @@ class SearchIndex : ObservableObject {
             }
         }
         
+        notes.sort(by: { lhs, rhs in
+            return lhs.date > rhs.date
+        })
         return notes
         
     }

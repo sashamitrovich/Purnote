@@ -6,9 +6,12 @@
 //
 
 import Foundation
-
+    
 
 struct Note: Identifiable, Equatable, Item {
+
+    
+    
     var type: ItemType = .Note
     
     static func == (lhs: Note, rhs: Note) -> Bool {
