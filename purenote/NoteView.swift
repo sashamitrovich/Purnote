@@ -51,7 +51,9 @@ struct NoteView: View {
                     }.showIf(condition: note.isLocal)
                
                 
-                ICloudItemView(note : note).environmentObject(self.data)
+                ICloudItemView(note : note)
+                    .environmentObject(self.data)
+                    .environmentObject(self.index)
                     .frame(maxWidth: .infinity, alignment: .leading).showIf(condition: !note.isLocal)
             }
             

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ICloudItemView: View {
     @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index: SearchIndex
     @State var note : Note
     @State private var isDownloading = false
     
@@ -102,6 +103,7 @@ struct ICloudItemView: View {
         }
         
         data.refresh(url: data.getCurrentUrl())
+        index.indexall()
         
         
     }

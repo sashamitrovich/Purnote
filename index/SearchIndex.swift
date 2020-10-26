@@ -95,6 +95,7 @@ class SearchIndex : ObservableObject {
         }
     }
     public func indexall() {
+        dict = [:]
         indexFolder(currentUrl: rootUrl)
     }
     
