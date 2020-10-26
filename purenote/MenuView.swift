@@ -56,6 +56,7 @@ struct MenuView: View {
                                         
                                         NewFolderView(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
                                             .environmentObject(data)
+                                            
                                         
                                     }
                                     Spacer(minLength: 20)

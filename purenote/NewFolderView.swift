@@ -11,6 +11,7 @@ struct NewFolderView: View {
     @EnvironmentObject var data: DataManager
     @State private var folderName: String = ""
     @Binding var showSheetView: Bool
+    @State var shouldAlertForEmptyFolderName = false
 
     var url: URL
     
@@ -40,11 +41,20 @@ struct NewFolderView: View {
             
             .navigationBarTitle(Text("Create New Folder"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
-                createFolder()
+                if folderName != String("") {
+                    createFolder()
+                }
+                else {
+                    shouldAlertForEmptyFolderName.toggle()
+                }
+
                 
             }) {
                 Text("Save").bold()
             })
+        }
+        .alert(isPresented: $shouldAlertForEmptyFolderName) {
+            Alert(title: Text("Can't create folder"), message: Text("Please enter folder name"), dismissButton: .default(Text("Got it!")))
         }
 
         
@@ -53,6 +63,6 @@ struct NewFolderView: View {
 
 struct NewFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        NewFolderView(showSheetView: .constant(false), url: URL(fileURLWithPath: "/new/path")).environmentObject(DataManager.sampleDataManager())
+        NewFolderView(showSheetView: .constant(true), url: URL(fileURLWithPath: "/new/path")).environmentObject(DataManager.sampleDataManager())
     }
 }

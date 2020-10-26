@@ -41,6 +41,7 @@
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
 		4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* NewFolderView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
+		4BF6BA3B254704DE00192511 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF6BA3A254704DD00192511 /* Form.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4BC41070253DBC2300AC8293 /* NewFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		4BF6BA3A254704DD00192511 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				4BBE309E254591A4002AAE4A /* SplashTest.swift */,
+				4BF6BA3A254704DD00192511 /* Form.swift */,
 			);
 			path = playground;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				328F2CE92535A9720053D6EC /* Note.swift in Sources */,
 				4B5FF2CF254196AB00EAD5AF /* CharacterSet.swift in Sources */,
 				4B262AAE2541B25500B2BD22 /* StringProtocol.swift in Sources */,
+				4BF6BA3B254704DE00192511 /* Form.swift in Sources */,
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				4B34B6A025404CAB00B9A05E /* SearchView.swift in Sources */,
