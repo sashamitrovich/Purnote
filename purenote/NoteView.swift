@@ -23,6 +23,13 @@ struct NoteView: View {
                     NavigationLink(destination:
                                     ScrollView {
                                         Parma(note.content, render: MyRender())
+                                            
+                                            .gesture(
+                                                TapGesture()
+                                                    .onEnded { _ in
+                                                        showSheetView.toggle()
+                                                    }
+                                            )
                                         .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(.leading, 5.0)
                                             .navigationBarItems(trailing:  Button(action: {
