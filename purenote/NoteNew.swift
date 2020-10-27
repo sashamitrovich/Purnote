@@ -65,7 +65,6 @@ struct NoteNew: View {
 struct NewNote_Previews: PreviewProvider {
     @State static var newNote = Note(type: .Folder)
     static var previews: some View {
-        let newNote = Note(type: .Folder)
         NoteNew(isEditing: .constant(true), newNote: DataManager.sampleDataManager().notes[0]).environmentObject(DataManager.sampleDataManager())
     }
 }

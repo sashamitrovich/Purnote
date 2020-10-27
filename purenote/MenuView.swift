@@ -23,14 +23,21 @@ struct MenuView: View {
     
     
     var body: some View {
-        List {
+        VStack {
             SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
                 .environmentObject(data)
                 .environmentObject(index)
-            FolderView().environmentObject(data).padding(.bottom, 5.0)
-                .showIf(condition: !isSearching)
-            NoteView().environmentObject(data)
-                .showIf(condition: !isSearching)
+            List {
+                FolderView().environmentObject(data)
+//                    .padding(.bottom, 5.0)
+                    .showIf(condition: !isSearching)
+                    .listStyle(PlainListStyle())
+                
+                NoteView().environmentObject(data)
+                    .showIf(condition: !isSearching)
+            }
+            .listStyle(PlainListStyle())
+
             
         }
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
@@ -54,7 +61,7 @@ struct MenuView: View {
                                         
                                     }.sheet(isPresented: $showingNewFolder) {
                                         
-                                        NewFolderView(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
+                                        FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
                                             .environmentObject(data)
                                             
                                         

@@ -18,6 +18,7 @@ struct RootView: View {
                     .environmentObject(index)
                     .environmentObject(data)
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
 //    private var profileButton: some View {

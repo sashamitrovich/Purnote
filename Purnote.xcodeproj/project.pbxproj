@@ -38,9 +38,10 @@
 		4BB9DC5425484B9F00584334 /* Parma in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5325484B9F00584334 /* Parma */; };
 		4BB9DC5825484BE100584334 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5725484BE100584334 /* Introspect */; };
 		4BB9DC5C25484C3800584334 /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5B25484C3800584334 /* SwiftUIRefresh */; };
+		4BB9DC5F25485F1C00584334 /* FolderEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB9DC5E25485F1C00584334 /* FolderEdit.swift */; };
 		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
-		4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* NewFolderView.swift */; };
+		4BC41071253DBC2300AC8293 /* FolderNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* FolderNew.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,9 +79,10 @@
 		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
 		4BB09A63253ED05300521ABF /* SplashSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashSummary.swift; sourceTree = "<group>"; };
 		4BB09A67253ED43600521ABF /* Splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
+		4BB9DC5E25485F1C00584334 /* FolderEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderEdit.swift; sourceTree = "<group>"; };
 		4BC41065253DB00000AC8293 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		4BC41070253DBC2300AC8293 /* NewFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderView.swift; sourceTree = "<group>"; };
+		4BC41070253DBC2300AC8293 /* FolderNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderNew.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,7 +161,8 @@
 				4B367DDC253864B800619115 /* NoteView.swift */,
 				4B367DDF2538668600619115 /* RootView.swift */,
 				4BC9D9F12538A43800966AD9 /* FolderView.swift */,
-				4BC41070253DBC2300AC8293 /* NewFolderView.swift */,
+				4BC41070253DBC2300AC8293 /* FolderNew.swift */,
+				4BB9DC5E25485F1C00584334 /* FolderEdit.swift */,
 				4B3EAF0A253F295100CBCB2B /* SearchBar.swift */,
 				4B34B69F25404CAB00B9A05E /* SearchView.swift */,
 				4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */,
@@ -303,6 +306,7 @@
 				4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */,
 				4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
+				4BB9DC5F25485F1C00584334 /* FolderEdit.swift in Sources */,
 				4BC4106E253DB92300AC8293 /* View.swift in Sources */,
 				328F2CE72535A9720053D6EC /* Item.swift in Sources */,
 				4BB09A68253ED43600521ABF /* Splash.swift in Sources */,
@@ -320,7 +324,7 @@
 				4B3EAEE7253EE19100CBCB2B /* SearchIndex.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
 				4B337C55253856290094A19F /* SampleData.swift in Sources */,
-				4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */,
+				4BC41071253DBC2300AC8293 /* FolderNew.swift in Sources */,
 				4B367DDD253864B800619115 /* NoteView.swift in Sources */,
 				3220525825359F7700A67FCF /* NoteNew.swift in Sources */,
 				4B3CAAF525430E12002019A3 /* Connection.swift in Sources */,

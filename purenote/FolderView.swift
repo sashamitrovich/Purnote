@@ -12,54 +12,74 @@ import UIKit
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
     @State private var selectedUrl: URL?
+    @State var showingFolderEdit = false
     
     var body: some View {
         
-        ScrollView {
-            LazyVStack{
-                ForEach(data.folders) { folder in
+        
+        ForEach(data.folders) { folder in
+            HStack {
+                NavigationLink(destination: MenuView().environmentObject(DataManager(url: folder.url)),
+                               tag: folder.url, selection: self.customBinding()) {
                     
-                    VStack {
-                        HStack {
-                            NavigationLink(destination: MenuView().environmentObject(DataManager(url: folder.url)),
-                                           tag: folder.url, selection: self.customBinding()) {
+                    HStack {
+                        Image(systemName: "folder")
+                            // my own modest Image extension
+                            // inspired by
+                            // https://stackoverflow.com/a/59974025/1393362
+                            .systemOrange()
+                        Text(folder.id)
+                            .fontWeight(.semibold)
+                            .font(.title3)
+                            .foregroundColor(Color(UIColor.label))
+                            
+                            .sheet(isPresented: $showingFolderEdit) {
                                 
-                                HStack {
-                                    Image(systemName: "folder")
-                                        // my own modest Image extension
-                                        // inspired by
-                                        // https://stackoverflow.com/a/59974025/1393362
-                                        .systemOrange()
-                                    Text(folder.id)
-                                        .fontWeight(.semibold)
-                                        .font(.title3)
-                                        .foregroundColor(Color(UIColor.label))
-                                    Spacer()
-                                    Image(systemName: "chevron.forward")
-                                        .foregroundColor(Color(UIColor.placeholderText))
-                                        .padding(.trailing, 8.0)
-                                        
-                                        
-//                                        .frame(alignment: .trailing)
+                                FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url, newFolderName: folder.id)
+                                    .environmentObject(data)
+//                                FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url)
+//                                    .onDisappear() {
+//                                        data.refresh(url: data.getCurrentUrl())
+//                                    }
+//                                    .environmentObject(data)
                                     
-                                }.padding(.leading, 6.0).padding(.top, 6).padding(.bottom,6)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .onLongPressGesture {
-                                    print("Long pressed!")
-                                }
                             }
-
+                        
+                        
+                    }
+                    
+                    .contextMenu {
+                        Button(action: {
+                            showingFolderEdit.toggle()
+                        }) {
+                            Text("Rename Folder")
+                            Image(systemName: "pencil")
                         }
                         
-                        .background(Color(UIColor.systemGray5), alignment: .leading)
-                        .cornerRadius(5)
                         
-                        Spacer(minLength: 6)
+                        Button(action: {
+                            // enable geolocation
+                        }) {
+                            Text("Delete Folder")
+                            Image(systemName: "trash")
+                        }
                     }
-
+                    
+                    
+                    
                 }
+                
+                
             }
-        }.showIf(condition: data.folders.count > 0)
+            
+            
+            
+            
+        }
+        .listStyle(PlainListStyle())
+        
+        
+        
         
         
         VStack {

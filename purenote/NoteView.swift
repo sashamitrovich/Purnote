@@ -59,13 +59,13 @@ struct NoteView: View {
             
         }.onDelete(perform: deleteItems).padding(.leading, 5.0)
         
-        VStack {
-            HStack {
-                Text("Tap the")
-                Image(systemName: "square.and.pencil")
-                Text("button to create a new note")
-            }.placeholderForegroundColor()
-        }.showIf(condition: data.notes.count == 0 && !isSearching)
+//        VStack {
+//            HStack {
+//                Text("Tap the")
+//                Image(systemName: "square.and.pencil")
+//                Text("button to create a new note")
+//            }.placeholderForegroundColor()
+//        }.showIf(condition: data.notes.count == 0 && !isSearching)
     }
     
     // how to return HStack or VStack as a view
