@@ -13,6 +13,7 @@ struct FolderView: View {
     @EnvironmentObject var data: DataManager
     @State private var selectedUrl: URL?
     @State var showingFolderEdit = false
+    @State var shouldAlertForFolderDelete = false
     
     var body: some View {
         
@@ -37,11 +38,6 @@ struct FolderView: View {
                                 
                                 FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url, newFolderName: folder.id)
                                     .environmentObject(data)
-//                                FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url)
-//                                    .onDisappear() {
-//                                        data.refresh(url: data.getCurrentUrl())
-//                                    }
-//                                    .environmentObject(data)
                                     
                             }
                         
@@ -58,7 +54,7 @@ struct FolderView: View {
                         
                         
                         Button(action: {
-                            // enable geolocation
+                            shouldAlertForFolderDelete.toggle()
                         }) {
                             Text("Delete Folder")
                             Image(systemName: "trash")
@@ -67,6 +63,11 @@ struct FolderView: View {
                     
                     
                     
+                }
+                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(folder.id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                    deleteFolder(id: folder.id)
+                    
+                }, secondaryButton: .cancel())
                 }
                 
                 
@@ -91,7 +92,23 @@ struct FolderView: View {
         }.showIf(condition: data.folders.count == 0)
     }
     
-    
+    func deleteFolder(id:String) {
+        
+        if let index = data.folders.firstIndex(where: { $0.id == id }) {
+            
+            do {
+                try FileManager.default.removeItem(at: data.folders[index].url
+                )
+            }
+            catch {
+                // failed
+                print("Failed to delete directory: \(error).")
+            }
+            
+            data.folders.remove(at: index)
+
+        }            
+    }
     
     func customBinding() -> Binding<URL?> {
         let binding = Binding<URL?>(get: {
