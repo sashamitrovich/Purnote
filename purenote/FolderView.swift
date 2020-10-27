@@ -34,17 +34,29 @@ struct FolderView: View {
                                         .fontWeight(.semibold)
                                         .font(.title3)
                                         .foregroundColor(Color(UIColor.label))
+                                    Spacer()
+                                    Image(systemName: "chevron.forward")
+                                        .foregroundColor(Color(UIColor.placeholderText))
+                                        .padding(.trailing, 8.0)
+                                        
+                                        
+//                                        .frame(alignment: .trailing)
+                                    
                                 }.padding(.leading, 6.0).padding(.top, 6).padding(.bottom,6)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                
+                                .onLongPressGesture {
+                                    print("Long pressed!")
+                                }
                             }
+
                         }
+                        
                         .background(Color(UIColor.systemGray5), alignment: .leading)
                         .cornerRadius(5)
                         
                         Spacer(minLength: 6)
                     }
+
                 }
             }
         }.showIf(condition: data.folders.count > 0)

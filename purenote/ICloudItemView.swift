@@ -59,10 +59,7 @@ struct ICloudItemView: View {
             /* error handling here */
             print("Unexpected error: \(error).")
         }
-        
 
-        //
-        //
         // wait for item to download
         
         // Delete the "." which is at the beginning of the icloud file name
@@ -113,5 +110,6 @@ struct ICloudItemView_Previews: PreviewProvider {
     static var previews: some View {
         ICloudItemView(note: DataManager.sampleDataManager().notes[0])
             .environmentObject(DataManager.sampleDataManager())
+            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "")))
     }
 }

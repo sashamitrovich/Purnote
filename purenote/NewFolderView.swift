@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewFolderView: View {
     @EnvironmentObject var data: DataManager
-    @State private var folderName: String = ""
+    @State var folderName: String = ""
     @Binding var showSheetView: Bool
     @State var shouldAlertForEmptyFolderName = false
 
@@ -63,6 +63,6 @@ struct NewFolderView: View {
 
 struct NewFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        NewFolderView(showSheetView: .constant(true), url: URL(fileURLWithPath: "/new/path")).environmentObject(DataManager.sampleDataManager())
+        NewFolderView(folderName: "", showSheetView: .constant(true), url: URL(fileURLWithPath: "/new/path")).environmentObject(DataManager.sampleDataManager())
     }
 }
