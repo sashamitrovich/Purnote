@@ -11,7 +11,6 @@
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
 		3220525D25359F8000A67FCF /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525A25359F8000A67FCF /* ListRow.swift */; };
-		322052622535A5B500A67FCF /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 322052612535A5B500A67FCF /* SwiftUIRefresh */; };
 		328F2CE62535A9720053D6EC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524F25359F7200A67FCF /* DataManager.swift */; };
 		328F2CE72535A9720053D6EC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525025359F7200A67FCF /* Item.swift */; };
 		328F2CE82535A9720053D6EC /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525125359F7200A67FCF /* Folder.swift */; };
@@ -19,7 +18,6 @@
 		328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */; };
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
-		4B1B149D2539F3C700B5F0D8 /* Parma in Frameworks */ = {isa = PBXBuildFile; productRef = 4B1B149C2539F3C700B5F0D8 /* Parma */; };
 		4B262AAE2541B25500B2BD22 /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B262AAD2541B25500B2BD22 /* StringProtocol.swift */; };
 		4B262AB12541BA6000B2BD22 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B262AB02541BA6000B2BD22 /* SearchResultsView.swift */; };
 		4B337C55253856290094A19F /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B337C54253856290094A19F /* SampleData.swift */; };
@@ -33,15 +31,17 @@
 		4B3EAF04253F258B00CBCB2B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAF00253F1F6C00CBCB2B /* String.swift */; };
 		4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAF0A253F295100CBCB2B /* SearchBar.swift */; };
 		4B5FF2CF254196AB00EAD5AF /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5FF2CE254196AB00EAD5AF /* CharacterSet.swift */; };
+		4B85F816254836B100755CFC /* AlertTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85F815254836B100755CFC /* AlertTest.swift */; };
 		4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */; };
 		4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A63253ED05300521ABF /* SplashSummary.swift */; };
 		4BB09A68253ED43600521ABF /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A67253ED43600521ABF /* Splash.swift */; };
-		4BBE309F254591A4002AAE4A /* SplashTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBE309E254591A4002AAE4A /* SplashTest.swift */; };
+		4BB9DC5425484B9F00584334 /* Parma in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5325484B9F00584334 /* Parma */; };
+		4BB9DC5825484BE100584334 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5725484BE100584334 /* Introspect */; };
+		4BB9DC5C25484C3800584334 /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5B25484C3800584334 /* SwiftUIRefresh */; };
 		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
 		4BC41071253DBC2300AC8293 /* NewFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41070253DBC2300AC8293 /* NewFolderView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
-		4BF6BA3B254704DE00192511 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF6BA3A254704DD00192511 /* Form.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,15 +74,14 @@
 		4B3EAF00253F1F6C00CBCB2B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4B3EAF0A253F295100CBCB2B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4B5FF2CE254196AB00EAD5AF /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
+		4B85F815254836B100755CFC /* AlertTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTest.swift; sourceTree = "<group>"; };
 		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
 		4BB09A63253ED05300521ABF /* SplashSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashSummary.swift; sourceTree = "<group>"; };
 		4BB09A67253ED43600521ABF /* Splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
-		4BBE309E254591A4002AAE4A /* SplashTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTest.swift; sourceTree = "<group>"; };
 		4BC41065253DB00000AC8293 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4BC4106D253DB92300AC8293 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		4BC41070253DBC2300AC8293 /* NewFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
-		4BF6BA3A254704DD00192511 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +89,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B1B149D2539F3C700B5F0D8 /* Parma in Frameworks */,
-				322052622535A5B500A67FCF /* SwiftUIRefresh in Frameworks */,
+				4BB9DC5C25484C3800584334 /* SwiftUIRefresh in Frameworks */,
+				4BB9DC5425484B9F00584334 /* Parma in Frameworks */,
+				4BB9DC5825484BE100584334 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,8 +186,7 @@
 		4B5609F0253D7E2D0050C211 /* playground */ = {
 			isa = PBXGroup;
 			children = (
-				4BBE309E254591A4002AAE4A /* SplashTest.swift */,
-				4BF6BA3A254704DD00192511 /* Form.swift */,
+				4B85F815254836B100755CFC /* AlertTest.swift */,
 			);
 			path = playground;
 			sourceTree = "<group>";
@@ -231,8 +230,9 @@
 			);
 			name = Purnote;
 			packageProductDependencies = (
-				322052612535A5B500A67FCF /* SwiftUIRefresh */,
-				4B1B149C2539F3C700B5F0D8 /* Parma */,
+				4BB9DC5325484B9F00584334 /* Parma */,
+				4BB9DC5725484BE100584334 /* Introspect */,
+				4BB9DC5B25484C3800584334 /* SwiftUIRefresh */,
 			);
 			productName = purenote;
 			productReference = 32EAC58625350C49000EE69F /* Purnote.app */;
@@ -265,8 +265,9 @@
 			);
 			mainGroup = 32731B36252767DB0031CADD;
 			packageReferences = (
-				327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
-				4B1B149B2539F3C700B5F0D8 /* XCRemoteSwiftPackageReference "Parma" */,
+				4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */,
+				4BB9DC5625484BE100584334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				4BB9DC5A25484C3800584334 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
 			);
 			productRefGroup = 32731B40252767DB0031CADD /* Products */;
 			projectDirPath = "";
@@ -300,7 +301,6 @@
 				4B3EAF04253F258B00CBCB2B /* String.swift in Sources */,
 				4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */,
 				4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */,
-				4BBE309F254591A4002AAE4A /* SplashTest.swift in Sources */,
 				4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */,
 				328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */,
 				4BC4106E253DB92300AC8293 /* View.swift in Sources */,
@@ -311,11 +311,11 @@
 				328F2CE92535A9720053D6EC /* Note.swift in Sources */,
 				4B5FF2CF254196AB00EAD5AF /* CharacterSet.swift in Sources */,
 				4B262AAE2541B25500B2BD22 /* StringProtocol.swift in Sources */,
-				4BF6BA3B254704DE00192511 /* Form.swift in Sources */,
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				4B34B6A025404CAB00B9A05E /* SearchView.swift in Sources */,
 				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
+				4B85F816254836B100755CFC /* AlertTest.swift in Sources */,
 				4B262AB12541BA6000B2BD22 /* SearchResultsView.swift in Sources */,
 				4B3EAEE7253EE19100CBCB2B /* SearchIndex.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
@@ -454,7 +454,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -464,7 +464,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.13;
+				MARKETING_VERSION = 0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -479,7 +479,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -489,7 +489,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.13;
+				MARKETING_VERSION = 0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -521,34 +521,47 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */ = {
+		4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/timbersoftware/SwiftUIRefresh.git";
+			repositoryURL = "git@github.com:dasautoooo/Parma.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		4BB9DC5625484BE100584334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vukrado/SwiftUI-Introspect";
+			requirement = {
+				branch = TextEditor;
+				kind = branch;
+			};
+		};
+		4BB9DC5A25484C3800584334 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:siteline/SwiftUIRefresh.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.0.3;
 			};
 		};
-		4B1B149B2539F3C700B5F0D8 /* XCRemoteSwiftPackageReference "Parma" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dasautoooo/Parma";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		322052612535A5B500A67FCF /* SwiftUIRefresh */ = {
+		4BB9DC5325484B9F00584334 /* Parma */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 327F37522530315D00754250 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
-			productName = SwiftUIRefresh;
-		};
-		4B1B149C2539F3C700B5F0D8 /* Parma */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4B1B149B2539F3C700B5F0D8 /* XCRemoteSwiftPackageReference "Parma" */;
+			package = 4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */;
 			productName = Parma;
+		};
+		4BB9DC5725484BE100584334 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BB9DC5625484BE100584334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		4BB9DC5B25484C3800584334 /* SwiftUIRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BB9DC5A25484C3800584334 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
+			productName = SwiftUIRefresh;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -27,6 +27,10 @@ struct NoteNew: View {
                     
                     
                     TextEditor(text: $newNote.content)
+                        .introspectTextEditor { tE in
+                            tE.becomeFirstResponder()
+                        }
+                    
                     
                     if newNote.content == "" {
                         Text("Type your new note here")
@@ -62,6 +66,6 @@ struct NewNote_Previews: PreviewProvider {
     @State static var newNote = Note(type: .Folder)
     static var previews: some View {
         let newNote = Note(type: .Folder)
-        NoteNew(isEditing: .constant(true), newNote: newNote).environmentObject(DataManager.sampleDataManager())
+        NoteNew(isEditing: .constant(true), newNote: DataManager.sampleDataManager().notes[0]).environmentObject(DataManager.sampleDataManager())
     }
 }

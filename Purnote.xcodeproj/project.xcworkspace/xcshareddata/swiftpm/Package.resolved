@@ -12,7 +12,7 @@
       },
       {
         "package": "Parma",
-        "repositoryURL": "https://github.com/dasautoooo/Parma",
+        "repositoryURL": "git@github.com:dasautoooo/Parma.git",
         "state": {
           "branch": null,
           "revision": "5aa1de6cdbbd37a38d56f3b55bed94d1dc48ec96",
@@ -21,16 +21,16 @@
       },
       {
         "package": "Introspect",
-        "repositoryURL": "https://github.com/siteline/SwiftUI-Introspect.git",
+        "repositoryURL": "https://github.com/vukrado/SwiftUI-Introspect",
         "state": {
-          "branch": null,
-          "revision": "f1ec9da347a7fbe53c520d35434f6c2295650bd5",
-          "version": "0.1.1"
+          "branch": "TextEditor",
+          "revision": "079ff4daafa07e1ca5825462a890c23bde7f34be",
+          "version": null
         }
       },
       {
         "package": "SwiftUIRefresh",
-        "repositoryURL": "https://github.com/timbersoftware/SwiftUIRefresh.git",
+        "repositoryURL": "git@github.com:siteline/SwiftUIRefresh.git",
         "state": {
           "branch": null,
           "revision": "fa8fac7b5eb5c729983a8bef65f094b5e0d12014",
