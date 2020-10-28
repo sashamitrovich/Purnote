@@ -13,7 +13,10 @@ struct NoteView: View {
     @EnvironmentObject var index : SearchIndex
     @State private var showSheetView = false
     var isSearching = false
-    @State private var dragAmount = CGSize.zero
+
+    @State var showingDirectoryPicker = false
+
+    @State var noteToMove = Note(type: .Note)
     
     var body: some View {
                 
@@ -49,16 +52,36 @@ struct NoteView: View {
                                             .environmentObject(self.data)
                                     }) {
                         ListRow(note: note).environmentObject(self.data)
+                    }
 
-//                            .onDrag({
-//                                print("dragging")
-//                                return NSItemProvider(object: note as Note as! NSItemProviderWriting)
-//                            })
-
+                    .contextMenu {
+                        Button(action: {
+                            noteToMove = note
+                            showingDirectoryPicker.toggle()
+                        }) {
+                            Text("Move Note")
+                            Image(systemName: "folder")
+                        }
+                    }
+                    .sheet(isPresented: $showingDirectoryPicker) {
+                        
+                        DocumentPickerViewController  { url in
                             
+                            let newNoteUrl : URL = url.appendingPathComponent(note.id)
                             
-                           
-                    }.showIf(condition: note.isLocal)
+                            do {
+                                try FileManager.default.moveItem(at: noteToMove.url, to: newNoteUrl)
+                            }
+                            catch {
+                                // failed
+                                print("Failed to move file: \(error).")
+                            }
+                            
+                            data.refresh(url: data.getCurrentUrl())
+                        }
+                        
+                    }
+                    .showIf(condition: note.isLocal)
                     
                 
                 ICloudItemView(note : note)
@@ -69,29 +92,23 @@ struct NoteView: View {
             
             
         }
-        .onMove(perform: { indices, newOffset in
-            print("moving")
-        })
+        
+
         .onDelete(perform: deleteItems).padding(.leading, 5.0)
         
         
-//        VStack {
-//            HStack {
-//                Text("Tap the")
-//                Image(systemName: "square.and.pencil")
-//                Text("button to create a new note")
-//            }.placeholderForegroundColor()
-//        }.showIf(condition: data.notes.count == 0 && !isSearching)
+        VStack {
+            HStack {
+                Text("Tap the")
+                Image(systemName: "square.and.pencil")
+                Text("button to create a new note")
+            }.placeholderForegroundColor()
+        }.showIf(condition: data.notes.count == 0 && !isSearching)
     }
     
     // how to return HStack or VStack as a view
     // https://stackoverflow.com/a/59663108/1393362
 
-    
-    func move(from source: IndexSet, to destination: Int) {
-        //        users.move(fromOffsets: source, toOffset: destination)
-        print("moving!")
-    }
     
     func deleteItems(at offsets: IndexSet) {
         

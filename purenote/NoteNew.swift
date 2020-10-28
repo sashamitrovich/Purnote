@@ -30,15 +30,7 @@ struct NoteNew: View {
                         .introspectTextEditor { tE in
                             tE.becomeFirstResponder()
                         }
-                    
-                    
-                    if newNote.content == "" {
-                        Text("Type your new note here")
-                            .foregroundColor(Color(UIColor.placeholderText))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 12)
-                    }
-                    
+                                                            
                 }
                 .navigationBarItems(trailing:  Button(action: {
                     if newNote.content != "" {
