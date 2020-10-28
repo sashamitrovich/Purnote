@@ -14,6 +14,7 @@ struct FolderView: View {
     @State private var selectedUrl: URL?
     @State var showingFolderEdit = false
     @State var shouldAlertForFolderDelete = false
+    @State var folderToDelete : Folder = Folder(id: "", url: URL(fileURLWithPath: ""))
     
     var body: some View {
         
@@ -38,7 +39,7 @@ struct FolderView: View {
                                 
                                 FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url, newFolderName: folder.id)
                                     .environmentObject(data)
-                                    
+                                
                             }
                         
                         
@@ -55,6 +56,7 @@ struct FolderView: View {
                         
                         Button(action: {
                             shouldAlertForFolderDelete.toggle()
+                            folderToDelete = folder
                         }) {
                             Text("Delete Folder")
                             Image(systemName: "trash")
@@ -64,8 +66,8 @@ struct FolderView: View {
                     
                     
                 }
-                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(folder.id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                    deleteFolder(id: folder.id)
+                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(folderToDelete.id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                    deleteFolder(id: folderToDelete.id)
                     
                 }, secondaryButton: .cancel())
                 }
@@ -73,15 +75,8 @@ struct FolderView: View {
                 
             }
             
-            
-            
-            
         }
         .listStyle(PlainListStyle())
-        
-        
-        
-        
         
         VStack {
             HStack {
@@ -106,7 +101,7 @@ struct FolderView: View {
             }
             
             data.folders.remove(at: index)
-
+            
         }            
     }
     
@@ -122,6 +117,6 @@ struct FolderView: View {
 
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
-        FolderView().environmentObject(DataManager.sampleDataManager())
+        FolderView( folderToDelete: DataManager.sampleDataManager().folders[0]).environmentObject(DataManager.sampleDataManager())
     }
 }
