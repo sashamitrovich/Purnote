@@ -17,7 +17,6 @@ struct FolderEdit: View {
     @State var newFolderName : String = ""
     
     func renameFolder() {
-        //        print ("creating new folder at:"+url.path)
         
         let oldUrl = url
         let newUrl = url.deletingLastPathComponent().appendingPathComponent(newFolderName)

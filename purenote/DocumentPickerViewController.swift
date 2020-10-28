@@ -28,7 +28,8 @@ struct DocumentPickerViewController: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let controller = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
         controller.delegate = context.coordinator
-        controller.directoryURL = URL(fileURLWithPath: "/private/var/mobile/Library/Mobile Documents/iCloud~com~mitrovic~purnote/Documents")
+        
+        controller.directoryURL = iCloudConnection.getConnection().rootUrl
         return controller
     }
     
