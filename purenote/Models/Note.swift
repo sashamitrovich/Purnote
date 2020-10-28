@@ -8,9 +8,8 @@
 import Foundation
     
 
-struct Note: Identifiable, Equatable, Item {
+class Note: NSObject, Identifiable {
 
-    
     
     var type: ItemType = .Note
     

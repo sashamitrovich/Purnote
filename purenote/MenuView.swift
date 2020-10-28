@@ -20,6 +20,7 @@ struct MenuView: View {
     
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
+    @State var editMode: EditMode = .inactive
     
     
     var body: some View {
@@ -29,62 +30,66 @@ struct MenuView: View {
                 .environmentObject(index)
             List {
                 FolderView().environmentObject(data)
-//                    .padding(.bottom, 5.0)
                     .showIf(condition: !isSearching)
-                    .listStyle(PlainListStyle())
                 
-                NoteView().environmentObject(data)
+                
+                NoteView().environmentObject(data)                    
                     .showIf(condition: !isSearching)
             }
-            .listStyle(PlainListStyle())
-
+            .navigationBarItems( trailing: EditButton())
+            .environment(\.editMode, $editMode)
+    
             
         }
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                HStack {
+                    Button(action: {
+                        searchText = ""
+                        data.refresh(url: data.getCurrentUrl())
+                        self.isSearching.toggle()
+                        
+                    }) {
+                        Image(systemName: "magnifyingglass").systemOrange().font(.title)
+                    }
+                    
+                    Spacer(minLength: 20)
+                    
+                    Button(action: {
+                        self.showingNewFolder.toggle()
+                    }) {
+                        Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
+                        
+                    }.sheet(isPresented: $showingNewFolder) {
+                        
+                        FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
+                            .environmentObject(data)
+                        
+                        
+                    }
+                    Spacer(minLength: 20)
+                    Button(action: {
+                        self.isCreatingNewNote.toggle()
+                    }) {
+                        Image(systemName: "square.and.pencil").systemOrange().font(.title)
+                        
+                    }.sheet(isPresented: $isCreatingNewNote) {
+                        
+                        NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                            .environmentObject(data)
+                            .environmentObject(index)
+                        
+                    }
+             
+                    
+                    
+                }
+            }
+        }
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
-        .navigationBarItems(trailing:
-                                HStack {
-                                    Button(action: {
-                                        searchText = ""
-                                        data.refresh(url: data.getCurrentUrl())
-                                        self.isSearching.toggle()
-                                        
-                                    }) {
-                                        Image(systemName: "magnifyingglass").systemOrange().font(.title)
-                                    }
-                                        
-                                    Spacer(minLength: 20)
-                                    
-                                    Button(action: {
-                                        self.showingNewFolder.toggle()
-                                    }) {
-                                        Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
-                                        
-                                    }.sheet(isPresented: $showingNewFolder) {
-                                        
-                                        FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
-                                            .environmentObject(data)
-                                            
-                                        
-                                    }
-                                    Spacer(minLength: 20)
-                                    Button(action: {
-                                        self.isCreatingNewNote.toggle()
-                                    }) {
-                                        Image(systemName: "square.and.pencil").systemOrange().font(.title)
-                                        
-                                    }.sheet(isPresented: $isCreatingNewNote) {
-                                        
-                                        NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
-                                            .environmentObject(data)
-                                            .environmentObject(index)
-                                        
-                                    }
-                                    
-                                }
-        )
+        
         // because we want to remove the default padding that the navigationBarItems creates
         // https://stackoverflow.com/a/63225776/1393362
-        .listStyle(PlainListStyle())
         .pullToRefresh(isShowing: $isShowing) {
             if isViewDisplayed {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -123,6 +128,7 @@ struct MenuView: View {
             return text
         }
     }
+
     
 }
 

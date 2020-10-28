@@ -13,6 +13,7 @@ struct NoteView: View {
     @EnvironmentObject var index : SearchIndex
     @State private var showSheetView = false
     var isSearching = false
+    @State private var dragAmount = CGSize.zero
     
     var body: some View {
                 
@@ -48,8 +49,17 @@ struct NoteView: View {
                                             .environmentObject(self.data)
                                     }) {
                         ListRow(note: note).environmentObject(self.data)
+
+//                            .onDrag({
+//                                print("dragging")
+//                                return NSItemProvider(object: note as Note as! NSItemProviderWriting)
+//                            })
+
+                            
+                            
+                           
                     }.showIf(condition: note.isLocal)
-               
+                    
                 
                 ICloudItemView(note : note)
                     .environmentObject(self.data)
@@ -57,7 +67,13 @@ struct NoteView: View {
                     .frame(maxWidth: .infinity, alignment: .leading).showIf(condition: !note.isLocal)
             }
             
-        }.onDelete(perform: deleteItems).padding(.leading, 5.0)
+            
+        }
+        .onMove(perform: { indices, newOffset in
+            print("moving")
+        })
+        .onDelete(perform: deleteItems).padding(.leading, 5.0)
+        
         
 //        VStack {
 //            HStack {
@@ -70,6 +86,12 @@ struct NoteView: View {
     
     // how to return HStack or VStack as a view
     // https://stackoverflow.com/a/59663108/1393362
+
+    
+    func move(from source: IndexSet, to destination: Int) {
+        //        users.move(fromOffsets: source, toOffset: destination)
+        print("moving!")
+    }
     
     func deleteItems(at offsets: IndexSet) {
         
@@ -91,7 +113,12 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView().environmentObject(DataManager.sampleDataManager())
+        List {
+            NoteView()
+                .environmentObject(DataManager.sampleDataManager())
+                .environmentObject(SearchIndex.init(rootUrl: URL(fileURLWithPath: "/")))
+        }
+
     }
 }
 
