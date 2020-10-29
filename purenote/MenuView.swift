@@ -25,10 +25,12 @@ struct MenuView: View {
     
     var body: some View {
         VStack {
-            SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
-                .environmentObject(data)
-                .environmentObject(index)
+            
             List {
+                SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
+                    .environmentObject(data)
+                    .environmentObject(index)
+                
                 FolderView().environmentObject(data)
                     .showIf(condition: !isSearching)
                 

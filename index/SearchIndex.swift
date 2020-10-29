@@ -84,9 +84,6 @@ class SearchIndex : ObservableObject {
         // https://medium.com/@jacqschweiger/using-character-sets-in-swift-945b99ba17e
         let tokens = content.lowercased().components(separatedBy: CharacterSet.punctuationCharacters.union(CharacterSet.whitespacesAndNewlines))
         
-
-   
-        
         for token in tokens {
             if token != "" {
                 addTerm(term: token, path: path)
