@@ -58,7 +58,7 @@ struct MenuView: View {
                     }) {
                         Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
                         
-                    }.sheet(isPresented: $showingNewFolder) {
+                    }.fullScreenCover(isPresented: $showingNewFolder) {
                         
                         FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
                             .environmentObject(data)

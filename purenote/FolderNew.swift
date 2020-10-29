@@ -33,25 +33,39 @@ struct FolderNew: View {
     var body: some View {
         
         NavigationView {
-                TextField("Enter a name for your new folder", text: $folderName)
-                    .foregroundColor(Color(UIColor.label))
+//                TextField("Enter a name for your new folder", text: $folderName)
+//                    .foregroundColor(Color(UIColor.label))
+                    
+            FolderEditName(newFolderName: $folderName)
+
 
             .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
             .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
             
             .navigationBarTitle(Text("Create New Folder"), displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                if folderName != String("") {
-                    createFolder()
-                }
-                else {
-                    shouldAlertForEmptyFolderName.toggle()
-                }
+                    .navigationBarItems(trailing: HStack {
+                        
+                        Button(action: {
+                            self.showSheetView = false
+                        })
+                        {
+                            Text("Cancel").bold()
+                        }
+                        Spacer(minLength: 20)
+                        
+                        Button(action: {
+                    if folderName != String("") {
+                        createFolder()
+                    }
+                    else {
+                        shouldAlertForEmptyFolderName.toggle()
+                    }
 
-                
-            }) {
-                Text("Save").bold()
-            })
+                    
+                }) {
+                    Text("Save").bold()
+                        }
+                    })
         }
         .alert(isPresented: $shouldAlertForEmptyFolderName) {
             Alert(title: Text("Can't create folder"), message: Text("Please enter folder name"), dismissButton: .default(Text("Got it!")))

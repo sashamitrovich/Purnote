@@ -21,6 +21,8 @@ struct NoteEdit: View {
         NavigationView {
             
             TextEditor(text: $data.notes[noteIndex].content)
+                
+                
                 .navigationBarItems(trailing:  Button(action: {
                     updateNote()
                     presentationMode.wrappedValue.dismiss()

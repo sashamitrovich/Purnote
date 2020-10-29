@@ -11,21 +11,21 @@ struct FolderEditName: View {
     @Binding var newFolderName:String
     
     var body: some View {
-        Color(UIColor.systemGray6)
-            .ignoresSafeArea() // Ignore just for the color
+        Color(.systemFill)
+//            .ignoresSafeArea() // Ignore just for the color https://stackoverflow.com/questions/56437036/swiftui-how-do-i-change-the-background-color-of-a-view
             .overlay(
                 VStack(spacing: 20) {
                     HStack {
                         Image(systemName: "folder")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.black).font(.largeTitle)
+                            .foregroundColor(.accentColor).font(.largeTitle)
                     }
                     .frame(width: 100, height: 100, alignment: .center)
      
                         
-                    TextField("Edit here", text: $newFolderName)
-                        .background(Color.white)
+                    TextField("Folder name", text: $newFolderName)
+                        .background(Color(.quaternarySystemFill))
                         .font(.title)
                         .frame(width: 300, alignment: .center)
                         .cornerRadius(5)
@@ -37,6 +37,13 @@ struct FolderEditName: View {
 
 struct FolderEditName_Previews: PreviewProvider {
     static var previews: some View {
-        FolderEditName(newFolderName: .constant("new folder"))
+       
+            FolderEditName(newFolderName: .constant("new folder"))
+                .environment(\.colorScheme, .dark)
+            
+            FolderEditName(newFolderName: .constant("new folder"))
+                .environment(\.colorScheme, .light)
+       
+
     }
 }

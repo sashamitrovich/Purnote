@@ -46,9 +46,10 @@ struct FolderEdit: View {
         NavigationView {
             VStack(alignment: .center) {
                 HStack(alignment: .center) {
-//                    TextField("Enter new folder name", text: $newFolderName)
-//                        .foregroundColor(Color(UIColor.label))
+                    //                    TextField("Enter new folder name", text: $newFolderName)
+                    //                        .foregroundColor(Color(UIColor.label))
                     FolderEditName(newFolderName: $newFolderName)
+                        
                         .introspectTextField() { tF in
                             tF.becomeFirstResponder()
                         }
@@ -58,16 +59,31 @@ struct FolderEdit: View {
                         .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
                         
                         .navigationBarTitle(Text("Rename Folder"), displayMode: .inline)
-                        .navigationBarItems(trailing: Button(action: {
-                            if folderName != String("") {
-                                renameFolder()
-                            }
-                            else {
-                                shouldAlertForEmptyFolderName.toggle()
-                            }                                                        
-                        }) {
-                            Text("Save").bold()
-                        })
+                        .navigationBarItems(trailing:
+                                                
+                                                HStack {
+                                                    Button(action: {
+                                                        self.showSheetView = false
+                                                    }) {
+                                                        Text("Cancel").bold()
+                                                    }
+                                                    
+                                                    Spacer(minLength: 20)
+                                                    
+                                                    Button(action: {
+                                                        if folderName != String("") {
+                                                            renameFolder()
+                                                        }
+                                                        else {
+                                                            shouldAlertForEmptyFolderName.toggle()
+                                                        }
+                                                    }) {
+                                                        Text("Save").bold()
+                                                    } 
+                                                }
+                                            
+                        )
+                    
                 }
             }
         }
