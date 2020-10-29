@@ -17,7 +17,7 @@ struct SearchResultsView: View {
     @Binding var searchText: String
     
     var body: some View {
-        List { 
+        List {
             ForEach(notes) { note in
                 
                 VStack {
@@ -54,6 +54,7 @@ struct SearchResultsView: View {
                 
             }
         }
+       
 //        .onDelete(perform: deleteItems).padding(.leading, 5.0)
     }
     

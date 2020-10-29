@@ -21,64 +21,69 @@ struct MenuView: View {
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
     
+    @ViewBuilder
     var body: some View {
         VStack {
             
-           
+            if isSearching {
                 SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
                     .environmentObject(data)
                     .environmentObject(index)
-            List {
-                FolderView().environmentObject(data)
-                    .showIf(condition: !isSearching)
-                
-                
-                NotesList()
-                    .environmentObject(data)
-                    .environmentObject(index)
-                    .showIf(condition: !isSearching)
             }
-            .navigationBarItems( trailing:  HStack {
-                Button(action: {
-                    searchText = ""
-                    data.refresh(url: data.getCurrentUrl())
-                    self.isSearching.toggle()
+           
+            else {
+                List {
+                    FolderView().environmentObject(data)
                     
-                }) {
-                    Image(systemName: "magnifyingglass").systemOrange().font(.title)
-                }
-                
-                Spacer(minLength: 20)
-                
-                Button(action: {
-                    self.showingNewFolder.toggle()
-                }) {
-                    Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
-                    
-                }.sheet(isPresented: $showingNewFolder) {
-                    
-                    FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
-                        .environmentObject(data)
-                    
-                    
-                }
-                Spacer(minLength: 20)
-                Button(action: {
-                    self.isCreatingNewNote.toggle()
-                }) {
-                    Image(systemName: "square.and.pencil").systemOrange().font(.title)
-                    
-                }.fullScreenCover(isPresented: $isCreatingNewNote) {
-                    
-                    NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                    NotesList()
                         .environmentObject(data)
                         .environmentObject(index)
                     
                 }
-                
-                
-                
-            })
+                //            .showIf(condition: !isSearching)
+                .navigationBarItems( trailing:  HStack {
+                    Button(action: {
+                        searchText = ""
+                        data.refresh(url: data.getCurrentUrl())
+                        self.isSearching.toggle()
+                        
+                    }) {
+                        Image(systemName: "magnifyingglass").systemOrange().font(.title)
+                    }
+                    
+                    Spacer(minLength: 20)
+                    
+                    Button(action: {
+                        self.showingNewFolder.toggle()
+                    }) {
+                        Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
+                        
+                    }.sheet(isPresented: $showingNewFolder) {
+                        
+                        FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
+                            .environmentObject(data)
+                        
+                        
+                    }
+                    Spacer(minLength: 20)
+                    Button(action: {
+                        self.isCreatingNewNote.toggle()
+                    }) {
+                        Image(systemName: "square.and.pencil").systemOrange().font(.title)
+                        
+                    }.fullScreenCover(isPresented: $isCreatingNewNote) {
+                        
+                        NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                            .environmentObject(data)
+                            .environmentObject(index)
+                        
+                    }
+                    
+                    
+                    
+                })
+            }
+
                 
         }
 

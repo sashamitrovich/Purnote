@@ -12,8 +12,27 @@ struct NotesList: View {
     @EnvironmentObject var index: SearchIndex
     @State var showingDirectoryPicker = false
     @State var noteToMove = Note(type: .Note)
+    var isSearching = false
+    
+    func deleteItems(at offsets: IndexSet) {
+        
+        for offset in offsets.enumerated() {
+            do {
+                try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
+            }
+            catch {
+                // failed
+                print("Failed to delete notes: \(error).")
+            }
+            
+        }
+        data.notes.remove(atOffsets: offsets)
+        index.indexall()
+        
+    }
     
     var body: some View {
+        
         ForEach(data.notes) { note in
             NavigationLink(destination:
                             NoteView(note: note).environmentObject(data).environmentObject(index)
@@ -47,9 +66,22 @@ struct NotesList: View {
                 }
 
             }
-
             .showIf(condition: note.isLocal)
+            
+            ICloudItemView(note : note)
+                .environmentObject(self.data)
+                .environmentObject(self.index)
+                .frame(maxWidth: .infinity, alignment: .leading).showIf(condition: !note.isLocal)
 
         }
+        .onDelete(perform: deleteItems).padding(.leading, 5.0)
+        
+        VStack {
+            HStack {
+                Text("Tap the")
+                Image(systemName: "square.and.pencil")
+                Text("button to create a new note")
+            }.placeholderForegroundColor()
+        }.showIf(condition: data.notes.count == 0 && !isSearching)
     }
 }
