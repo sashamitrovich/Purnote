@@ -20,22 +20,22 @@ struct MenuView: View {
     
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
-//    @State var editMode: EditMode = .inactive
-    
     
     var body: some View {
         VStack {
             
-            List {
+           
                 SearchView(searchText: $searchText, isSearching: $isSearching).showIf(condition: isSearching)
                     .environmentObject(data)
                     .environmentObject(index)
-                
+            List {
                 FolderView().environmentObject(data)
                     .showIf(condition: !isSearching)
                 
                 
-                NoteView().environmentObject(data)                    
+                NotesList()
+                    .environmentObject(data)
+                    .environmentObject(index)
                     .showIf(condition: !isSearching)
             }
             .navigationBarItems( trailing:  HStack {
@@ -68,7 +68,7 @@ struct MenuView: View {
                 }) {
                     Image(systemName: "square.and.pencil").systemOrange().font(.title)
                     
-                }.sheet(isPresented: $isCreatingNewNote) {
+                }.fullScreenCover(isPresented: $isCreatingNewNote) {
                     
                     NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
                         .environmentObject(data)
@@ -79,11 +79,9 @@ struct MenuView: View {
                 
                 
             })
-//            .environment(\.editMode, $editMode)
-    
-            
+                
         }
-        .padding(.top, 5.0)
+
        
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
         
@@ -97,8 +95,6 @@ struct MenuView: View {
                     isShowing = false
                 }
             }
-            
-
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -107,7 +103,6 @@ struct MenuView: View {
                     index.indexall()
                     isShowing = false
                 }
-
             }
         }
         .onAppear() {

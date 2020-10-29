@@ -11,25 +11,23 @@ struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
     @State var note: Note
-    @Binding var showSheetView: Bool
+    @Environment(\.presentationMode) var presentationMode
     
     var noteIndex: Int {
         data.notes.firstIndex(where: { $0.id == note.id })!
     }
-
+    
     var body: some View {
         NavigationView {
-           
+            
             TextEditor(text: $data.notes[noteIndex].content)
-                    .navigationBarItems(trailing:  Button(action: {
-                                                                    
-                        updateNote()
-    
-                        
-                    }) {
-                        Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
-                    })
-   
+                .navigationBarItems(trailing:  Button(action: {
+                    updateNote()
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
+                })
+            
         }
     }
     
@@ -46,12 +44,11 @@ struct NoteEdit: View {
         }
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
-        self.showSheetView = false
     }
 }
 
-struct NoteDetail_Previews: PreviewProvider {
-    static var previews: some View {        
-        NoteEdit(note: DataManager.sampleDataManager().notes[0] , showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
-    }
-}
+//struct NoteDetail_Previews: PreviewProvider {
+//    static var previews: some View {        
+//        NoteEdit(note: DataManager.sampleDataManager().notes[0] , showSheetView: .constant(true) ).environmentObject(DataManager.sampleDataManager())
+//    }
+//}

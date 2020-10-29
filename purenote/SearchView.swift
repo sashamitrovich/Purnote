@@ -16,18 +16,19 @@ struct SearchView: View {
     
     var body: some View {
         
-        Group {
-            HStack {
-                SearchBar(text: $searchText, placeholder: "Search your notes here")
-                Button("Cancel", action: {
-                    isSearching.toggle()
-                })
+            Group {
+                HStack {
+                    SearchBar(text: $searchText, placeholder: "Search your notes here")
+                        .frame(maxWidth: 300)
+                    Button("Cancel", action: {
+                        isSearching.toggle()
+                    })
+                }
+                
+                SearchResultsView(notes: index.search(phrase: searchText), searchText: $searchText)
+                    .environmentObject(index)
+                    .environmentObject(data)
             }
-            
-            SearchResultsView(notes: index.search(phrase: searchText), searchText: $searchText)
-                .environmentObject(index)
-                .environmentObject(data)
-        }
     }
 }
 

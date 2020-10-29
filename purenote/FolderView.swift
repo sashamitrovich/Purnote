@@ -35,7 +35,7 @@ struct FolderView: View {
                             .font(.title3)
                             .foregroundColor(Color(UIColor.label))
                             
-                            .sheet(isPresented: $showingFolderEdit) {
+                            .fullScreenCover(isPresented: $showingFolderEdit) {
                                 
                                 FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url, newFolderName: folder.id)
                                     .environmentObject(data)

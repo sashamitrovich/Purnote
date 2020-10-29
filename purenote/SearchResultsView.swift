@@ -17,40 +17,42 @@ struct SearchResultsView: View {
     @Binding var searchText: String
     
     var body: some View {
-        ForEach(notes) { note in
-            
-            VStack {
+        List { 
+            ForEach(notes) { note in
                 
-                NavigationLink(destination:
-                                ScrollView {
-                                    Parma(note.content, render: MyRender())
-                                        .gesture(
-                                            TapGesture()
-                                                .onEnded { _ in
-                                                    showSheetView.toggle()
-                                                }
-                                        )
-                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                                        .padding(.leading, 5.0)
-                                        .navigationBarItems(trailing:  Button(action: {
-                                            showSheetView.toggle()
+                VStack {
+                    
+                    NavigationLink(destination:
+                                    ScrollView {
+                                        Parma(note.content, render: MyRender())
+                                            .gesture(
+                                                TapGesture()
+                                                    .onEnded { _ in
+                                                        showSheetView.toggle()
+                                                    }
+                                            )
+                                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                                            .padding(.leading, 5.0)
+                                            .navigationBarItems(trailing:  Button(action: {
+                                                showSheetView.toggle()
+                                                
+                                            }) {
+                                                Text("Edit").font(.title2).foregroundColor(Color(UIColor.systemOrange))
+                                                
+                                            }.sheet(isPresented: $showSheetView) {
+                                                
+                                                NoteEdit(note: note)
+                                                    .environmentObject(data)
+                                                
+                                            })
                                             
-                                        }) {
-                                            Text("Edit").font(.title2).foregroundColor(Color(UIColor.systemOrange))
-                                            
-                                        }.sheet(isPresented: $showSheetView) {
-                                            
-                                            NoteEdit(note: note, showSheetView: $showSheetView)
-                                                .environmentObject(data)
-                                            
-                                        })
-                                        
-                                        .environmentObject(DataManager(searchNotes: notes))
-                                }) {
-                    ListRow(note: note).environmentObject(DataManager(searchNotes: notes))
+                                            .environmentObject(DataManager(searchNotes: notes))
+                                    }) {
+                        ListRow(note: note).environmentObject(DataManager(searchNotes: notes))
+                    }
                 }
+                
             }
-            
         }
 //        .onDelete(perform: deleteItems).padding(.leading, 5.0)
     }

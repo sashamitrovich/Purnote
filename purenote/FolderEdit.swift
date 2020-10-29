@@ -44,29 +44,34 @@ struct FolderEdit: View {
     var body: some View {
         
         NavigationView {
-            TextField("Enter new folder name", text: $newFolderName)
-                .foregroundColor(Color(UIColor.label))
-                .introspectTextField() { tF in
-                    tF.becomeFirstResponder()
+            VStack(alignment: .center) {
+                HStack(alignment: .center) {
+//                    TextField("Enter new folder name", text: $newFolderName)
+//                        .foregroundColor(Color(UIColor.label))
+                    FolderEditName(newFolderName: $newFolderName)
+                        .introspectTextField() { tF in
+                            tF.becomeFirstResponder()
+                        }
+                        .ignoresSafeArea()
+                        
+                        .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
+                        .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
+                        
+                        .navigationBarTitle(Text("Rename Folder"), displayMode: .inline)
+                        .navigationBarItems(trailing: Button(action: {
+                            if folderName != String("") {
+                                renameFolder()
+                            }
+                            else {
+                                shouldAlertForEmptyFolderName.toggle()
+                            }                                                        
+                        }) {
+                            Text("Save").bold()
+                        })
                 }
-                
-                .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
-                .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
-                
-                .navigationBarTitle(Text("Rename Folder"), displayMode: .inline)
-                .navigationBarItems(trailing: Button(action: {
-                    if folderName != String("") {
-                        renameFolder()
-                    }
-                    else {
-                        shouldAlertForEmptyFolderName.toggle()
-                    }
-                    
-                    
-                }) {
-                    Text("Save").bold()
-                })
+            }
         }
+        
         .alert(isPresented: $shouldAlertForEmptyFolderName) {
             Alert(title: Text("Can't create folder"), message: Text("Please enter folder name"), dismissButton: .default(Text("Got it!")))
         }

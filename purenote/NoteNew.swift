@@ -35,6 +35,7 @@ struct NoteNew: View {
                 .navigationBarItems(trailing:  Button(action: {
                     if newNote.content != "" {
                         data.addSaveNote(newNote: &newNote)
+                        data.refresh(url: data.getCurrentUrl())
                         index.indexall()
                     }
                     self.isEditing = false

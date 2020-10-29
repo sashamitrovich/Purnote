@@ -14,9 +14,8 @@ struct AlertTest: View {
             .onTapGesture(perform: {
                 displayAlert.toggle()
             })
-            .alert(isPresented: $displayAlert) {
-                
-                Alert(title: Text("Can't create folder"), message: Text("Please enter folder name"), dismissButton: .default(Text("Got it!")))
+            .fileMover(isPresented: $displayAlert, file: URL(fileURLWithPath: "/")) {_ in 
+                print("completing move")
             }
     }
 }
