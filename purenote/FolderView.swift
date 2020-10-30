@@ -7,22 +7,25 @@
 
 import SwiftUI
 import UIKit
-
+import Introspect
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
     @State private var selectedUrl: URL?
     @State var showingFolderEdit = false
     @State var shouldAlertForFolderDelete = false
-    @State var folderToDelete : Folder = Folder(id: "", url: URL(fileURLWithPath: ""))
     
+    @State var folderIndexToHandle  = Int.max
+    
+    @ViewBuilder
     var body: some View {
         
-        
-        ForEach(data.folders) { folder in
-            HStack {
-                NavigationLink(destination: MenuView().environmentObject(DataManager(url: folder.url)),
-                               tag: folder.url, selection: self.customBinding()) {
+        ForEach(data.folders.indices) { index in
+            //                HStack {
+            
+            if !(showingFolderEdit && folderIndexToHandle == index) {
+                NavigationLink(destination: MenuView().environmentObject(DataManager(url: data.folders[index].url)),
+                               tag: data.folders[index].url, selection: self.customBinding()) {
                     
                     HStack {
                         Image(systemName: "folder")
@@ -30,24 +33,18 @@ struct FolderView: View {
                             // inspired by
                             // https://stackoverflow.com/a/59974025/1393362
                             .systemOrange()
-                        Text(folder.id)
+                        Text(data.folders[index].id)
                             .fontWeight(.semibold)
                             .font(.title3)
                             .foregroundColor(Color(UIColor.label))
-                            
-                            .fullScreenCover(isPresented: $showingFolderEdit) {
-                                
-                                FolderEdit(folderName: folder.id, showSheetView: $showingFolderEdit, url: folder.url, newFolderName: folder.id)
-                                    .environmentObject(data)
-                                
-                            }
-                        
-                        
                     }
                     
                     .contextMenu {
                         Button(action: {
                             showingFolderEdit.toggle()
+                            folderIndexToHandle = index
+                            print("folderIndexToHandle=\(String(describing: folderIndexToHandle))")
+                            print("clicked edit button")
                         }) {
                             Text("Rename Folder")
                             Image(systemName: "pencil")
@@ -56,7 +53,7 @@ struct FolderView: View {
                         
                         Button(action: {
                             shouldAlertForFolderDelete.toggle()
-                            folderToDelete = folder
+                            folderIndexToHandle = index
                         }) {
                             Text("Delete Folder")
                             Image(systemName: "trash")
@@ -65,26 +62,100 @@ struct FolderView: View {
                     
                     
                     
+                    
                 }
-                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(folderToDelete.id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                    deleteFolder(id: folderToDelete.id)
+                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(data.folders[folderIndexToHandle].id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                    deleteFolder(id: data.folders[folderIndexToHandle].id)
                     
                 }, secondaryButton: .cancel())
                 }
-                
-                
+                .showIf(condition: !(folderIndexToHandle == index && !showingFolderEdit))
+            }
+            
+            //                    .sheet(isPresented: $showingFolderEdit) {
+            //
+            //
+            //                                            let index = getIndex(id: folderIdToHandle ?? "")
+            //                                            FolderEdit(folderName: data.folders[index].id, showSheetView: $showingFolderEdit, url: data.folders[index].url, newFolderName: data.folders[index].id)
+            //                                                .environmentObject(data)
+            //
+            //                    }
+            
+            
+            
+            //                }
+            if showingFolderEdit && folderIndexToHandle == index {
+                HStack {
+                    TextField(data.folders[folderIndexToHandle].id, text: $data.folders[folderIndexToHandle].id, onCommit: {
+                        print ("commiting")
+                        renameFolder(index: index)
+                        folderIndexToHandle = Int.max
+                        showingFolderEdit = false
+                        
+                    }
+                    )
+                    .font(.title3)
+                    .introspectTextField() { tF in
+                        tF.becomeFirstResponder()
+                    }
+                    Spacer()
+                    Button(action:{
+                        showingFolderEdit.toggle()
+                        folderIndexToHandle = Int.max
+                    }) {
+                    Image(systemName: "xmark.circle")
+                        .foregroundColor(.red)
+                    }
+                }
             }
             
         }
         .listStyle(PlainListStyle())
         
-        VStack {
-            HStack {
-                Text("Tap the")
-                Image(systemName: "folder.badge.plus")
-                Text("button to create a new folder")
-            }.placeholderForegroundColor()
-        }.showIf(condition: data.folders.count == 0)
+        if data.folders.count == 0 {
+            VStack {
+                HStack {
+                    Text("Tap the")
+                    Image(systemName: "folder.badge.plus")
+                    Text("button to create a new folder")
+                }.placeholderForegroundColor()
+            }
+        }
+        
+                  
+        
+        
+    }
+    
+    func getIndex(id:String) -> Int{
+        print("folderIdToHandle=\(String(describing: folderIndexToHandle))")
+        
+        if let result = data.folders.firstIndex(where: { $0.id == id }) {
+            return result
+        }
+        
+        else {
+            return 0
+        }
+        
+    }
+    
+    func renameFolder(index: Int) {
+        
+        let oldUrl = data.folders[index].url
+        let newUrl = data.folders[index].url.deletingLastPathComponent().appendingPathComponent(data.folders[index].id)
+        
+        
+        do {
+            try FileManager.default.moveItem(at: oldUrl, to: newUrl)
+            
+            
+        }
+        catch {
+            // failed
+            print("Failed to rename directory: \(error).")
+        }
+
     }
     
     func deleteFolder(id:String) {
@@ -115,8 +186,8 @@ struct FolderView: View {
     }
 }
 
-struct FolderView_Previews: PreviewProvider {
-    static var previews: some View {
-        FolderView( folderToDelete: DataManager.sampleDataManager().folders[0]).environmentObject(DataManager.sampleDataManager())
-    }
-}
+//struct FolderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FolderView().environmentObject(DataManager.sampleDataManager())
+//    }
+//}

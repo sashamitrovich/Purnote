@@ -87,7 +87,6 @@ struct MenuView: View {
                 
         }
 
-       
         .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
         
         // because we want to remove the default padding that the navigationBarItems creates
