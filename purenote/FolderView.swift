@@ -72,6 +72,12 @@ struct FolderView: View {
             
             if showingFolderEdit && folderIndexToHandle == index {
                 HStack {
+                    Image(systemName: "folder")
+                        // my own modest Image extension
+                        // inspired by
+                        // https://stackoverflow.com/a/59974025/1393362
+                        .systemOrange()
+                    
                     TextField(data.folders[folderIndexToHandle].id, text: $data.folders[folderIndexToHandle].id, onCommit: {
 
                         renameFolder(index: index)

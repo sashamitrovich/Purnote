@@ -19,32 +19,39 @@ struct ICloudItemView: View {
     
     @ViewBuilder
     var body: some View {
-        HStack {
+        VStack(alignment: .leading) {
+            Text(note.date.toString())
+                .fontWeight(.light)
+                .multilineTextAlignment(.leading)
+//                .foregroundColor(Color(UIColor.placeholderText))
             
-            
-            Text(note.label)
-                .frame(maxWidth: .infinity, alignment: .leading)
-              
-            
-            if self.isDownloading {
-                ProgressView().progressViewStyle(CircularProgressViewStyle.init())
-            }
-            else {
-                Image(systemName: "icloud.and.arrow.down")
-                    .frame(alignment: .trailing)
-            }
-        }
-        .padding(.bottom, 10.0)
-        .padding(.top, 11.0)
-        .onTapGesture() {
-            if !isDownloading {
-                isDownloading.toggle()
+            HStack {
                 
-                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                    
-                    download()
+                
+                Text(note.label)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                  
+                
+                if self.isDownloading {
+                    ProgressView().progressViewStyle(CircularProgressViewStyle.init())
+                }
+                else {
+                    Image(systemName: "icloud.and.arrow.down")
+                        .frame(alignment: .trailing)
                 }
             }
+            .padding(.bottom, 10.0)
+//            .padding(.top, 1.0)
+            .onTapGesture() {
+                if !isDownloading {
+                    isDownloading.toggle()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        
+                        download()
+                    }
+                }
+        }
         }
     }
     
