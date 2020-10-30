@@ -43,8 +43,6 @@ struct FolderView: View {
                         Button(action: {
                             showingFolderEdit.toggle()
                             folderIndexToHandle = index
-                            print("folderIndexToHandle=\(String(describing: folderIndexToHandle))")
-                            print("clicked edit button")
                         }) {
                             Text("Rename Folder")
                             Image(systemName: "pencil")
@@ -72,22 +70,10 @@ struct FolderView: View {
                 .showIf(condition: !(folderIndexToHandle == index && !showingFolderEdit))
             }
             
-            //                    .sheet(isPresented: $showingFolderEdit) {
-            //
-            //
-            //                                            let index = getIndex(id: folderIdToHandle ?? "")
-            //                                            FolderEdit(folderName: data.folders[index].id, showSheetView: $showingFolderEdit, url: data.folders[index].url, newFolderName: data.folders[index].id)
-            //                                                .environmentObject(data)
-            //
-            //                    }
-            
-            
-            
-            //                }
             if showingFolderEdit && folderIndexToHandle == index {
                 HStack {
                     TextField(data.folders[folderIndexToHandle].id, text: $data.folders[folderIndexToHandle].id, onCommit: {
-                        print ("commiting")
+
                         renameFolder(index: index)
                         folderIndexToHandle = Int.max
                         showingFolderEdit = false
@@ -124,19 +110,6 @@ struct FolderView: View {
         
                   
         
-        
-    }
-    
-    func getIndex(id:String) -> Int{
-        print("folderIdToHandle=\(String(describing: folderIndexToHandle))")
-        
-        if let result = data.folders.firstIndex(where: { $0.id == id }) {
-            return result
-        }
-        
-        else {
-            return 0
-        }
         
     }
     
