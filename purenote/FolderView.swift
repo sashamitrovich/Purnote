@@ -107,10 +107,6 @@ struct FolderView: View {
                 }.placeholderForegroundColor()
             }
         }
-        
-                  
-        
-        
     }
     
     func renameFolder(index: Int) {
@@ -159,8 +155,10 @@ struct FolderView: View {
     }
 }
 
-//struct FolderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FolderView().environmentObject(DataManager.sampleDataManager())
-//    }
-//}
+struct FolderView_Previews: PreviewProvider {
+    static var previews: some View {
+        List {
+        FolderView().environmentObject(DataManager.sampleDataManager())
+        }
+    }
+}

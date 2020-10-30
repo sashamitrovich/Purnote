@@ -134,7 +134,7 @@ struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
         MenuView()
             .environmentObject(DataManager.sampleDataManager())
-            .environmentObject(SearchIndex.init(rootUrl: URL(fileURLWithPath: "/")))
+            .environmentObject(SearchIndex.init(rootUrl: URL(fileURLWithPath: "/notes")))
     }
 }
 

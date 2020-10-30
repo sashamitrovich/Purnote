@@ -21,17 +21,12 @@ struct RootView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
-//    private var profileButton: some View {
-//        Button(action: { }) {
-//            Image(systemName: "person.crop.circle")
-//        }
-//    }
 }
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
         RootView(data: DataManager.sampleDataManager())
-            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/")))
+            .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/notes")))
         
     }
 }
