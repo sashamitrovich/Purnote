@@ -11,6 +11,7 @@ import SwiftUI
 struct MenuView: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
+    @EnvironmentObject var monitor: iCloudMonitor
     @State private var isShowing = false
     @State var showingNewFolder = false
     @State var isCreatingNewNote = false
@@ -96,6 +97,15 @@ struct MenuView: View {
                 index.indexall()
             }
         }
+        // iCloud told us something under the container changed
+        .onChange(of: monitor.changeCount) {
+            if isViewDisplayed {
+                data.refresh(url: data.getCurrentUrl())
+                index.indexall()
+            }
+        }
+        // kept as the fallback for when there is no ubiquity container to
+        // watch: iCloud Drive switched off, or the simulator
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 if isViewDisplayed {
@@ -130,6 +140,7 @@ struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
         MenuView()
             .environmentObject(DataManager.sampleDataManager())
+            .environmentObject(iCloudMonitor())
             .environmentObject(SearchIndex.init(rootUrl: URL(fileURLWithPath: "/notes")))
     }
 }

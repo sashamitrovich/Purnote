@@ -18,6 +18,7 @@ struct PurenoteApp: App {
     var data: DataManager = DataManager(url: URL(fileURLWithPath: ""))
 
     private var icloudConnection = iCloudConnection()
+    @StateObject private var monitor = iCloudMonitor()
     @State var connection = iCloudConnection.getConnection()
     
     init() {
@@ -38,6 +39,7 @@ struct PurenoteApp: App {
                 RootView(data: DataManager(url: connection.rootUrl))
                     .environmentObject(DataManager(url: connection.rootUrl))
                     .environmentObject(SearchIndex(rootUrl: connection.rootUrl))
+                    .environmentObject(monitor)
             }
             
 
