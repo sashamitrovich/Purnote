@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIRefresh
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
@@ -91,13 +90,10 @@ struct MenuView: View {
         
         // because we want to remove the default padding that the navigationBarItems creates
         // https://stackoverflow.com/a/63225776/1393362
-        .pullToRefresh(isShowing: $isShowing) {
+        .refreshable {
             if isViewDisplayed {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    data.refresh(url: data.getCurrentUrl())
-                    index.indexall()
-                    isShowing = false
-                }
+                data.refresh(url: data.getCurrentUrl())
+                index.indexall()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in

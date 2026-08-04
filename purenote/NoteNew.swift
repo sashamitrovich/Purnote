@@ -12,6 +12,7 @@ struct NoteNew: View {
     @EnvironmentObject var index: SearchIndex
     @Binding var isEditing: Bool
     @State var newNote: Note
+    @FocusState private var editorFocused: Bool
     
     
     
@@ -27,9 +28,7 @@ struct NoteNew: View {
                     
                     
                     TextEditor(text: $newNote.content)
-                        .introspectTextEditor { tE in
-                            tE.becomeFirstResponder()
-                        }
+                        .focused($editorFocused)
                                                             
                 }
                 .navigationBarItems(trailing:  Button(action: {
@@ -49,6 +48,7 @@ struct NoteNew: View {
             }
             .onAppear(perform: {
                 newNote=Note(type: .Note)
+                editorFocused = true
             }
             )
         }

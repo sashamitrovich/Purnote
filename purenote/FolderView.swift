@@ -7,7 +7,6 @@
 
 import SwiftUI
 import UIKit
-import Introspect
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
@@ -16,6 +15,7 @@ struct FolderView: View {
     @State var shouldAlertForFolderDelete = false
     
     @State var folderIndexToHandle  = Int.max
+    @FocusState private var renameFieldFocused: Bool
     
     @ViewBuilder
     var body: some View {
@@ -87,9 +87,8 @@ struct FolderView: View {
                     }
                     )
                     .font(.title3)
-                    .introspectTextField() { tF in
-                        tF.becomeFirstResponder()
-                    }
+                    .focused($renameFieldFocused)
+                    .onAppear { renameFieldFocused = true }
                     Spacer()
                     Button(action:{
                         showingFolderEdit.toggle()

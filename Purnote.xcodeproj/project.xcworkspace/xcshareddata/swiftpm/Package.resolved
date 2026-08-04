@@ -1,43 +1,24 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Down",
-        "repositoryURL": "https://github.com/iwasrobbed/Down",
-        "state": {
-          "branch": null,
-          "revision": "731f6bbab24ab208ea2d6a944e3f8a8a9d5273c7",
-          "version": "0.9.4"
-        }
-      },
-      {
-        "package": "Parma",
-        "repositoryURL": "git@github.com:dasautoooo/Parma.git",
-        "state": {
-          "branch": null,
-          "revision": "5aa1de6cdbbd37a38d56f3b55bed94d1dc48ec96",
-          "version": "0.2.0"
-        }
-      },
-      {
-        "package": "Introspect",
-        "repositoryURL": "https://github.com/vukrado/SwiftUI-Introspect",
-        "state": {
-          "branch": "TextEditor",
-          "revision": "079ff4daafa07e1ca5825462a890c23bde7f34be",
-          "version": null
-        }
-      },
-      {
-        "package": "SwiftUIRefresh",
-        "repositoryURL": "git@github.com:siteline/SwiftUIRefresh.git",
-        "state": {
-          "branch": null,
-          "revision": "fa8fac7b5eb5c729983a8bef65f094b5e0d12014",
-          "version": "0.0.3"
-        }
+  "originHash" : "e6955ddadd0665e884f98676217dbbe4bd383f970b9a5af500937e847d495afb",
+  "pins" : [
+    {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iwasrobbed/Down",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "parma",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dasautoooo/Parma.git",
+      "state" : {
+        "revision" : "3c8b431fd5ad3cf675c60d0aa89f011cbcbb036c",
+        "version" : "0.3.0"
+      }
+    }
+  ],
+  "version" : 3
 }

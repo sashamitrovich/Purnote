@@ -15,6 +15,7 @@ struct FolderEdit: View {
     @State var shouldAlertForEmptyFolderName = false
     var url:URL
     @State var newFolderName : String = ""
+    @FocusState private var nameFieldFocused: Bool
     
     func renameFolder() {
         
@@ -50,9 +51,8 @@ struct FolderEdit: View {
                     //                        .foregroundColor(Color(UIColor.label))
                     FolderEditName(newFolderName: $newFolderName)
                         
-                        .introspectTextField() { tF in
-                            tF.becomeFirstResponder()
-                        }
+                        .focused($nameFieldFocused)
+                        .onAppear { nameFieldFocused = true }
                         .ignoresSafeArea()
                         
                         .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
