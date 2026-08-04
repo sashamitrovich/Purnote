@@ -44,7 +44,7 @@ struct FolderEdit: View {
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
             VStack(alignment: .center) {
                 HStack(alignment: .center) {
                     //                    TextField("Enter new folder name", text: $newFolderName)

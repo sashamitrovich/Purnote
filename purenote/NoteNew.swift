@@ -17,7 +17,7 @@ struct NoteNew: View {
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
             VStack {
                 
                 

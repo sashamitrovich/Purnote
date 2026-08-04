@@ -12,13 +12,12 @@ struct RootView: View {
     @EnvironmentObject var index:SearchIndex
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
 
                 MenuView()
                     .environmentObject(index)
                     .environmentObject(data)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
     
 }

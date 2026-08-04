@@ -32,7 +32,7 @@ struct FolderNew: View {
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
 //                TextField("Enter a name for your new folder", text: $folderName)
 //                    .foregroundColor(Color(UIColor.label))
                     

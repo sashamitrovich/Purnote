@@ -18,7 +18,7 @@ struct NoteEdit: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             
             MarkdownEditor(text: $data.notes[noteIndex].content)
                 

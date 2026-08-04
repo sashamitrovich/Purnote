@@ -10,100 +10,28 @@ import UIKit
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
-    @State private var selectedUrl: URL?
-    @State var showingFolderEdit = false
-    @State var shouldAlertForFolderDelete = false
-    
-    @State var folderIndexToHandle  = Int.max
+
+    /// The folder currently being renamed, identified by URL rather than by
+    /// index or name: the index shifts when the list changes underneath us,
+    /// and the name changes on every keystroke while renaming.
+    @State private var renamingFolder: URL?
+    @State private var draftName = ""
+    @State private var folderPendingDelete: URL?
     @FocusState private var renameFieldFocused: Bool
-    
+
     @ViewBuilder
     var body: some View {
-        
-        ForEach(data.folders.indices) { index in
-            //                HStack {
-            
-            if !(showingFolderEdit && folderIndexToHandle == index) {
-                NavigationLink(destination: MenuView().environmentObject(DataManager(url: data.folders[index].url)),
-                               tag: data.folders[index].url, selection: self.customBinding()) {
-                    
-                    HStack {
-                        Image(systemName: "folder")
-                            // my own modest Image extension
-                            // inspired by
-                            // https://stackoverflow.com/a/59974025/1393362
-                            .systemOrange()
-                        Text(data.folders[index].id)
-                            .fontWeight(.semibold)
-                            .font(.title3)
-                            .foregroundColor(Color(UIColor.label))
-                    }
-                    
-                    .contextMenu {
-                        Button(action: {
-                            showingFolderEdit.toggle()
-                            folderIndexToHandle = index
-                        }) {
-                            Text("Rename Folder")
-                            Image(systemName: "pencil")
-                        }
-                        
-                        
-                        Button(action: {
-                            shouldAlertForFolderDelete.toggle()
-                            folderIndexToHandle = index
-                        }) {
-                            Text("Delete Folder")
-                            Image(systemName: "trash")
-                        }
-                    }
-                    
-                    
-                    
-                    
-                }
-                .alert(isPresented: $shouldAlertForFolderDelete) {Alert(title: Text("Are you sure you want to delete \(data.folders[folderIndexToHandle].id) and it's contents?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                    deleteFolder(id: data.folders[folderIndexToHandle].id)
-                    
-                }, secondaryButton: .cancel())
-                }
-                .showIf(condition: !(folderIndexToHandle == index && !showingFolderEdit))
-            }
-            
-            if showingFolderEdit && folderIndexToHandle == index {
-                HStack {
-                    Image(systemName: "folder")
-                        // my own modest Image extension
-                        // inspired by
-                        // https://stackoverflow.com/a/59974025/1393362
-                        .systemOrange()
-                    
-                    TextField(data.folders[folderIndexToHandle].id, text: $data.folders[folderIndexToHandle].id, onCommit: {
 
-                        renameFolder(index: index)
-                        folderIndexToHandle = Int.max
-                        showingFolderEdit = false
-                        
-                    }
-                    )
-                    .font(.title3)
-                    .focused($renameFieldFocused)
-                    .onAppear { renameFieldFocused = true }
-                    Spacer()
-                    Button(action:{
-                        showingFolderEdit.toggle()
-                        folderIndexToHandle = Int.max
-                    }) {
-                    Image(systemName: "xmark.circle")
-                        .foregroundColor(.red)
-                    }
-                }
+        ForEach(data.folders) { folder in
+            if renamingFolder == folder.url {
+                renameRow(folder)
+            } else {
+                folderRow(folder)
             }
-            
         }
         .listStyle(PlainListStyle())
-        
-        if data.folders.count == 0 {
+
+        if data.folders.isEmpty {
             VStack {
                 HStack {
                     Text("Tap the")
@@ -113,57 +41,146 @@ struct FolderView: View {
             }
         }
     }
-    
-    func renameFolder(index: Int) {
-        
-        let oldUrl = data.folders[index].url
-        let newUrl = data.folders[index].url.deletingLastPathComponent().appendingPathComponent(data.folders[index].id)
-        
-        
+
+    private func folderRow(_ folder: Folder) -> some View {
+        NavigationLink {
+            FolderDestination(url: folder.url)
+        } label: {
+            HStack {
+                Image(systemName: "folder")
+                    // my own modest Image extension
+                    // inspired by
+                    // https://stackoverflow.com/a/59974025/1393362
+                    .systemOrange()
+                Text(folder.id)
+                    .fontWeight(.semibold)
+                    .font(.title3)
+                    .foregroundColor(Color(UIColor.label))
+            }
+        }
+        .contextMenu {
+            Button {
+                draftName = folder.id
+                renamingFolder = folder.url
+            } label: {
+                Text("Rename Folder")
+                Image(systemName: "pencil")
+            }
+
+            Button(role: .destructive) {
+                folderPendingDelete = folder.url
+            } label: {
+                Text("Delete Folder")
+                Image(systemName: "trash")
+            }
+        }
+        // scoped to this row's url, so only the folder actually being deleted
+        // puts up an alert
+        .alert("Are you sure you want to delete \(folder.id) and its contents?",
+               isPresented: deleteConfirmation(for: folder)) {
+            Button("Delete", role: .destructive) { deleteFolder(folder) }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("The folder is moved to the Trash")
+        }
+    }
+
+    private func renameRow(_ folder: Folder) -> some View {
+        HStack {
+            Image(systemName: "folder")
+                .systemOrange()
+
+            TextField(folder.id, text: $draftName)
+                .font(.title3)
+                .focused($renameFieldFocused)
+                .submitLabel(.done)
+                .onSubmit { commitRename(of: folder) }
+
+            Spacer()
+
+            Button {
+                cancelRename()
+            } label: {
+                Image(systemName: "xmark.circle")
+                    .foregroundColor(.red)
+            }
+            .buttonStyle(.plain)
+        }
+        .onAppear { renameFieldFocused = true }
+    }
+
+    // MARK: - Deleting
+
+    private func deleteConfirmation(for folder: Folder) -> Binding<Bool> {
+        Binding(
+            get: { folderPendingDelete == folder.url },
+            set: { if !$0 { folderPendingDelete = nil } }
+        )
+    }
+
+    private func deleteFolder(_ folder: Folder) {
         do {
-            try FileManager.default.moveItem(at: oldUrl, to: newUrl)
-            
-            
+            try FileManager.default.trashItem(at: folder.url, resultingItemURL: nil)
+        }
+        catch {
+            // failed
+            print("Failed to delete directory: \(error).")
+            return
+        }
+        data.folders.removeAll { $0.url == folder.url }
+    }
+
+    // MARK: - Renaming
+
+    private func commitRename(of folder: Folder) {
+        let newName = draftName.trimmingCharacters(in: .whitespacesAndNewlines)
+        defer { cancelRename() }
+
+        guard !newName.isEmpty, newName != folder.id else { return }
+
+        let newUrl = folder.url.deletingLastPathComponent().appendingPathComponent(newName)
+        do {
+            try FileManager.default.moveItem(at: folder.url, to: newUrl)
         }
         catch {
             // failed
             print("Failed to rename directory: \(error).")
+            return
         }
 
+        // the url has to move with the name, otherwise the row still points at
+        // the old path and navigating into it finds nothing
+        if let index = data.folders.firstIndex(where: { $0.url == folder.url }) {
+            data.folders[index].id = newName
+            data.folders[index].url = newUrl
+        }
     }
-    
-    func deleteFolder(id:String) {
-        
-        if let index = data.folders.firstIndex(where: { $0.id == id }) {
-            
-            do {
-                try FileManager.default.removeItem(at: data.folders[index].url
-                )
-            }
-            catch {
-                // failed
-                print("Failed to delete directory: \(error).")
-            }
-            
-            data.folders.remove(at: index)
-            
-        }            
+
+    private func cancelRename() {
+        renamingFolder = nil
+        draftName = ""
     }
-    
-    func customBinding() -> Binding<URL?> {
-        let binding = Binding<URL?>(get: {
-            self.selectedUrl
-        }, set: {
-            self.selectedUrl = $0
-        })
-        return binding
+}
+
+/// Builds the folder's DataManager lazily, in `body` rather than where the
+/// NavigationLink is created — otherwise every visible row lists its directory
+/// off disk just to render the link.
+private struct FolderDestination: View {
+    @StateObject private var data: DataManager
+
+    init(url: URL) {
+        _data = StateObject(wrappedValue: DataManager(url: url))
+    }
+
+    var body: some View {
+        MenuView().environmentObject(data)
     }
 }
 
 struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-        FolderView().environmentObject(DataManager.sampleDataManager())
+            FolderView().environmentObject(DataManager.sampleDataManager())
         }
     }
 }
