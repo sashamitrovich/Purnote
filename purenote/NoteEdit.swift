@@ -20,7 +20,7 @@ struct NoteEdit: View {
     var body: some View {
         NavigationView {
             
-            TextEditor(text: $data.notes[noteIndex].content)
+            MarkdownEditor(text: $data.notes[noteIndex].content)
                 
                 
                 .navigationBarItems(trailing:  Button(action: {

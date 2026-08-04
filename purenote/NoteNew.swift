@@ -12,7 +12,6 @@ struct NoteNew: View {
     @EnvironmentObject var index: SearchIndex
     @Binding var isEditing: Bool
     @State var newNote: Note
-    @FocusState private var editorFocused: Bool
     
     
     
@@ -27,8 +26,7 @@ struct NoteNew: View {
                 ZStack(alignment: .topLeading) {
                     
                     
-                    TextEditor(text: $newNote.content)
-                        .focused($editorFocused)
+                    MarkdownEditor(text: $newNote.content)
                                                             
                 }
                 .navigationBarItems(trailing:  Button(action: {
@@ -48,7 +46,6 @@ struct NoteNew: View {
             }
             .onAppear(perform: {
                 newNote=Note(type: .Note)
-                editorFocused = true
             }
             )
         }
