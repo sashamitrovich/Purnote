@@ -41,7 +41,7 @@ struct NoteEdit: View {
                             save()
                             dismiss()
                         } label: {
-                            Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
+                            Text("Done").bold()
                         }
                     }
                 }

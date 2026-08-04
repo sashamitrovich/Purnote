@@ -38,7 +38,7 @@ struct SearchResultsView: View {
                                                 showSheetView.toggle()
                                                 
                                             }) {
-                                                Text("Edit").font(.title2).foregroundColor(Color(UIColor.systemOrange))
+                                                Text("Edit").bold()
                                                 
                                             }.sheet(isPresented: $showSheetView) {
                                                 

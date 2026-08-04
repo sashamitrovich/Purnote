@@ -18,6 +18,7 @@ struct RootView: View {
                     .environmentObject(index)
                     .environmentObject(data)
         }
+        .tint(.accentColor)
     }
     
 }
@@ -29,3 +30,4 @@ struct RootView_Previews: PreviewProvider {
         
     }
 }
+

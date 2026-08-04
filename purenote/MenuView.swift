@@ -40,54 +40,54 @@ struct MenuView: View {
                         .environmentObject(index)
                     
                 }
-                //            .showIf(condition: !isSearching)
-                .navigationBarItems( trailing:  HStack {
-                    Button(action: {
-                        searchText = ""
-                        data.refresh(url: data.getCurrentUrl())
-                        self.isSearching.toggle()
-                        
-                    }) {
-                        Image(systemName: "magnifyingglass").systemOrange().font(.title)
+                // the actions live in the bottom bar, within reach of a
+                // thumb, rather than in the top right corner. The icons are
+                // left at their system size and take their colour from the
+                // accent colour -- forcing .font(.title) and a hand-applied
+                // orange fought the toolbar's own styling and looked it
+                .toolbar {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button {
+                            searchText = ""
+                            data.refresh(url: data.getCurrentUrl())
+                            self.isSearching.toggle()
+                        } label: {
+                            Image(systemName: "magnifyingglass")
+                        }
+                        .accessibilityLabel("Search")
+
+                        Spacer()
+
+                        Button {
+                            self.showingNewFolder.toggle()
+                        } label: {
+                            Image(systemName: "plus.rectangle.on.folder")
+                        }
+                        .accessibilityLabel("New folder")
+
+                        Button {
+                            self.isCreatingNewNote.toggle()
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                        }
+                        .accessibilityLabel("New note")
                     }
-                    
-                    Spacer(minLength: 20)
-                    
-                    Button(action: {
-                        self.showingNewFolder.toggle()
-                    }) {
-                        Image(systemName: "plus.rectangle.on.folder").systemOrange().font(.title)
-                        
-                    }.fullScreenCover(isPresented: $showingNewFolder) {
-                        
-                        FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
-                            .environmentObject(data)
-                        
-                        
-                    }
-                    Spacer(minLength: 20)
-                    Button(action: {
-                        self.isCreatingNewNote.toggle()
-                    }) {
-                        Image(systemName: "square.and.pencil").systemOrange().font(.title)
-                        
-                    }.fullScreenCover(isPresented: $isCreatingNewNote) {
-                        
-                        NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
-                            .environmentObject(data)
-                            .environmentObject(index)
-                        
-                    }
-                    
-                    
-                    
-                })
+                }
+                .fullScreenCover(isPresented: $showingNewFolder) {
+                    FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
+                        .environmentObject(data)
+                }
+                .fullScreenCover(isPresented: $isCreatingNewNote) {
+                    NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
+                        .environmentObject(data)
+                        .environmentObject(index)
+                }
             }
 
                 
         }
 
-        .navigationBarTitle(Text(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent)), displayMode: .automatic)
+        .navigationTitle(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent))
         
         // because we want to remove the default padding that the navigationBarItems creates
         // https://stackoverflow.com/a/63225776/1393362

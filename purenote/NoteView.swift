@@ -13,7 +13,13 @@ struct NoteView: View {
 
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
+    @EnvironmentObject var monitor: iCloudMonitor
     var note:Note
+    /// Content read straight off disk after iCloud reported a change. The
+    /// enclosing MenuView stops refreshing once a note is pushed on top of it,
+    /// so without this a note edited on the Mac stayed stale exactly while you
+    /// were looking at it.
+    @State private var liveContent: String?
     @State var showEdit  = false
     @State var text = "some content to edit"
 
@@ -24,7 +30,13 @@ struct NoteView: View {
     /// here -- which, for an app whose files are meant to be edited elsewhere,
     /// is ordinary rather than exceptional.
     var content: String {
-        data.notes.first(where: { $0.id == note.id })?.content ?? note.content
+        liveContent ?? data.notes.first(where: { $0.id == note.id })?.content ?? note.content
+    }
+
+    private func reloadFromDisk() {
+        guard let updated = try? String(contentsOf: note.url, encoding: .utf8) else { return }
+        liveContent = updated
+        note.content = updated
     }
 
     var body: some View {
@@ -46,6 +58,7 @@ struct NoteView: View {
                 }
                 .environmentObject(data)
                 .environmentObject(index)
+                .onChange(of: monitor.changeCount) { reloadFromDisk() }
 
 
         }

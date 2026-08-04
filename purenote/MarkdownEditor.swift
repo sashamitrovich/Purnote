@@ -26,29 +26,46 @@ struct MarkdownEditor: View {
     var body: some View {
         TextEditor(text: $text, selection: $selection)
             .focused($focused)
-            .onAppear { focused = true }
-            .toolbar {
-                // One item holding a horizontal ScrollView, rather than a
-                // ToolbarItemGroup: the full set of buttons does not fit the
-                // width of a smaller iPhone, and Apple Notes solves the same
-                // problem by letting its bar scroll.
-                ToolbarItem(placement: .keyboard) {
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 26) {
-                            ForEach(actions) { action in
-                                Button(action: action.run) {
-                                    Image(systemName: action.icon)
-                                        .imageScale(.large)
-                                }
-                                .accessibilityLabel(action.name)
-                            }
-                        }
-                        .padding(.horizontal, 4)
-                    }
-                    .scrollIndicators(.hidden)
-                }
+            .task {
+                // the presentation animation has to finish before the editor
+                // can become first responder. onAppear, and a short sleep, are
+                // both too early inside a sheet or a fullScreenCover: the
+                // focus is dropped, the keyboard never comes up, and the
+                // formatting bar goes with it
+                try? await Task.sleep(for: .milliseconds(450))
+                focused = true
+            }
+            // A safe area inset rather than ToolbarItem(placement: .keyboard).
+            // The keyboard placement only exists while the keyboard is up, and
+            // it did not show at all on device; this is ours, so it is always
+            // there, always at thumb height, and rides up above the keyboard
+            // when the keyboard appears.
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                formattingBar
             }
             .tint(Color(UIColor.systemOrange))
+    }
+
+    private var formattingBar: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 28) {
+                ForEach(actions) { action in
+                    Button(action: action.run) {
+                        Image(systemName: action.icon)
+                            .imageScale(.large)
+                            .frame(minWidth: 24, minHeight: 34)
+                    }
+                    .accessibilityLabel(action.name)
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .scrollIndicators(.hidden)
+        .frame(height: 46)
+        .background(.bar)
+        .overlay(alignment: .top) {
+            Divider()
+        }
     }
 
     // MARK: - Actions

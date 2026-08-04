@@ -58,7 +58,8 @@ struct FolderEdit: View {
                         .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
                         .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
                         
-                        .navigationBarTitle(Text("Rename Folder"), displayMode: .inline)
+                        .navigationTitle("Rename Folder")
+                        .navigationBarTitleDisplayMode(.inline)
                         .navigationBarItems(trailing:
                                                 
                                                 HStack {

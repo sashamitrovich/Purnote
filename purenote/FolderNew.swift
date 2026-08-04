@@ -42,7 +42,8 @@ struct FolderNew: View {
             .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .topLeading)
             .padding(EdgeInsets(top: 25, leading: 5, bottom: 5, trailing: 5))
             
-            .navigationBarTitle(Text("Create New Folder"), displayMode: .inline)
+            .navigationTitle("Create New Folder")
+            .navigationBarTitleDisplayMode(.inline)
                     .navigationBarItems(trailing: HStack {
                         
                         Button(action: {

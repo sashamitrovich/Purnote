@@ -34,17 +34,13 @@ struct NoteNew: View {
                             save()
                             self.isEditing = false
                         } label: {
-                            Text("Done").font(.title2).foregroundColor(Color(UIColor.systemOrange))
+                            Text("Done").bold()
                         }
                     }
                 }
 
 
             }
-            .onAppear(perform: {
-                newNote=Note(type: .Note)
-            }
-            )
         }
     }
 
