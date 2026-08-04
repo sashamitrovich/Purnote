@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Parma
+import MarkdownUI
 
 
 struct SearchResultsView: View {
@@ -24,7 +24,8 @@ struct SearchResultsView: View {
                     
                     NavigationLink(destination:
                                     ScrollView {
-                                        Parma(note.content, render: MyRender())
+                                        Markdown(note.content)
+                                            .markdownTheme(.purnote)
                                             .gesture(
                                                 TapGesture()
                                                     .onEnded { _ in

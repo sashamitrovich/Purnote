@@ -37,7 +37,7 @@
 		4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */; };
 		4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A63253ED05300521ABF /* SplashSummary.swift */; };
 		4BB09A68253ED43600521ABF /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A67253ED43600521ABF /* Splash.swift */; };
-		4BB9DC5425484B9F00584334 /* Parma in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5325484B9F00584334 /* Parma */; };
+		4BB9DC5425484B9F00584334 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB9DC5325484B9F00584334 /* MarkdownUI */; };
 		4BB9DC5F25485F1C00584334 /* FolderEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB9DC5E25485F1C00584334 /* FolderEdit.swift */; };
 		4BC41066253DB00000AC8293 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC41065253DB00000AC8293 /* Image.swift */; };
 		4BC4106E253DB92300AC8293 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4106D253DB92300AC8293 /* View.swift */; };
@@ -97,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BB9DC5425484B9F00584334 /* Parma in Frameworks */,
+				4BB9DC5425484B9F00584334 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +241,7 @@
 			);
 			name = Purnote;
 			packageProductDependencies = (
-				4BB9DC5325484B9F00584334 /* Parma */,
+				4BB9DC5325484B9F00584334 /* MarkdownUI */,
 			);
 			productName = purenote;
 			productReference = 32EAC58625350C49000EE69F /* Purnote.app */;
@@ -274,7 +274,7 @@
 			);
 			mainGroup = 32731B36252767DB0031CADD;
 			packageReferences = (
-				4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */,
+				4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 32731B40252767DB0031CADD /* Products */;
 			projectDirPath = "";
@@ -533,21 +533,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */ = {
+		4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dasautoooo/Parma.git";
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
+				minimumVersion = 2.4.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4BB9DC5325484B9F00584334 /* Parma */ = {
+		4BB9DC5325484B9F00584334 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "Parma" */;
-			productName = Parma;
+			package = 4BB9DC5225484B9F00584334 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
