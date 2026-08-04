@@ -18,14 +18,19 @@ struct NoteView: View {
     @State var text = "some content to edit"
 
 
-    var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id })!
+    /// The note as the list currently knows it, falling back to the copy this
+    /// view was handed. Looking it up by index and force unwrapping crashed
+    /// whenever a note was deleted or renamed on the Mac while it was open
+    /// here -- which, for an app whose files are meant to be edited elsewhere,
+    /// is ordinary rather than exceptional.
+    var content: String {
+        data.notes.first(where: { $0.id == note.id })?.content ?? note.content
     }
 
     var body: some View {
 
         ScrollView {
-            Markdown(data.notes[noteIndex].content)
+            Markdown(content)
                 .markdownTheme(.purnote)
                 .padding(.top, 5.0)
                 .padding(.horizontal, 5.0)

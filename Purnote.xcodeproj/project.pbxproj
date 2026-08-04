@@ -10,6 +10,7 @@
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		4BA1000125359F7700A67FCF /* MarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000025359F7700A67FCF /* MarkdownEditor.swift */; };
+		4BA1000325359F7700A67FCF /* Autosave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000225359F7700A67FCF /* Autosave.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
 		3220525D25359F8000A67FCF /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525A25359F8000A67FCF /* ListRow.swift */; };
 		328F2CE62535A9720053D6EC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524F25359F7200A67FCF /* DataManager.swift */; };
@@ -57,6 +58,7 @@
 		3220525325359F7700A67FCF /* NoteNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNew.swift; sourceTree = "<group>"; };
 		3220525525359F7700A67FCF /* NoteEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEdit.swift; sourceTree = "<group>"; };
 		4BA1000025359F7700A67FCF /* MarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEditor.swift; sourceTree = "<group>"; };
+		4BA1000225359F7700A67FCF /* Autosave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosave.swift; sourceTree = "<group>"; };
 		3220525A25359F8000A67FCF /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		3220525C25359F8000A67FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudItemView.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				3220525A25359F8000A67FCF /* ListRow.swift */,
 				3220525525359F7700A67FCF /* NoteEdit.swift */,
 				4BA1000025359F7700A67FCF /* MarkdownEditor.swift */,
+				4BA1000225359F7700A67FCF /* Autosave.swift */,
 				3220525325359F7700A67FCF /* NoteNew.swift */,
 				3220524E25359F7200A67FCF /* Models */,
 				3220524225359E1E00A67FCF /* purenoteApp.swift */,
@@ -328,6 +331,7 @@
 				3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */,
 				3220525725359F7700A67FCF /* NoteEdit.swift in Sources */,
 				4BA1000125359F7700A67FCF /* MarkdownEditor.swift in Sources */,
+				4BA1000325359F7700A67FCF /* Autosave.swift in Sources */,
 				4B34B6A025404CAB00B9A05E /* SearchView.swift in Sources */,
 				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
 				4B85F816254836B100755CFC /* AlertTest.swift in Sources */,

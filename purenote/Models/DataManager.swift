@@ -142,6 +142,34 @@ class DataManager: ObservableObject {
     }
     
     
+    /// Writes a note's content to its file, giving it one first if it does not
+    /// have one yet, and adding it to the list the first time.
+    ///
+    /// Safe to call repeatedly with the same note, which is what autosave
+    /// needs. A note whose file was deleted elsewhere is written back out
+    /// rather than throwing the edit away.
+    func persist(_ note: Note) {
+        // a new Note starts out as URL(fileURLWithPath: ""), which is not an
+        // empty path -- it resolves against the working directory -- so the
+        // test is whether this looks like one of our note files at all
+        if note.url.pathExtension != "md" {
+            note.url = currentUrl.appendingPathComponent(note.id).appendingPathExtension("md")
+        }
+
+        do {
+            try note.content.write(to: note.url, atomically: true, encoding: .utf8)
+        }
+        catch {
+            // failed
+            print("Failed to save note: \(error).")
+            return
+        }
+
+        if !notes.contains(where: { $0.id == note.id }) {
+            notes.insert(note, at: 0)
+        }
+    }
+
     private func saveNote(note: inout Note) {
         
         let documentURL = currentUrl.appendingPathComponent(String(note.id))
