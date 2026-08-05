@@ -39,6 +39,33 @@ struct PurenoteApp: App {
         print("starting app")
     }
 
+    /// Re-checks iCloud and decides whether to offer the move.
+    ///
+    /// url(forUbiquityContainerIdentifier:) blocks, and it keeps returning nil
+    /// for a while after iCloud Drive is switched back on, so this asks off the
+    /// main thread and gives it a few tries rather than deciding on the first
+    /// answer. It also works from the freshly read value rather than reading
+    /// the @State back immediately after writing it, which returned the old
+    /// connection and was why the prompt never appeared.
+    private func refreshConnection() async {
+        for delay in [0.0, 1.0, 3.0, 6.0] {
+            if delay > 0 { try? await Task.sleep(for: .seconds(delay)) }
+
+            let updated = await Task.detached(priority: .utility) {
+                iCloudConnection.getConnection()
+            }.value
+
+            connection = updated
+            offerToMove = useLocalStorage && updated.connectionAvailable && !Storage.localIsEmpty
+
+            print("iCloud available: \(updated.connectionAvailable), "
+                  + "local storage: \(useLocalStorage), "
+                  + "local notes: \(!Storage.localIsEmpty) -> offer move: \(offerToMove)")
+
+            if updated.connectionAvailable { return }
+        }
+    }
+
     private func moveToICloud() {
         guard connection.connectionAvailable else { return }
         Storage.move(from: Storage.local().rootUrl, to: connection.rootUrl)
@@ -52,13 +79,14 @@ struct PurenoteApp: App {
             if !shownSplashScreen || !canStart {
                 Splash(shownSplashScreen: $shownSplashScreen,
                        iCloudAvailable: connection.connectionAvailable,
-                       tryAgain: { icloudConnection.updateConnection(connection: &connection) },
+                       tryAgain: { Task { await refreshConnection() } },
                        continueWithoutICloud: {
                            useLocalStorage = true
                            shownSplashScreen = true
                        })
+                    .task { await refreshConnection() }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                        icloudConnection.updateConnection(connection: &connection)
+                        Task { await refreshConnection() }
                     }
             }
             else {
@@ -66,11 +94,9 @@ struct PurenoteApp: App {
                     .environmentObject(DataManager(url: storage.rootUrl))
                     .environmentObject(SearchIndex(rootUrl: storage.rootUrl))
                     .environmentObject(monitor)
+                    .task { await refreshConnection() }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                        icloudConnection.updateConnection(connection: &connection)
-                        offerToMove = useLocalStorage
-                            && connection.connectionAvailable
-                            && !Storage.localIsEmpty
+                        Task { await refreshConnection() }
                     }
                     .alert("Move your notes to iCloud Drive?", isPresented: $offerToMove) {
                         Button("Move") { moveToICloud() }
