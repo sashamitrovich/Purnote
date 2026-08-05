@@ -170,6 +170,40 @@ class DataManager: ObservableObject {
         }
     }
 
+    /// Renames a still-generated file to match its first line. Called when
+    /// editing finishes rather than while typing: autosave writes every second,
+    /// and renaming on every keystroke would mean an iCloud move per character
+    /// and a note whose identity changes under the app.
+    func finishEditing(_ note: Note) {
+        persist(note)
+
+        guard NoteNaming.isGenerated(note.url.lastPathComponent),
+              let name = NoteNaming.name(from: note.content)
+        else { return }
+
+        let target = NoteNaming.availableURL(named: name,
+                                             in: note.url.deletingLastPathComponent())
+        guard target != note.url else { return }
+
+        do {
+            try CoordinatedFile.move(from: note.url, to: target)
+        }
+        catch {
+            // failed -- the note keeps the name it has, which is not worth
+            // bothering the user about
+            print("Could not rename note to \(target.lastPathComponent): \(error).")
+            return
+        }
+
+        if let index = notes.firstIndex(where: { $0.id == note.id }) {
+            notes.remove(at: index)
+        }
+        note.url = target
+        note.id = target.lastPathComponent
+        note.label = note.id
+        notes.insert(note, at: 0)
+    }
+
     private func saveNote(note: inout Note) {
         
         let documentURL = currentUrl.appendingPathComponent(String(note.id))

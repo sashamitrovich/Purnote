@@ -27,11 +27,11 @@ struct NoteNew: View {
                     MarkdownEditor(text: $newNote.content)
 
                 }
-                .autosaving(newNote.content) { save() }
+                .autosaving(newNote.content, save: { save() }, finish: { finish() })
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            save()
+                            finish()
                             self.isEditing = false
                         } label: {
                             Text("Done").bold()
@@ -53,6 +53,17 @@ struct NoteNew: View {
             return
         }
         data.persist(newNote)
+        data.refresh(url: data.getCurrentUrl())
+        index.indexall()
+    }
+
+    /// Editing is over: this is when the new note gets a name taken from its
+    /// first line instead of the timestamp it was created with.
+    func finish() {
+        guard !newNote.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+        data.finishEditing(newNote)
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
     }

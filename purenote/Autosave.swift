@@ -15,6 +15,9 @@ struct Autosave: ViewModifier {
     /// The value being edited. Any change to it restarts the timer.
     let text: String
     let save: () -> Void
+    /// Called once when editing is over rather than on every debounce, for
+    /// work that should not happen while the user is still typing.
+    let finish: () -> Void
 
     /// Long enough not to write on every keystroke, short enough that the gap
     /// between typing and a save on disk is not somewhere work can be lost.
@@ -44,14 +47,16 @@ struct Autosave: ViewModifier {
     private func flush() {
         pending?.cancel()
         pending = nil
-        save()
+        finish()
     }
 }
 
 extension View {
     /// Autosaves `text` by calling `save` once typing pauses, on dismissal,
     /// and when the app stops being active.
-    func autosaving(_ text: String, save: @escaping () -> Void) -> some View {
-        modifier(Autosave(text: text, save: save))
+    func autosaving(_ text: String,
+                    save: @escaping () -> Void,
+                    finish: @escaping () -> Void) -> some View {
+        modifier(Autosave(text: text, save: save, finish: finish))
     }
 }

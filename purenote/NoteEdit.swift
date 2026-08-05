@@ -34,11 +34,11 @@ struct NoteEdit: View {
         NavigationStack {
 
             MarkdownEditor(text: content)
-                .autosaving(note.content) { save() }
+                .autosaving(note.content, save: { save() }, finish: { finish() })
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            save()
+                            finish()
                             dismiss()
                         } label: {
                             Text("Done").bold()
@@ -50,6 +50,14 @@ struct NoteEdit: View {
 
     func save() {
         data.persist(note)
+        data.refresh(url: data.getCurrentUrl())
+        index.indexall()
+    }
+
+    /// Editing is over: this is when the file may be renamed to match its
+    /// first line.
+    func finish() {
+        data.finishEditing(note)
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
     }

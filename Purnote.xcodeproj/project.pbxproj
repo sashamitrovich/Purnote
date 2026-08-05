@@ -14,6 +14,7 @@
 		4BA1000525359F7700A67FCF /* iCloudMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000425359F7700A67FCF /* iCloudMonitor.swift */; };
 		4BA1000725359F7700A67FCF /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000625359F7700A67FCF /* Storage.swift */; };
 		4BA1000925359F7700A67FCF /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
+		4BA1001125359F7700A67FCF /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
 		3220525D25359F8000A67FCF /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525A25359F8000A67FCF /* ListRow.swift */; };
 		328F2CE62535A9720053D6EC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524F25359F7200A67FCF /* DataManager.swift */; };
@@ -65,6 +66,7 @@
 		4BA1000425359F7700A67FCF /* iCloudMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudMonitor.swift; sourceTree = "<group>"; };
 		4BA1000625359F7700A67FCF /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		4BA1000825359F7700A67FCF /* CoordinatedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatedFile.swift; sourceTree = "<group>"; };
+		4BA1001025359F7700A67FCF /* NoteNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNaming.swift; sourceTree = "<group>"; };
 		3220525A25359F8000A67FCF /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		3220525C25359F8000A67FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudItemView.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				4BA1000425359F7700A67FCF /* iCloudMonitor.swift */,
 				4BA1000625359F7700A67FCF /* Storage.swift */,
 				4BA1000825359F7700A67FCF /* CoordinatedFile.swift */,
+				4BA1001025359F7700A67FCF /* NoteNaming.swift */,
 				3220525325359F7700A67FCF /* NoteNew.swift */,
 				3220524E25359F7200A67FCF /* Models */,
 				3220524225359E1E00A67FCF /* purenoteApp.swift */,
@@ -344,6 +347,7 @@
 				4BA1000525359F7700A67FCF /* iCloudMonitor.swift in Sources */,
 				4BA1000725359F7700A67FCF /* Storage.swift in Sources */,
 				4BA1000925359F7700A67FCF /* CoordinatedFile.swift in Sources */,
+				4BA1001125359F7700A67FCF /* NoteNaming.swift in Sources */,
 				4B34B6A025404CAB00B9A05E /* SearchView.swift in Sources */,
 				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
 				4B85F816254836B100755CFC /* AlertTest.swift in Sources */,
