@@ -8,79 +8,88 @@
 import SwiftUI
 
 struct Splash: View {
-    @Binding var shownSplashScreen : Bool
-    var iCloudConnectionNotAvailable : Bool
-    
-    
+    @Binding var shownSplashScreen: Bool
+    var iCloudAvailable: Bool
+    var tryAgain: () -> Void
+    var continueWithoutICloud: () -> Void
+
     @ViewBuilder
     var body: some View {
-       
-         
-            VStack(alignment: .center) {
-                    
-                SplashSummary()
-//                    .padding(.bottom, 30.0)
-                
-                if !iCloudConnectionNotAvailable {
-                    Button(action: {
-                        shownSplashScreen.toggle()
-                    })
-                    {
-                        Text("Next").font(.title2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.white)
-                            .multilineTextAlignment(.center)
-                            .padding(.vertical, 8.0).padding(.horizontal, 78.0)
-                            .background(Color(UIColor.systemOrange))
-                            .cornerRadius(7)
-                    }
-                    .padding()
-                }                
-                else if iCloudConnectionNotAvailable {
-                    VStack(alignment: .center) {
-                        HStack(alignment: .center) {
-                            Image(systemName: "xmark.octagon.fill")
-                                .font(.title)
-                                .foregroundColor(Color(UIColor.red))
-                                .accessibility(hidden: true)
-                                .foregroundColor(.red)
-                            Text("Purnote can't access the iCloud Drive")
-                                .font(.headline)
-                                .multilineTextAlignment(.center)
-                        }.frame(width: 220)
-                        .padding()
-                        
-                        Text("Please activate your iCloud Drive and grant Purnote access to the iCloud Drive")
-                            .font(.callout)
-                            .multilineTextAlignment(.center)
-                            .frame(width:300)
-                            .padding()
-                        
-                        Button(action: {
-                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                        }) {
-                            Text("Open Settings").font(.title3)
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.white)
-                                .multilineTextAlignment(.center)
-                                .padding(.vertical, 8.0).padding(.horizontal, 28.0)
-                                .background(Color(UIColor.systemOrange))
-                                .cornerRadius(7)
-                        }
-       
-                            
-                    }
-             
-                }
+        VStack(alignment: .center) {
 
+            SplashSummary()
+
+            if iCloudAvailable {
+                Button {
+                    shownSplashScreen.toggle()
+                } label: {
+                    Text("Next").primaryAction()
+                }
+                .padding()
             }
-            
+            else {
+                noICloud
+            }
+        }
+    }
+
+    /// iCloud Drive being unavailable is not the user's fault and often not
+    /// something they can fix on the spot, so this offers a way past it as
+    /// well as a way to fix it. The app is plain files in a directory, and a
+    /// directory does not have to be an iCloud one.
+    private var noICloud: some View {
+        VStack(alignment: .center, spacing: 16) {
+            HStack(alignment: .center) {
+                Image(systemName: "exclamationmark.icloud")
+                    .font(.title)
+                    .foregroundColor(Color(UIColor.systemOrange))
+                    .accessibility(hidden: true)
+                Text("Purnote can't reach iCloud Drive")
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(width: 260)
+
+            Text("Turn on iCloud Drive and give Purnote access to it, or keep your notes on this iPhone for now.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(width: 300)
+
+            Button(action: tryAgain) {
+                Text("Try Again").primaryAction()
+            }
+
+            Button("Open Settings") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }
+            .font(.body.weight(.medium))
+
+            Button("Continue without iCloud", action: continueWithoutICloud)
+                .font(.body.weight(.medium))
+                .padding(.top, 4)
+        }
+        .padding()
+    }
+}
+
+private extension Text {
+    func primaryAction() -> some View {
+        self.font(.title3)
+            .fontWeight(.semibold)
+            .foregroundColor(Color.white)
+            .multilineTextAlignment(.center)
+            .padding(.vertical, 10.0).padding(.horizontal, 40.0)
+            .background(Color(UIColor.systemOrange))
+            .cornerRadius(10)
     }
 }
 
 struct Splash_Previews: PreviewProvider {
     static var previews: some View {
-        Splash(shownSplashScreen: .constant(false), iCloudConnectionNotAvailable: false)
-        Splash(shownSplashScreen: .constant(false), iCloudConnectionNotAvailable: true)
+        Splash(shownSplashScreen: .constant(false), iCloudAvailable: true,
+               tryAgain: {}, continueWithoutICloud: {})
+        Splash(shownSplashScreen: .constant(false), iCloudAvailable: false,
+               tryAgain: {}, continueWithoutICloud: {})
     }
 }
