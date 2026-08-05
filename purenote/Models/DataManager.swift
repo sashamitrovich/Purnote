@@ -56,7 +56,7 @@ class DataManager: ObservableObject {
         do {
             
             
-            let newNote: Note = try Note(content: String(contentsOf: url, encoding: String.Encoding.utf8), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
+            let newNote: Note = try Note(content: CoordinatedFile.read(url), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
             
             
             notes.append(newNote)
@@ -157,7 +157,7 @@ class DataManager: ObservableObject {
         }
 
         do {
-            try note.content.write(to: note.url, atomically: true, encoding: .utf8)
+            try CoordinatedFile.write(note.content, to: note.url)
         }
         catch {
             // failed
@@ -176,7 +176,7 @@ class DataManager: ObservableObject {
             .appendingPathExtension("md")
         
         do {
-            try note.content.write(to: documentURL, atomically:true, encoding:String.Encoding.utf8)
+            try CoordinatedFile.write(note.content, to: documentURL)
         }
         catch {
             // failed

@@ -74,7 +74,7 @@ struct ICloudItemView: View {
 
             
             do {
-                data.notes[index].content = try String(contentsOf: URL(fileURLWithPath: downloadedFilePath), encoding: String.Encoding.utf8)
+                data.notes[index].content = try CoordinatedFile.read(URL(fileURLWithPath: downloadedFilePath))
             }
             catch {
                 /* error handling here */

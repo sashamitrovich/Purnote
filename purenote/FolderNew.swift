@@ -19,7 +19,7 @@ struct FolderNew: View {
         print ("creating new folder at:"+url.path)
         let newUrl = url.appendingPathComponent(folderName)
         do {
-            try FileManager.default.createDirectory(at: newUrl, withIntermediateDirectories: false)
+            try CoordinatedFile.createDirectory(at: newUrl)
         }
         catch {
             // failed

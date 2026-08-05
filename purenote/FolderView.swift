@@ -120,7 +120,7 @@ struct FolderView: View {
 
     private func deleteFolder(_ folder: Folder) {
         do {
-            try FileManager.default.trashItem(at: folder.url, resultingItemURL: nil)
+            try CoordinatedFile.trash(folder.url)
         }
         catch {
             // failed
@@ -140,7 +140,7 @@ struct FolderView: View {
 
         let newUrl = folder.url.deletingLastPathComponent().appendingPathComponent(newName)
         do {
-            try FileManager.default.moveItem(at: folder.url, to: newUrl)
+            try CoordinatedFile.move(from: folder.url, to: newUrl)
         }
         catch {
             // failed

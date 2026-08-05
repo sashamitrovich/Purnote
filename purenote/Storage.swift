@@ -55,7 +55,7 @@ enum Storage {
 
             let target = freeName(for: item, in: destination)
             do {
-                try fm.moveItem(at: item, to: target)
+                try CoordinatedFile.move(from: item, to: target)
                 if target != taken { renamed += 1 } else { moved += 1 }
             }
             catch {

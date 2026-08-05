@@ -24,7 +24,7 @@ struct FolderEdit: View {
         
         
         do {            
-            try FileManager.default.moveItem(at: oldUrl, to: newUrl)
+            try CoordinatedFile.move(from: oldUrl, to: newUrl)
             
             
         }

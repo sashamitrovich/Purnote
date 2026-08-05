@@ -18,7 +18,7 @@ struct NotesList: View {
         
         for offset in offsets.enumerated() {
             do {
-                try FileManager.default.trashItem(at: data.notes[offset.element].url, resultingItemURL: nil)
+                try CoordinatedFile.trash(data.notes[offset.element].url)
             }
             catch {
                 // failed
@@ -55,7 +55,7 @@ struct NotesList: View {
                     let newNoteUrl : URL = url.appendingPathComponent(note.id)
 
                     do {
-                        try FileManager.default.moveItem(at: noteToMove.url, to: newNoteUrl)
+                        try CoordinatedFile.move(from: noteToMove.url, to: newNoteUrl)
                     }
                     catch {
                         // failed

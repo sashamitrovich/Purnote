@@ -34,7 +34,7 @@ struct NoteView: View {
     }
 
     private func reloadFromDisk() {
-        guard let updated = try? String(contentsOf: note.url, encoding: .utf8) else { return }
+        guard let updated = try? CoordinatedFile.read(note.url) else { return }
         liveContent = updated
         note.content = updated
     }

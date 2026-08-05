@@ -64,7 +64,7 @@ struct SearchResultsView: View {
         for offset in offsets.enumerated() {
             
             do {
-                try FileManager.default.trashItem(at: notes[offset.element].url, resultingItemURL: nil)
+                try CoordinatedFile.trash(notes[offset.element].url)
             }
             catch {
                 // failed
