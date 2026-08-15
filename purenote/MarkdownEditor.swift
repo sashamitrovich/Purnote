@@ -35,6 +35,13 @@ struct MarkdownEditor: View {
                 try? await Task.sleep(for: .milliseconds(450))
                 focused = true
             }
+            // TextEditor sits its text hard against the screen edges. Pad the
+            // editor itself (not the whole view) so text gets a comfortable
+            // gutter, while the formatting bar below still spans full width --
+            // the padding is applied before .safeAreaInset for exactly that
+            // reason.
+            .padding(.horizontal, 12)
+            .padding(.top, 8)
             // A safe area inset rather than ToolbarItem(placement: .keyboard).
             // The keyboard placement only exists while the keyboard is up, and
             // it did not show at all on device; this is ours, so it is always

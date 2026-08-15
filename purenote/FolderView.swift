@@ -46,16 +46,23 @@ struct FolderView: View {
         NavigationLink {
             FolderDestination(url: folder.url)
         } label: {
-            HStack {
+            HStack(spacing: 12) {
                 Image(systemName: "folder")
                     // my own modest Image extension
                     // inspired by
                     // https://stackoverflow.com/a/59974025/1393362
                     .systemOrange()
                 Text(folder.id)
-                    .fontWeight(.semibold)
-                    .font(.title3)
+                    .font(.body)
                     .foregroundColor(Color(UIColor.label))
+
+                Spacer()
+
+                // how many notes are inside, the way Notes shows it
+                Text("\(noteCount(in: folder))")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .monospacedDigit()
             }
         }
         .contextMenu {
@@ -107,6 +114,19 @@ struct FolderView: View {
             .buttonStyle(.plain)
         }
         .onAppear { renameFieldFocused = true }
+    }
+
+    /// The number of notes directly inside a folder. Counts the `.md` files,
+    /// including any still showing as iCloud `.icloud` placeholders, and
+    /// ignores nested folders and the Trash.
+    private func noteCount(in folder: Folder) -> Int {
+        let contents = (try? FileManager.default.contentsOfDirectory(
+            at: folder.url,
+            includingPropertiesForKeys: [.isDirectoryKey])) ?? []
+
+        return contents.filter { url in
+            !url.hasDirectoryPath && url.lastPathComponent.contains(".md")
+        }.count
     }
 
     // MARK: - Deleting

@@ -18,24 +18,33 @@ class SearchIndex : ObservableObject {
         indexall()
     }
     
-    public var dict: [Int: Set<String>] = [:]
-    
+    /// Term -> the paths of every note that contains it. Keyed by the term
+    /// itself (not its hash) so we can match on a prefix: typing "mark" has to
+    /// find "markdown", the way search-as-you-type is expected to work.
+    public var dict: [String: Set<String>] = [:]
+
     public var idHash: [String : String] = [:]
-    
+
     public func searchPhrase(phrase: String) -> Set<String> {
-        let tokens = phrase.lowercased().removePuncuation().components(separatedBy: " ")
-        var urls : Set<String> = []
-                
-        for (index,token) in tokens.enumerated() {
-            let searchResult = searchWord(word: String(token))
+        let tokens = phrase.lowercased()
+            .removePuncuation()
+            .components(separatedBy: " ")
+            .filter { !$0.isEmpty }
+
+        // an empty or all-punctuation query matches nothing rather than
+        // everything -- and stops an empty token from wiping the intersection
+        guard !tokens.isEmpty else { return [] }
+
+        var urls: Set<String> = []
+        for (index, token) in tokens.enumerated() {
+            let searchResult = searchWord(word: token)
             if index == 0 {
                 urls = searchResult
-            }
-            else {
+            } else {
                 urls = urls.intersection(searchResult)
             }
         }
-        
+
         return urls
     }
     public func getSearchResultsAsUrls(phrase: String) -> [URL] {
@@ -53,28 +62,21 @@ class SearchIndex : ObservableObject {
     }
     
     
-    public func searchWord(word:String) -> Set<String> {
+    /// Every note that has a word *beginning with* `word`. Prefix rather than
+    /// exact match, so a partial word entered while typing still finds notes.
+    public func searchWord(word: String) -> Set<String> {
+        let prefix = word.lowercased()
+        guard !prefix.isEmpty else { return [] }
+
         var paths: Set<String> = []
-        let wordHash = word.lowercased().hash
-        
-        if !(dict[wordHash] == nil) && !dict[wordHash]!.isEmpty {
-            paths = dict[wordHash]!
+        for (term, termPaths) in dict where term.hasPrefix(prefix) {
+            paths.formUnion(termPaths)
         }
-        
         return paths
-        
     }
-    
+
     func addTerm(term: String, path: String) {
-        let termHash = term.lowercased().hash
-        if !dict.keys.contains(termHash) {
-            dict[termHash] = [path]
-        }
-        else {
-            var idSet : Set<String> = dict[termHash]!
-            idSet.insert(path)
-            dict[termHash] = idSet
-        }
+        dict[term.lowercased(), default: []].insert(path)
     }
     
 

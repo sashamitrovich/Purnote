@@ -58,6 +58,12 @@ final class iCloudMonitor: ObservableObject {
         observers.forEach(NotificationCenter.default.removeObserver)
     }
 
+    /// Force a refresh in the views watching this monitor, for when the app
+    /// itself writes a file and there is no iCloud notification to wait for --
+    /// seeding the first-run welcome note, and anything on the simulator, where
+    /// the metadata query never fires at all.
+    func bump() { changeCount += 1 }
+
     private func changed() {
         coalescing?.invalidate()
         coalescing = Timer.scheduledTimer(withTimeInterval: Self.coalesceWindow,

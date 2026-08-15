@@ -41,26 +41,35 @@ struct NoteView: View {
 
     var body: some View {
 
-        ScrollView {
-            Markdown(content)
-                .markdownTheme(.purnote)
-                .padding(.top, 5.0)
-                .padding(.horizontal, 5.0)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-                .onTapGesture {
-                    self.showEdit = true
-                }
-                .fullScreenCover(isPresented: $showEdit, onDismiss: {
-                                    showEdit = false }) {
-                        NoteEdit(note: note)
-                            .environmentObject(data)
-                            .environmentObject(index)
-                }
-                .environmentObject(data)
-                .environmentObject(index)
-                .onChange(of: monitor.changeCount) { reloadFromDisk() }
-
-
+        GeometryReader { geo in
+            ScrollView {
+                Markdown(content)
+                    .markdownTheme(.purnote)
+                    .padding(.top, 10.0)
+                    .padding(.horizontal, 20.0)
+                    // fill the height of the scroll view so the tap target is
+                    // the whole page, not just the glyphs. Tapping the empty
+                    // space below a short note now opens the editor too, which
+                    // is where a tap most obviously means "let me write here".
+                    .frame(maxWidth: .infinity, minHeight: geo.size.height, alignment: .topLeading)
+                    .environmentObject(data)
+                    .environmentObject(index)
+                    .onChange(of: monitor.changeCount) { reloadFromDisk() }
+            }
+            .scrollContentBackground(.hidden)
+            .background(Color.purnotePaper)
+        }
+        // the gesture and the cover live on the ScrollView, so the whole
+        // visible area is tappable rather than only the rendered text
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.showEdit = true
+        }
+        .fullScreenCover(isPresented: $showEdit, onDismiss: {
+                            showEdit = false }) {
+                NoteEdit(note: note)
+                    .environmentObject(data)
+                    .environmentObject(index)
         }
     }
 
@@ -75,10 +84,38 @@ extension Theme {
         .link {
             ForegroundColor(Color(UIColor.systemOrange))
         }
+        // a soft, rounded checkbox instead of the default hard SF square --
+        // amber when ticked, a quiet hollow box when not
+        .taskListMarker { configuration in
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .strokeBorder(
+                    configuration.isCompleted
+                        ? Color(UIColor.systemOrange)
+                        : Color(UIColor.tertiaryLabel),
+                    lineWidth: 1.7
+                )
+                .background(
+                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                        .fill(configuration.isCompleted ? Color(UIColor.systemOrange) : .clear)
+                )
+                .overlay {
+                    if configuration.isCompleted {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+                }
+                .frame(width: 18, height: 18)
+                .padding(.trailing, 4)
+        }
+        // Headings are set in a serif -- the same voice as the note titles in
+        // the list. It is Purnote's one deliberate step away from the all-SF
+        // look of Notes, and it reads warmer for something you sat down to write.
         .heading1 { configuration in
             configuration.label
                 .markdownMargin(top: .rem(0.4), bottom: .rem(0.5))
                 .markdownTextStyle {
+                    FontFamily(.system(.serif))
                     FontWeight(.bold)
                     FontSize(.em(1.8))
                 }
@@ -87,6 +124,7 @@ extension Theme {
             configuration.label
                 .markdownMargin(top: .rem(0.9), bottom: .rem(0.4))
                 .markdownTextStyle {
+                    FontFamily(.system(.serif))
                     FontWeight(.semibold)
                     FontSize(.em(1.4))
                 }
@@ -95,6 +133,7 @@ extension Theme {
             configuration.label
                 .markdownMargin(top: .rem(0.8), bottom: .rem(0.3))
                 .markdownTextStyle {
+                    FontFamily(.system(.serif))
                     FontWeight(.semibold)
                     FontSize(.em(1.15))
                 }

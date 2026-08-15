@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @main
 struct PurenoteApp: App {
@@ -15,6 +16,10 @@ struct PurenoteApp: App {
     @AppStorage("shownSplashScreen") var shownSplashScreen = false
     /// Set when the user chose to carry on without iCloud Drive.
     @AppStorage("useLocalStorage") private var useLocalStorage = false
+    /// Whether the one-time welcome note has been offered. Kept as a flag rather
+    /// than "is the folder empty?" so that a user who deletes every note is left
+    /// with an empty library, not one that quietly refills itself.
+    @AppStorage("didSeedWelcome") private var didSeedWelcome = false
     @EnvironmentObject var index: SearchIndex
     private let fm = FileManager.default
     var data: DataManager = DataManager(url: URL(fileURLWithPath: ""))
@@ -37,6 +42,29 @@ struct PurenoteApp: App {
     
     init() {
         print("starting app")
+        Self.useSerifNavigationTitles()
+    }
+
+    /// Sets navigation-bar titles in a serif, so "Notes", folder names and the
+    /// like share the voice of the note titles in the list. Done through the
+    /// UINavigationBar appearance proxy because SwiftUI has no serif hook for
+    /// the large title itself.
+    private static func useSerifNavigationTitles() {
+        func serif(_ base: UIFont) -> UIFont {
+            guard let descriptor = base.fontDescriptor.withDesign(.serif) else { return base }
+            return UIFont(descriptor: descriptor, size: base.pointSize)
+        }
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .purnotePaper
+        appearance.shadowColor = .clear
+        appearance.largeTitleTextAttributes = [.font: serif(.systemFont(ofSize: 34, weight: .bold))]
+        appearance.titleTextAttributes = [.font: serif(.systemFont(ofSize: 17, weight: .semibold))]
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
     }
 
     /// Re-checks iCloud and decides whether to offer the move.
@@ -63,6 +91,34 @@ struct PurenoteApp: App {
                   + "local notes: \(!Storage.localIsEmpty) -> offer move: \(offerToMove)")
 
             if updated.connectionAvailable { return }
+        }
+    }
+
+    /// Writes the sample notes the first time the app runs, so a fresh install
+    /// is never a blank screen. Only ever touches an empty library, and only
+    /// once, so it can never overwrite or resurrect a user's own notes.
+    private func seedSampleLibraryIfNeeded() {
+        guard !didSeedWelcome else { return }
+        didSeedWelcome = true
+
+        let root = storage.rootUrl
+        let existing = (try? fm.contentsOfDirectory(atPath: root.path))?
+            .filter { $0 != ".Trash" } ?? []
+        guard existing.isEmpty else { return }
+
+        do {
+            for note in SampleNotes.all {
+                let url = root.appendingPathComponent(note.path)
+                let folder = url.deletingLastPathComponent()
+                if folder.path != root.path,
+                   !fm.fileExists(atPath: folder.path) {
+                    try CoordinatedFile.createDirectory(at: folder, withIntermediateDirectories: true)
+                }
+                try CoordinatedFile.write(note.content, to: url)
+            }
+            monitor.bump()
+        } catch {
+            print("Failed to seed sample notes: \(error)")
         }
     }
 
@@ -94,6 +150,7 @@ struct PurenoteApp: App {
                     .environmentObject(DataManager(url: storage.rootUrl))
                     .environmentObject(SearchIndex(rootUrl: storage.rootUrl))
                     .environmentObject(monitor)
+                    .task { seedSampleLibraryIfNeeded() }
                     .task { await refreshConnection() }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         Task { await refreshConnection() }

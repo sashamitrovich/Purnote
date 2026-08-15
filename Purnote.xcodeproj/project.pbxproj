@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
-		4BA1000125359F7700A67FCF /* MarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000025359F7700A67FCF /* MarkdownEditor.swift */; };
-		4BA1000325359F7700A67FCF /* Autosave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000225359F7700A67FCF /* Autosave.swift */; };
-		4BA1000525359F7700A67FCF /* iCloudMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000425359F7700A67FCF /* iCloudMonitor.swift */; };
-		4BA1000725359F7700A67FCF /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000625359F7700A67FCF /* Storage.swift */; };
-		4BA1000925359F7700A67FCF /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
-		4BA1001125359F7700A67FCF /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
 		3220525D25359F8000A67FCF /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525A25359F8000A67FCF /* ListRow.swift */; };
 		328F2CE62535A9720053D6EC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524F25359F7200A67FCF /* DataManager.swift */; };
@@ -24,6 +18,7 @@
 		328F2CED2535A99D0053D6EC /* ICloudItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */; };
 		32EAC58D25350C4A000EE69F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58C25350C4A000EE69F /* Assets.xcassets */; };
 		32EAC59025350C4A000EE69F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */; };
+		42D817A0A7E249CC1F7CEA11 /* SampleNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A3912D7254CA089DE22720 /* SampleNotes.swift */; };
 		4B0EECB02549AC1600C462A4 /* DocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0EECAF2549AC1600C462A4 /* DocumentPickerViewController.swift */; };
 		4B262AAE2541B25500B2BD22 /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B262AAD2541B25500B2BD22 /* StringProtocol.swift */; };
 		4B262AB12541BA6000B2BD22 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B262AB02541BA6000B2BD22 /* SearchResultsView.swift */; };
@@ -40,6 +35,12 @@
 		4B3EAF0B253F295100CBCB2B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3EAF0A253F295100CBCB2B /* SearchBar.swift */; };
 		4B5FF2CF254196AB00EAD5AF /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5FF2CE254196AB00EAD5AF /* CharacterSet.swift */; };
 		4B85F816254836B100755CFC /* AlertTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85F815254836B100755CFC /* AlertTest.swift */; };
+		4BA1000125359F7700A67FCF /* MarkdownEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000025359F7700A67FCF /* MarkdownEditor.swift */; };
+		4BA1000325359F7700A67FCF /* Autosave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000225359F7700A67FCF /* Autosave.swift */; };
+		4BA1000525359F7700A67FCF /* iCloudMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000425359F7700A67FCF /* iCloudMonitor.swift */; };
+		4BA1000725359F7700A67FCF /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000625359F7700A67FCF /* Storage.swift */; };
+		4BA1000925359F7700A67FCF /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
+		4BA1001125359F7700A67FCF /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		4BB09A5F253ECDCE00521ABF /* SplashDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */; };
 		4BB09A64253ED05300521ABF /* SplashSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A63253ED05300521ABF /* SplashSummary.swift */; };
 		4BB09A68253ED43600521ABF /* Splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB09A67253ED43600521ABF /* Splash.swift */; };
@@ -51,9 +52,22 @@
 		4BC82D4C254AAAE80044FA11 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4B254AAAE80044FA11 /* NotesList.swift */; };
 		4BC82D50254AADE40044FA11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4F254AADE40044FA11 /* NoteView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
+		A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		779B1E18DFE20A1DC63D7B73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32731B37252767DB0031CADD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32EAC58525350C49000EE69F;
+			remoteInfo = Purnote;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		3220525025359F7200A67FCF /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -61,12 +75,6 @@
 		3220525225359F7200A67FCF /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		3220525325359F7700A67FCF /* NoteNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNew.swift; sourceTree = "<group>"; };
 		3220525525359F7700A67FCF /* NoteEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEdit.swift; sourceTree = "<group>"; };
-		4BA1000025359F7700A67FCF /* MarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEditor.swift; sourceTree = "<group>"; };
-		4BA1000225359F7700A67FCF /* Autosave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosave.swift; sourceTree = "<group>"; };
-		4BA1000425359F7700A67FCF /* iCloudMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudMonitor.swift; sourceTree = "<group>"; };
-		4BA1000625359F7700A67FCF /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		4BA1000825359F7700A67FCF /* CoordinatedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatedFile.swift; sourceTree = "<group>"; };
-		4BA1001025359F7700A67FCF /* NoteNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNaming.swift; sourceTree = "<group>"; };
 		3220525A25359F8000A67FCF /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		3220525C25359F8000A67FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		328F2CEC2535A99D0053D6EC /* ICloudItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudItemView.swift; sourceTree = "<group>"; };
@@ -75,6 +83,7 @@
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0EECAF2549AC1600C462A4 /* DocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewController.swift; sourceTree = "<group>"; };
 		4B262AAD2541B25500B2BD22 /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
 		4B262AB02541BA6000B2BD22 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
@@ -92,6 +101,12 @@
 		4B3EAF0A253F295100CBCB2B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4B5FF2CE254196AB00EAD5AF /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
 		4B85F815254836B100755CFC /* AlertTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTest.swift; sourceTree = "<group>"; };
+		4BA1000025359F7700A67FCF /* MarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEditor.swift; sourceTree = "<group>"; };
+		4BA1000225359F7700A67FCF /* Autosave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosave.swift; sourceTree = "<group>"; };
+		4BA1000425359F7700A67FCF /* iCloudMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudMonitor.swift; sourceTree = "<group>"; };
+		4BA1000625359F7700A67FCF /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		4BA1000825359F7700A67FCF /* CoordinatedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatedFile.swift; sourceTree = "<group>"; };
+		4BA1001025359F7700A67FCF /* NoteNaming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNaming.swift; sourceTree = "<group>"; };
 		4BB09A5E253ECDCE00521ABF /* SplashDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashDetail.swift; sourceTree = "<group>"; };
 		4BB09A63253ED05300521ABF /* SplashSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashSummary.swift; sourceTree = "<group>"; };
 		4BB09A67253ED43600521ABF /* Splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splash.swift; sourceTree = "<group>"; };
@@ -102,6 +117,8 @@
 		4BC82D4B254AAAE80044FA11 /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesList.swift; sourceTree = "<group>"; };
 		4BC82D4F254AADE40044FA11 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		4FC5BB902ED1225384CA50B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,9 +130,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC0AE9ADBDC7EF6241712ABB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1801245ED6C92A939EA1848D /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4FC5BB902ED1225384CA50B9 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		3220524E25359F7200A67FCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +165,7 @@
 		322052602535A5B500A67FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1801245ED6C92A939EA1848D /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -147,6 +181,7 @@
 				32EAC58725350C49000EE69F /* purenote */,
 				32731B40252767DB0031CADD /* Products */,
 				322052602535A5B500A67FCF /* Frameworks */,
+				9F4FC471AF111228171BFA9E /* purenoteTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				32EAC58625350C49000EE69F /* Purnote.app */,
+				4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,6 +226,7 @@
 				4B0EECAF2549AC1600C462A4 /* DocumentPickerViewController.swift */,
 				4BC82D4B254AAAE80044FA11 /* NotesList.swift */,
 				4BC82D4F254AADE40044FA11 /* NoteView.swift */,
+				28A3912D7254CA089DE22720 /* SampleNotes.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -242,6 +279,15 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		9F4FC471AF111228171BFA9E /* purenoteTests */ = {
+			isa = PBXGroup;
+			children = (
+				B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */,
+			);
+			name = purenoteTests;
+			path = purenoteTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -264,6 +310,24 @@
 			productName = purenote;
 			productReference = 32EAC58625350C49000EE69F /* Purnote.app */;
 			productType = "com.apple.product-type.application";
+		};
+		92CEF4496AB43F2989229AEA /* purenoteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5487408B1F89F2C6174B0C6E /* Build configuration list for PBXNativeTarget "purenoteTests" */;
+			buildPhases = (
+				0E9AED2124AE19929C8EFF29 /* Sources */,
+				BC0AE9ADBDC7EF6241712ABB /* Frameworks */,
+				4C1DA5F9C3AE3C4EBD7A132E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABF5FCDCAAA27AF8B5ADA2B8 /* PBXTargetDependency */,
+			);
+			name = purenoteTests;
+			productName = purenoteTests;
+			productReference = 4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -299,6 +363,7 @@
 			projectRoot = "";
 			targets = (
 				32EAC58525350C49000EE69F /* Purnote */,
+				92CEF4496AB43F2989229AEA /* purenoteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -313,9 +378,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4C1DA5F9C3AE3C4EBD7A132E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0E9AED2124AE19929C8EFF29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32EAC58225350C49000EE69F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -361,10 +441,20 @@
 				4B0EECB02549AC1600C462A4 /* DocumentPickerViewController.swift in Sources */,
 				4B3CAAF525430E12002019A3 /* Connection.swift in Sources */,
 				4B367DE02538668600619115 /* RootView.swift in Sources */,
+				42D817A0A7E249CC1F7CEA11 /* SampleNotes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ABF5FCDCAAA27AF8B5ADA2B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Purnote;
+			target = 32EAC58525350C49000EE69F /* Purnote */;
+			targetProxy = 779B1E18DFE20A1DC63D7B73 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		32731B4C252767DE0031CADD /* Debug */ = {
@@ -490,7 +580,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -500,7 +590,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -515,7 +605,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = purenote/purenote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"purenote/Preview Content\"";
 				DEVELOPMENT_TEAM = BBX4M6XN45;
 				ENABLE_PREVIEWS = YES;
@@ -525,11 +615,46 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		4EE569021043F7EE4417E82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenoteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Purnote.app/Purnote";
+			};
+			name = Debug;
+		};
+		75D6DBC702FFF25E73B3E276 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenoteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Purnote.app/Purnote";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -550,6 +675,15 @@
 			buildConfigurations = (
 				32EAC59325350C4A000EE69F /* Debug */,
 				32EAC59425350C4A000EE69F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5487408B1F89F2C6174B0C6E /* Build configuration list for PBXNativeTarget "purenoteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75D6DBC702FFF25E73B3E276 /* Release */,
+				4EE569021043F7EE4417E82C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
