@@ -6,7 +6,7 @@
 //  never a blank screen. They double as a gentle tour of what the app can do --
 //  headings, checklists, tables, quotes, links, folders -- and one of them
 //  explains how to delete everything, since the files are the user's to keep or
-//  throw away.
+//  throw away. This is also the library shown in the App Store screenshots.
 //
 
 import Foundation
@@ -19,23 +19,28 @@ enum SampleNotes {
         ("Welcome to Purnote.md", """
         # Welcome to Purnote 👋
 
-        Every note you write is just a **plain `.md` file** in your iCloud Drive — \
-        nothing locked away, nothing to export. Open the same notes on your Mac, \
-        back them up anywhere.
+        Every note you write is a **plain Markdown file** in your own iCloud Drive — no database, no proprietary format, nothing to export. Ever.
 
-        ## Write the way you like
+        ## Why it matters
+        - [x] Your notes are just files
+        - [x] Open them on your Mac, or in any editor
+        - [ ] Never think about lock-in again
 
-        - Type **Markdown** by hand, *or*
-        - Tap the bar above the keyboard and let it write the syntax for you
+        ## What you can do
+        - Write in **Markdown**, or tap the bar above the keyboard and let it write the syntax for you
+        - Organise notes into folders
+        - Search every note instantly
+        - Render headings, tables, checklists and code
 
-        ## A few things to try
+        ## It syncs itself
+        Write on your phone and it is on your Mac a moment later. Edit it on your Mac and it changes here while you watch.
 
-        - [x] Read this note
-        - [ ] Create your first note
-        - [ ] Make a checklist
-        - [ ] Find a note with search
+        ## Built to stay out of the way
+        - No accounts, no sign-in
+        - No ads, no tracking, no analytics
+        - Works offline, syncs when you are back
 
-        > The best note is the one you can actually find again.
+        > The best note is the one you can actually find again — and still have in ten years.
 
         Happy writing.
         """),
@@ -43,96 +48,133 @@ enum SampleNotes {
         ("Managing your notes.md", """
         # Managing your notes
 
-        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside \
-        a folder called **purnote**. That folder *is* the whole database — there is \
-        nothing hidden anywhere else.
+        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. That folder *is* the whole database — there is nothing hidden anywhere else.
 
         ## Delete one note
-        Swipe left on it in the list, or open the **Files** app and delete the \
-        `.md` file.
+        Swipe left on it in the list, or open the **Files** app and delete the `.md` file.
 
         ## Delete everything
-        There is no "delete all" button, on purpose — your notes are just files. \
-        To wipe the slate clean:
+        There is no "delete all" button, on purpose — your notes are just files. To wipe the slate clean:
 
         1. Open the **Files** app
         2. Go to **iCloud Drive → purnote**
         3. Delete the whole **purnote** folder
 
-        Purnote will simply show whatever is left. Because the files are yours, \
-        nothing is locked in — and nothing is ever deleted behind your back.
+        Purnote will simply show whatever is left. Because the files are yours, nothing is locked in — and nothing is ever deleted behind your back.
 
-        > These sample notes appear only once, on a brand-new install. Delete any \
-        you don't want and they stay gone.
+        > These sample notes appear only once, on a brand-new install. Delete any you don't want and they stay gone.
         """),
 
-        ("Reading list.md", """
-        # Reading list
+        ("Marathon training.md", """
+        # Marathon training
 
-        ## Reading now
-        - [ ] *Piranesi* — Susanna Clarke
-        - [x] *The Left Hand of Darkness* — Ursula K. Le Guin
+        Sixteen weeks to Berlin. Keep it boring, keep it consistent, and trust the plan on the days you would rather not.
 
-        ## Up next
-        - [ ] *The Dispossessed*
-        - [ ] *A Wizard of Earthsea*
-        - [ ] *Station Eleven*
+        ## This week — build 3
+        - [x] Mon — easy 8 km, nose-breathing only
+        - [x] Wed — intervals, 6 × 800 m @ 3:45/km
+        - [ ] Fri — easy 6 km + strides
+        - [ ] Sat — long run, 28 km
+        - [ ] Sun — rest, actually rest
 
-        > Started *Piranesi* on the train. The House is the world, and the world is the House.
+        ## The block at a glance
+        | Week | Long run | Quality | Total |
+        |---|---|---|---|
+        | 11 | 26 km | 8 × 800 | 52 km |
+        | 12 | 28 km | 3 × 2 km | 55 km |
+        | 13 | 30 km | 10 km tempo | 58 km |
+        | 14 | 32 km | 6 × 1 km | 60 km |
+        | 15 | 24 km | taper | 42 km |
 
-        **2026 so far:** 14 books.
+        ## Race-pace targets
+        - Goal sub-3:30 → **4:58 / km**
+        - Long-run pace 5:40–6:00 / km
+        - Easy pace stays conversational
+
+        ## Fuelling
+        - A gel every 5 km from km 10
+        - Sip at every station, do not gulp
+        - Rehearse the race breakfast on long-run mornings
+
+        > Nothing new on race day. Not the shoes, not the breakfast, not the pace.
         """),
 
-        ("Morning pages.md", """
-        # Morning pages
+        ("Home espresso dial-in.md", """
+        # Home espresso dial-in
 
-        *Three pages, before anything else.* Today, typed.
+        Chasing 1:2 in about 28 seconds.
 
-        The fog hasn't lifted off the hills yet and the coffee is doing its slow \
-        work. I keep circling one idea:
+        | Setting | Today |
+        |---|---|
+        | Dose | 18 g |
+        | Yield | 36 g |
+        | Time | 29 s |
+        | Grind | 2.4 |
 
-        > Make the thing small enough that starting is easy.
+        *Tastes sour?* Grind finer. *Bitter?* Coarser, or drop the temperature a degree.
 
-        Grateful for:
-
-        - black coffee, second cup
-        - the quiet before the street wakes up
-        - a week with nothing urgent in it
-
-        Tomorrow: start the small version. Ship one paragraph.
+        > Weigh everything. Guessing is how you get sad coffee.
         """),
 
-        ("Ideas.md", """
-        # Ideas
+        ("Ideas worth keeping.md", """
+        # Ideas worth keeping
 
         - A notes app that is *just files* — no lock-in ✓
-        - A weekend cabin, no wifi, a stack of books
+        - A weekend with no wifi and a stack of books
         - Learn to develop black-and-white film at home
         - Write one postcard a week to someone I miss
-        - A slow walk with no destination
 
         > Keep the list short. Cross things off, or delete them.
         """),
 
+        // ---------- Journal ----------
+        ("Journal/Morning pages.md", """
+        # Morning pages
+
+        *Three pages, before anything else.* Today, typed.
+
+        The fog hasn't lifted off the hills yet and the coffee is doing its slow work. One idea keeps circling:
+
+        > Make the thing small enough that starting is easy.
+
+        Tomorrow: ship one paragraph.
+        """),
+
+        ("Journal/Gratitude.md", """
+        # Gratitude
+
+        Three, most nights:
+
+        - Black coffee, second cup
+        - The quiet before the street wakes up
+        - A week with nothing urgent in it
+        """),
+
+        ("Journal/One line a day.md", """
+        # One line a day
+
+        **Mon** — Ran in the rain and didn't mind it.
+        **Tue** — Fixed the thing I'd avoided for a month.
+        **Wed** — Long lunch, no phone.
+        **Thu** — Started the book everyone talks about.
+        """),
+
+        // ---------- Recipes ----------
         ("Recipes/Sourdough.md", """
         # Sourdough
 
         A loaf that fits a weekend if you feed the starter on Friday night.
 
-        ## Timeline
         | Step | When |
         |---|---|
         | Feed starter | Fri 21:00 |
-        | Mix & autolyse | Sat 09:00 |
-        | Folds | Sat 09:30–11:30 |
+        | Mix & fold | Sat 09:00 |
         | Shape | Sat 13:00 |
         | Bake | Sun 08:00 |
 
-        ## Method
         1. Autolyse flour and water, 45 min
         2. Add starter and salt, fold every 30 min × 4
-        3. Shape, then cold-proof in the fridge overnight
-        4. Bake at 250°C in a dutch oven — lid on 20 min, lid off 20 min
+        3. Cold-proof overnight, then bake at 250°C
 
         > The crust should sing quietly as it cools.
         """),
@@ -143,35 +185,64 @@ enum SampleNotes {
         **Serves 2.** About 20 minutes, start to plate.
 
         1. Salt the water like the sea
-        2. Garlic in *cold* oil, low heat — never let it brown
-        3. Chilli flakes, then the tomatoes
-
-        | Ingredient | Amount |
-        |---|---|
-        | Spaghetti | 200 g |
-        | Garlic | 3 cloves |
-        | Cherry tomatoes | 250 g |
+        2. Garlic in *cold* oil, low heat
+        3. Chilli, then the tomatoes
 
         > Reserve a cup of pasta water before draining — it's the sauce.
         """),
 
-        ("Travel/Lisbon in three days.md", """
-        # Lisbon, three days
+        ("Recipes/Ragu, the slow way.md", """
+        # Ragù, the slow way
 
-        ## Day 1 — Alfama
-        - Tram **28** early, before the queues
-        - Miradouro de Santa Luzia for the view
-        - Dinner: grilled sardines in a side street
+        No shortcuts. Three hours, mostly waiting.
 
-        ## Day 2 — Belém
-        - [ ] Pastéis de Belém (get there before 10)
+        - Soffritto: onion, carrot, celery, patient
+        - Beef and pork, browned in batches
+        - Milk first, then wine, then tomatoes
+        - Barely a bubble for three hours
+        """),
+
+        ("Recipes/Negroni.md", """
+        # Negroni
+
+        Equal parts, stirred, orange.
+
+        | | |
+        |---|---|
+        | Gin | 30 ml |
+        | Campari | 30 ml |
+        | Sweet vermouth | 30 ml |
+
+        > Stir, don't shake. Big ice. One orange peel.
+        """),
+
+        // ---------- Travel ----------
+        ("Travel/Weekend in Lisbon.md", """
+        # Weekend in Lisbon
+
+        Three days, good shoes, no rush.
+
+        ## Friday — Alfama & Graça
+        - Tram **28** early, before the crowds
+        - Miradouro de Santa Luzia for the tiles and the view
+        - Lunch: grilled sardines in a side street
+        - Fado in a tiny room after dark
+
+        ## Saturday — Belém
+        - [x] Pastéis de Belém before 10
         - [ ] Jerónimos Monastery
-        - [ ] Sunset by the river
+        - [ ] Torre de Belém from the outside
+        - [ ] Coffee by the river as the sun drops
 
-        ## Day 3 — slow
-        Coffee, a bookshop, no plan. Maybe the [tile museum](https://www.museudoazulejo.gov.pt).
+        ## Sunday — slow
+        Coffee, a bookshop, no plan. Maybe the [tile museum](https://www.museudoazulejo.gov.pt) if the legs allow.
 
-        > Bring good shoes. The whole city is a staircase.
+        | Getting around | Viva Viagem card |
+        |---|---|
+        | Cash | Small notes for fado |
+        | Weather | Layers, evenings cool |
+
+        > The whole city is a staircase — and every landing has a view.
         """),
 
         ("Travel/Packing list.md", """
@@ -181,27 +252,55 @@ enum SampleNotes {
         - [ ] Charger + EU adapter
         - [ ] Light jacket for the evenings
         - [x] Offline map downloaded
-        - [ ] Sunglasses
         - [ ] A book for the plane
 
         **One bag only.** If it doesn't fit, it doesn't come.
         """),
 
-        ("Travel/Cabin notes.md", """
-        # Cabin notes
+        ("Travel/Kyoto in autumn.md", """
+        # Kyoto in autumn
 
-        Off-grid for a week. What actually mattered:
+        Peak colour, late November.
 
-        - The wood stove takes 20 minutes — light it *before* the sun drops
-        - Water from the rain butt, boiled twice
-        - No signal past the second gate
+        - Early train to Arashiyama
+        - Philosopher's Path on foot
+        - Kaiseki dinner, booked months ahead
 
-        ## Bring next time
-        - [ ] A sharper axe
-        - [ ] More coffee than seems reasonable
-        - [x] The good torch
+        > Temples open at dawn and so should you.
+        """),
 
-        > The quiet is the point. Don't fill it.
+        // ---------- Reading ----------
+        ("Reading/Piranesi.md", """
+        # Piranesi — notes
+
+        Susanna Clarke. Read it in two sittings.
+
+        > The House is the world, and the world is the House.
+
+        - The statues as a memory palace
+        - Kindness as the whole moral of it
+        - That last page, again
+        """),
+
+        ("Reading/To read.md", """
+        # To read
+
+        - [ ] *The Dispossessed* — Le Guin
+        - [ ] *Station Eleven*
+        - [x] *The Left Hand of Darkness*
+        - [ ] *A Wizard of Earthsea*
+
+        **2026 so far:** 14 books.
+        """),
+
+        ("Reading/Quotes.md", """
+        # Quotes
+
+        > The purpose of a storyteller is not to tell you how to think, but to give you questions to think upon.
+
+        > We cross our bridges when we come to them and burn them behind us.
+
+        > Attention is the rarest and purest form of generosity.
         """),
     ]
 }
