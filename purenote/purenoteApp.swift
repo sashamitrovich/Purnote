@@ -26,7 +26,12 @@ struct PurenoteApp: App {
 
     private var icloudConnection = iCloudConnection()
     @StateObject private var monitor = iCloudMonitor()
-    @State var connection = iCloudConnection.getConnection()
+    /// Starts empty (unavailable) on purpose: resolving the iCloud connection
+    /// calls url(forUbiquityContainerIdentifier:), which blocks and can take
+    /// seconds on a fresh install. Doing that synchronously here ran it on the
+    /// main thread at launch and let the watchdog kill the app before it drew a
+    /// frame. refreshConnection() fills this in from a background task instead.
+    @State var connection = Connection()
     @State private var offerToMove = false
 
     /// Where the notes actually live. This deliberately does not fall back to
@@ -102,23 +107,26 @@ struct PurenoteApp: App {
         didSeedWelcome = true
 
         let root = storage.rootUrl
-        let existing = (try? fm.contentsOfDirectory(atPath: root.path))?
-            .filter { $0 != ".Trash" } ?? []
-        guard existing.isEmpty else { return }
+        let monitor = self.monitor
 
-        do {
+        // The writes are coordinated file I/O (and, on device, iCloud), which is
+        // slow and must never run on the main thread at launch. Do it in the
+        // background and only hop back to the main actor to refresh the views.
+        Task.detached(priority: .utility) {
+            let fm = FileManager.default
+            let existing = (try? fm.contentsOfDirectory(atPath: root.path))?
+                .filter { $0 != ".Trash" } ?? []
+            guard existing.isEmpty else { return }
+
             for note in SampleNotes.all {
                 let url = root.appendingPathComponent(note.path)
                 let folder = url.deletingLastPathComponent()
-                if folder.path != root.path,
-                   !fm.fileExists(atPath: folder.path) {
-                    try CoordinatedFile.createDirectory(at: folder, withIntermediateDirectories: true)
+                if folder.path != root.path, !fm.fileExists(atPath: folder.path) {
+                    try? CoordinatedFile.createDirectory(at: folder, withIntermediateDirectories: true)
                 }
-                try CoordinatedFile.write(note.content, to: url)
+                try? CoordinatedFile.write(note.content, to: url)
             }
-            monitor.bump()
-        } catch {
-            print("Failed to seed sample notes: \(error)")
+            await MainActor.run { monitor.bump() }
         }
     }
 
