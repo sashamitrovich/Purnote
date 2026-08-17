@@ -8,6 +8,17 @@ app's only source of truth, so you can open, edit and back them up with anything
 you like.
 
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/01-plain-files.png" width="19%" alt="Your notes, as plain files" />
+  <img src="docs/screenshots/02-no-lock-in.png" width="19%" alt="No account. No lock-in." />
+  <img src="docs/screenshots/03-markdown-effortless.png" width="19%" alt="Markdown, made effortless" />
+  <img src="docs/screenshots/04-simple-warmer.png" width="19%" alt="Like Notes. But warmer." />
+  <img src="docs/screenshots/05-free.png" width="19%" alt="Free. No catch." />
+</p>
+
+
 ## Features:
 
 * take your notes and they get directly saved to the iCloud Drive, in the directory called "purnote"
