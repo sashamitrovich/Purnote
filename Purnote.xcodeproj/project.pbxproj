@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
@@ -49,8 +50,14 @@
 		4BC82D4C254AAAE80044FA11 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4B254AAAE80044FA11 /* NotesList.swift */; };
 		4BC82D50254AADE40044FA11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4F254AADE40044FA11 /* NoteView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
+		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
+		7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */; };
+		983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */; };
 		A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		BBF812E3C0ADA5C4AD2D2252 /* MarkdownFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */; };
 		C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */; };
+		D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */; };
+		E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF766C78D380C1E73C6C266B /* ModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +71,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
+		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -80,6 +89,7 @@
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowTextTests.swift; sourceTree = "<group>"; };
 		4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0EECAF2549AC1600C462A4 /* DocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewController.swift; sourceTree = "<group>"; };
 		4B262AAD2541B25500B2BD22 /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
@@ -112,7 +122,11 @@
 		4BC82D4F254AADE40044FA11 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 		4FC5BB902ED1225384CA50B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
+		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
+		AF766C78D380C1E73C6C266B /* ModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
+		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +232,8 @@
 				4BC82D4B254AAAE80044FA11 /* NotesList.swift */,
 				4BC82D4F254AADE40044FA11 /* NoteView.swift */,
 				28A3912D7254CA089DE22720 /* SampleNotes.swift */,
+				FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */,
+				02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -274,6 +290,11 @@
 			isa = PBXGroup;
 			children = (
 				B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */,
+				45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */,
+				20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */,
+				A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */,
+				9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */,
+				AF766C78D380C1E73C6C266B /* ModelTests.swift */,
 			);
 			name = purenoteTests;
 			path = purenoteTests;
@@ -384,6 +405,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */,
+				7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */,
+				BBF812E3C0ADA5C4AD2D2252 /* MarkdownFormatterTests.swift in Sources */,
+				D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */,
+				09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */,
+				E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +456,8 @@
 				4B3CAAF525430E12002019A3 /* Connection.swift in Sources */,
 				4B367DE02538668600619115 /* RootView.swift in Sources */,
 				42D817A0A7E249CC1F7CEA11 /* SampleNotes.swift in Sources */,
+				983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */,
+				7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

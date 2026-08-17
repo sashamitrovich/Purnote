@@ -19,10 +19,6 @@ struct MarkdownEditor: View {
     @State private var selection: TextSelection?
     @FocusState private var focused: Bool
 
-    /// Block prefixes the line buttons toggle between. Longest first, so that
-    /// "- [ ] " is recognised before the "- " inside it.
-    private static let blockPrefixes = ["- [ ] ", "- [x] ", "### ", "## ", "# ", "1. ", "- ", "> "]
-
     var body: some View {
         TextEditor(text: $text, selection: $selection)
             .focused($focused)
@@ -131,63 +127,27 @@ struct MarkdownEditor: View {
             : TextSelection(range: index(lower)..<index(upper))
     }
 
-    /// Wraps the selection in `marker`, or unwraps it if it is already wrapped.
-    /// With nothing selected it inserts the pair and drops the cursor between
-    /// them, so tapping **B** and typing does what you would expect.
+    // The actual text edits live in MarkdownFormatter (pure, unit-tested); these
+    // just translate the current TextSelection to offsets and back.
+
     private func wrap(_ marker: String) {
         let (lower, upper) = selectedOffsets
-        let selected = String(text[index(lower)..<index(upper)])
-        let n = marker.count
-
-        if selected.count >= 2 * n, selected.hasPrefix(marker), selected.hasSuffix(marker) {
-            text.replaceSubrange(index(lower)..<index(upper),
-                                 with: String(selected.dropFirst(n).dropLast(n)))
-            setSelection(lower, upper - 2 * n)
-        } else {
-            text.replaceSubrange(index(lower)..<index(upper), with: marker + selected + marker)
-            if selected.isEmpty {
-                setSelection(lower + n, lower + n)
-            } else {
-                setSelection(lower + n, upper + n)
-            }
-        }
+        apply(MarkdownFormatter.wrap(text, lower, upper, with: marker))
     }
 
-    /// Adds `prefix` to the start of the current line, removes it again if it
-    /// is already there, and replaces any competing block prefix.
     private func toggleLinePrefix(_ prefix: String) {
         let (lower, upper) = selectedOffsets
-        let lineStart = lineStartOffset(at: lower)
-        let line = text[index(lineStart)...]
-        let existing = Self.blockPrefixes.first { line.hasPrefix($0) }
-
-        var delta = 0
-        if let existing {
-            text.removeSubrange(index(lineStart)..<index(lineStart + existing.count))
-            delta -= existing.count
-        }
-        if existing != prefix {
-            text.insert(contentsOf: prefix, at: index(lineStart))
-            delta += prefix.count
-        }
-        setSelection(max(lower + delta, lineStart), max(upper + delta, lineStart))
+        apply(MarkdownFormatter.toggleLinePrefix(text, lower, upper, prefix: prefix))
     }
 
-    /// Turns the selection into `[selection](url)` and selects the placeholder,
-    /// so the next thing typed replaces it.
     private func insertLink() {
         let (lower, upper) = selectedOffsets
-        let selected = String(text[index(lower)..<index(upper)])
-        text.replaceSubrange(index(lower)..<index(upper), with: "[\(selected)](url)")
-
-        let placeholder = lower + selected.count + 3   // past "[selected]("
-        setSelection(placeholder, placeholder + 3)
+        apply(MarkdownFormatter.insertLink(text, lower, upper))
     }
 
-    private func lineStartOffset(at offset: Int) -> Int {
-        let upToCursor = text[text.startIndex..<index(offset)]
-        guard let newline = upToCursor.lastIndex(of: "\n") else { return 0 }
-        return text.distance(from: text.startIndex, to: newline) + 1
+    private func apply(_ result: MarkdownFormatter.Result) {
+        text = result.text
+        setSelection(result.lower, result.upper)
     }
 }
 
