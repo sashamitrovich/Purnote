@@ -142,7 +142,7 @@ class SearchIndex : ObservableObject {
         
         for url in urls {
             do {
-                try notes.append(Note(content: CoordinatedFile.read(url), date: FileManager.default.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note))
+                try notes.append(Note(content: CoordinatedFile.read(url), date: (FileManager.default.attributesOfItem(atPath: url.path)[.creationDate] as? Date) ?? Date(), path: url.lastPathComponent, isLocal: true, url: url, type: .Note))
             }
             catch {
                 /* error handling here */

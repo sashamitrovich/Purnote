@@ -22,7 +22,6 @@ struct PurenoteApp: App {
     @AppStorage("didSeedWelcome") private var didSeedWelcome = false
     @EnvironmentObject var index: SearchIndex
     private let fm = FileManager.default
-    var data: DataManager = DataManager(url: URL(fileURLWithPath: ""))
 
     private var icloudConnection = iCloudConnection()
     @StateObject private var monitor = iCloudMonitor()

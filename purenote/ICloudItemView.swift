@@ -99,7 +99,7 @@ struct ICloudItemView: View {
         }
         
         do {
-            data.notes[noteIndex].date = try FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as! Date
+            data.notes[noteIndex].date = try (FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as? Date) ?? Date()
         }
         catch {
             /* error handling here */

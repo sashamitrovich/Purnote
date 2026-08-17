@@ -56,7 +56,7 @@ class DataManager: ObservableObject {
         do {
             
             
-            let newNote: Note = try Note(content: CoordinatedFile.read(url), date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
+            let newNote: Note = try Note(content: CoordinatedFile.read(url), date: (fm.attributesOfItem(atPath: url.path)[.creationDate] as? Date) ?? Date(), path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
             
             
             notes.append(newNote)
@@ -111,7 +111,7 @@ class DataManager: ObservableObject {
                     
                     
                     do {
-                        try addNote(newNote: Note(content: url.relativeString, date: fm.attributesOfItem(atPath: url.path)[.creationDate] as! Date, path: url.lastPathComponent, isLocal: false, url: url, type: .Note))
+                        try addNote(newNote: Note(content: url.relativeString, date: (fm.attributesOfItem(atPath: url.path)[.creationDate] as? Date) ?? Date(), path: url.lastPathComponent, isLocal: false, url: url, type: .Note))
                     }
                     catch {
                         /* error handling here */
