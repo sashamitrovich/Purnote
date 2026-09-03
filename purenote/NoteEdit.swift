@@ -11,30 +11,42 @@ struct NoteEdit: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
     @State var note: Note
+    /// Character offset the editor should open at, from the block the reader
+    /// tapped on the rendered page.
+    var initialCaret: Int? = nil
     @Environment(\.dismiss) private var dismiss
 
-    /// Edits go through the note object itself rather than through an index
-    /// into data.notes. The note can be deleted or renamed on the Mac while it
-    /// is open here, and resolving it by index meant a crash when that
-    /// happened -- on every keystroke, since the lookup was re-evaluated every
-    /// time the binding was read.
-    private var content: Binding<String> {
-        Binding(
-            get: { note.content },
-            set: { newValue in
-                note.content = newValue
-                if let index = data.notes.firstIndex(where: { $0.id == note.id }) {
-                    data.notes[index].content = newValue
-                }
-            }
-        )
-    }
+    /// The editor's own copy of the text.
+    ///
+    /// This has to be real @State holding a String. Note is a class, so a
+    /// binding that only writes `note.content` mutates an object in place and
+    /// SwiftUI is never told anything changed -- the editor then does not see
+    /// edits the app itself makes, and an edit applied during typing (Return
+    /// continuing a list) arrived late and twice. A new note was bound to
+    /// @State and behaved correctly, which is what gave the bug away.
+    @State private var draft = ""
+    @State private var loadedDraft = false
 
     var body: some View {
         NavigationStack {
 
-            MarkdownEditor(text: content)
-                .autosaving(note.content, save: { save() }, finish: { finish() })
+            MarkdownEditor(text: $draft, initialCaret: initialCaret)
+                .onAppear {
+                    // once only: coming back from the background must not
+                    // throw away what has been typed since
+                    guard !loadedDraft else { return }
+                    draft = note.content
+                    loadedDraft = true
+                }
+                // the note and the list are kept in step with the buffer, which
+                // is what the old binding's setter used to do on every keystroke
+                .onChange(of: draft) { _, newValue in
+                    note.content = newValue
+                    if let index = data.notes.firstIndex(where: { $0.id == note.id }) {
+                        data.notes[index].content = newValue
+                    }
+                }
+                .autosaving(draft, save: { save() }, finish: { finish() })
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
