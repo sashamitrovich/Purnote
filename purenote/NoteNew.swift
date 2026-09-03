@@ -12,6 +12,8 @@ struct NoteNew: View {
     @EnvironmentObject var index: SearchIndex
     @Binding var isEditing: Bool
     @State var newNote: Note
+    /// The editor's own copy of the text -- see the note on onChange below.
+    @State private var draft = ""
 
     var body: some View {
 
@@ -24,10 +26,18 @@ struct NoteNew: View {
                 ZStack(alignment: .topLeading) {
 
 
-                    MarkdownEditor(text: $newNote.content)
+                    MarkdownEditor(text: $draft)
 
                 }
-                .autosaving(newNote.content, save: { save() }, finish: { finish() })
+                // The buffer has to be a String in @State. Note is a class, so
+                // `$newNote.content` writes straight into an object and SwiftUI
+                // is never told anything changed -- the editor then never hears
+                // about edits the app itself makes, which is what stopped the
+                // formatting bar working.
+                .onChange(of: draft) { _, newValue in
+                    newNote.content = newValue
+                }
+                .autosaving(draft, save: { save() }, finish: { finish() })
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {

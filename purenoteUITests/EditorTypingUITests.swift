@@ -148,4 +148,51 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertTrue(after.contains("ZZZ"), "typing did not reach an existing note")
         XCTAssertEqual(after.count, before.count + 3, "typing changed more than it typed")
     }
+
+    // MARK: - The formatting bar
+
+    /// The bar scrolls horizontally, so only the first few buttons are on
+    /// screen at once. That is how it has always been; this only pins that the
+    /// visible ones are actually reachable.
+    func testBarButtonsExistAndAreHittable() throws {
+        try newNote()
+        for name in ["Bold", "Heading", "Italic"] {
+            let button = app.buttons[name].firstMatch
+            XCTAssertTrue(button.waitForExistence(timeout: 5), "\(name) button missing")
+            XCTAssertTrue(button.isHittable, "\(name) button is not hittable")
+        }
+    }
+
+    func testBoldInsertsMarkersAtTheCaret() throws {
+        try newNote()
+        editor.typeText("abc")
+        app.buttons["Bold"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        XCTAssertEqual(try value(), "abc****")
+    }
+
+    func testBoldThenTypingLandsBetweenTheMarkers() throws {
+        try newNote()
+        editor.typeText("abc")
+        app.buttons["Bold"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        editor.typeText("hi")
+        XCTAssertEqual(try value(), "abc**hi**")
+    }
+
+    func testHeadingPrefixesTheLine() throws {
+        try newNote()
+        editor.typeText("title")
+        app.buttons["Heading"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        XCTAssertEqual(try value(), "# title")
+    }
+
+    func testBulletedListPrefixesTheLine() throws {
+        try newNote()
+        editor.typeText("milk")
+        app.buttons["Bulleted list"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        XCTAssertEqual(try value(), "- milk")
+    }
 }
