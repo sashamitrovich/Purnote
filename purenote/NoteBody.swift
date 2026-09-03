@@ -40,7 +40,26 @@ struct NoteBody: View {
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                         // the whole block is the tap target, not just its glyphs
                         .contentShape(Rectangle())
-                        .onTapGesture { onTapBlock(block.offset) }
+                        // laid out again underneath, to find the character the
+                        // tap actually landed on rather than the top of the block
+                        .overlay {
+                            GeometryReader { geo in
+                                Color.clear
+                                    .contentShape(Rectangle())
+                                    // high priority: NoteView puts a tap
+                                    // gesture on the whole page for "write at
+                                    // the end", and an ancestor's tap otherwise
+                                    // wins over this one, so every tap landed
+                                    // at the end of the note
+                                    .highPriorityGesture(
+                                        SpatialTapGesture().onEnded { tap in
+                                            onTapBlock(caretOffset(in: block,
+                                                                   width: geo.size.width,
+                                                                   at: tap.location))
+                                        }
+                                    )
+                            }
+                        }
                 }
             }
         }
@@ -113,6 +132,34 @@ struct NoteBody: View {
     /// Drawn size of the box, and the invisible square you actually hit.
     private static let boxSize: CGFloat = 24
     private static let touchTarget: CGFloat = 44
+
+    /// Where in the file a tap on `block` points.
+    private func caretOffset(in block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> Int {
+        let font = Self.font(for: block)
+        let inside = TextHitTest.characterOffset(in: block.text,
+                                                 font: font,
+                                                 width: width,
+                                                 lineSpacing: font.pointSize * 0.2,
+                                                 at: point)
+        return block.offset + inside
+    }
+
+    /// The font a block is drawn in, so it can be laid out again the same way.
+    /// These mirror Theme.purnote -- if the theme's sizes change, these have to
+    /// change with them or taps land a line or two out.
+    private static func font(for block: MarkdownBlock) -> UIFont {
+        let base = MarkdownTextView.baseFontSize
+        let heading = block.text.prefix(while: { $0 == "#" }).count
+
+        let font: UIFont
+        switch heading {
+        case 1: font = .systemFont(ofSize: base * 1.8, weight: .bold)
+        case 2: font = .systemFont(ofSize: base * 1.4, weight: .semibold)
+        case 3: font = .systemFont(ofSize: base * 1.15, weight: .semibold)
+        default: font = .systemFont(ofSize: base)
+        }
+        return UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+    }
 
     private func toggle(_ task: TaskItem) {
         source = MarkdownBlocks.toggleTask(in: source, line: task.id)

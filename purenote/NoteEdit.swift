@@ -24,20 +24,22 @@ struct NoteEdit: View {
     /// edits the app itself makes, and an edit applied during typing (Return
     /// continuing a list) arrived late and twice. A new note was bound to
     /// @State and behaved correctly, which is what gave the bug away.
-    @State private var draft = ""
-    @State private var loadedDraft = false
+    ///
+    /// Seeded here rather than in onAppear: the text view is built before
+    /// onAppear runs, so filling it later meant the caret was placed in an
+    /// empty string and every tap opened the note at the very top.
+    @State private var draft: String
+
+    init(note: Note, initialCaret: Int? = nil) {
+        _note = State(initialValue: note)
+        _draft = State(initialValue: note.content)
+        self.initialCaret = initialCaret
+    }
 
     var body: some View {
         NavigationStack {
 
             MarkdownEditor(text: $draft, initialCaret: initialCaret)
-                .onAppear {
-                    // once only: coming back from the background must not
-                    // throw away what has been typed since
-                    guard !loadedDraft else { return }
-                    draft = note.content
-                    loadedDraft = true
-                }
                 // the note and the list are kept in step with the buffer, which
                 // is what the old binding's setter used to do on every keystroke
                 .onChange(of: draft) { _, newValue in

@@ -8,6 +8,12 @@
 import SwiftUI
 import MarkdownUI
 
+/// Where a tap asked the editor to put the caret.
+private struct EditRequest: Identifiable {
+    let id = UUID()
+    let caret: Int
+}
+
 struct NoteView: View {
 
 
@@ -20,10 +26,12 @@ struct NoteView: View {
     /// so without this a note edited on the Mac stayed stale exactly while you
     /// were looking at it.
     @State private var liveContent: String?
-    @State var showEdit  = false
-    /// Offset of the block that was tapped, so the editor opens where the
-    /// reader was looking rather than at the top of the note.
-    @State private var caretOffset: Int?
+    /// A request to open the editor, carrying where the caret should go.
+    ///
+    /// The offset travels *with* the presentation rather than in a second piece
+    /// of state beside it: set separately, it had not arrived by the time the
+    /// editor was built, so every tap opened the note at its end.
+    @State private var editing: EditRequest?
     @State var text = "some content to edit"
 
 
@@ -73,8 +81,7 @@ struct NoteView: View {
             ScrollView {
                 NoteBody(source: sourceBinding,
                          onTapBlock: { offset in
-                             caretOffset = offset
-                             showEdit = true
+                             editing = EditRequest(caret: offset)
                          })
                     .padding(.top, 10.0)
                     .padding(.horizontal, 20.0)
@@ -96,14 +103,12 @@ struct NoteView: View {
         .onTapGesture {
             // a tap on the empty space below the note means "write at the end",
             // which is where a new thought goes
-            caretOffset = content.count
-            showEdit = true
+            editing = EditRequest(caret: content.count)
         }
-        .fullScreenCover(isPresented: $showEdit, onDismiss: {
-                            showEdit = false }) {
-                NoteEdit(note: note, initialCaret: caretOffset)
-                    .environmentObject(data)
-                    .environmentObject(index)
+        .fullScreenCover(item: $editing) { request in
+            NoteEdit(note: note, initialCaret: request.caret)
+                .environmentObject(data)
+                .environmentObject(index)
         }
     }
 

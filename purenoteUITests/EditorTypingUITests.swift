@@ -262,4 +262,43 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertTrue(editor.waitForExistence(timeout: 10),
                       "tapping the text should open the editor")
     }
+
+    // MARK: - Where the caret lands
+
+    /// Tapping a word on the rendered page should open the editor with the
+    /// caret at that word, not at the top of the paragraph.
+    ///
+    /// Asserted by typing a marker and looking at where it ended up, which is
+    /// the only way to see a caret from outside.
+    func testCaretLandsNearTheTappedWord() throws {
+        try openNoteWithChecklist()
+
+        // the opening paragraph, whose text we know
+        let paragraph = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Sixteen weeks")
+        ).firstMatch
+        XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "paragraph not found")
+
+        // tap near the end of the paragraph rather than its start
+        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.8, dy: 0.75)).tap()
+        XCTAssertTrue(editor.waitForExistence(timeout: 10), "editor never opened")
+        Thread.sleep(forTimeInterval: 1.5)
+
+        editor.typeText("§")
+        let text = try XCTUnwrap(editor.value as? String)
+
+        let marker = try XCTUnwrap(text.range(of: "§"), "marker was not typed")
+        let at = text.distance(from: text.startIndex, to: marker.lowerBound)
+
+        let paragraphStart = try XCTUnwrap(text.range(of: "Sixteen weeks")).lowerBound
+        let start = text.distance(from: text.startIndex, to: paragraphStart)
+        let end = start + 118   // the paragraph is ~118 characters long
+
+        XCTAssertTrue(at > start, "caret landed at or before the start of the paragraph (\(at) vs \(start))")
+        XCTAssertTrue(at <= end + 2, "caret landed past the paragraph (\(at) vs \(end))")
+        // tapped four fifths of the way along the last line, so it should be
+        // well into the second half of the paragraph
+        XCTAssertTrue(at > start + 50,
+                      "caret landed near the start rather than where the tap was (\(at - start) chars in)")
+    }
 }

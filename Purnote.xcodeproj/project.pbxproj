@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
+		313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E2B5BE1504D6232B8253C /* TextHitTest.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
@@ -90,6 +91,7 @@
 		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
+		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				08942BE74755E2F1B15845AE /* MarkdownTextView.swift */,
 				D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */,
 				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
+				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */,
 				8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */,
 				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
+				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
