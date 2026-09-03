@@ -195,4 +195,71 @@ final class EditorTypingUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.6)
         XCTAssertEqual(try value(), "- milk")
     }
+
+    // MARK: - Checkboxes on the rendered page
+
+    /// Opens a sample note that has a checklist, without entering the editor.
+    private func openNoteWithChecklist() throws {
+        let note = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Marathon training")
+        ).firstMatch
+        XCTAssertTrue(note.waitForExistence(timeout: 15), "sample note not in the list")
+        note.tap()
+        Thread.sleep(forTimeInterval: 1.5)
+    }
+
+    /// The reported bug: tapping a checkbox on the rendered page opened the
+    /// editor instead of ticking the box.
+    ///
+    /// A tick is written to the file, so it survives the run. The test therefore
+    /// asserts that the box *changed*, never what it started as -- otherwise it
+    /// passes once and fails every time after.
+    func testTappingACheckboxTogglesItAndDoesNotOpenTheEditor() throws {
+        try openNoteWithChecklist()
+
+        let box = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Fri —")
+        ).firstMatch
+        XCTAssertTrue(box.waitForExistence(timeout: 10), "no checkbox on the page")
+
+        let before = box.value as? String
+        XCTAssertNotNil(before, "checkbox does not report whether it is ticked")
+
+        box.tap()
+        Thread.sleep(forTimeInterval: 1.0)
+
+        XCTAssertFalse(editor.exists, "tapping a checkbox opened the editor")
+        XCTAssertNotEqual(box.value as? String, before, "the box did not change")
+    }
+
+    func testTappingACheckboxTwiceLeavesItAsItWas() throws {
+        try openNoteWithChecklist()
+
+        let box = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Sun —")
+        ).firstMatch
+        XCTAssertTrue(box.waitForExistence(timeout: 10), "no checkbox on the page")
+        let before = box.value as? String
+
+        box.tap()
+        Thread.sleep(forTimeInterval: 0.8)
+        XCTAssertNotEqual(box.value as? String, before)
+
+        box.tap()
+        Thread.sleep(forTimeInterval: 0.8)
+        XCTAssertEqual(box.value as? String, before, "two taps should cancel out")
+        XCTAssertFalse(editor.exists, "tapping a checkbox opened the editor")
+    }
+
+    /// Tapping the words, rather than the box, still means "let me write here".
+    func testTappingTheTextOpensTheEditor() throws {
+        try openNoteWithChecklist()
+
+        app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "Sixteen weeks")
+        ).firstMatch.tap()
+
+        XCTAssertTrue(editor.waitForExistence(timeout: 10),
+                      "tapping the text should open the editor")
+    }
 }

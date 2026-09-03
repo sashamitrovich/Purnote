@@ -21,6 +21,9 @@ import SwiftUI
 import UIKit
 
 struct MarkdownTextView: UIViewRepresentable {
+    /// Base size for the editor, before Dynamic Type scales it.
+    static let baseFontSize: CGFloat = 19
+
     @Binding var text: String
     /// The selection, in character offsets, so the formatting bar can work in
     /// the same units as MarkdownFormatter.
@@ -31,7 +34,11 @@ struct MarkdownTextView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let view = UITextView()
         view.delegate = context.coordinator
-        view.font = .preferredFont(forTextStyle: .body)
+        // A larger base than the 17pt system body -- this is a writing app and
+        // the default read small. Still routed through UIFontMetrics, so the
+        // reader's own Dynamic Type setting scales it from here.
+        view.font = UIFontMetrics(forTextStyle: .body)
+            .scaledFont(for: .systemFont(ofSize: Self.baseFontSize))
         view.adjustsFontForContentSizeCategory = true
         view.backgroundColor = .clear
         view.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -85,8 +92,19 @@ struct MarkdownTextView: UIViewRepresentable {
                       replacementText replacement: String) -> Bool {
             guard replacement == "\n", range.length == 0 else { return true }
 
+            // Return can arrive while a word is still being composed -- the
+            // grey inline prediction, or a multistage keyboard. That text is
+            // not in `textView.text` yet, so continuing the list from it would
+            // work off a buffer missing the letters the user can see, and they
+            // end up on the wrong line. Commit it first, then read the caret
+            // back rather than trusting the range we were handed, which the
+            // commit may have moved.
+            if textView.markedTextRange != nil {
+                textView.unmarkText()
+            }
+
             let source = textView.text ?? ""
-            let caret = source.characterOffset(ofUTF16: range.location)
+            let caret = source.characterOffset(ofUTF16: textView.selectedRange.location)
             guard let edit = ListContinuation.edit(source, at: caret) else { return true }
 
             // as one edit, through the text view itself, so it lands on the

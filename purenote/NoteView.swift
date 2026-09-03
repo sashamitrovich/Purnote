@@ -21,6 +21,9 @@ struct NoteView: View {
     /// were looking at it.
     @State private var liveContent: String?
     @State var showEdit  = false
+    /// Offset of the block that was tapped, so the editor opens where the
+    /// reader was looking rather than at the top of the note.
+    @State private var caretOffset: Int?
     @State var text = "some content to edit"
 
 
@@ -33,6 +36,31 @@ struct NoteView: View {
         liveContent ?? data.notes.first(where: { $0.id == note.id })?.content ?? note.content
     }
 
+    /// The note's source, writeable. Ticking a checkbox on the rendered page
+    /// goes through here: straight to the file, the way an edit in the editor
+    /// would, so the tap IS the change rather than view state to be saved later.
+    private var sourceBinding: Binding<String> {
+        Binding(
+            get: { content },
+            set: { newValue in
+                guard newValue != content else { return }
+                liveContent = newValue
+                note.content = newValue
+                if let i = data.notes.firstIndex(where: { $0.id == note.id }) {
+                    data.notes[i].content = newValue
+                }
+                do {
+                    try CoordinatedFile.write(newValue, to: note.url)
+                } catch {
+                    // the tick stays on screen but did not reach the file; not
+                    // worth an alert, and the next edit will carry it
+                    print("Failed to write toggled checkbox: \(error).")
+                }
+                index.indexall()
+            }
+        )
+    }
+
     private func reloadFromDisk() {
         guard let updated = try? CoordinatedFile.read(note.url) else { return }
         liveContent = updated
@@ -43,8 +71,11 @@ struct NoteView: View {
 
         GeometryReader { geo in
             ScrollView {
-                Markdown(content)
-                    .markdownTheme(.purnote)
+                NoteBody(source: sourceBinding,
+                         onTapBlock: { offset in
+                             caretOffset = offset
+                             showEdit = true
+                         })
                     .padding(.top, 10.0)
                     .padding(.horizontal, 20.0)
                     // fill the height of the scroll view so the tap target is
@@ -63,11 +94,14 @@ struct NoteView: View {
         // visible area is tappable rather than only the rendered text
         .contentShape(Rectangle())
         .onTapGesture {
-            self.showEdit = true
+            // a tap on the empty space below the note means "write at the end",
+            // which is where a new thought goes
+            caretOffset = content.count
+            showEdit = true
         }
         .fullScreenCover(isPresented: $showEdit, onDismiss: {
                             showEdit = false }) {
-                NoteEdit(note: note)
+                NoteEdit(note: note, initialCaret: caretOffset)
                     .environmentObject(data)
                     .environmentObject(index)
         }
@@ -81,6 +115,11 @@ extension Theme {
     /// (notes usually open with a heading, so 1.5rem of space above it is
     /// wasted) and links in the app's orange.
     static let purnote = Theme.basic
+        // the same base size as the editor, so tapping into a note does not
+        // change the size of the words under your finger
+        .text {
+            FontSize(MarkdownTextView.baseFontSize)
+        }
         .link {
             ForegroundColor(Color(UIColor.systemOrange))
         }
