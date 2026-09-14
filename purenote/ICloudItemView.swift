@@ -13,10 +13,6 @@ struct ICloudItemView: View {
     @State var note : Note
     @State private var isDownloading = false
     
-    var noteIndex: Int {
-        data.notes.firstIndex(where: { $0.id == note.id }) ?? Int.max
-    }
-    
     @ViewBuilder
     var body: some View {
         VStack(alignment: .leading) {
@@ -55,61 +51,91 @@ struct ICloudItemView: View {
         }
     }
     
+    /// Starts the iCloud download and turns the row into a normal local note
+    /// once the file is actually there.
+    ///
+    /// The wait must not run on the main thread: this used to be a `while`
+    /// loop checking `fileExists`, which froze the UI for the whole download
+    /// and for ever if iCloud stalled. The wait now polls on a detached task
+    /// and gives up after a timeout, leaving the row as it was so a tap can
+    /// simply try again.
     func download() {
-        data.notes[noteIndex].isDownloading = true
-        // start downloading item
+        guard let note = data.notes.first(where: { $0.id == self.note.id }) else { return }
+        note.isDownloading = true
+
+        let placeholder = note.url
+        let downloaded = ICloudPlaceholder.downloadedURL(for: placeholder)
+
         do {
-            try FileManager.default.startDownloadingUbiquitousItem(at: note.url)
-            
+            try FileManager.default.startDownloadingUbiquitousItem(at: placeholder)
         }
         catch {
             /* error handling here */
-            print("Unexpected error: \(error).")
+            print("Failed to start download for \(placeholder.lastPathComponent): \(error).")
+            note.isDownloading = false
+            isDownloading = false
+            return
         }
 
-        // wait for item to download
-        
-        // Delete the "." which is at the beginning of the icloud file name
-        var lastPathComponent = note.url.lastPathComponent
-        lastPathComponent.removeFirst()
-        // Get folder path without the last component
-        let folderPath = note.url.deletingLastPathComponent().path
-        // Create the downloaded file path
-        let downloadedFilePath = folderPath + "/" + lastPathComponent.replacingOccurrences(of: ".icloud", with: "")
-                
-        var isDownloaded = false
-        // Create a loop until isDownloaded is true
-        while !isDownloaded {
-            // Check if the file is downloaded
-            if FileManager.default.fileExists(atPath: downloadedFilePath) {
-                isDownloaded = true
+        Task.detached(priority: .userInitiated) {
+            await ICloudPlaceholder.waitForDownload(at: downloaded, timeout: .seconds(60))
+
+            let exists = FileManager.default.fileExists(atPath: downloaded.path)
+            let content = exists ? try? CoordinatedFile.read(downloaded) : nil
+            let date: Date
+            if exists {
+                date = (try? FileManager.default.attributesOfItem(atPath: downloaded.path)[.creationDate] as? Date) ?? Date()
+            } else {
+                date = Date()
+            }
+
+            await MainActor.run {
+                guard let current = data.notes.first(where: { $0.id == note.id }) else { return }
+                current.isDownloading = false
+                isDownloading = false
+
+                guard exists, let content else { return }
+                current.content = content
+                current.date = date
+                current.url = downloaded
+                current.isLocal = true
+
+                data.refresh(url: data.getCurrentUrl())
+                index.indexall()
             }
         }
-        
-        // now we can display it as a local file
-        
-        
-        
-        do {
-            data.notes[noteIndex].content = try CoordinatedFile.read(URL(fileURLWithPath: downloadedFilePath))
+    }
+}
+
+/// The small amount of URL arithmetic around an iCloud `.icloud` placeholder,
+/// plus the wait for the file it stands in for. Extracted from the view so it
+/// can be unit tested.
+enum ICloudPlaceholder {
+
+    /// The file a placeholder stands in for. The placeholder for `note.md` is
+    /// named `.note.md.icloud`, so the eventual file is the placeholder's own
+    /// name with the leading dot and the `.icloud` suffix removed. Names that
+    /// do not follow that shape are returned unchanged.
+    static func downloadedURL(for placeholder: URL) -> URL {
+        var name = placeholder.lastPathComponent
+        if name.hasPrefix(".") { name.removeFirst() }
+        if name.hasSuffix(".icloud") {
+            name = String(name.dropLast(".icloud".count))
         }
-        catch {
-            /* error handling here */
-            print("Unexpected error: \(error).")
+        return placeholder.deletingLastPathComponent().appendingPathComponent(name)
+    }
+
+    /// Polls until the file exists or the timeout passes. A failed download
+    /// leaves the placeholder behind and the file never appears, so without a
+    /// deadline this would wait forever.
+    static func waitForDownload(at url: URL,
+                                timeout: Duration,
+                                pollingEvery interval: Duration = .milliseconds(500)) async {
+        let deadline = ContinuousClock.now + timeout
+        while !FileManager.default.fileExists(atPath: url.path) {
+            if ContinuousClock.now > deadline { return }
+            try? await Task.sleep(for: interval)
         }
-        
-        do {
-            data.notes[noteIndex].date = try (FileManager.default.attributesOfItem(atPath: downloadedFilePath)[.creationDate] as? Date) ?? Date()
-        }
-        catch {
-            /* error handling here */
-            print("Unexpected error: \(error).")
-        }
-        
-        data.refresh(url: data.getCurrentUrl())
-        index.indexall()
-        
-        
     }
 }
 
