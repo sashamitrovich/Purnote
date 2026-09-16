@@ -128,10 +128,8 @@ final class EditorTypingUITests: XCTestCase {
     /// an object in place and SwiftUI was never told -- edits the app itself
     /// made never reached the editor. This checks the path still works.
     func testTypingWorksInAnExistingNote() throws {
-        let note = app.buttons.matching(
-            NSPredicate(format: "label BEGINSWITH %@", "Marathon training")
-        ).firstMatch
-        XCTAssertTrue(note.waitForExistence(timeout: 15), "sample note not in the list")
+        let note = sampleNote()
+        XCTAssertTrue(note.waitForExistence(timeout: 5), "sample note not in the list")
         note.tap()
 
         Thread.sleep(forTimeInterval: 1.5)
@@ -151,12 +149,12 @@ final class EditorTypingUITests: XCTestCase {
 
     // MARK: - The formatting bar
 
-    /// The bar scrolls horizontally, so only the first few buttons are on
-    /// screen at once. That is how it has always been; this only pins that the
-    /// visible ones are actually reachable.
+    /// The most-used buttons sit leftmost so they are on screen at once; this
+    /// pins that those visible ones are reachable, including the List menu that
+    /// now holds the three list styles.
     func testBarButtonsExistAndAreHittable() throws {
         try newNote()
-        for name in ["Bold", "Heading", "Italic"] {
+        for name in ["Bold", "Italic", "Heading", "List"] {
             let button = app.buttons[name].firstMatch
             XCTAssertTrue(button.waitForExistence(timeout: 5), "\(name) button missing")
             XCTAssertTrue(button.isHittable, "\(name) button is not hittable")
@@ -191,6 +189,8 @@ final class EditorTypingUITests: XCTestCase {
     func testBulletedListPrefixesTheLine() throws {
         try newNote()
         editor.typeText("milk")
+        app.buttons["List"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
         app.buttons["Bulleted list"].firstMatch.tap()
         Thread.sleep(forTimeInterval: 0.6)
         XCTAssertEqual(try value(), "- milk")
@@ -200,12 +200,26 @@ final class EditorTypingUITests: XCTestCase {
 
     /// Opens a sample note that has a checklist, without entering the editor.
     private func openNoteWithChecklist() throws {
-        let note = app.buttons.matching(
-            NSPredicate(format: "label BEGINSWITH %@", "Marathon training")
-        ).firstMatch
-        XCTAssertTrue(note.waitForExistence(timeout: 15), "sample note not in the list")
+        let note = sampleNote()
+        XCTAssertTrue(note.waitForExistence(timeout: 5), "sample note not in the list")
         note.tap()
         Thread.sleep(forTimeInterval: 1.5)
+    }
+
+    /// The seeded "Marathon training" note, scrolled into view. The list renders
+    /// lazily, and the tests before this one leave new notes above it, so the
+    /// sample can sit below the fold; scroll until it exists rather than
+    /// assuming it is on screen.
+    private func sampleNote() -> XCUIElement {
+        let predicate = NSPredicate(format: "label BEGINSWITH %@", "Marathon training")
+        let note = app.buttons.matching(predicate).firstMatch
+
+        var swipes = 0
+        while !note.exists && swipes < 15 {
+            app.swipeUp()
+            swipes += 1
+        }
+        return note
     }
 
     /// The reported bug: tapping a checkbox on the rendered page opened the
