@@ -38,12 +38,23 @@ enum MarkdownFormatter {
         if selected.count >= 2 * n, selected.hasPrefix(marker), selected.hasSuffix(marker) {
             text.replaceSubrange(lo..<hi, with: String(selected.dropFirst(n).dropLast(n)))
             return Result(text: text, lower: lower, upper: upper - 2 * n)
-        } else {
-            text.replaceSubrange(lo..<hi, with: marker + selected + marker)
-            return selected.isEmpty
-                ? Result(text: text, lower: lower + n, upper: lower + n)
-                : Result(text: text, lower: lower + n, upper: upper + n)
         }
+
+        // Nothing selected, but the caret sits inside an empty marker pair just
+        // made ("**|**"): pressing the button again cancels it rather than
+        // stacking another pair of markers.
+        if selected.isEmpty, lower >= n, upper + n <= text.count,
+           String(text[index(text, lower - n)..<lo]) == marker,
+           String(text[hi..<index(text, upper + n)]) == marker {
+            text.replaceSubrange(index(text, lower - n)..<index(text, upper + n), with: "")
+            return Result(text: text, lower: lower - n, upper: upper - n)
+        }
+
+        // Otherwise wrap the selection -- or the caret point -- in the marker.
+        text.replaceSubrange(lo..<hi, with: marker + selected + marker)
+        return selected.isEmpty
+            ? Result(text: text, lower: lower + n, upper: lower + n)
+            : Result(text: text, lower: lower + n, upper: upper + n)
     }
 
     /// Adds `prefix` to the start of the current line, removes it again if it is
