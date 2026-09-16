@@ -44,33 +44,6 @@ struct PurenoteApp: App {
         useLocalStorage || connection.connectionAvailable
     }
     
-    init() {
-        print("starting app")
-        Self.useSerifNavigationTitles()
-    }
-
-    /// Sets navigation-bar titles in a serif, so "Notes", folder names and the
-    /// like share the voice of the note titles in the list. Done through the
-    /// UINavigationBar appearance proxy because SwiftUI has no serif hook for
-    /// the large title itself.
-    private static func useSerifNavigationTitles() {
-        func serif(_ base: UIFont) -> UIFont {
-            guard let descriptor = base.fontDescriptor.withDesign(.serif) else { return base }
-            return UIFont(descriptor: descriptor, size: base.pointSize)
-        }
-
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .purnotePaper
-        appearance.shadowColor = .clear
-        appearance.largeTitleTextAttributes = [.font: serif(.systemFont(ofSize: 34, weight: .bold))]
-        appearance.titleTextAttributes = [.font: serif(.systemFont(ofSize: 17, weight: .semibold))]
-
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().compactAppearance = appearance
-    }
-
     /// Re-checks iCloud and decides whether to offer the move.
     ///
     /// url(forUbiquityContainerIdentifier:) blocks, and it keeps returning nil

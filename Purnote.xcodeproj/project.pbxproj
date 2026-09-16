@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
+		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
+		313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E2B5BE1504D6232B8253C /* TextHitTest.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
 		3220525825359F7700A67FCF /* NoteNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525325359F7700A67FCF /* NoteNew.swift */; };
@@ -52,12 +54,20 @@
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
 		7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */; };
+		8359C02608FBC1EC0470A26D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08942BE74755E2F1B15845AE /* MarkdownTextView.swift */; };
+		8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */; };
 		983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */; };
 		A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
 		BBF812E3C0ADA5C4AD2D2252 /* MarkdownFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */; };
 		C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */; };
 		D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */; };
+		DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC685CA064D505099236339 /* ListContinuationTests.swift */; };
+		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF766C78D380C1E73C6C266B /* ModelTests.swift */; };
+		F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0911EFA1CD837D20B64122 /* NoteBody.swift */; };
+		F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */; };
+		FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,11 +78,22 @@
 			remoteGlobalIDString = 32EAC58525350C49000EE69F;
 			remoteInfo = Purnote;
 		};
+		8621041AA69A8674F8F4204D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32731B37252767DB0031CADD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32EAC58525350C49000EE69F;
+			remoteInfo = Purnote;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
+		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
+		37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ICloudPlaceholderTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
+		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -89,6 +110,7 @@
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocksTests.swift; sourceTree = "<group>"; };
 		45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowTextTests.swift; sourceTree = "<group>"; };
 		4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0EECAF2549AC1600C462A4 /* DocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewController.swift; sourceTree = "<group>"; };
@@ -121,11 +143,16 @@
 		4BC82D4B254AAAE80044FA11 /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesList.swift; sourceTree = "<group>"; };
 		4BC82D4F254AADE40044FA11 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		4C0911EFA1CD837D20B64122 /* NoteBody.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteBody.swift; sourceTree = "<group>"; };
 		4FC5BB902ED1225384CA50B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		51705BEAF85739AE0266239A /* purenoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		AF766C78D380C1E73C6C266B /* ModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
+		C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditorTypingUITests.swift; sourceTree = "<group>"; };
+		D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocks.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,9 +173,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD997A2C342BF7DCE3617EFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8359C02608FBC1EC0470A26D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1278FACAD54DDA91FCDE43EF /* purenoteUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */,
+			);
+			name = purenoteUITests;
+			path = purenoteUITests;
+			sourceTree = SOURCE_ROOT;
+		};
 		1801245ED6C92A939EA1848D /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +234,7 @@
 				32731B40252767DB0031CADD /* Products */,
 				322052602535A5B500A67FCF /* Frameworks */,
 				9F4FC471AF111228171BFA9E /* purenoteTests */,
+				1278FACAD54DDA91FCDE43EF /* purenoteUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,6 +243,7 @@
 			children = (
 				32EAC58625350C49000EE69F /* Purnote.app */,
 				4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */,
+				51705BEAF85739AE0266239A /* purenoteUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -234,6 +280,11 @@
 				28A3912D7254CA089DE22720 /* SampleNotes.swift */,
 				FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */,
 				02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */,
+				6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */,
+				08942BE74755E2F1B15845AE /* MarkdownTextView.swift */,
+				D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */,
+				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
+				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -295,6 +346,9 @@
 				A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */,
 				9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */,
 				AF766C78D380C1E73C6C266B /* ModelTests.swift */,
+				1FC685CA064D505099236339 /* ListContinuationTests.swift */,
+				37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */,
+				3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */,
 			);
 			name = purenoteTests;
 			path = purenoteTests;
@@ -303,6 +357,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		30C4496AD69223C8BF87AE6C /* purenoteUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 045BCD08B915EA276422AF98 /* Build configuration list for PBXNativeTarget "purenoteUITests" */;
+			buildPhases = (
+				2C03E7B826702D7A818DC905 /* Sources */,
+				CD997A2C342BF7DCE3617EFE /* Frameworks */,
+				E974492899527E7CDAADED8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F3DDD6481132354CB29ED9AC /* PBXTargetDependency */,
+			);
+			name = purenoteUITests;
+			productName = purenoteUITests;
+			productReference = 51705BEAF85739AE0266239A /* purenoteUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		32EAC58525350C49000EE69F /* Purnote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 32EAC59225350C4A000EE69F /* Build configuration list for PBXNativeTarget "Purnote" */;
@@ -376,6 +448,7 @@
 			targets = (
 				32EAC58525350C49000EE69F /* Purnote */,
 				92CEF4496AB43F2989229AEA /* purenoteTests */,
+				30C4496AD69223C8BF87AE6C /* purenoteUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -397,6 +470,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E974492899527E7CDAADED8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -410,6 +490,17 @@
 				D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */,
 				09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */,
 				E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */,
+				DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */,
+				24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */,
+				209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C03E7B826702D7A818DC905 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +549,11 @@
 				42D817A0A7E249CC1F7CEA11 /* SampleNotes.swift in Sources */,
 				983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */,
 				7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */,
+				F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */,
+				88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */,
+				8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */,
+				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
+				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +565,12 @@
 			name = Purnote;
 			target = 32EAC58525350C49000EE69F /* Purnote */;
 			targetProxy = 779B1E18DFE20A1DC63D7B73 /* PBXContainerItemProxy */;
+		};
+		F3DDD6481132354CB29ED9AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Purnote;
+			target = 32EAC58525350C49000EE69F /* Purnote */;
+			targetProxy = 8621041AA69A8674F8F4204D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -656,6 +758,23 @@
 			};
 			name = Debug;
 		};
+		6ED7686D61A472201071AB31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenoteUITests;
+				PRODUCT_NAME = purenoteUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Purnote;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		75D6DBC702FFF25E73B3E276 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -674,9 +793,34 @@
 			};
 			name = Release;
 		};
+		A3F1F51AE4B39CF82BFE79E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenoteUITests;
+				PRODUCT_NAME = purenoteUITests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Purnote;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		045BCD08B915EA276422AF98 /* Build configuration list for PBXNativeTarget "purenoteUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ED7686D61A472201071AB31 /* Release */,
+				A3F1F51AE4B39CF82BFE79E6 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		32731B3A252767DB0031CADD /* Build configuration list for PBXProject "Purnote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

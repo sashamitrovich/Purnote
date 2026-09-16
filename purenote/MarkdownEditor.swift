@@ -5,6 +5,14 @@
 
 import SwiftUI
 
+/// A one-off request from the formatting bar to place the caret at an offset.
+/// The `id` makes two asks to the same offset distinct, so a deferred re-ask
+/// (after a Menu dismisses) is still applied rather than swallowed as a no-op.
+struct CaretRequest: Equatable {
+    let offset: Int
+    let id = UUID()
+}
+
 /// A plain text editor with an Apple Notes style formatting bar above the
 /// keyboard.
 ///
@@ -15,29 +23,22 @@ import SwiftUI
 /// trip to quietly reformat somebody's note.
 struct MarkdownEditor: View {
     @Binding var text: String
+    /// Where to put the caret when the editor opens, for a tap on the rendered
+    /// page that means "let me write here".
+    var initialCaret: Int? = nil
 
-    @State private var selection: TextSelection?
-    @FocusState private var focused: Bool
+    /// The selection in character offsets -- the same units MarkdownFormatter
+    /// works in.
+    @State private var selection: Range<Int> = 0..<0
+    /// Where the formatting bar wants the caret, applied by the text view on
+    /// its own schedule rather than by syncing the live selection binding.
+    @State private var caretRequest: CaretRequest?
 
     var body: some View {
-        TextEditor(text: $text, selection: $selection)
-            .focused($focused)
-            .task {
-                // the presentation animation has to finish before the editor
-                // can become first responder. onAppear, and a short sleep, are
-                // both too early inside a sheet or a fullScreenCover: the
-                // focus is dropped, the keyboard never comes up, and the
-                // formatting bar goes with it
-                try? await Task.sleep(for: .milliseconds(450))
-                focused = true
-            }
-            // TextEditor sits its text hard against the screen edges. Pad the
-            // editor itself (not the whole view) so text gets a comfortable
-            // gutter, while the formatting bar below still spans full width --
-            // the padding is applied before .safeAreaInset for exactly that
-            // reason.
-            .padding(.horizontal, 12)
-            .padding(.top, 8)
+        MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest, initialCaret: initialCaret)
+            // TextEditor sat its text hard against the screen edges; the text
+            // view has its own inset, so this only adds the outer gutter.
+            .padding(.horizontal, 4)
             // A safe area inset rather than ToolbarItem(placement: .keyboard).
             // The keyboard placement only exists while the keyboard is up, and
             // it did not show at all on device; this is ours, so it is always
@@ -50,20 +51,17 @@ struct MarkdownEditor: View {
     }
 
     private var formattingBar: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 28) {
-                ForEach(actions) { action in
-                    Button(action: action.run) {
-                        Image(systemName: action.icon)
-                            .imageScale(.large)
-                            .frame(minWidth: 24, minHeight: 34)
-                    }
-                    .accessibilityLabel(action.name)
-                }
+        // Fixed whenever every button fits; scrolls only when the row genuinely
+        // needs more room than the screen offers (narrow devices, large text).
+        // A plain ScrollView rubber-banded even when the content already fit,
+        // so the bar could be nudged around with nothing to scroll to.
+        ViewThatFits(in: .horizontal) {
+            barRow
+            ScrollView(.horizontal) {
+                barRow
             }
-            .padding(.horizontal, 20)
+            .scrollIndicators(.hidden)
         }
-        .scrollIndicators(.hidden)
         .frame(height: 46)
         .background(.bar)
         .overlay(alignment: .top) {
@@ -71,28 +69,82 @@ struct MarkdownEditor: View {
         }
     }
 
+    private var barRow: some View {
+        HStack(spacing: 20) {
+            ForEach(actions) { action in
+                if let items = action.menuItems {
+                    Menu {
+                        ForEach(items) { item in
+                            Button(item.name, action: item.run)
+                        }
+                    } label: {
+                        icon(for: action)
+                    }
+                    .accessibilityLabel(action.name)
+                } else {
+                    Button(action: action.run) {
+                        icon(for: action)
+                    }
+                    .accessibilityLabel(action.name)
+                }
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+
+    private func icon(for action: Action) -> some View {
+        Image(systemName: action.icon)
+            .imageScale(.large)
+            .frame(minWidth: 24, minHeight: 34)
+    }
+
     // MARK: - Actions
+    //
+    // The most-used actions sit leftmost so they are visible without
+    // scrolling. The three list styles share one "List" menu -- they used to be
+    // three buttons that pushed Checklist (the one people actually want) off
+    // the right edge where it was easy to miss. There is deliberately no
+    // "hide keyboard" button: it only ever hid the keyboard (never re-opened
+    // it), and the editor already dismisses the keyboard by swiping down.
 
     private struct Action: Identifiable {
         let id = UUID()
         let name: String
         let icon: String
         let run: () -> Void
+        /// When set, this action renders as a Menu holding these actions rather
+        /// than as a button that runs directly.
+        let menuItems: [Action]?
+
+        init(name: String, icon: String, run: @escaping () -> Void) {
+            self.name = name
+            self.icon = icon
+            self.run = run
+            self.menuItems = nil
+        }
+
+        init(name: String, icon: String, menuItems: [Action]) {
+            self.name = name
+            self.icon = icon
+            self.run = {}
+            self.menuItems = menuItems
+        }
     }
 
     private var actions: [Action] {
         [
-            Action(name: "Heading", icon: "textformat.size") { toggleLinePrefix("# ") },
             Action(name: "Bold", icon: "bold") { wrap("**") },
             Action(name: "Italic", icon: "italic") { wrap("*") },
-            Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
-            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
-            Action(name: "Bulleted list", icon: "list.bullet") { toggleLinePrefix("- ") },
-            Action(name: "Numbered list", icon: "list.number") { toggleLinePrefix("1. ") },
-            Action(name: "Checklist", icon: "checklist") { toggleLinePrefix("- [ ] ") },
+            Action(name: "Heading", icon: "textformat.size") { toggleLinePrefix("# ") },
+            Action(name: "List", icon: "list.bullet", menuItems: [
+                Action(name: "Bulleted list", icon: "list.bullet") { toggleLinePrefix("- ") },
+                Action(name: "Numbered list", icon: "list.number") { toggleLinePrefix("1. ") },
+                Action(name: "Checklist", icon: "checklist") { toggleLinePrefix("- [ ] ") },
+            ]),
             Action(name: "Quote", icon: "text.quote") { toggleLinePrefix("> ") },
             Action(name: "Link", icon: "link", run: insertLink),
-            Action(name: "Hide keyboard", icon: "keyboard.chevron.compact.down") { focused = false },
+            Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
+            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") }
         ]
     }
 
@@ -102,29 +154,11 @@ struct MarkdownEditor: View {
     // because mutating the string invalidates every index into the old value.
 
     private var selectedOffsets: (lower: Int, upper: Int) {
-        let range: Range<String.Index>
-        switch selection?.indices {
-        case .selection(let r):
-            range = r
-        case .multiSelection(let set):
-            range = set.ranges.first ?? text.endIndex..<text.endIndex
-        case nil:
-            range = text.endIndex..<text.endIndex
-        @unknown default:
-            range = text.endIndex..<text.endIndex
-        }
-        return (text.distance(from: text.startIndex, to: range.lowerBound),
-                text.distance(from: text.startIndex, to: range.upperBound))
-    }
-
-    private func index(_ offset: Int) -> String.Index {
-        text.index(text.startIndex, offsetBy: min(max(offset, 0), text.count))
+        (min(selection.lowerBound, text.count), min(selection.upperBound, text.count))
     }
 
     private func setSelection(_ lower: Int, _ upper: Int) {
-        selection = lower == upper
-            ? TextSelection(insertionPoint: index(lower))
-            : TextSelection(range: index(lower)..<index(upper))
+        selection = lower..<max(lower, upper)
     }
 
     // The actual text edits live in MarkdownFormatter (pure, unit-tested); these
@@ -148,6 +182,17 @@ struct MarkdownEditor: View {
     private func apply(_ result: MarkdownFormatter.Result) {
         text = result.text
         setSelection(result.lower, result.upper)
+
+        // Ask the text view to place the caret. Two asks: once for the direct
+        // buttons (the text change is enough to wake the view), and once after
+        // the current event, because a Menu item's action runs while the menu
+        // dismisses and focus returning to the text view can move the caret
+        // back to where it was a moment later.
+        caretRequest = CaretRequest(offset: result.lower)
+        let offset = result.lower
+        DispatchQueue.main.async {
+            caretRequest = CaretRequest(offset: offset)
+        }
     }
 }
 
