@@ -51,34 +51,45 @@ struct MarkdownEditor: View {
     }
 
     private var formattingBar: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 20) {
-                ForEach(actions) { action in
-                    if let items = action.menuItems {
-                        Menu {
-                            ForEach(items) { item in
-                                Button(item.name, action: item.run)
-                            }
-                        } label: {
-                            icon(for: action)
-                        }
-                        .accessibilityLabel(action.name)
-                    } else {
-                        Button(action: action.run) {
-                            icon(for: action)
-                        }
-                        .accessibilityLabel(action.name)
-                    }
-                }
+        // Fixed whenever every button fits; scrolls only when the row genuinely
+        // needs more room than the screen offers (narrow devices, large text).
+        // A plain ScrollView rubber-banded even when the content already fit,
+        // so the bar could be nudged around with nothing to scroll to.
+        ViewThatFits(in: .horizontal) {
+            barRow
+            ScrollView(.horizontal) {
+                barRow
             }
-            .padding(.horizontal, 20)
+            .scrollIndicators(.hidden)
         }
-        .scrollIndicators(.hidden)
         .frame(height: 46)
         .background(.bar)
         .overlay(alignment: .top) {
             Divider()
         }
+    }
+
+    private var barRow: some View {
+        HStack(spacing: 20) {
+            ForEach(actions) { action in
+                if let items = action.menuItems {
+                    Menu {
+                        ForEach(items) { item in
+                            Button(item.name, action: item.run)
+                        }
+                    } label: {
+                        icon(for: action)
+                    }
+                    .accessibilityLabel(action.name)
+                } else {
+                    Button(action: action.run) {
+                        icon(for: action)
+                    }
+                    .accessibilityLabel(action.name)
+                }
+            }
+        }
+        .padding(.horizontal, 20)
     }
 
     private func icon(for action: Action) -> some View {
