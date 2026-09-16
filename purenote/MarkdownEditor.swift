@@ -41,14 +41,23 @@ struct MarkdownEditor: View {
 
     private var formattingBar: some View {
         ScrollView(.horizontal) {
-            HStack(spacing: 28) {
+            HStack(spacing: 20) {
                 ForEach(actions) { action in
-                    Button(action: action.run) {
-                        Image(systemName: action.icon)
-                            .imageScale(.large)
-                            .frame(minWidth: 24, minHeight: 34)
+                    if let items = action.menuItems {
+                        Menu {
+                            ForEach(items) { item in
+                                Button(item.name, action: item.run)
+                            }
+                        } label: {
+                            icon(for: action)
+                        }
+                        .accessibilityLabel(action.name)
+                    } else {
+                        Button(action: action.run) {
+                            icon(for: action)
+                        }
+                        .accessibilityLabel(action.name)
                     }
-                    .accessibilityLabel(action.name)
                 }
             }
             .padding(.horizontal, 20)
@@ -61,27 +70,58 @@ struct MarkdownEditor: View {
         }
     }
 
+    private func icon(for action: Action) -> some View {
+        Image(systemName: action.icon)
+            .imageScale(.large)
+            .frame(minWidth: 24, minHeight: 34)
+    }
+
     // MARK: - Actions
+    //
+    // The most-used actions sit leftmost so they are visible without
+    // scrolling. The three list styles share one "List" menu -- they used to be
+    // three buttons that pushed Checklist (the one people actually want) off
+    // the right edge where it was easy to miss. The bar still scrolls, but
+    // only for the occasional actions at the far end.
 
     private struct Action: Identifiable {
         let id = UUID()
         let name: String
         let icon: String
         let run: () -> Void
+        /// When set, this action renders as a Menu holding these actions rather
+        /// than as a button that runs directly.
+        let menuItems: [Action]?
+
+        init(name: String, icon: String, run: @escaping () -> Void) {
+            self.name = name
+            self.icon = icon
+            self.run = run
+            self.menuItems = nil
+        }
+
+        init(name: String, icon: String, menuItems: [Action]) {
+            self.name = name
+            self.icon = icon
+            self.run = {}
+            self.menuItems = menuItems
+        }
     }
 
     private var actions: [Action] {
         [
-            Action(name: "Heading", icon: "textformat.size") { toggleLinePrefix("# ") },
             Action(name: "Bold", icon: "bold") { wrap("**") },
             Action(name: "Italic", icon: "italic") { wrap("*") },
-            Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
-            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
-            Action(name: "Bulleted list", icon: "list.bullet") { toggleLinePrefix("- ") },
-            Action(name: "Numbered list", icon: "list.number") { toggleLinePrefix("1. ") },
-            Action(name: "Checklist", icon: "checklist") { toggleLinePrefix("- [ ] ") },
+            Action(name: "Heading", icon: "textformat.size") { toggleLinePrefix("# ") },
+            Action(name: "List", icon: "list.bullet", menuItems: [
+                Action(name: "Bulleted list", icon: "list.bullet") { toggleLinePrefix("- ") },
+                Action(name: "Numbered list", icon: "list.number") { toggleLinePrefix("1. ") },
+                Action(name: "Checklist", icon: "checklist") { toggleLinePrefix("- [ ] ") },
+            ]),
             Action(name: "Quote", icon: "text.quote") { toggleLinePrefix("> ") },
             Action(name: "Link", icon: "link", run: insertLink),
+            Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
+            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
             Action(name: "Hide keyboard", icon: "keyboard.chevron.compact.down") {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
                                                 to: nil, from: nil, for: nil)
