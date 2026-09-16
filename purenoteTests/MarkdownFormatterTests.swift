@@ -26,6 +26,18 @@ final class MarkdownFormatterTests: XCTestCase {
         XCTAssertEqual([r.lower, r.upper], [3, 3])   // cursor between the markers
     }
 
+    func testWrapTwiceWithEmptySelectionCancelsThePair() {
+        // first press: empty selection -> a pair with the cursor in the middle
+        let first = MarkdownFormatter.wrap("ab", 1, 1, with: "**")
+        XCTAssertEqual(first.text, "a****b")
+        XCTAssertEqual([first.lower, first.upper], [3, 3])
+
+        // second press, still nothing selected: remove the empty pair again
+        let second = MarkdownFormatter.wrap(first.text, first.lower, first.upper, with: "**")
+        XCTAssertEqual(second.text, "ab")
+        XCTAssertEqual([second.lower, second.upper], [1, 1])
+    }
+
     func testItalicUsesSingleAsterisk() {
         let r = MarkdownFormatter.wrap("word", 0, 4, with: "*")
         XCTAssertEqual(r.text, "*word*")
