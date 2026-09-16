@@ -89,7 +89,7 @@ struct NoteBody: View {
                             // stops looking like a list. This keeps the full
                             // width and enough height to hit reliably.
                             .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
+                            .padding(.vertical, Self.markerVerticalPadding)
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
@@ -99,7 +99,9 @@ struct NoteBody: View {
 
                     Markdown(task.content)
                         .markdownTheme(.purnote)
-                        .padding(.top, 1)
+                        // the box sits markerVerticalPadding below the row top;
+                        // give the first line the same so the two line up
+                        .padding(.top, Self.markerVerticalPadding)
                         .contentShape(Rectangle())
                         .onTapGesture { onTapBlock(block.offset) }
                 }
@@ -132,6 +134,10 @@ struct NoteBody: View {
     /// Drawn size of the box, and the invisible square you actually hit.
     private static let boxSize: CGFloat = 24
     private static let touchTarget: CGFloat = 44
+    /// Vertical padding around the drawn box, so the tap target is taller than
+    /// the box. The text's first line is nudged the same amount so the box and
+    /// the text line up instead of the text floating a little higher.
+    private static let markerVerticalPadding: CGFloat = 6
 
     /// Where in the file a tap on `block` points.
     private func caretOffset(in block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> Int {
