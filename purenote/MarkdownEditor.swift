@@ -103,8 +103,9 @@ struct MarkdownEditor: View {
     // The most-used actions sit leftmost so they are visible without
     // scrolling. The three list styles share one "List" menu -- they used to be
     // three buttons that pushed Checklist (the one people actually want) off
-    // the right edge where it was easy to miss. The bar still scrolls, but
-    // only for the occasional actions at the far end.
+    // the right edge where it was easy to miss. There is deliberately no
+    // "hide keyboard" button: it only ever hid the keyboard (never re-opened
+    // it), and the editor already dismisses the keyboard by swiping down.
 
     private struct Action: Identifiable {
         let id = UUID()
@@ -143,11 +144,7 @@ struct MarkdownEditor: View {
             Action(name: "Quote", icon: "text.quote") { toggleLinePrefix("> ") },
             Action(name: "Link", icon: "link", run: insertLink),
             Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
-            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
-            Action(name: "Hide keyboard", icon: "keyboard.chevron.compact.down") {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                                to: nil, from: nil, for: nil)
-            },
+            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") }
         ]
     }
 
