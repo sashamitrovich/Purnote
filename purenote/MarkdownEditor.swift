@@ -5,6 +5,14 @@
 
 import SwiftUI
 
+/// A one-off request from the formatting bar to place the caret at an offset.
+/// The `id` makes two asks to the same offset distinct, so a deferred re-ask
+/// (after a Menu dismisses) is still applied rather than swallowed as a no-op.
+struct CaretRequest: Equatable {
+    let offset: Int
+    let id = UUID()
+}
+
 /// A plain text editor with an Apple Notes style formatting bar above the
 /// keyboard.
 ///
@@ -22,9 +30,12 @@ struct MarkdownEditor: View {
     /// The selection in character offsets -- the same units MarkdownFormatter
     /// works in.
     @State private var selection: Range<Int> = 0..<0
+    /// Where the formatting bar wants the caret, applied by the text view on
+    /// its own schedule rather than by syncing the live selection binding.
+    @State private var caretRequest: CaretRequest?
 
     var body: some View {
-        MarkdownTextView(text: $text, selection: $selection, initialCaret: initialCaret)
+        MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest, initialCaret: initialCaret)
             // TextEditor sat its text hard against the screen edges; the text
             // view has its own inset, so this only adds the outer gutter.
             .padding(.horizontal, 4)
@@ -163,6 +174,17 @@ struct MarkdownEditor: View {
     private func apply(_ result: MarkdownFormatter.Result) {
         text = result.text
         setSelection(result.lower, result.upper)
+
+        // Ask the text view to place the caret. Two asks: once for the direct
+        // buttons (the text change is enough to wake the view), and once after
+        // the current event, because a Menu item's action runs while the menu
+        // dismisses and focus returning to the text view can move the caret
+        // back to where it was a moment later.
+        caretRequest = CaretRequest(offset: result.lower)
+        let offset = result.lower
+        DispatchQueue.main.async {
+            caretRequest = CaretRequest(offset: offset)
+        }
     }
 }
 

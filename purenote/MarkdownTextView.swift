@@ -28,6 +28,9 @@ struct MarkdownTextView: UIViewRepresentable {
     /// The selection, in character offsets, so the formatting bar can work in
     /// the same units as MarkdownFormatter.
     @Binding var selection: Range<Int>
+    /// A caret placement requested by the formatting bar, applied here so the
+    /// live selection binding never has to be forced during typing.
+    @Binding var caretRequest: CaretRequest?
     /// Where to put the caret the first time the editor appears.
     var initialCaret: Int?
 
@@ -64,24 +67,33 @@ struct MarkdownTextView: UIViewRepresentable {
     }
 
     func updateUIView(_ view: UITextView, context: Context) {
-        // only when something other than the user changed the text, otherwise
-        // every keystroke would reset the buffer and the caret with it
         if view.text != text {
             view.text = text
-            // the formatting bar chooses where the caret should land (between
-            // the ** it just inserted, or around the "url" placeholder), so the
-            // selection comes from the binding rather than from where it was
-            let lower = text.utf16Offset(ofCharacter: selection.lowerBound)
-            let upper = text.utf16Offset(ofCharacter: selection.upperBound)
-            view.selectedRange = NSRange(location: lower, length: max(0, upper - lower))
-            view.scrollRangeToVisible(view.selectedRange)
         }
+
+        // The formatting bar asks for the caret explicitly. Apply it on its own
+        // rather than from the live selection binding: during ordinary typing
+        // the binding lags the view, and syncing it back would yank the caret
+        // mid-word. A request also arrives again after a Menu item's action,
+        // once the menu has dismissed and focus has settled, so it lands even
+        // though the text itself has not changed.
+        guard let request = caretRequest,
+              context.coordinator.appliedCaretRequest != request else { return }
+        context.coordinator.appliedCaretRequest = request
+
+        let location = text.utf16Offset(ofCharacter: request.offset)
+        let range = NSRange(location: location, length: 0)
+        view.selectedRange = range
+        view.scrollRangeToVisible(range)
     }
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     final class Coordinator: NSObject, UITextViewDelegate {
         private let parent: MarkdownTextView
+        /// The last caret request this view applied, so the same ask does not
+        /// reapply while a fresh ask (even to the same offset) still does.
+        var appliedCaretRequest: CaretRequest?
 
         init(_ parent: MarkdownTextView) { self.parent = parent }
 

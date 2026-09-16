@@ -196,6 +196,21 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertEqual(try value(), "- milk")
     }
 
+    /// The reported bug: applying a list style from the menu left the caret at
+    /// the start of the line, so the next thing typed landed before the marker
+    /// instead of in the list. A bar button must leave the caret where the
+    /// change was made, ready to type the item's text.
+    func testChecklistPutsTheCaretAfterTheMarker() throws {
+        try newNote()
+        editor.typeText("milk")
+        app.buttons["List"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        app.buttons["Checklist"].firstMatch.tap()
+        Thread.sleep(forTimeInterval: 0.6)
+        editor.typeText("!")
+        XCTAssertEqual(try value(), "- [ ] milk!")
+    }
+
     // MARK: - Checkboxes on the rendered page
 
     /// Opens a sample note that has a checklist, without entering the editor.
