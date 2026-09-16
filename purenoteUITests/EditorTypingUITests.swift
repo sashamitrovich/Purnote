@@ -149,12 +149,11 @@ final class EditorTypingUITests: XCTestCase {
 
     // MARK: - The formatting bar
 
-    /// The most-used buttons sit leftmost so they are on screen at once; this
-    /// pins that those visible ones are reachable, including the List menu that
-    /// now holds the three list styles.
+    /// Every bar button is reachable without scrolling, so the row fits the
+    /// screen rather than spilling past its edge.
     func testBarButtonsExistAndAreHittable() throws {
         try newNote()
-        for name in ["Bold", "Italic", "Heading", "List"] {
+        for name in ["Bold", "Italic", "Heading", "List", "Quote", "Link", "Strikethrough", "Code"] {
             let button = app.buttons[name].firstMatch
             XCTAssertTrue(button.waitForExistence(timeout: 5), "\(name) button missing")
             XCTAssertTrue(button.isHittable, "\(name) button is not hittable")
