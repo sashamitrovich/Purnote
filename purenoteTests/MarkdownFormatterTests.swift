@@ -91,6 +91,18 @@ final class MarkdownFormatterTests: XCTestCase {
         XCTAssertEqual([r.lower, r.upper], [7, 7])
     }
 
+    // MARK: - tableSkeleton
+
+    func testTableSkeletonBuildsHeaderSeparatorAndBody() {
+        let table = MarkdownFormatter.tableSkeleton(rows: 2, columns: 3)
+        XCTAssertEqual(table, "| Header | Header | Header |\n| --- | --- | --- |\n|  |  |  |\n|  |  |  |")
+    }
+
+    func testTableSkeletonClampsToMinimums() {
+        let table = MarkdownFormatter.tableSkeleton(rows: 0, columns: 0)
+        XCTAssertEqual(table, "| Header |\n| --- |\n|  |")
+    }
+
     // MARK: - lineStartOffset
 
     func testLineStartOffset() {

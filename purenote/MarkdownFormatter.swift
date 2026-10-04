@@ -100,6 +100,24 @@ enum MarkdownFormatter {
         return Result(text: text, lower: caret, upper: caret)
     }
 
+    /// A GFM table skeleton: a header row, a separator row, and `rows` empty
+    /// body rows, each `columns` wide. Inserted at the caret, then the user
+    /// types into the cells.
+    static func tableSkeleton(rows: Int, columns: Int) -> String {
+        func row(_ cells: [String]) -> String {
+            "| " + cells.joined(separator: " | ") + " |"
+        }
+        let width = max(columns, 1)
+        let header = row(Array(repeating: "Header", count: width))
+        let separator = row(Array(repeating: "---", count: width))
+        let body = row(Array(repeating: "", count: width))
+        var lines = [header, separator]
+        for _ in 0..<max(rows, 1) {
+            lines.append(body)
+        }
+        return lines.joined(separator: "\n")
+    }
+
     /// Offset of the start of the line containing `offset`.
     static func lineStartOffset(_ text: String, at offset: Int) -> Int {
         let upToCursor = text[text.startIndex..<index(text, offset)]

@@ -158,7 +158,13 @@ struct MarkdownEditor: View {
             Action(name: "Link", icon: "link", run: insertLink),
             Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
             Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
-            Action(name: "Photo", icon: "photo") { showingPhotoPicker = true }
+            Action(name: "Photo", icon: "photo") { showingPhotoPicker = true },
+            Action(name: "Table", icon: "tablecells", menuItems: [
+                Action(name: "2 × 2", icon: "tablecells") { insertTable(rows: 2, columns: 2) },
+                Action(name: "3 × 2", icon: "tablecells") { insertTable(rows: 3, columns: 2) },
+                Action(name: "3 × 3", icon: "tablecells") { insertTable(rows: 3, columns: 3) },
+                Action(name: "4 × 4", icon: "tablecells") { insertTable(rows: 4, columns: 4) },
+            ])
         ]
     }
 
@@ -237,6 +243,13 @@ struct MarkdownEditor: View {
             // the image did not make it to disk; leave the editor untouched
             print("Failed to save picked image: \(error).")
         }
+    }
+
+    /// Inserts a table skeleton of the given size at the caret.
+    private func insertTable(rows: Int, columns: Int) {
+        let (lower, upper) = selectedOffsets
+        let skeleton = MarkdownFormatter.tableSkeleton(rows: rows, columns: columns)
+        apply(MarkdownFormatter.insert(text, lower, upper, string: skeleton))
     }
 }
 
