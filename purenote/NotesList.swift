@@ -13,23 +13,17 @@ struct NotesList: View {
     @State private var noteToMove: Note?
     var isSearching = false
     
-    func deleteItems(at offsets: IndexSet) {
-        
-        for offset in offsets.enumerated() {
-            let url = data.notes[offset.element].url
-            do {
-                try CoordinatedFile.trash(url)
-                try NoteAssets.trashAssetsFolder(forNoteAt: url)
-            }
-            catch {
-                // failed
-                print("Failed to delete notes: \(error).")
-            }
-            
+    func delete(_ note: Note) {
+        do {
+            try CoordinatedFile.trash(note.url)
+            try NoteAssets.trashAssetsFolder(forNoteAt: note.url)
         }
-        data.notes.remove(atOffsets: offsets)
+        catch {
+            // failed
+            print("Failed to delete note: \(error).")
+        }
+        data.notes.removeAll { $0.id == note.id }
         index.indexall()
-        
     }
     
     var body: some View {
@@ -47,10 +41,14 @@ struct NotesList: View {
                     Text("Move Note")
                     Image(systemName: "folder")
                 }
+                Button(role: .destructive) {
+                    delete(note)
+                } label: {
+                    Text("Delete Note")
+                    Image(systemName: "trash")
+                }
             }
-            .onDrag {
-                NSItemProvider(object: note.url.path as NSString)
-            }
+            .draggable(note.url.path)
             .showIf(condition: note.isLocal)
             
             ICloudItemView(note : note)
@@ -59,7 +57,7 @@ struct NotesList: View {
                 .frame(maxWidth: .infinity, alignment: .leading).showIf(condition: !note.isLocal)
 
         }
-        .onDelete(perform: deleteItems).padding(.leading, 5.0)
+        .padding(.leading, 5.0)
         .sheet(item: $noteToMove) { note in
             MoveNoteSheet(note: note)
                 .environmentObject(data)

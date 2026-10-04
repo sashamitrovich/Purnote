@@ -27,38 +27,40 @@ struct MenuView: View {
 
     @ViewBuilder
     var body: some View {
-        List {
-            // With nothing typed the list is the ordinary folders + notes.
-            // As soon as there is a query the same list becomes the results,
-            // in place -- no second screen to push onto.
-            if searchText.isEmpty {
-                SmartFoldersView()
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                // With nothing typed the list is the ordinary folders + notes.
+                // As soon as there is a query the same list becomes the results,
+                // in place -- no second screen to push onto.
+                if searchText.isEmpty {
+                    SmartFoldersView()
 
-                // where the smart folders (saved filters) end and the real
-                // physical folders begin
-                HStack {
-                    Text("Folders")
-                        .font(.caption.weight(.semibold))
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                        .textCase(.uppercase)
-                    Spacer()
+                    // where the smart folders (saved filters) end and the real
+                    // physical folders begin
+                    HStack {
+                        Text("Folders")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(Color(UIColor.secondaryLabel))
+                            .textCase(.uppercase)
+                        Spacer()
+                    }
+                    .padding(.top, 18)
+                    .padding(.leading, 4)
+
+                    FolderView().environmentObject(data)
+
+                    NotesList()
+                        .environmentObject(data)
+                        .environmentObject(index)
+                } else {
+                    searchResults
                 }
-                .padding(.top, 18)
-                .padding(.leading, 4)
-
-                FolderView().environmentObject(data)
-
-                NotesList()
-                    .environmentObject(data)
-                    .environmentObject(index)
-            } else {
-                searchResults
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
         }
         // a clean sheet, not a grey grouped list -- edge-to-edge rows on warm
         // paper, the way a writing app looks
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
         .background(Color.purnotePaper)
         // the whole bottom bar -- actions, or the search field when searching --
         // rides above the keyboard as a safe-area inset, so everything a thumb

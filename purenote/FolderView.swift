@@ -7,7 +7,6 @@
 
 import SwiftUI
 import UIKit
-import UniformTypeIdentifiers
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
@@ -73,17 +72,17 @@ struct FolderView: View {
                           ? Color(UIColor.systemOrange).opacity(0.15)
                           : Color.clear)
             )
-            .onDrop(of: [.text], isTargeted: isTargetedBinding(for: folder)) { providers in
-                guard let provider = providers.first else { return false }
-                provider.loadObject(ofClass: NSString.self) { object, _ in
-                    DispatchQueue.main.async {
-                        guard let path = object as? String,
-                              let note = data.notes.first(where: { $0.url.path == path }) else { return }
-                        data.move(note: note, to: folder.url)
-                        index.indexall()
-                    }
+            .dropDestination(for: String.self) { paths, _ in
+                guard let path = paths.first,
+                      let note = data.notes.first(where: { $0.url.path == path }) else {
+                    return false
                 }
+                data.move(note: note, to: folder.url)
+                index.indexall()
                 return true
+            } isTargeted: { targeted in
+                dropTargetedFolder = targeted ? folder.url
+                    : (dropTargetedFolder == folder.url ? nil : dropTargetedFolder)
             }
         }
         .contextMenu {
@@ -111,21 +110,6 @@ struct FolderView: View {
         } message: {
             Text("The folder is moved to the Trash")
         }
-    }
-
-    /// A per-row binding that reports whether a drag is currently over this
-    /// folder, for the drop highlight.
-    private func isTargetedBinding(for folder: Folder) -> Binding<Bool> {
-        Binding(
-            get: { dropTargetedFolder == folder.url },
-            set: { targeted in
-                if targeted {
-                    dropTargetedFolder = folder.url
-                } else if dropTargetedFolder == folder.url {
-                    dropTargetedFolder = nil
-                }
-            }
-        )
     }
 
     private func renameRow(_ folder: Folder) -> some View {
