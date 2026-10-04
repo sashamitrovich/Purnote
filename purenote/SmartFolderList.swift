@@ -83,6 +83,7 @@ struct SmartFoldersView: View {
                     Image(systemName: "trash")
                 }
             }
+            .menuRowStyle()
         }
 
         Button {
@@ -97,6 +98,7 @@ struct SmartFoldersView: View {
                     .foregroundColor(Color(UIColor.secondaryLabel))
             }
         }
+        .menuRowStyle()
         .sheet(item: $editorMode) { mode in
             switch mode {
             case .new:

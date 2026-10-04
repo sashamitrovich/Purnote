@@ -37,5 +37,15 @@ extension View {
         return self
             .foregroundColor(Color(UIColor.placeholderText))
     }
+
+    /// Restores the List-row look now that the menu renders in a LazyVStack:
+    /// a little vertical breathing room plus a bottom separator line.
+    func menuRowStyle() -> some View {
+        return self
+            .padding(.vertical, 7)
+            .overlay(alignment: .bottom) {
+                Divider()
+            }
+    }
     
 }

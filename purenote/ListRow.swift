@@ -35,7 +35,6 @@ struct ListRow: View {
             }
             .font(.system(size: 15))
         }
-        .padding(.vertical, 5)
     }
 
     // Derived text lives in NoteRowText so it can be unit-tested.

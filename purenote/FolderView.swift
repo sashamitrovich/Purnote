@@ -66,6 +66,7 @@ struct FolderView: View {
                     .foregroundColor(.secondary)
                     .monospacedDigit()
             }
+            .menuRowStyle()
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(dropTargetedFolder == folder.url
