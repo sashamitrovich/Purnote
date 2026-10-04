@@ -34,6 +34,18 @@ struct MenuView: View {
             if searchText.isEmpty {
                 SmartFoldersView()
 
+                // where the smart folders (saved filters) end and the real
+                // physical folders begin
+                HStack {
+                    Text("Folders")
+                        .font(.caption.weight(.semibold))
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                        .textCase(.uppercase)
+                    Spacer()
+                }
+                .padding(.top, 18)
+                .padding(.leading, 4)
+
                 FolderView().environmentObject(data)
 
                 NotesList()
