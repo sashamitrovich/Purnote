@@ -59,6 +59,27 @@ final class NoteAssetsTests: XCTestCase {
         XCTAssertFalse(fm.fileExists(atPath: dir.appendingPathComponent("Trip.assets").path))
     }
 
+    func testRenameAssetsFolderRenamesAndRewritesReferences() throws {
+        let oldNote = dir.appendingPathComponent("1600000000000.md")
+        _ = try NoteAssets.addImage(Data([1]), fileExtension: "jpg", to: oldNote)
+        let content = "A note\n\n" + NoteAssets.imageMarkdown(relativePath: "1600000000000.assets/image.jpg")
+
+        let newNote = dir.appendingPathComponent("My Trip.md")
+        let rewritten = NoteAssets.renameAssetsFolder(from: oldNote, to: newNote, content: content)
+
+        XCTAssertTrue(fm.fileExists(atPath: dir.appendingPathComponent("My Trip.assets/image.jpg").path))
+        XCTAssertFalse(fm.fileExists(atPath: dir.appendingPathComponent("1600000000000.assets").path))
+        XCTAssertEqual(rewritten, "A note\n\n" + NoteAssets.imageMarkdown(relativePath: "My Trip.assets/image.jpg"))
+    }
+
+    func testRenameAssetsFolderWithoutFolderLeavesContentUntouched() {
+        let content = "no images here"
+        let rewritten = NoteAssets.renameAssetsFolder(from: dir.appendingPathComponent("a.md"),
+                                                       to: dir.appendingPathComponent("b.md"),
+                                                       content: content)
+        XCTAssertEqual(rewritten, content)
+    }
+
     func testMoveAssetsFolderDoesNothingWhenAbsent() throws {
         let note = dir.appendingPathComponent("NoAssets.md")
         try NoteAssets.moveAssetsFolder(forNoteAt: note,

@@ -187,6 +187,13 @@ class DataManager: ObservableObject {
 
         do {
             try CoordinatedFile.move(from: note.url, to: target)
+            // keep the assets folder beside the note under the new name, and
+            // point the references at it
+            let rewritten = NoteAssets.renameAssetsFolder(from: note.url, to: target, content: note.content)
+            if rewritten != note.content {
+                note.content = rewritten
+                try CoordinatedFile.write(rewritten, to: target)
+            }
         }
         catch {
             // failed -- the note keeps the name it has, which is not worth

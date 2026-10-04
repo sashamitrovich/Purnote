@@ -59,6 +59,7 @@
 		4BC82D50254AADE40044FA11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4F254AADE40044FA11 /* NoteView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 		538364A293D884F840EC0380 /* NoteAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148DAD556072905879EA5FD1 /* NoteAssets.swift */; };
+		5CA664706BBEA2FDB1698D71 /* NoteImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B6BAC33D97CB9F0C53494C /* NoteImageProvider.swift */; };
 		67137BAE79C94D6628E904B7 /* iCloudConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */; };
 		746901B2534EF8565A8705DE /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		77B91737BF829C6E1656F275 /* NoteAssetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DA30DAFDF3DE8F8A02837 /* NoteAssetsTests.swift */; };
@@ -200,6 +201,7 @@
 		B80E8780988E51439F977A92 /* SharedInboxTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInboxTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
 		C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditorTypingUITests.swift; sourceTree = "<group>"; };
+		C5B6BAC33D97CB9F0C53494C /* NoteImageProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteImageProvider.swift; sourceTree = "<group>"; };
 		D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInbox.swift; sourceTree = "<group>"; };
 		D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocks.swift; sourceTree = "<group>"; };
 		D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */,
 				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 				148DAD556072905879EA5FD1 /* NoteAssets.swift */,
+				C5B6BAC33D97CB9F0C53494C /* NoteImageProvider.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */,
 				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
 				538364A293D884F840EC0380 /* NoteAssets.swift in Sources */,
+				5CA664706BBEA2FDB1698D71 /* NoteImageProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,8 +17,10 @@ struct NotesList: View {
     func deleteItems(at offsets: IndexSet) {
         
         for offset in offsets.enumerated() {
+            let url = data.notes[offset.element].url
             do {
-                try CoordinatedFile.trash(data.notes[offset.element].url)
+                try CoordinatedFile.trash(url)
+                try NoteAssets.trashAssetsFolder(forNoteAt: url)
             }
             catch {
                 // failed
@@ -56,6 +58,7 @@ struct NotesList: View {
 
                     do {
                         try CoordinatedFile.move(from: noteToMove.url, to: newNoteUrl)
+                        try NoteAssets.moveAssetsFolder(forNoteAt: noteToMove.url, to: newNoteUrl)
                     }
                     catch {
                         // failed

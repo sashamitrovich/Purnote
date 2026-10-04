@@ -42,8 +42,8 @@ enum NoteAssets {
 
     /// Moves the note's assets folder to the note's new location, keeping the
     /// folder's existing name so references stay valid. Call this whenever a
-    /// note file is moved between directories (never on a plain rename, where
-    /// the folder should stay put). No-op when there is no assets folder.
+    /// note file is moved between directories (a rename uses
+    /// `renameAssetsFolder` instead). No-op when there is no assets folder.
     static func moveAssetsFolder(forNoteAt oldNoteURL: URL, to newNoteURL: URL) throws {
         let source = folderURL(for: oldNoteURL)
         guard FileManager.default.fileExists(atPath: source.path) else { return }
@@ -51,6 +51,26 @@ enum NoteAssets {
             .appendingPathComponent(source.lastPathComponent)
         guard source.path != target.path else { return }
         try CoordinatedFile.move(from: source, to: target)
+    }
+
+    /// Renames the assets folder to match a renamed note and rewrites the
+    /// note's references from the old folder name to the new one, so the
+    /// folder always sits beside its note with the same stem. Returns the
+    /// rewritten content (the original when there was no folder to rename).
+    static func renameAssetsFolder(from oldNoteURL: URL, to newNoteURL: URL, content: String) -> String {
+        let oldFolder = folderURL(for: oldNoteURL)
+        guard FileManager.default.fileExists(atPath: oldFolder.path) else { return content }
+        let newFolder = folderURL(for: newNoteURL)
+        guard oldFolder.lastPathComponent != newFolder.lastPathComponent else { return content }
+
+        let oldName = oldFolder.lastPathComponent
+        let newName = newFolder.lastPathComponent
+        do {
+            try CoordinatedFile.move(from: oldFolder, to: newFolder)
+            return content.replacingOccurrences(of: oldName, with: newName)
+        } catch {
+            return content
+        }
     }
 
     /// Moves the note's assets folder to the Trash alongside the note.

@@ -80,6 +80,7 @@ struct NoteView: View {
         GeometryReader { geo in
             ScrollView {
                 NoteBody(source: sourceBinding,
+                         noteDirectory: note.url.deletingLastPathComponent(),
                          onTapBlock: { offset in
                              editing = EditRequest(caret: offset)
                          })

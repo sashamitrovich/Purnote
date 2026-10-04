@@ -77,6 +77,20 @@ final class MarkdownFormatterTests: XCTestCase {
         XCTAssertEqual(r.text[range(r.text, r.lower, r.upper)], "url")
     }
 
+    // MARK: - insert
+
+    func testInsertPlacesTextAtCaret() {
+        let r = MarkdownFormatter.insert("hello world", 5, 5, string: " there")
+        XCTAssertEqual(r.text, "hello there world")
+        XCTAssertEqual([r.lower, r.upper], [11, 11])
+    }
+
+    func testInsertReplacesSelection() {
+        let r = MarkdownFormatter.insert("hello world", 0, 5, string: "goodbye")
+        XCTAssertEqual(r.text, "goodbye world")
+        XCTAssertEqual([r.lower, r.upper], [7, 7])
+    }
+
     // MARK: - lineStartOffset
 
     func testLineStartOffset() {

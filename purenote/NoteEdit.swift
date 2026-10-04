@@ -39,7 +39,8 @@ struct NoteEdit: View {
     var body: some View {
         NavigationStack {
 
-            MarkdownEditor(text: $draft, initialCaret: initialCaret)
+            MarkdownEditor(text: $draft, initialCaret: initialCaret,
+                           saveImage: { data, ext in try savePickedImage(data, ext) })
                 // the note and the list are kept in step with the buffer, which
                 // is what the old binding's setter used to do on every keystroke
                 .onChange(of: draft) { _, newValue in
@@ -66,6 +67,13 @@ struct NoteEdit: View {
         data.persist(note)
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
+    }
+
+    /// Saves a picked image into the note's assets folder. The note is
+    /// persisted first so it has a real file URL to derive the folder from.
+    private func savePickedImage(_ imageData: Data, _ ext: String) throws -> String {
+        data.persist(note)
+        return try NoteAssets.addImage(imageData, fileExtension: ext, to: note.url)
     }
 
     /// Editing is over: this is when the file may be renamed to match its

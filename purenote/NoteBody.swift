@@ -23,6 +23,8 @@ struct NoteBody: View {
     /// The note's source. Ticking a checkbox writes a new value back through
     /// this binding, which is what makes the tap land in the file.
     @Binding var source: String
+    /// The note's directory, used to resolve relative image (and link) paths.
+    var noteDirectory: URL
     /// Called when a block is tapped, with the offset of the block's first
     /// character -- the place the editor should put the caret.
     var onTapBlock: (Int) -> Void = { _ in }
@@ -35,8 +37,9 @@ struct NoteBody: View {
                 if block.isTaskList {
                     taskList(block)
                 } else {
-                    Markdown(block.text)
+                    Markdown(block.text, baseURL: noteDirectory, imageBaseURL: noteDirectory)
                         .markdownTheme(.purnote)
+                        .markdownImageProvider(NoteImageProvider())
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                         // the whole block is the tap target, not just its glyphs
                         .contentShape(Rectangle())
@@ -185,7 +188,7 @@ struct NoteBody: View {
     A closing paragraph.
     """
     return ScrollView {
-        NoteBody(source: $text)
+        NoteBody(source: $text, noteDirectory: URL(fileURLWithPath: "/tmp"))
             .padding(20)
     }
     .background(Color.purnotePaper)
