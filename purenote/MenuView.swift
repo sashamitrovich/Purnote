@@ -49,6 +49,17 @@ struct MenuView: View {
 
                     FolderView().environmentObject(data)
 
+                    // where the folders end and the notes begin
+                    HStack {
+                        Text("Notes")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(Color(UIColor.secondaryLabel))
+                            .textCase(.uppercase)
+                        Spacer()
+                    }
+                    .padding(.top, 18)
+                    .padding(.leading, 4)
+
                     NotesList()
                         .environmentObject(data)
                         .environmentObject(index)
