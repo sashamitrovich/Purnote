@@ -26,7 +26,16 @@ struct NoteImageProvider: ImageProvider {
                 // a local path whose file is missing renders nothing rather
                 // than a broken-image glyph
             } else {
-                DefaultImageProvider().makeImage(url: url)
+                // remote image: SwiftUI's own loader, which doesn't use the
+                // deprecated URLSession initializer that NetworkImage does
+                AsyncImage(url: url) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                }
             }
         }
     }
