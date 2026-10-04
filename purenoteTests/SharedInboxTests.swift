@@ -103,6 +103,8 @@ final class SharedInboxTests: XCTestCase {
         try fm.createDirectory(at: root.appendingPathComponent("Work/Ideas"), withIntermediateDirectories: true)
         try fm.createDirectory(at: root.appendingPathComponent("Archive"), withIntermediateDirectories: true)
         try fm.createDirectory(at: root.appendingPathComponent(".Trash"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: root.appendingPathComponent(".purnote"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: root.appendingPathComponent("Trip.assets"), withIntermediateDirectories: true)
         try "note".write(to: root.appendingPathComponent("note.md"), atomically: true, encoding: .utf8)
 
         XCTAssertEqual(SharedInbox.folders(in: root),
