@@ -27,6 +27,12 @@ struct HelpView: View {
                     Text(versionText)
                         .font(.footnote)
                         .foregroundColor(.secondary)
+                    Divider()
+                    Text("Support Purnote")
+                        .font(.caption.weight(.semibold))
+                        .foregroundColor(Color(UIColor.secondaryLabel))
+                        .textCase(.uppercase)
+                    TipJarView()
                 }
                 .padding(20)
             }
