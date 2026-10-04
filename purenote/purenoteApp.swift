@@ -107,6 +107,28 @@ struct PurenoteApp: App {
         Storage.move(from: Storage.local().rootUrl, to: connection.rootUrl)
         useLocalStorage = false
     }
+
+    /// Imports any notes the share extension left in the App Group inbox into
+    /// the app's current storage (iCloud Drive or the local Documents folder),
+    /// keeping the folder each was saved into, then mirrors the resulting
+    /// folder list back into the group container so the extension's picker
+    /// stays current. Runs at launch, on foreground, and on background (the
+    /// last of which refreshes the catalog right before the user goes to
+    /// share).
+    private func syncSharedInbox() {
+        guard let inbox = SharedInbox.inboxURL else { return }
+        let root = storage.rootUrl
+        let monitor = self.monitor
+
+        Task.detached(priority: .utility) {
+            let moved = SharedInbox.importNotes(from: inbox, into: root)
+            if let catalog = SharedInbox.catalogURL() {
+                SharedInbox.writeCatalog(SharedInbox.folders(in: root), to: catalog)
+            }
+            guard moved > 0 else { return }
+            await MainActor.run { monitor.bump() }
+        }
+    }
     
     var body: some Scene {
         
@@ -131,9 +153,14 @@ struct PurenoteApp: App {
                     .environmentObject(SearchIndex(rootUrl: storage.rootUrl))
                     .environmentObject(monitor)
                     .task { seedSampleLibraryIfNeeded() }
+                    .task { syncSharedInbox() }
                     .task { await refreshConnection() }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         Task { await refreshConnection() }
+                        syncSharedInbox()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        syncSharedInbox()
                     }
                     .alert("Move your notes to iCloud Drive?", isPresented: $offerToMove) {
                         Button("Move") { moveToICloud() }

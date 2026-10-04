@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
+		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
+		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
+		2B4C07553892920862AF887C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		2E3700EB7271C634F78374F5 /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
 		313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E2B5BE1504D6232B8253C /* TextHitTest.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
@@ -52,18 +58,27 @@
 		4BC82D4C254AAAE80044FA11 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4B254AAAE80044FA11 /* NotesList.swift */; };
 		4BC82D50254AADE40044FA11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4F254AADE40044FA11 /* NoteView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
+		67137BAE79C94D6628E904B7 /* iCloudConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */; };
+		746901B2534EF8565A8705DE /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
 		7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */; };
 		8359C02608FBC1EC0470A26D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1626C47E78431A3707516E4B /* Theme.swift */; };
+		88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E8780988E51439F977A92 /* SharedInboxTests.swift */; };
 		88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08942BE74755E2F1B15845AE /* MarkdownTextView.swift */; };
 		8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */; };
+		8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */; };
+		99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */; };
 		A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		A8E625A624360CDA2C16CD0C /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAF425430E12002019A3 /* Connection.swift */; };
 		BBF812E3C0ADA5C4AD2D2252 /* MarkdownFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */; };
+		BE8C933A7147BEB0B122EC73 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */; };
 		C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */; };
+		C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F388666FE7CDDE74109E21 /* ShareContentTests.swift */; };
 		D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */; };
+		D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */; };
 		DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC685CA064D505099236339 /* ListContinuationTests.swift */; };
-		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF766C78D380C1E73C6C266B /* ModelTests.swift */; };
 		F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0911EFA1CD837D20B64122 /* NoteBody.swift */; };
 		F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */; };
@@ -71,6 +86,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		02E56E871601B043EA5596A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32731B37252767DB0031CADD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B697AD9EF1F2E6EC85DF44BC;
+			remoteInfo = purenoteShare;
+		};
 		779B1E18DFE20A1DC63D7B73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 32731B37252767DB0031CADD /* Project object */;
@@ -87,12 +109,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4D71DAF579E5EE6D4E29F065 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
 		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		1626C47E78431A3707516E4B /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = purenoteShare.entitlements; sourceTree = "<group>"; };
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
-		37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ICloudPlaceholderTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
+		24F388666FE7CDDE74109E21 /* ShareContentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareContentTests.swift; sourceTree = "<group>"; };
 		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
@@ -110,6 +148,7 @@
 		32EAC58C25350C4A000EE69F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32EAC58F25350C4A000EE69F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32EAC59125350C4A000EE69F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ICloudPlaceholderTests.swift; sourceTree = "<group>"; };
 		3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocksTests.swift; sourceTree = "<group>"; };
 		45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowTextTests.swift; sourceTree = "<group>"; };
 		4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +165,7 @@
 		4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndex.swift; sourceTree = "<group>"; };
 		4B3EAF00253F1F6C00CBCB2B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4B5FF2CE254196AB00EAD5AF /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
+		4B6CB538D6D055508A193FC8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B85F815254836B100755CFC /* AlertTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTest.swift; sourceTree = "<group>"; };
 		4BA1000025359F7700A67FCF /* MarkdownEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEditor.swift; sourceTree = "<group>"; };
 		4BA1000225359F7700A67FCF /* Autosave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autosave.swift; sourceTree = "<group>"; };
@@ -144,15 +184,21 @@
 		4BC82D4F254AADE40044FA11 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		4BC9D9F12538A43800966AD9 /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 		4C0911EFA1CD837D20B64122 /* NoteBody.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteBody.swift; sourceTree = "<group>"; };
+		4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareContent.swift; sourceTree = "<group>"; };
 		4FC5BB902ED1225384CA50B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		51705BEAF85739AE0266239A /* purenoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = purenoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
+		8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		AF766C78D380C1E73C6C266B /* ModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		B80E8780988E51439F977A92 /* SharedInboxTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInboxTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
 		C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditorTypingUITests.swift; sourceTree = "<group>"; };
+		D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInbox.swift; sourceTree = "<group>"; };
 		D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocks.swift; sourceTree = "<group>"; };
+		D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,6 +208,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BB9DC5425484B9F00584334 /* MarkdownUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		524FB5EC0CE3BCD95919A33E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B4C07553892920862AF887C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +289,7 @@
 				322052602535A5B500A67FCF /* Frameworks */,
 				9F4FC471AF111228171BFA9E /* purenoteTests */,
 				1278FACAD54DDA91FCDE43EF /* purenoteUITests */,
+				6174534081B3181462230ACC /* purenoteShare */,
 			);
 			sourceTree = "<group>";
 		};
@@ -244,6 +299,7 @@
 				32EAC58625350C49000EE69F /* Purnote.app */,
 				4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */,
 				51705BEAF85739AE0266239A /* purenoteUITests.xctest */,
+				6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,6 +341,8 @@
 				D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */,
 				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
 				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
+				4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */,
+				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -337,6 +395,19 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		6174534081B3181462230ACC /* purenoteShare */ = {
+			isa = PBXGroup;
+			children = (
+				D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */,
+				4B6CB538D6D055508A193FC8 /* Info.plist */,
+				1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */,
+				8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */,
+				1626C47E78431A3707516E4B /* Theme.swift */,
+			);
+			name = purenoteShare;
+			path = purenoteShare;
+			sourceTree = SOURCE_ROOT;
+		};
 		9F4FC471AF111228171BFA9E /* purenoteTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +420,8 @@
 				1FC685CA064D505099236339 /* ListContinuationTests.swift */,
 				37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */,
 				3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */,
+				24F388666FE7CDDE74109E21 /* ShareContentTests.swift */,
+				B80E8780988E51439F977A92 /* SharedInboxTests.swift */,
 			);
 			name = purenoteTests;
 			path = purenoteTests;
@@ -382,10 +455,12 @@
 				32EAC58225350C49000EE69F /* Sources */,
 				32EAC58325350C49000EE69F /* Frameworks */,
 				32EAC58425350C49000EE69F /* Resources */,
+				4D71DAF579E5EE6D4E29F065 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				47C563FC649A6381DB066A9E /* PBXTargetDependency */,
 			);
 			name = Purnote;
 			packageProductDependencies = (
@@ -412,6 +487,23 @@
 			productName = purenoteTests;
 			productReference = 4AE7A46788DABE2D6AE9CFB6 /* purenoteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B697AD9EF1F2E6EC85DF44BC /* purenoteShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22E148331A1DCE13BDC5DC7C /* Build configuration list for PBXNativeTarget "purenoteShare" */;
+			buildPhases = (
+				FC7D0189B4AE9DF891A666FD /* Sources */,
+				524FB5EC0CE3BCD95919A33E /* Frameworks */,
+				104ABC5EE0DBC2439F963225 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = purenoteShare;
+			productName = purenoteShare;
+			productReference = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -449,11 +541,19 @@
 				32EAC58525350C49000EE69F /* Purnote */,
 				92CEF4496AB43F2989229AEA /* purenoteTests */,
 				30C4496AD69223C8BF87AE6C /* purenoteUITests */,
+				B697AD9EF1F2E6EC85DF44BC /* purenoteShare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		104ABC5EE0DBC2439F963225 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32EAC58425350C49000EE69F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -493,6 +593,8 @@
 				DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */,
 				24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */,
 				209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */,
+				C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */,
+				88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,12 +656,36 @@
 				8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */,
 				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
 				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
+				D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */,
+				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC7D0189B4AE9DF891A666FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE8C933A7147BEB0B122EC73 /* ShareViewController.swift in Sources */,
+				2E3700EB7271C634F78374F5 /* CoordinatedFile.swift in Sources */,
+				746901B2534EF8565A8705DE /* NoteNaming.swift in Sources */,
+				67137BAE79C94D6628E904B7 /* iCloudConnection.swift in Sources */,
+				A8E625A624360CDA2C16CD0C /* Connection.swift in Sources */,
+				99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */,
+				00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */,
+				20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */,
+				87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		47C563FC649A6381DB066A9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = purenoteShare;
+			target = B697AD9EF1F2E6EC85DF44BC /* purenoteShare */;
+			targetProxy = 02E56E871601B043EA5596A2 /* PBXContainerItemProxy */;
+		};
 		ABF5FCDCAAA27AF8B5ADA2B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Purnote;
@@ -793,6 +919,27 @@
 			};
 			name = Release;
 		};
+		7BCA41C67C825E19E1C7102F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = purenoteShare/purenoteShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				INFOPLIST_FILE = purenoteShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote.share;
+				PRODUCT_NAME = purenoteShare;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A3F1F51AE4B39CF82BFE79E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -809,6 +956,26 @@
 			};
 			name = Debug;
 		};
+		A526022CD26773324FBC77B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = purenoteShare/purenoteShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20;
+				DEVELOPMENT_TEAM = BBX4M6XN45;
+				INFOPLIST_FILE = purenoteShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mitrovic.purenote.share;
+				PRODUCT_NAME = purenoteShare;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -817,6 +984,15 @@
 			buildConfigurations = (
 				6ED7686D61A472201071AB31 /* Release */,
 				A3F1F51AE4B39CF82BFE79E6 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22E148331A1DCE13BDC5DC7C /* Build configuration list for PBXNativeTarget "purenoteShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BCA41C67C825E19E1C7102F /* Release */,
+				A526022CD26773324FBC77B8 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

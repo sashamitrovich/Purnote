@@ -27,6 +27,7 @@ you like.
 * organize notes in folders
 * notes get automatically synced with your Mac
 * edit or create the notes directly on your Mac and they will be updated in the app
+* share into Purnote from any app — pick Purnote in the share sheet and the shared text or link becomes a note, with the link kept at the bottom
 * search all your notes within the app. For this I've built a naive inverted implementations (naive because there's no score relevance) that indexes all your notes
 
 The formatting buttons insert exactly the characters you would have typed
