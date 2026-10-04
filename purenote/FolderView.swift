@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import UniformTypeIdentifiers
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
@@ -18,6 +19,7 @@ struct FolderView: View {
     @State private var renamingFolder: URL?
     @State private var draftName = ""
     @State private var folderPendingDelete: URL?
+    @State private var dropTargetedFolder: URL?
     @FocusState private var renameFieldFocused: Bool
 
     @ViewBuilder
@@ -65,6 +67,12 @@ struct FolderView: View {
                     .foregroundColor(.secondary)
                     .monospacedDigit()
             }
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(dropTargetedFolder == folder.url
+                          ? Color(UIColor.systemOrange).opacity(0.15)
+                          : Color.clear)
+            )
         }
         .contextMenu {
             Button {
@@ -82,13 +90,16 @@ struct FolderView: View {
                 Image(systemName: "trash")
             }
         }
-        .dropDestination(for: NoteDragPayload.self) { payloads, _ in
-            guard let payload = payloads.first,
-                  let note = data.notes.first(where: { $0.url.path == payload.urlPath }) else {
-                return false
+        .onDrop(of: [UTType.purnoteNote], isTargeted: isTargetedBinding(for: folder)) { providers in
+            guard let provider = providers.first else { return false }
+            provider.loadItem(forTypeIdentifier: UTType.purnoteNote.identifier, options: nil) { item, _ in
+                guard let path = item as? String else { return }
+                DispatchQueue.main.async {
+                    guard let note = data.notes.first(where: { $0.url.path == path }) else { return }
+                    data.move(note: note, to: folder.url)
+                    index.indexall()
+                }
             }
-            data.move(note: note, to: folder.url)
-            index.indexall()
             return true
         }
         // scoped to this row's url, so only the folder actually being deleted
@@ -100,6 +111,21 @@ struct FolderView: View {
         } message: {
             Text("The folder is moved to the Trash")
         }
+    }
+
+    /// A per-row binding that reports whether a drag is currently over this
+    /// folder, for the drop highlight.
+    private func isTargetedBinding(for folder: Folder) -> Binding<Bool> {
+        Binding(
+            get: { dropTargetedFolder == folder.url },
+            set: { targeted in
+                if targeted {
+                    dropTargetedFolder = folder.url
+                } else if dropTargetedFolder == folder.url {
+                    dropTargetedFolder = nil
+                }
+            }
+        )
     }
 
     private func renameRow(_ folder: Folder) -> some View {

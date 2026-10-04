@@ -14,15 +14,6 @@ extension UTType {
     static let purnoteNote = UTType(exportedAs: "com.mitrovic.purenote.note")
 }
 
-/// The payload a dragged note carries: its file URL path.
-struct NoteDragPayload: Transferable, Codable {
-    let urlPath: String
-
-    static var transferRepresentation: some TransferRepresentation {
-        CodableRepresentation(contentType: .purnoteNote)
-    }
-}
-
 struct NotesList: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
@@ -64,7 +55,10 @@ struct NotesList: View {
                     Image(systemName: "folder")
                 }
             }
-            .draggable(NoteDragPayload(urlPath: note.url.path))
+            .onDrag {
+                NSItemProvider(item: note.url.path as NSString,
+                               typeIdentifier: UTType.purnoteNote.identifier)
+            }
             .showIf(condition: note.isLocal)
             
             ICloudItemView(note : note)
