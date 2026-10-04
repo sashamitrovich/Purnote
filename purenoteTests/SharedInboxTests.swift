@@ -109,6 +109,19 @@ final class SharedInboxTests: XCTestCase {
                        ["Archive", "Work", "Work/Ideas"])
     }
 
+    func testChildFoldersListsDirectChildrenOnly() {
+        let catalog = ["Work/Ideas/Deep", "Work", "Work/Notes", "Archive", "Work/Ideas", "Personal"]
+
+        XCTAssertEqual(SharedInbox.childFolders(of: "", in: catalog),
+                       ["Archive", "Personal", "Work"])
+        XCTAssertEqual(SharedInbox.childFolders(of: "Work", in: catalog),
+                       ["Work/Ideas", "Work/Notes"])
+        XCTAssertEqual(SharedInbox.childFolders(of: "Work/Ideas", in: catalog),
+                       ["Work/Ideas/Deep"])
+        XCTAssertEqual(SharedInbox.childFolders(of: "Archive", in: catalog), [])
+        XCTAssertEqual(SharedInbox.childFolders(of: "", in: []), [])
+    }
+
     func testCatalogRoundTripsThroughJson() throws {
         let url = base.appendingPathComponent("folders.json")
         SharedInbox.writeCatalog(["Work/Ideas", "Work", "Archive"], to: url)

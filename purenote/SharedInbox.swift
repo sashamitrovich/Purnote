@@ -126,6 +126,20 @@ enum SharedInbox {
         return result
     }
 
+    /// The direct children of a folder within the catalog, as full relative
+    /// paths. An empty `path` means the root of the storage, so its children
+    /// are the top-level folders.
+    static func childFolders(of path: String, in folders: [String]) -> [String] {
+        let prefix = path.isEmpty ? "" : path + "/"
+        return folders
+            .filter { folder in
+                folder.hasPrefix(prefix)
+                    && folder.count > prefix.count
+                    && !folder.dropFirst(prefix.count).contains("/")
+            }
+            .sorted()
+    }
+
     private static func collectFolders(in directory: URL, relative: String, into result: inout [String]) {
         let fm = FileManager.default
         let children = (try? fm.contentsOfDirectory(at: directory,

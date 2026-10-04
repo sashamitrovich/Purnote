@@ -99,7 +99,7 @@ final class ShareViewController: UIViewController {
 
     @objc private func chooseFolder() {
         let folders = SharedInbox.catalogURL().map { SharedInbox.readCatalog(from: $0) } ?? []
-        let picker = FolderPickerViewController(folders: folders, selected: destination) { [weak self] picked in
+        let picker = FolderPickerViewController(path: "", folders: folders, selected: destination) { [weak self] picked in
             guard let self else { return }
             if let picked {
                 self.destination = picked
