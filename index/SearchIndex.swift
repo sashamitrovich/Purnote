@@ -25,6 +25,9 @@ class SearchIndex : ObservableObject {
 
     public var idHash: [String : String] = [:]
 
+    /// Tag (lowercased) -> the paths of every note that contains it.
+    public var tagDict: [String: Set<String>] = [:]
+
     public func searchPhrase(phrase: String) -> Set<String> {
         let tokens = phrase.lowercased()
             .removePuncuation()
@@ -75,6 +78,38 @@ class SearchIndex : ObservableObject {
         return paths
     }
 
+    /// Every tag present across the library, sorted.
+    public func allTags() -> [String] {
+        tagDict.keys.sorted()
+    }
+
+    /// The notes containing every one of the given tags.
+    public func searchByTags(_ tags: [String]) -> [Note] {
+        let lowered = tags.map { $0.lowercased() }
+        guard !lowered.isEmpty else { return [] }
+
+        var paths: Set<String> = []
+        for (index, tag) in lowered.enumerated() {
+            let hits = tagDict[tag] ?? []
+            paths = index == 0 ? hits : paths.intersection(hits)
+        }
+
+        var notes: [Note] = []
+        for path in paths {
+            let url = URL(fileURLWithPath: path)
+            do {
+                try notes.append(Note(content: CoordinatedFile.read(url),
+                                      date: (FileManager.default.attributesOfItem(atPath: path)[.creationDate] as? Date) ?? Date(),
+                                      path: url.lastPathComponent, isLocal: true, url: url, type: .Note))
+            }
+            catch {
+                print("Unexpected error adding note to tag results: \(error).")
+            }
+        }
+        notes.sort { $0.date > $1.date }
+        return notes
+    }
+
     func addTerm(term: String, path: String) {
         dict[term.lowercased(), default: []].insert(path)
     }
@@ -92,9 +127,15 @@ class SearchIndex : ObservableObject {
             }
             
         }
+
+        // index the #tag tokens too, so notes can be filtered by tag
+        for tag in TagScanner.tags(in: content) {
+            tagDict[tag.lowercased(), default: []].insert(path)
+        }
     }
     public func indexall() {
         dict = [:]
+        tagDict = [:]
         indexFolder(currentUrl: rootUrl)
     }
     

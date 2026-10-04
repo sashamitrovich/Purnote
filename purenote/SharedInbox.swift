@@ -119,7 +119,8 @@ enum SharedInbox {
     }
 
     /// Every folder under the storage root, as relative paths ("Work",
-    /// "Work/Ideas"), skipping the Trash and everything that is not a folder.
+    /// "Work/Ideas"), skipping hidden folders (`.Trash`, `.purnote`, …) and
+    /// everything that is not a folder.
     static func folders(in root: URL) -> [String] {
         var result: [String] = []
         collectFolders(in: root, relative: "", into: &result)
