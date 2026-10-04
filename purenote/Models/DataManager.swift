@@ -179,8 +179,13 @@ class DataManager: ObservableObject {
     func finishEditing(_ note: Note) {
         persist(note)
 
-        guard NoteNaming.isGenerated(note.url.lastPathComponent),
-              let name = NoteNaming.name(from: note.content)
+        // Rename the file to match the note's first line, so the filename on
+        // disk (and on the Mac) always mirrors the title the user sees. The
+        // first line is the source of truth; a name changed by hand on the Mac
+        // is reverted here when the title says something else.
+        let currentStem = note.url.deletingPathExtension().lastPathComponent
+        guard let name = NoteNaming.name(from: note.content),
+              name != currentStem
         else { return }
 
         let target = NoteNaming.availableURL(named: name,
