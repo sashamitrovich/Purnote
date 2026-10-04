@@ -41,6 +41,14 @@ enum CoordinatedFile {
         }
     }
 
+    /// Binary variant for attachments (images etc.): same coordination, just
+    /// raw bytes instead of UTF-8 text.
+    static func write(_ data: Data, to url: URL) throws {
+        try coordinateWriting(at: url, options: .forReplacing) { actual in
+            try data.write(to: actual, options: .atomic)
+        }
+    }
+
     static func createDirectory(at url: URL, withIntermediateDirectories intermediates: Bool = false) throws {
         try coordinateWriting(at: url, options: .forReplacing) { actual in
             try FileManager.default.createDirectory(at: actual,
