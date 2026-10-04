@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -269,7 +269,6 @@
 			children = (
 				C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */,
 			);
-			name = purenoteUITests;
 			path = purenoteUITests;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -440,7 +439,6 @@
 				8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */,
 				1626C47E78431A3707516E4B /* Theme.swift */,
 			);
-			name = purenoteShare;
 			path = purenoteShare;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -462,7 +460,6 @@
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 			);
-			name = purenoteTests;
 			path = purenoteTests;
 			sourceTree = "<group>";
 		};
