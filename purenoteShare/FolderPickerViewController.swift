@@ -13,6 +13,9 @@ import UIKit
 /// as relative paths from the storage root. One view controller instance is a
 /// single level of the tree; tapping a folder pushes the next level with the
 /// same `onPick` closure, so a pick anywhere collapses the whole stack.
+///
+/// Styled to match the app: warm paper background, orange folder icons, plain
+/// edge-to-edge rows.
 final class FolderPickerViewController: UITableViewController {
 
     /// Called with the chosen folder path ("" = top level) or nil on cancel.
@@ -32,7 +35,7 @@ final class FolderPickerViewController: UITableViewController {
         self.onPick = onPick
         self.folders = folders
         self.subfolders = SharedInbox.childFolders(of: path, in: folders)
-        super.init(style: .insetGrouped)
+        super.init(style: .plain)
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
@@ -40,6 +43,21 @@ final class FolderPickerViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = path.isEmpty ? "Save to" : (path as NSString).lastPathComponent
+
+        view.backgroundColor = .purnotePaper
+        tableView.backgroundColor = .purnotePaper
+        tableView.separatorColor = .separator
+        // orange checkmarks, matching the app's accent
+        tableView.tintColor = .systemOrange
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .purnotePaper
+        appearance.shadowColor = .clear
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = .systemOrange
+
         if path.isEmpty {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -69,11 +87,13 @@ final class FolderPickerViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.backgroundColor = .purnotePaper
         switch indexPath.section {
         case 0:
             var content = cell.defaultContentConfiguration()
             content.text = path.isEmpty ? "Notes" : "Save to \((path as NSString).lastPathComponent)"
             content.image = UIImage(systemName: path.isEmpty ? "note.text" : "folder")
+            content.imageProperties.tintColor = .systemOrange
             cell.contentConfiguration = content
             cell.accessoryType = (selected == path) ? .checkmark : .none
 
@@ -82,6 +102,7 @@ final class FolderPickerViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = (subfolder as NSString).lastPathComponent
             content.image = UIImage(systemName: "folder")
+            content.imageProperties.tintColor = .systemOrange
             cell.contentConfiguration = content
             cell.accessoryType = .disclosureIndicator
 
@@ -89,6 +110,7 @@ final class FolderPickerViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = "New Folder\u{2026}"
             content.image = UIImage(systemName: "folder.badge.plus")
+            content.imageProperties.tintColor = .systemOrange
             cell.contentConfiguration = content
         }
         return cell

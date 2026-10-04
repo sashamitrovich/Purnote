@@ -19,17 +19,25 @@ final class ShareViewController: UIViewController {
     private var destinationButton: UIBarButtonItem?
 
     /// The folder the note will land in, as a path relative to the storage
-    /// root ("" = top level).
+    /// root ("" = top level). Defaults to the folder used last time.
     private var destination = "" {
         didSet { updateDestinationButton() }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .purnotePaper
 
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .purnotePaper
+        appearance.shadowColor = .clear
+        navBar.standardAppearance = appearance
+        navBar.scrollEdgeAppearance = appearance
+        navBar.tintColor = .systemOrange
+
         let navItem = UINavigationItem(title: "Save to Purnote")
         navItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -41,11 +49,13 @@ final class ShareViewController: UIViewController {
         save.isEnabled = false
         navItem.rightBarButtonItems = [save, destinationItem]
         navBar.items = [navItem]
-        saveButton = save
         view.addSubview(navBar)
+        saveButton = save
 
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = .preferredFont(forTextStyle: .body)
+        textView.backgroundColor = .purnotePaper
+        textView.textColor = .label
         view.addSubview(textView)
 
         NSLayoutConstraint.activate([
@@ -54,10 +64,14 @@ final class ShareViewController: UIViewController {
             navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             textView.topAnchor.constraint(equalTo: navBar.bottomAnchor),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             textView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+
+        // Start where the user left off last time.
+        let folders = SharedInbox.catalogURL().map { SharedInbox.readCatalog(from: $0) } ?? []
+        destination = SharedInbox.suggestedFolder(lastUsed: SharedInbox.lastSharedFolder(), in: folders)
 
         Task { await loadSharedContent() }
     }
@@ -99,14 +113,34 @@ final class ShareViewController: UIViewController {
 
     @objc private func chooseFolder() {
         let folders = SharedInbox.catalogURL().map { SharedInbox.readCatalog(from: $0) } ?? []
-        let picker = FolderPickerViewController(path: "", folders: folders, selected: destination) { [weak self] picked in
+
+        let onPick: (String?) -> Void = { [weak self] picked in
             guard let self else { return }
             if let picked {
                 self.destination = picked
             }
             self.dismiss(animated: true)
         }
-        present(UINavigationController(rootViewController: picker), animated: true)
+
+        let nav = UINavigationController()
+        nav.viewControllers = pickerStack(folders: folders, onPick: onPick)
+        present(nav, animated: true)
+    }
+
+    /// Builds the picker stack, pre-drilled into the current destination so the
+    /// last-used folder is suggested first.
+    private func pickerStack(folders: [String], onPick: @escaping (String?) -> Void) -> [FolderPickerViewController] {
+        var stack = [FolderPickerViewController(
+            path: "", folders: folders, selected: destination, onPick: onPick)]
+
+        guard !destination.isEmpty else { return stack }
+        var current = ""
+        for component in destination.split(separator: "/") {
+            current = current.isEmpty ? String(component) : current + "/" + component
+            stack.append(FolderPickerViewController(
+                path: current, folders: folders, selected: destination, onPick: onPick))
+        }
+        return stack
     }
 
     private func updateDestinationButton() {
@@ -130,6 +164,7 @@ final class ShareViewController: UIViewController {
 
         do {
             try SharedInbox.save(content, to: inbox, in: destination)
+            SharedInbox.rememberSharedFolder(destination)
             extensionContext?.completeRequest(returningItems: nil)
         } catch {
             present(alert: "Couldn't save",

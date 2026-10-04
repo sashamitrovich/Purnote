@@ -63,6 +63,7 @@
 		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
 		7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */; };
 		8359C02608FBC1EC0470A26D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1626C47E78431A3707516E4B /* Theme.swift */; };
 		88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E8780988E51439F977A92 /* SharedInboxTests.swift */; };
 		88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08942BE74755E2F1B15845AE /* MarkdownTextView.swift */; };
 		8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */; };
@@ -125,6 +126,7 @@
 /* Begin PBXFileReference section */
 		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
 		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		1626C47E78431A3707516E4B /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = purenoteShare.entitlements; sourceTree = "<group>"; };
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				4B6CB538D6D055508A193FC8 /* Info.plist */,
 				1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */,
 				8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */,
+				1626C47E78431A3707516E4B /* Theme.swift */,
 			);
 			name = purenoteShare;
 			path = purenoteShare;
@@ -670,6 +673,7 @@
 				99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */,
 				00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */,
 				20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */,
+				87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

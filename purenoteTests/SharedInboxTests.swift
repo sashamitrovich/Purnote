@@ -122,6 +122,15 @@ final class SharedInboxTests: XCTestCase {
         XCTAssertEqual(SharedInbox.childFolders(of: "", in: []), [])
     }
 
+    func testSuggestedFolderFallsBackWhenLastIsGone() {
+        let available = ["Archive", "Work", "Work/Ideas"]
+
+        XCTAssertEqual(SharedInbox.suggestedFolder(lastUsed: "Work/Ideas", in: available),
+                       "Work/Ideas")
+        XCTAssertEqual(SharedInbox.suggestedFolder(lastUsed: "Deleted", in: available), "")
+        XCTAssertEqual(SharedInbox.suggestedFolder(lastUsed: "", in: available), "")
+    }
+
     func testCatalogRoundTripsThroughJson() throws {
         let url = base.appendingPathComponent("folders.json")
         SharedInbox.writeCatalog(["Work/Ideas", "Work", "Archive"], to: url)

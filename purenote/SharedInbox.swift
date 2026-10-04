@@ -153,6 +153,23 @@ enum SharedInbox {
             collectFolders(in: child, relative: rel, into: &result)
         }
     }
+
+    // MARK: - Remembering the last folder
+
+    /// The folder the user shared into last time ("" = never, or top level).
+    static func lastSharedFolder() -> String {
+        UserDefaults(suiteName: groupIdentifier)?.string(forKey: "lastSharedFolder") ?? ""
+    }
+
+    static func rememberSharedFolder(_ folder: String) {
+        UserDefaults(suiteName: groupIdentifier)?.set(folder, forKey: "lastSharedFolder")
+    }
+
+    /// The folder to suggest as the default: the last one used, when it still
+    /// exists in the catalog; otherwise the top level.
+    static func suggestedFolder(lastUsed: String, in available: [String]) -> String {
+        available.contains(lastUsed) ? lastUsed : ""
+    }
 }
 
 /// The shape of the mirrored folder list. Kept tiny and Codable so the app and
