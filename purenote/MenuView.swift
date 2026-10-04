@@ -242,7 +242,7 @@ struct MenuView: View {
 
     func conditionalNavBarTitle(text: String) -> String {
         if (text=="Documents") {
-            return "Notes"
+            return "Purnote"
         }
         else {
             return text
