@@ -91,17 +91,18 @@ final class ShareViewController: UIViewController {
         let content = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !content.isEmpty else { return }
 
-        let connection = iCloudConnection.getConnection()
-        guard connection.connectionAvailable else {
+        // The note goes into the App Group inbox; the app moves it into its
+        // storage (iCloud Drive or local) the next time it opens. The
+        // extension cannot reach the app's own Documents folder, so the shared
+        // inbox is the hand-off point.
+        guard let inbox = SharedInbox.inboxURL else {
             present(alert: "Couldn't save",
-                    message: "Purnote saves shared notes to iCloud Drive. Turn on iCloud Drive and make sure you're signed in, then try again.")
+                    message: "Purnote couldn't access its shared storage. Try again.")
             return
         }
 
         do {
-            let url = NoteNaming.availableURL(named: ShareContent.title(from: content),
-                                              in: connection.rootUrl)
-            try CoordinatedFile.write(content, to: url)
+            try SharedInbox.save(content, to: inbox)
             extensionContext?.completeRequest(returningItems: nil)
         } catch {
             present(alert: "Couldn't save",

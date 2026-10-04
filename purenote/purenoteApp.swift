@@ -107,6 +107,23 @@ struct PurenoteApp: App {
         Storage.move(from: Storage.local().rootUrl, to: connection.rootUrl)
         useLocalStorage = false
     }
+
+    /// Moves notes the share extension left in the App Group inbox into the
+    /// app's current storage (iCloud Drive or the local Documents folder).
+    /// The extension is a separate sandbox and cannot reach the app's own
+    /// Documents folder, so the shared inbox is the hand-off point; this runs
+    /// at launch and when the app returns to the foreground.
+    private func importSharedNotes() {
+        guard let inbox = SharedInbox.inboxURL else { return }
+        let root = storage.rootUrl
+        let monitor = self.monitor
+
+        Task.detached(priority: .utility) {
+            let moved = SharedInbox.importNotes(from: inbox, into: root)
+            guard moved > 0 else { return }
+            await MainActor.run { monitor.bump() }
+        }
+    }
     
     var body: some Scene {
         
@@ -131,9 +148,11 @@ struct PurenoteApp: App {
                     .environmentObject(SearchIndex(rootUrl: storage.rootUrl))
                     .environmentObject(monitor)
                     .task { seedSampleLibraryIfNeeded() }
+                    .task { importSharedNotes() }
                     .task { await refreshConnection() }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         Task { await refreshConnection() }
+                        importSharedNotes()
                     }
                     .alert("Move your notes to iCloud Drive?", isPresented: $offerToMove) {
                         Button("Move") { moveToICloud() }

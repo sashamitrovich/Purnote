@@ -14,5 +14,9 @@
 	<array>
 		<string>iCloud.com.mitrovic.purnote</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.mitrovic.purenote</string>
+	</array>
 </dict>
 </plist>

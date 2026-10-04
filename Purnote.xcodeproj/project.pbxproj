@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
@@ -61,8 +62,10 @@
 		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
 		7DE24AB34B3F8ACB77E6A07A /* NoteRowTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DB9434F853D3FD3F7C83C9 /* NoteRowTextTests.swift */; };
 		8359C02608FBC1EC0470A26D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
+		88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E8780988E51439F977A92 /* SharedInboxTests.swift */; };
 		88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08942BE74755E2F1B15845AE /* MarkdownTextView.swift */; };
 		8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */; };
+		8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		983BB56061D87E239F9A3962 /* NoteRowText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */; };
 		99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */; };
 		A2438AFAE7F8DBCBF379E888 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
@@ -186,8 +189,10 @@
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		AF766C78D380C1E73C6C266B /* ModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		B80E8780988E51439F977A92 /* SharedInboxTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInboxTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
 		C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditorTypingUITests.swift; sourceTree = "<group>"; };
+		D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInbox.swift; sourceTree = "<group>"; };
 		D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocks.swift; sourceTree = "<group>"; };
 		D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
@@ -333,6 +338,7 @@
 				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
 				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
 				4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */,
+				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -409,6 +415,7 @@
 				37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */,
 				3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */,
 				24F388666FE7CDDE74109E21 /* ShareContentTests.swift */,
+				B80E8780988E51439F977A92 /* SharedInboxTests.swift */,
 			);
 			name = purenoteTests;
 			path = purenoteTests;
@@ -581,6 +588,7 @@
 				24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */,
 				209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */,
 				C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */,
+				88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +651,7 @@
 				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
 				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
 				D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */,
+				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +665,7 @@
 				67137BAE79C94D6628E904B7 /* iCloudConnection.swift in Sources */,
 				A8E625A624360CDA2C16CD0C /* Connection.swift in Sources */,
 				99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */,
+				00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
