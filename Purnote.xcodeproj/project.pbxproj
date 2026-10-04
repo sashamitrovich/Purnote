@@ -10,6 +10,7 @@
 		00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		2B4C07553892920862AF887C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
@@ -186,6 +187,7 @@
 		51705BEAF85739AE0266239A /* purenoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = purenoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
+		8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		AF766C78D380C1E73C6C266B /* ModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */,
 				4B6CB538D6D055508A193FC8 /* Info.plist */,
 				1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */,
+				8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */,
 			);
 			name = purenoteShare;
 			path = purenoteShare;
@@ -666,6 +669,7 @@
 				A8E625A624360CDA2C16CD0C /* Connection.swift in Sources */,
 				99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */,
 				00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */,
+				20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

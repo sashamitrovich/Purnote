@@ -2,10 +2,11 @@
 //  SharedInboxTests.swift
 //  purenoteTests
 //
-//  Tests for the App Group inbox: how shared notes get named, listed and moved
-//  into the app's storage. They exercise the logic against temp directories
-//  rather than the real group container, which the unit-test bundle has no
-//  entitlement to reach.
+//  Tests for the App Group hand-off: how shared notes get named, placed in a
+//  folder, and moved into the app's storage, plus the folder catalog the app
+//  mirrors for the extension's picker. They exercise the logic against temp
+//  directories rather than the real group container, which the unit-test
+//  bundle has no entitlement to reach.
 //
 
 @testable import Purnote
@@ -46,19 +47,11 @@ final class SharedInboxTests: XCTestCase {
         XCTAssertEqual(second.lastPathComponent, "Same 2.md")
     }
 
-    // MARK: - pendingNotes
-
-    func testPendingNotesListsOnlyMarkdownFiles() throws {
-        try SharedInbox.save("one", to: inbox)
-        try SharedInbox.save("two", to: inbox)
-        // a non-.md file and a subfolder are both ignored
-        try "not a note".write(to: inbox.appendingPathComponent("ignore.txt"),
-                               atomically: true, encoding: .utf8)
-        try fm.createDirectory(at: inbox.appendingPathComponent("folder", isDirectory: true),
-                               withIntermediateDirectories: true)
-
-        let pending = SharedInbox.pendingNotes(in: inbox)
-        XCTAssertEqual(pending.map(\.lastPathComponent).sorted(), ["one.md", "two.md"])
+    func testSaveIntoFolderCreatesTheSubdirectory() throws {
+        let url = try SharedInbox.save("filed", to: inbox, in: "Work/Ideas")
+        XCTAssertEqual(url.lastPathComponent, "filed.md")
+        XCTAssertTrue(fm.fileExists(atPath: url.path))
+        XCTAssertTrue(url.path.contains("/Work/Ideas/"))
     }
 
     // MARK: - import
@@ -67,10 +60,25 @@ final class SharedInboxTests: XCTestCase {
         try SharedInbox.save("Incoming note", to: inbox)
 
         XCTAssertEqual(SharedInbox.importNotes(from: inbox, into: root), 1)
-        XCTAssertTrue(SharedInbox.pendingNotes(in: inbox).isEmpty)
         XCTAssertEqual(try fm.contentsOfDirectory(atPath: root.path), ["Incoming note.md"])
         XCTAssertEqual(try CoordinatedFile.read(root.appendingPathComponent("Incoming note.md")),
                        "Incoming note")
+    }
+
+    func testImportPreservesTheChosenFolder() throws {
+        try SharedInbox.save("filed", to: inbox, in: "Work")
+
+        XCTAssertEqual(SharedInbox.importNotes(from: inbox, into: root), 1)
+        let destination = root.appendingPathComponent("Work/filed.md")
+        XCTAssertTrue(fm.fileExists(atPath: destination.path))
+        XCTAssertEqual(try CoordinatedFile.read(destination), "filed")
+    }
+
+    func testImportCreatesAFolderThatDoesNotExistYet() throws {
+        try SharedInbox.save("filed", to: inbox, in: "New Folder")
+
+        XCTAssertEqual(SharedInbox.importNotes(from: inbox, into: root), 1)
+        XCTAssertTrue(fm.fileExists(atPath: root.appendingPathComponent("New Folder/filed.md").path))
     }
 
     func testImportAvoidsClashWithExistingNote() throws {
@@ -86,5 +94,30 @@ final class SharedInboxTests: XCTestCase {
 
     func testImportIntoEmptyInboxReturnsZero() {
         XCTAssertEqual(SharedInbox.importNotes(from: inbox, into: root), 0)
+    }
+
+    // MARK: - folder catalog
+
+    func testFoldersEnumeratesNestedDirectories() throws {
+        try fm.createDirectory(at: root.appendingPathComponent("Work"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: root.appendingPathComponent("Work/Ideas"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: root.appendingPathComponent("Archive"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: root.appendingPathComponent(".Trash"), withIntermediateDirectories: true)
+        try "note".write(to: root.appendingPathComponent("note.md"), atomically: true, encoding: .utf8)
+
+        XCTAssertEqual(SharedInbox.folders(in: root),
+                       ["Archive", "Work", "Work/Ideas"])
+    }
+
+    func testCatalogRoundTripsThroughJson() throws {
+        let url = base.appendingPathComponent("folders.json")
+        SharedInbox.writeCatalog(["Work/Ideas", "Work", "Archive"], to: url)
+
+        XCTAssertEqual(SharedInbox.readCatalog(from: url),
+                       ["Archive", "Work", "Work/Ideas"])
+    }
+
+    func testReadCatalogFromMissingFileReturnsEmpty() {
+        XCTAssertEqual(SharedInbox.readCatalog(from: base.appendingPathComponent("nope.json")), [])
     }
 }
