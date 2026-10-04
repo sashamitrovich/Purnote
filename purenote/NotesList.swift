@@ -10,8 +10,7 @@ import SwiftUI
 struct NotesList: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
-    @State var showingDirectoryPicker = false
-    @State var noteToMove = Note(type: .Note)
+    @State private var noteToMove: Note?
     var isSearching = false
     
     func deleteItems(at offsets: IndexSet) {
@@ -42,32 +41,12 @@ struct NotesList: View {
                 ListRow(note: note).environmentObject(self.data)
             }
             .contextMenu {
-                Button(action: {
+                Button {
                     noteToMove = note
-                    showingDirectoryPicker.toggle()
-                }) {
+                } label: {
                     Text("Move Note")
                     Image(systemName: "folder")
                 }
-            }                        
-            .sheet(isPresented: $showingDirectoryPicker) {
-
-                DocumentPickerViewController  { url in
-
-                    let newNoteUrl : URL = url.appendingPathComponent(note.id)
-
-                    do {
-                        try CoordinatedFile.move(from: noteToMove.url, to: newNoteUrl)
-                        try NoteAssets.moveAssetsFolder(forNoteAt: noteToMove.url, to: newNoteUrl)
-                    }
-                    catch {
-                        // failed
-                        print("Failed to move file: \(error).")
-                    }
-
-                    data.refresh(url: data.getCurrentUrl())
-                }
-
             }
             .showIf(condition: note.isLocal)
             
@@ -78,6 +57,11 @@ struct NotesList: View {
 
         }
         .onDelete(perform: deleteItems).padding(.leading, 5.0)
+        .sheet(item: $noteToMove) { note in
+            MoveNoteSheet(note: note)
+                .environmentObject(data)
+                .environmentObject(index)
+        }
         
         VStack {
             HStack {

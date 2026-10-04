@@ -15,6 +15,7 @@
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		2B4C07553892920862AF887C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
 		2E3700EB7271C634F78374F5 /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
+		30539D69F1C8F88AFF581F14 /* MoveNoteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1D655A8F1258A0502077E9 /* MoveNoteSheet.swift */; };
 		313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E2B5BE1504D6232B8253C /* TextHitTest.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
@@ -206,6 +207,7 @@
 		D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownBlocks.swift; sourceTree = "<group>"; };
 		D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
+		FD1D655A8F1258A0502077E9 /* MoveNoteSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoveNoteSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +353,7 @@
 				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 				148DAD556072905879EA5FD1 /* NoteAssets.swift */,
 				C5B6BAC33D97CB9F0C53494C /* NoteImageProvider.swift */,
+				FD1D655A8F1258A0502077E9 /* MoveNoteSheet.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
 				538364A293D884F840EC0380 /* NoteAssets.swift in Sources */,
 				5CA664706BBEA2FDB1698D71 /* NoteImageProvider.swift in Sources */,
+				30539D69F1C8F88AFF581F14 /* MoveNoteSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

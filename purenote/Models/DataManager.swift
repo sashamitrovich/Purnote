@@ -127,8 +127,8 @@ class DataManager: ObservableObject {
             }
             
             else {
-                // also add folders
-                if url.lastPathComponent != ".Trash" {
+                // also add folders, skipping hidden ones (`.Trash`, `.purnote`, …)
+                if !url.lastPathComponent.hasPrefix(".") {
                     addFolder(id: url.lastPathComponent, url: url)
                 }
                 
