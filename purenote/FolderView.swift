@@ -73,6 +73,18 @@ struct FolderView: View {
                           ? Color(UIColor.systemOrange).opacity(0.15)
                           : Color.clear)
             )
+            .onDrop(of: [.text], isTargeted: isTargetedBinding(for: folder)) { providers in
+                guard let provider = providers.first else { return false }
+                provider.loadObject(ofClass: NSString.self) { object, _ in
+                    DispatchQueue.main.async {
+                        guard let path = object as? String,
+                              let note = data.notes.first(where: { $0.url.path == path }) else { return }
+                        data.move(note: note, to: folder.url)
+                        index.indexall()
+                    }
+                }
+                return true
+            }
         }
         .contextMenu {
             Button {
@@ -89,18 +101,6 @@ struct FolderView: View {
                 Text("Delete Folder")
                 Image(systemName: "trash")
             }
-        }
-        .onDrop(of: [UTType.purnoteNote], isTargeted: isTargetedBinding(for: folder)) { providers in
-            guard let provider = providers.first else { return false }
-            provider.loadItem(forTypeIdentifier: UTType.purnoteNote.identifier, options: nil) { item, _ in
-                guard let path = item as? String else { return }
-                DispatchQueue.main.async {
-                    guard let note = data.notes.first(where: { $0.url.path == path }) else { return }
-                    data.move(note: note, to: folder.url)
-                    index.indexall()
-                }
-            }
-            return true
         }
         // scoped to this row's url, so only the folder actually being deleted
         // puts up an alert

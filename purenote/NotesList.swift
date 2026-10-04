@@ -6,13 +6,6 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
-
-extension UTType {
-    /// A Purnote-only drag type, so only our own note rows can be dropped onto
-    /// a folder (never arbitrary text dragged in from another app).
-    static let purnoteNote = UTType(exportedAs: "com.mitrovic.purenote.note")
-}
 
 struct NotesList: View {
     @EnvironmentObject var data: DataManager
@@ -56,8 +49,7 @@ struct NotesList: View {
                 }
             }
             .onDrag {
-                NSItemProvider(item: note.url.path as NSString,
-                               typeIdentifier: UTType.purnoteNote.identifier)
+                NSItemProvider(object: note.url.path as NSString)
             }
             .showIf(condition: note.isLocal)
             
