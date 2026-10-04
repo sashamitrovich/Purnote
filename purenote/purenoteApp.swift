@@ -151,6 +151,7 @@ struct PurenoteApp: App {
                 RootView(data: DataManager(url: storage.rootUrl))
                     .environmentObject(DataManager(url: storage.rootUrl))
                     .environmentObject(SearchIndex(rootUrl: storage.rootUrl))
+                    .environmentObject(SmartFolderList(rootUrl: storage.rootUrl))
                     .environmentObject(monitor)
                     .task { seedSampleLibraryIfNeeded() }
                     .task { syncSharedInbox() }

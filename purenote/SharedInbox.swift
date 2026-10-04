@@ -119,7 +119,8 @@ enum SharedInbox {
     }
 
     /// Every folder under the storage root, as relative paths ("Work",
-    /// "Work/Ideas"), skipping the Trash and everything that is not a folder.
+    /// "Work/Ideas"), skipping hidden folders (`.Trash`, `.purnote`, …) and
+    /// everything that is not a folder.
     static func folders(in root: URL) -> [String] {
         var result: [String] = []
         collectFolders(in: root, relative: "", into: &result)
@@ -145,7 +146,7 @@ enum SharedInbox {
         let children = (try? fm.contentsOfDirectory(at: directory,
                                                     includingPropertiesForKeys: [.isDirectoryKey])) ?? []
         for child in children {
-            guard child.lastPathComponent != ".Trash" else { continue }
+            guard !child.lastPathComponent.hasPrefix(".") else { continue }
             let isDir = (try? child.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory ?? false
             guard isDir else { continue }
             let rel = relative.isEmpty ? child.lastPathComponent : relative + "/" + child.lastPathComponent

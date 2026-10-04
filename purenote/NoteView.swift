@@ -79,6 +79,11 @@ struct NoteView: View {
 
         GeometryReader { geo in
             ScrollView {
+                let tags = TagScanner.tags(in: content)
+                if !tags.isEmpty {
+                    TagChipsRow(tags: tags)
+                        .padding(.top, 10)
+                }
                 NoteBody(source: sourceBinding,
                          onTapBlock: { offset in
                              editing = EditRequest(caret: offset)

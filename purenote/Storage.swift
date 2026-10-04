@@ -25,7 +25,7 @@ enum Storage {
 
     static var localIsEmpty: Bool {
         let contents = (try? fm.contentsOfDirectory(atPath: local().rootUrl.path)) ?? []
-        return contents.filter { $0 != ".Trash" }.isEmpty
+        return contents.filter { !$0.hasPrefix(".") }.isEmpty
     }
 
     /// Moves everything from one root into another, recursively.

@@ -32,6 +32,8 @@ struct MenuView: View {
             // As soon as there is a query the same list becomes the results,
             // in place -- no second screen to push onto.
             if searchText.isEmpty {
+                SmartFoldersView()
+
                 FolderView().environmentObject(data)
 
                 NotesList()
