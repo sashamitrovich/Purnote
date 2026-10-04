@@ -25,6 +25,10 @@ you like.
 * use the MarkDown notation for notes and they will be rendered by the App (thanks to project https://github.com/gonzalezreal/swift-markdown-ui by https://github.com/gonzalezreal)
 * a formatting bar above the keyboard, so you don't have to know MarkDown by heart — headings, bold, italic, strikethrough, code, lists, checklists, quotes and links
 * organize notes in folders
+* tag notes with #tags and filter them with Smart Folders
+* add photos to a note — saved as plain files beside it, never locked in
+* create tables from the formatting bar
+* drag a note onto a folder to move it
 * notes get automatically synced with your Mac
 * edit or create the notes directly on your Mac and they will be updated in the app
 * share into Purnote from any app — pick Purnote in the share sheet and the shared text or link becomes a note, with the link kept at the bottom
