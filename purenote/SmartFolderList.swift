@@ -48,6 +48,16 @@ struct SmartFoldersView: View {
     @State private var editorMode: SmartFolderEditorMode?
 
     var body: some View {
+        HStack {
+            Text("Smart Folders")
+                .font(.caption.weight(.semibold))
+                .foregroundColor(Color(UIColor.secondaryLabel))
+                .textCase(.uppercase)
+            Spacer()
+        }
+        .padding(.top, 14)
+        .padding(.leading, 4)
+
         ForEach(folders.folders) { folder in
             NavigationLink(destination: SmartFolderDestination(folder: folder)) {
                 HStack(spacing: 12) {
@@ -80,10 +90,11 @@ struct SmartFoldersView: View {
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: "plus")
-                    .systemOrange()
+                    .font(.body.weight(.medium))
+                    .foregroundColor(Color(UIColor.secondaryLabel))
                 Text("New Smart Folder")
                     .font(.body)
-                    .foregroundColor(Color(UIColor.label))
+                    .foregroundColor(Color(UIColor.secondaryLabel))
             }
         }
         .sheet(item: $editorMode) { mode in
