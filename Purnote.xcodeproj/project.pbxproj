@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09393055C34947A2EBFCB637 /* TagViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E2BD2D58694EB17F63E4D4 /* TagViews.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
@@ -68,6 +69,7 @@
 		D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */; };
 		DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC685CA064D505099236339 /* ListContinuationTests.swift */; };
 		E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF766C78D380C1E73C6C266B /* ModelTests.swift */; };
+		EF560893187C6C927DD779E6 /* SmartFolderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85556A3D9B0B603A23EB9687 /* SmartFolderList.swift */; };
 		F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0911EFA1CD837D20B64122 /* NoteBody.swift */; };
 		F6EF653983CC2D3AEA33C3B6 /* SmartFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1709CB8D928C8D28FA1DDE0E /* SmartFolder.swift */; };
 		F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */; };
@@ -153,7 +155,9 @@
 		4C0911EFA1CD837D20B64122 /* NoteBody.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteBody.swift; sourceTree = "<group>"; };
 		4FC5BB902ED1225384CA50B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		51705BEAF85739AE0266239A /* purenoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = purenoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E2BD2D58694EB17F63E4D4 /* TagViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagViews.swift; sourceTree = "<group>"; };
 		6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
+		85556A3D9B0B603A23EB9687 /* SmartFolderList.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolderList.swift; sourceTree = "<group>"; };
 		988DFD87D8BB0456CD6FCA4A /* TagScannerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagScannerTests.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
 				33B84739744B72B1129D4611 /* TagScanner.swift */,
 				1709CB8D928C8D28FA1DDE0E /* SmartFolder.swift */,
+				85556A3D9B0B603A23EB9687 /* SmartFolderList.swift */,
+				66E2BD2D58694EB17F63E4D4 /* TagViews.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -570,6 +576,8 @@
 				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
 				B9CA211CEFADB2779355ECBA /* TagScanner.swift in Sources */,
 				F6EF653983CC2D3AEA33C3B6 /* SmartFolder.swift in Sources */,
+				EF560893187C6C927DD779E6 /* SmartFolderList.swift in Sources */,
+				09393055C34947A2EBFCB637 /* TagViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
