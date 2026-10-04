@@ -48,6 +48,7 @@ struct NotesList: View {
                     Image(systemName: "folder")
                 }
             }
+            .draggable(note.url.path)
             .showIf(condition: note.isLocal)
             
             ICloudItemView(note : note)

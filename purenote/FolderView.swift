@@ -10,6 +10,7 @@ import UIKit
 
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
+    @EnvironmentObject var index: SearchIndex
 
     /// The folder currently being renamed, identified by URL rather than by
     /// index or name: the index shifts when the list changes underneath us,
@@ -80,6 +81,15 @@ struct FolderView: View {
                 Text("Delete Folder")
                 Image(systemName: "trash")
             }
+        }
+        .dropDestination(for: String.self) { paths, _ in
+            guard let path = paths.first,
+                  let note = data.notes.first(where: { $0.url.path == path }) else {
+                return false
+            }
+            data.move(note: note, to: folder.url)
+            index.indexall()
+            return true
         }
         // scoped to this row's url, so only the folder actually being deleted
         // puts up an alert
@@ -201,6 +211,7 @@ struct FolderView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             FolderView().environmentObject(DataManager.sampleDataManager())
+                .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/notes")))
         }
     }
 }

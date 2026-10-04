@@ -218,6 +218,21 @@ class DataManager: ObservableObject {
         notes.insert(note, at: 0)
     }
 
+    /// Moves a note (and its attachments folder, if any) into another folder.
+    /// The same move the "Move Note" picker makes, driven here by a drop.
+    func move(note: Note, to folderURL: URL) {
+        let destination = folderURL.appendingPathComponent(note.id)
+        guard destination.path != note.url.path else { return }
+
+        do {
+            try CoordinatedFile.move(from: note.url, to: destination)
+            try NoteAssets.moveAssetsFolder(forNoteAt: note.url, to: destination)
+        } catch {
+            print("Failed to move note to \(folderURL.lastPathComponent): \(error).")
+        }
+        refresh(url: getCurrentUrl())
+    }
+
     private func saveNote(note: inout Note) {
         
         let documentURL = currentUrl.appendingPathComponent(String(note.id))
