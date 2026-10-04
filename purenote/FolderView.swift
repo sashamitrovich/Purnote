@@ -55,8 +55,9 @@ struct FolderView: View {
                     // https://stackoverflow.com/a/59974025/1393362
                     .systemOrange()
                 Text(folder.id)
-                    .font(.body)
+                    .font(.system(size: 21, weight: .semibold, design: .serif))
                     .foregroundColor(Color(UIColor.label))
+                    .lineLimit(1)
 
                 Spacer()
 

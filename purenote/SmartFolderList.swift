@@ -64,8 +64,9 @@ struct SmartFoldersView: View {
                     Image(systemName: "tray.full")
                         .systemOrange()
                     Text(folder.name)
-                        .font(.body)
+                        .font(.system(size: 21, weight: .semibold, design: .serif))
                         .foregroundColor(Color(UIColor.label))
+                        .lineLimit(1)
                     Spacer()
                 }
             }
