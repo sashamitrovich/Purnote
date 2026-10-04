@@ -21,6 +21,7 @@ struct MenuView: View {
     // searchFieldFocused raises the keyboard with it.
     @State private var showSearch = false
     @FocusState private var searchFieldFocused: Bool
+    @State private var showingHelp = false
 
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
@@ -123,6 +124,19 @@ struct MenuView: View {
         }
         .onDisappear() {
             self.isViewDisplayed = false
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingHelp = true
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                }
+                .accessibilityLabel("Help")
+            }
+        }
+        .sheet(isPresented: $showingHelp) {
+            HelpView()
         }
     }
     

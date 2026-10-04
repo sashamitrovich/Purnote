@@ -12,6 +12,7 @@
 		0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */; };
 		1C8EE6D8D5B425968D96968C /* SmartFolderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */; };
 		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1DB6151361D5A7EEFB63A212 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB2D6FC43D9EFD78E209395 /* HelpView.swift */; };
 		20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
@@ -144,6 +145,7 @@
 		24F388666FE7CDDE74109E21 /* ShareContentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareContentTests.swift; sourceTree = "<group>"; };
 		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
+		2FB2D6FC43D9EFD78E209395 /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		3220524225359E1E00A67FCF /* purenoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = purenoteApp.swift; sourceTree = "<group>"; };
 		3220524F25359F7200A67FCF /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		3220525025359F7200A67FCF /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				4D300693CB60D6D68976FE5E /* NoteAssets.swift */,
 				AC37A371F05DCA9DB5C4C076 /* NoteImageProvider.swift */,
 				B3C964AD4988695CFA8246EC /* MoveNoteSheet.swift */,
+				2FB2D6FC43D9EFD78E209395 /* HelpView.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				8E8DE5F908BBC182008C05AF /* NoteAssets.swift in Sources */,
 				DBB0EA8853225BC2FF49C037 /* NoteImageProvider.swift in Sources */,
 				E9CB4D7C56ED932BE3C1ED47 /* MoveNoteSheet.swift in Sources */,
+				1DB6151361D5A7EEFB63A212 /* HelpView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
