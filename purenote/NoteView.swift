@@ -75,6 +75,14 @@ struct NoteView: View {
         note.content = updated
     }
 
+    /// Opens the editor at the given offset. The iCloud cache is dropped
+    /// first: editing rewrites the note (and a rename rewrites the image
+    /// references), so a stale cached copy would render the wrong images.
+    private func openEditor(at offset: Int) {
+        liveContent = nil
+        editing = EditRequest(caret: offset)
+    }
+
     var body: some View {
 
         GeometryReader { geo in
@@ -87,7 +95,7 @@ struct NoteView: View {
                 NoteBody(source: sourceBinding,
                          noteDirectory: note.url.deletingLastPathComponent(),
                          onTapBlock: { offset in
-                             editing = EditRequest(caret: offset)
+                             openEditor(at: offset)
                          })
                     .padding(.top, 10.0)
                     .padding(.horizontal, 20.0)
@@ -109,7 +117,7 @@ struct NoteView: View {
         .onTapGesture {
             // a tap on the empty space below the note means "write at the end",
             // which is where a new thought goes
-            editing = EditRequest(caret: content.count)
+            openEditor(at: content.count)
         }
         .fullScreenCover(item: $editing) { request in
             NoteEdit(note: note, initialCaret: request.caret)
