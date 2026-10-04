@@ -90,6 +90,16 @@ enum MarkdownFormatter {
         return Result(text: text, lower: placeholder, upper: placeholder + 3)
     }
 
+    /// Inserts `string` at the selection, replacing whatever is selected, and
+    /// places the caret just after the inserted text.
+    static func insert(_ text: String, _ lower: Int, _ upper: Int, string: String) -> Result {
+        var text = text
+        let lo = index(text, lower), hi = index(text, upper)
+        text.replaceSubrange(lo..<hi, with: string)
+        let caret = lower + string.count
+        return Result(text: text, lower: caret, upper: caret)
+    }
+
     /// Offset of the start of the line containing `offset`.
     static func lineStartOffset(_ text: String, at offset: Int) -> Int {
         let upToCursor = text[text.startIndex..<index(text, offset)]

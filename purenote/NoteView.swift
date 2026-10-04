@@ -85,6 +85,7 @@ struct NoteView: View {
                         .padding(.top, 10)
                 }
                 NoteBody(source: sourceBinding,
+                         noteDirectory: note.url.deletingLastPathComponent(),
                          onTapBlock: { offset in
                              editing = EditRequest(caret: offset)
                          })

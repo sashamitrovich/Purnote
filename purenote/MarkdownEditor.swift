@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 /// A one-off request from the formatting bar to place the caret at an offset.
 /// The `id` makes two asks to the same offset distinct, so a deferred re-ask
@@ -27,12 +28,17 @@ struct MarkdownEditor: View {
     /// page that means "let me write here".
     var initialCaret: Int? = nil
 
+    /// Saves a picked image and returns the Markdown path to reference it.
+    var saveImage: (Data, String) throws -> String
+
     /// The selection in character offsets -- the same units MarkdownFormatter
     /// works in.
     @State private var selection: Range<Int> = 0..<0
     /// Where the formatting bar wants the caret, applied by the text view on
     /// its own schedule rather than by syncing the live selection binding.
     @State private var caretRequest: CaretRequest?
+    @State private var showingPhotoPicker = false
+    @State private var photoPickerItem: PhotosPickerItem?
 
     var body: some View {
         MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest, initialCaret: initialCaret)
@@ -48,6 +54,13 @@ struct MarkdownEditor: View {
                 formattingBar
             }
             .tint(Color(UIColor.systemOrange))
+            .photosPicker(isPresented: $showingPhotoPicker,
+                          selection: $photoPickerItem,
+                          matching: .images)
+            .onChange(of: photoPickerItem) { _, item in
+                guard let item else { return }
+                Task { await insertPickedImage(item) }
+            }
     }
 
     private var formattingBar: some View {
@@ -144,7 +157,8 @@ struct MarkdownEditor: View {
             Action(name: "Quote", icon: "text.quote") { toggleLinePrefix("> ") },
             Action(name: "Link", icon: "link", run: insertLink),
             Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
-            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") }
+            Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
+            Action(name: "Photo", icon: "photo") { showingPhotoPicker = true }
         ]
     }
 
@@ -194,11 +208,41 @@ struct MarkdownEditor: View {
             caretRequest = CaretRequest(offset: offset)
         }
     }
+
+    /// Saves a picked image and inserts the Markdown reference at the caret.
+    private func insertPickedImage(_ item: PhotosPickerItem) async {
+        guard let rawData = try? await item.loadTransferable(type: Data.self),
+              let image = UIImage(data: rawData) else { return }
+
+        // normalise to JPEG (PNG when the image has transparency) so the file
+        // on disk is a plain, viewable image whatever the source format was
+        let data: Data
+        let ext: String
+        if let jpeg = image.jpegData(compressionQuality: 0.9) {
+            data = jpeg
+            ext = "jpg"
+        } else if let png = image.pngData() {
+            data = png
+            ext = "png"
+        } else {
+            return
+        }
+
+        do {
+            let relativePath = try saveImage(data, ext)
+            let (lower, upper) = selectedOffsets
+            apply(MarkdownFormatter.insert(text, lower, upper,
+                                           string: NoteAssets.imageMarkdown(relativePath: relativePath)))
+        } catch {
+            // the image did not make it to disk; leave the editor untouched
+            print("Failed to save picked image: \(error).")
+        }
+    }
 }
 
 #Preview {
     @Previewable @State var text = "# Heading\n\nSome **bold** text.\n\n- a list item\n"
     return NavigationStack {
-        MarkdownEditor(text: $text)
+        MarkdownEditor(text: $text, saveImage: { _, _ in "image.jpg" })
     }
 }

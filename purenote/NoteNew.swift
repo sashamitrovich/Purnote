@@ -26,7 +26,8 @@ struct NoteNew: View {
                 ZStack(alignment: .topLeading) {
 
 
-                    MarkdownEditor(text: $draft)
+                    MarkdownEditor(text: $draft,
+                                   saveImage: { imageData, ext in try savePickedImage(imageData, ext) })
 
                 }
                 // The buffer has to be a String in @State. Note is a class, so
@@ -65,6 +66,13 @@ struct NoteNew: View {
         data.persist(newNote)
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
+    }
+
+    /// Saves a picked image into the new note's assets folder, persisting the
+    /// note first so it has a real file URL.
+    private func savePickedImage(_ imageData: Data, _ ext: String) throws -> String {
+        data.persist(newNote)
+        return try NoteAssets.addImage(imageData, fileExtension: ext, to: newNote.url)
     }
 
     /// Editing is over: this is when the new note gets a name taken from its

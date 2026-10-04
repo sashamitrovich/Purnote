@@ -127,8 +127,10 @@ class DataManager: ObservableObject {
             }
             
             else {
-                // also add folders, skipping hidden ones (`.Trash`, `.purnote`, …)
-                if !url.lastPathComponent.hasPrefix(".") {
+                // add folders, skipping hidden ones (`.Trash`, `.purnote`) and
+                // a note's attachment folder (`<note>.assets`)
+                if !url.lastPathComponent.hasPrefix("."),
+                   !url.lastPathComponent.hasSuffix(".assets") {
                     addFolder(id: url.lastPathComponent, url: url)
                 }
                 
@@ -177,8 +179,13 @@ class DataManager: ObservableObject {
     func finishEditing(_ note: Note) {
         persist(note)
 
-        guard NoteNaming.isGenerated(note.url.lastPathComponent),
-              let name = NoteNaming.name(from: note.content)
+        // Rename the file to match the note's first line, so the filename on
+        // disk (and on the Mac) always mirrors the title the user sees. The
+        // first line is the source of truth; a name changed by hand on the Mac
+        // is reverted here when the title says something else.
+        let currentStem = note.url.deletingPathExtension().lastPathComponent
+        guard let name = NoteNaming.name(from: note.content),
+              name != currentStem
         else { return }
 
         let target = NoteNaming.availableURL(named: name,
@@ -187,6 +194,13 @@ class DataManager: ObservableObject {
 
         do {
             try CoordinatedFile.move(from: note.url, to: target)
+            // keep the assets folder beside the note under the new name, and
+            // point the references at it
+            let rewritten = NoteAssets.renameAssetsFolder(from: note.url, to: target, content: note.content)
+            if rewritten != note.content {
+                note.content = rewritten
+                try CoordinatedFile.write(rewritten, to: target)
+            }
         }
         catch {
             // failed -- the note keeps the name it has, which is not worth

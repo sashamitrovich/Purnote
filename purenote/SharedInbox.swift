@@ -146,7 +146,8 @@ enum SharedInbox {
         let children = (try? fm.contentsOfDirectory(at: directory,
                                                     includingPropertiesForKeys: [.isDirectoryKey])) ?? []
         for child in children {
-            guard !child.lastPathComponent.hasPrefix(".") else { continue }
+            guard !child.lastPathComponent.hasPrefix("."),
+                  !child.lastPathComponent.hasSuffix(".assets") else { continue }
             let isDir = (try? child.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory ?? false
             guard isDir else { continue }
             let rel = relative.isEmpty ? child.lastPathComponent : relative + "/" + child.lastPathComponent
