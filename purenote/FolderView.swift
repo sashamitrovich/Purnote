@@ -82,9 +82,9 @@ struct FolderView: View {
                 Image(systemName: "trash")
             }
         }
-        .dropDestination(for: String.self) { paths, _ in
-            guard let path = paths.first,
-                  let note = data.notes.first(where: { $0.url.path == path }) else {
+        .dropDestination(for: NoteDragPayload.self) { payloads, _ in
+            guard let payload = payloads.first,
+                  let note = data.notes.first(where: { $0.url.path == payload.urlPath }) else {
                 return false
             }
             data.move(note: note, to: folder.url)

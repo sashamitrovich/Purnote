@@ -6,6 +6,22 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
+
+extension UTType {
+    /// A Purnote-only drag type, so only our own note rows can be dropped onto
+    /// a folder (never arbitrary text dragged in from another app).
+    static let purnoteNote = UTType(exportedAs: "com.mitrovic.purenote.note")
+}
+
+/// The payload a dragged note carries: its file URL path.
+struct NoteDragPayload: Transferable, Codable {
+    let urlPath: String
+
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .purnoteNote)
+    }
+}
 
 struct NotesList: View {
     @EnvironmentObject var data: DataManager
@@ -48,7 +64,7 @@ struct NotesList: View {
                     Image(systemName: "folder")
                 }
             }
-            .draggable(note.url.path)
+            .draggable(NoteDragPayload(urlPath: note.url.path))
             .showIf(condition: note.isLocal)
             
             ICloudItemView(note : note)
