@@ -149,15 +149,20 @@ final class EditorTypingUITests: XCTestCase {
 
     // MARK: - The formatting bar
 
-    /// Every bar button is reachable without scrolling, so the row fits the
-    /// screen rather than spilling past its edge.
+    /// Every visible bar button is reachable without scrolling, so the row
+    /// fits the screen rather than spilling past its edge. Strikethrough, Code
+    /// and Table moved into the "···" overflow menu (its "More" button must be
+    /// present too).
     func testBarButtonsExistAndAreHittable() throws {
         try newNote()
-        for name in ["Bold", "Italic", "Heading", "List", "Quote", "Link", "Strikethrough", "Code"] {
+        for name in ["Bold", "Italic", "Heading", "List", "Quote", "Link", "Photo"] {
             let button = app.buttons[name].firstMatch
             XCTAssertTrue(button.waitForExistence(timeout: 5), "\(name) button missing")
             XCTAssertTrue(button.isHittable, "\(name) button is not hittable")
         }
+        let more = app.buttons["More"].firstMatch
+        XCTAssertTrue(more.waitForExistence(timeout: 5), "More button missing")
+        XCTAssertTrue(more.isHittable, "More button is not hittable")
     }
 
     func testBoldInsertsMarkersAtTheCaret() throws {
@@ -189,8 +194,12 @@ final class EditorTypingUITests: XCTestCase {
         try newNote()
         editor.typeText("milk")
         app.buttons["List"].firstMatch.tap()
-        Thread.sleep(forTimeInterval: 0.6)
-        app.buttons["Bulleted list"].firstMatch.tap()
+        // wait for the menu item rather than a fixed sleep. Known flaky on
+        // the simulator (fails on 1.4.0 too): the tap on "List" sometimes
+        // does not open the menu at all. See #52.
+        let item = app.buttons["Bulleted list"].firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 5), "Bulleted list menu item missing")
+        item.tap()
         Thread.sleep(forTimeInterval: 0.6)
         XCTAssertEqual(try value(), "- milk")
     }
@@ -203,8 +212,12 @@ final class EditorTypingUITests: XCTestCase {
         try newNote()
         editor.typeText("milk")
         app.buttons["List"].firstMatch.tap()
-        Thread.sleep(forTimeInterval: 0.6)
-        app.buttons["Checklist"].firstMatch.tap()
+        // wait for the menu item rather than a fixed sleep. Known flaky on
+        // the simulator (fails on 1.4.0 too): the tap on "List" sometimes
+        // does not open the menu at all. See #52.
+        let item = app.buttons["Checklist"].firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 5), "Checklist menu item missing")
+        item.tap()
         Thread.sleep(forTimeInterval: 0.6)
         editor.typeText("!")
         XCTAssertEqual(try value(), "- [ ] milk!")

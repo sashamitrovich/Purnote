@@ -76,7 +76,7 @@ struct MarkdownEditor: View {
             .scrollIndicators(.hidden)
         }
         .frame(height: 46)
-        .background(.bar)
+        .background(Color.purnotePaper2)
         .overlay(alignment: .top) {
             Divider()
         }
@@ -84,7 +84,7 @@ struct MarkdownEditor: View {
 
     private var barRow: some View {
         HStack(spacing: 20) {
-            ForEach(actions) { action in
+            ForEach(visibleActions) { action in
                 if let items = action.menuItems {
                     Menu {
                         ForEach(items) { item in
@@ -101,6 +101,31 @@ struct MarkdownEditor: View {
                     .accessibilityLabel(action.name)
                 }
             }
+
+            // The less-used actions (strikethrough, code, table) live in an
+            // overflow menu, so the bar itself never scrolls on a modern phone.
+            // Amber, so it reads as "more" rather than one more ink button.
+            Menu {
+                ForEach(overflowActions) { action in
+                    if let items = action.menuItems {
+                        Menu {
+                            ForEach(items) { item in
+                                Button(item.name, action: item.run)
+                            }
+                        } label: {
+                            Label(action.name, systemImage: action.icon)
+                        }
+                    } else {
+                        Button(action.name, action: action.run)
+                    }
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+                    .imageScale(.large)
+                    .foregroundColor(Color.accentColor)
+                    .frame(minWidth: 24, minHeight: 34)
+            }
+            .accessibilityLabel("More")
         }
         .padding(.horizontal, 20)
     }
@@ -108,6 +133,7 @@ struct MarkdownEditor: View {
     private func icon(for action: Action) -> some View {
         Image(systemName: action.icon)
             .imageScale(.large)
+            .foregroundColor(Color.primary.opacity(0.85))
             .frame(minWidth: 24, minHeight: 34)
     }
 
@@ -144,7 +170,9 @@ struct MarkdownEditor: View {
         }
     }
 
-    private var actions: [Action] {
+    /// The seven actions always visible on the bar: the ones people reach for
+    /// first. The rest (strikethrough, code, table) sit in the overflow menu.
+    private var visibleActions: [Action] {
         [
             Action(name: "Bold", icon: "bold") { wrap("**") },
             Action(name: "Italic", icon: "italic") { wrap("*") },
@@ -156,9 +184,14 @@ struct MarkdownEditor: View {
             ]),
             Action(name: "Quote", icon: "text.quote") { toggleLinePrefix("> ") },
             Action(name: "Link", icon: "link", run: insertLink),
+            Action(name: "Photo", icon: "photo") { showingPhotoPicker = true },
+        ]
+    }
+
+    private var overflowActions: [Action] {
+        [
             Action(name: "Strikethrough", icon: "strikethrough") { wrap("~~") },
             Action(name: "Code", icon: "chevron.left.forwardslash.chevron.right") { wrap("`") },
-            Action(name: "Photo", icon: "photo") { showingPhotoPicker = true },
             Action(name: "Table", icon: "tablecells", menuItems: [
                 Action(name: "2 × 2", icon: "tablecells") { insertTable(rows: 2, columns: 2) },
                 Action(name: "3 × 2", icon: "tablecells") { insertTable(rows: 3, columns: 2) },

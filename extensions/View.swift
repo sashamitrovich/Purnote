@@ -16,10 +16,20 @@ extension UIColor {
             ? UIColor(red: 0.090, green: 0.084, blue: 0.067, alpha: 1)   // ~#17150F
             : UIColor(red: 0.988, green: 0.980, blue: 0.965, alpha: 1)   // ~#FCFAF6
     }
+
+    /// A warm second paper tone, one step darker than `purnotePaper`: the
+    /// editor's formatting bar and code blocks sit on it rather than a cool
+    /// system grey.
+    static let purnotePaper2 = UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(red: 0.149, green: 0.133, blue: 0.106, alpha: 1)   // #26221B
+            : UIColor(red: 0.957, green: 0.937, blue: 0.902, alpha: 1)   // #F4EFE6
+    }
 }
 
 extension Color {
     static let purnotePaper = Color(uiColor: .purnotePaper)
+    static let purnotePaper2 = Color(uiColor: .purnotePaper2)
 }
 
 extension View {

@@ -44,7 +44,7 @@ struct MarkdownTextView: UIViewRepresentable {
             .scaledFont(for: .systemFont(ofSize: Self.baseFontSize))
         view.adjustsFontForContentSizeCategory = true
         view.backgroundColor = .clear
-        view.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        view.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         view.textContainer.lineFragmentPadding = 0
         view.alwaysBounceVertical = true
         view.keyboardDismissMode = .interactive
