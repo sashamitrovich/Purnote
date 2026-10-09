@@ -13,25 +13,29 @@ struct FilteredNotesView: View {
     @EnvironmentObject var index: SearchIndex
 
     var body: some View {
-        List {
-            if notes.isEmpty {
-                HStack {
-                    Text("No notes match")
-                }
-                .placeholderForegroundColor()
-            } else {
-                ForEach(notes) { note in
-                    NavigationLink(destination: NoteView(note: note)
-                        .environmentObject(data)
-                        .environmentObject(index)
-                    ) {
-                        ListRow(note: note)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                if notes.isEmpty {
+                    HStack {
+                        Text("No notes match")
+                    }
+                    .placeholderForegroundColor()
+                    .menuRowStyle()
+                } else {
+                    ForEach(notes) { note in
+                        NavigationLink(destination: NoteView(note: note)
+                            .environmentObject(data)
+                            .environmentObject(index)
+                        ) {
+                            ListRow(note: note)
+                        }
+                        .menuRowStyle()
                     }
                 }
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
         .background(Color.purnotePaper)
     }
 }

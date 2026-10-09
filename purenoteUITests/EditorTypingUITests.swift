@@ -342,4 +342,41 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertTrue(at > start + 50,
                       "caret landed near the start rather than where the tap was (\(at - start) chars in)")
     }
+
+    // MARK: - Folder create & rename (native alerts)
+
+    /// New Folder and Rename Folder are native alerts now; both must still
+    /// create and rename a real folder.
+    func testCreateAndRenameFolder() throws {
+        let newFolderButton = app.buttons["New folder"].firstMatch
+        XCTAssertTrue(newFolderButton.waitForExistence(timeout: 20), "no New folder button")
+
+        // New Folder → menu → alert
+        newFolderButton.tap()
+        let menuItem = app.buttons["New Folder"].firstMatch
+        XCTAssertTrue(menuItem.waitForExistence(timeout: 5), "no New Folder menu item")
+        menuItem.tap()
+
+        let field = app.textFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "no alert text field")
+        field.typeText("Test Folder")
+        app.buttons["Create"].firstMatch.tap()
+
+        let folderRow = app.staticTexts["Test Folder"].firstMatch
+        XCTAssertTrue(folderRow.waitForExistence(timeout: 10), "folder was not created")
+
+        // Rename via the row's context menu → alert (pre-filled with the name)
+        folderRow.press(forDuration: 1.2)
+        let renameItem = app.buttons["Rename Folder"].firstMatch
+        XCTAssertTrue(renameItem.waitForExistence(timeout: 5), "no Rename Folder menu item")
+        renameItem.tap()
+
+        let renameField = app.textFields.firstMatch
+        XCTAssertTrue(renameField.waitForExistence(timeout: 5), "no rename text field")
+        renameField.typeText(" Renamed")
+        app.buttons["Save"].firstMatch.tap()
+
+        XCTAssertTrue(app.staticTexts["Test Folder Renamed"].firstMatch
+            .waitForExistence(timeout: 10), "folder was not renamed")
+    }
 }

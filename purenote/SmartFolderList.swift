@@ -125,12 +125,14 @@ struct SmartFolderEditor: View {
             Form {
                 Section {
                     TextField("Name", text: $name)
+                        .listRowBackground(Color.purnotePaper2)
                 }
                 Section("Tags") {
                     let tags = index.allTags()
                     if tags.isEmpty {
                         Text("Type a #tag in any note and it will appear here.")
                             .foregroundColor(Color(UIColor.placeholderText))
+                            .listRowBackground(Color.purnotePaper2)
                     } else {
                         ForEach(tags, id: \.self) { tag in
                             Button {
@@ -150,10 +152,13 @@ struct SmartFolderEditor: View {
                                     }
                                 }
                             }
+                            .listRowBackground(Color.purnotePaper2)
                         }
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.purnotePaper)
             .navigationTitle(folder == nil ? "New Smart Folder" : "Edit Smart Folder")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -13,6 +13,9 @@ import SwiftUI
 /// does, but set in a serif that is Purnote's own.
 struct ListRow: View {
     var note: Note
+    /// When set, shown in place of the relative date — used by search results
+    /// for a note living in another folder, so it is clear where it lives.
+    var location: String? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -22,7 +25,7 @@ struct ListRow: View {
                 .lineLimit(1)
 
             HStack(spacing: 5) {
-                Text(dateText)
+                Text(location ?? dateText)
                     .foregroundColor(.secondary)
 
                 if !preview.isEmpty {

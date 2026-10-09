@@ -87,9 +87,13 @@ struct MenuView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             bottomBar
         }
-        .fullScreenCover(isPresented: $showingNewFolder) {
-            FolderNew(showSheetView: $showingNewFolder, url: data.getCurrentUrl())
-                .environmentObject(data)
+        .alert("New Folder", isPresented: $showingNewFolder) {
+            TextField("Name", text: $newFolderName)
+            Button("Cancel", role: .cancel) { newFolderName = "" }
+            Button("Create") { createFolder() }
+                .disabled(newFolderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        } message: {
+            Text("It will appear in iCloud Drive › Purnote.")
         }
         .fullScreenCover(isPresented: $isCreatingNewNote) {
             NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
@@ -256,6 +260,21 @@ struct MenuView: View {
         showSearch = false
     }
 
+    private func createFolder() {
+        let name = newFolderName.trimmingCharacters(in: .whitespacesAndNewlines)
+        defer { newFolderName = "" }
+        guard !name.isEmpty else { return }
+
+        let url = data.getCurrentUrl()
+        do {
+            try CoordinatedFile.createDirectory(at: url.appendingPathComponent(name))
+        } catch {
+            print("Failed to create directory: \(error).")
+            return
+        }
+        data.refresh(url: url)
+    }
+
     /// The results rows, shown inline in the main list while a query is
     /// present. Searching is global, so a match can live in another folder;
     /// tapping a row still opens it in the usual NoteView.
@@ -269,16 +288,43 @@ struct MenuView: View {
                 Text("\u{201C}\(searchText)\u{201D}")
             }.placeholderForegroundColor()
         } else {
+            // the result count, and the fact that search spans every folder
+            Text(results.count == 1 ? "1 result · all folders" : "\(results.count) results · all folders")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 2)
+
             ForEach(results) { note in
                 NavigationLink(destination:
                     NoteView(note: note)
                         .environmentObject(data)
                         .environmentObject(index)
                 ) {
-                    ListRow(note: note)
+                    ListRow(note: note, location: location(for: note))
                 }
+                .menuRowStyle()
             }
         }
+    }
+
+    /// For a search result, the folder it lives in — but only when that is not
+    /// the folder being viewed, where the row already reads as "here".
+    private func location(for note: Note) -> String? {
+        let here = note.url.deletingLastPathComponent().standardizedFileURL.path
+            == data.getCurrentUrl().standardizedFileURL.path
+        return here ? nil : folderLabel(for: note)
+    }
+
+    /// The folder a note lives in, relative to the storage root. Root notes are
+    /// just "Purnote".
+    private func folderLabel(for note: Note) -> String {
+        let root = index.rootUrl.standardizedFileURL.path
+        let folder = note.url.deletingLastPathComponent().standardizedFileURL.path
+        guard folder != root else { return "Purnote" }
+        if folder.hasPrefix(root + "/") {
+            return String(folder.dropFirst(root.count + 1))
+        }
+        return (folder as NSString).lastPathComponent
     }
 
     func conditionalNavBarTitle(text: String) -> String {

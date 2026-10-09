@@ -19,17 +19,12 @@ struct FolderView: View {
     @State private var draftName = ""
     @State private var folderPendingDelete: URL?
     @State private var dropTargetedFolder: URL?
-    @FocusState private var renameFieldFocused: Bool
 
     @ViewBuilder
     var body: some View {
 
         ForEach(data.folders) { folder in
-            if renamingFolder == folder.url {
-                renameRow(folder)
-            } else {
-                folderRow(folder)
-            }
+            folderRow(folder)
         }
         .listStyle(PlainListStyle())
         .alert("Rename Folder", isPresented: renameAlertPresented) {
@@ -116,30 +111,6 @@ struct FolderView: View {
         }
     }
 
-    private func renameRow(_ folder: Folder) -> some View {
-        HStack {
-            Image(systemName: "folder")
-                .systemOrange()
-
-            TextField(folder.id, text: $draftName)
-                .font(.title3)
-                .focused($renameFieldFocused)
-                .submitLabel(.done)
-                .onSubmit { commitRename(of: folder) }
-
-            Spacer()
-
-            Button {
-                cancelRename()
-            } label: {
-                Image(systemName: "xmark.circle")
-                    .foregroundColor(.red)
-            }
-            .buttonStyle(.plain)
-        }
-        .onAppear { renameFieldFocused = true }
-    }
-
     /// The number of notes directly inside a folder. Counts the `.md` files,
     /// including any still showing as iCloud `.icloud` placeholders, and
     /// ignores nested folders and the Trash.
@@ -176,7 +147,20 @@ struct FolderView: View {
 
     // MARK: - Renaming
 
-    private func commitRename(of folder: Folder) {
+    private var renameAlertPresented: Binding<Bool> {
+        Binding(
+            get: { renamingFolder != nil },
+            set: { if !$0 { cancelRename() } }
+        )
+    }
+
+    private func commitRename() {
+        guard let url = renamingFolder,
+              let folder = data.folders.first(where: { $0.url == url }) else {
+            cancelRename()
+            return
+        }
+
         let newName = draftName.trimmingCharacters(in: .whitespacesAndNewlines)
         defer { cancelRename() }
 
