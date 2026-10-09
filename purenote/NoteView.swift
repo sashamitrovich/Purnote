@@ -201,6 +201,30 @@ extension Theme {
                 .relativeLineSpacing(.em(0.2))
                 .markdownMargin(top: .zero, bottom: .rem(0.6))
         }
+        // Lighter tables: row hairlines only (no vertical rules, no outer
+        // border), a semibold secondary header, and cell text a step smaller
+        // in tabular figures so a wide table fits the phone without wrapping.
+        .table { configuration in
+            configuration.label
+                .fixedSize(horizontal: false, vertical: true)
+                .markdownTableBorderStyle(.init(.insideHorizontalBorders, color: Color(UIColor.separator)))
+                .markdownMargin(top: .zero, bottom: .rem(0.8))
+        }
+        .tableCell { configuration in
+            configuration.label
+                .markdownTextStyle {
+                    if configuration.row == 0 {
+                        FontWeight(.semibold)
+                        ForegroundColor(Color(UIColor.secondaryLabel))
+                    }
+                    FontSize(.em(0.85))
+                    FontDigitVariant(.monospaced)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .relativeLineSpacing(.em(0.2))
+                .padding(.vertical, 4)
+                .padding(.trailing, 4)
+        }
         // the default code block does not scroll, so long lines are simply
         // cut off at the right edge of the screen
         .codeBlock { configuration in
@@ -213,7 +237,7 @@ extension Theme {
                     }
                     .padding(10)
             }
-            .background(Color(UIColor.secondarySystemBackground))
+            .background(Color.purnotePaper2)
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .markdownMargin(top: .zero, bottom: .rem(0.8))
         }

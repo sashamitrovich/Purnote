@@ -101,6 +101,15 @@ struct NoteBody: View {
                     .accessibilityAddTraits(.isButton)
 
                     Markdown(task.content)
+                        // a ticked item reads muted, so the eye goes to what is
+                        // still left to do. It has to be the theme's text style:
+                        // MarkdownUI sets its own colour, so .foregroundColor is
+                        // ignored. Keep the FontSize -- the hit-testing in
+                        // font(for:) assumes the theme's base size.
+                        .markdownTextStyle(\.text) {
+                            FontSize(MarkdownTextView.baseFontSize)
+                            ForegroundColor(task.isCompleted ? .secondary : .primary)
+                        }
                         .markdownTheme(.purnote)
                         // the box sits markerVerticalPadding below the row top;
                         // give the first line the same so the two line up
@@ -159,13 +168,19 @@ struct NoteBody: View {
     private static func font(for block: MarkdownBlock) -> UIFont {
         let base = MarkdownTextView.baseFontSize
         let heading = block.text.prefix(while: { $0 == "#" }).count
+        let isTable = block.text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("|")
 
         let font: UIFont
-        switch heading {
-        case 1: font = .systemFont(ofSize: base * 1.8, weight: .bold)
-        case 2: font = .systemFont(ofSize: base * 1.4, weight: .semibold)
-        case 3: font = .systemFont(ofSize: base * 1.15, weight: .semibold)
-        default: font = .systemFont(ofSize: base)
+        if isTable {
+            // table cells render at 0.85em (see Theme.purnote's .tableCell)
+            font = .systemFont(ofSize: base * 0.85)
+        } else {
+            switch heading {
+            case 1: font = .systemFont(ofSize: base * 1.8, weight: .bold)
+            case 2: font = .systemFont(ofSize: base * 1.4, weight: .semibold)
+            case 3: font = .systemFont(ofSize: base * 1.15, weight: .semibold)
+            default: font = .systemFont(ofSize: base)
+            }
         }
         return UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
     }
