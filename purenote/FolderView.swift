@@ -32,15 +32,13 @@ struct FolderView: View {
             }
         }
         .listStyle(PlainListStyle())
-
-        if data.folders.isEmpty {
-            VStack {
-                HStack {
-                    Text("Tap the")
-                    Image(systemName: "folder.badge.plus")
-                    Text("button to create a new folder")
-                }.placeholderForegroundColor()
-            }
+        .alert("Rename Folder", isPresented: renameAlertPresented) {
+            TextField("Name", text: $draftName)
+            Button("Cancel", role: .cancel) { cancelRename() }
+            Button("Save") { commitRename() }
+                .disabled(draftName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        } message: {
+            Text("The folder is renamed in iCloud Drive › Purnote.")
         }
     }
 
@@ -55,7 +53,7 @@ struct FolderView: View {
                     // https://stackoverflow.com/a/59974025/1393362
                     .systemOrange()
                 Text(folder.id)
-                    .font(.system(size: 21, weight: .semibold, design: .serif))
+                    .font(.title3)
                     .foregroundColor(Color(UIColor.label))
                     .lineLimit(1)
 
@@ -66,6 +64,10 @@ struct FolderView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .monospacedDigit()
+
+                Image(systemName: "chevron.right")
+                    .font(.footnote)
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
             }
             .menuRowStyle()
             .background(

@@ -11,8 +11,34 @@ import UIKit
 @main
 struct PurenoteApp: App {
 
-    
-    
+    init() {
+        // Serif (New York) navigation titles — the app's one deliberate step
+        // away from the all-SF look. Both the large root title and the inline
+        // folder titles, with the label colour set explicitly: the earlier 1.3
+        // attempt set the font but no foreground colour, which left the title
+        // white on the paper background.
+        let inline = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        let large = UIFont.systemFont(ofSize: 34, weight: .bold)
+        let inlineSerif = inline.fontDescriptor.withDesign(.serif)
+            .map { UIFont(descriptor: $0, size: 17) } ?? inline
+        let largeSerif = large.fontDescriptor.withDesign(.serif)
+            .map { UIFont(descriptor: $0, size: 34) } ?? large
+
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [
+            .font: inlineSerif,
+            .foregroundColor: UIColor.label
+        ]
+        appearance.largeTitleTextAttributes = [
+            .font: largeSerif,
+            .foregroundColor: UIColor.label
+        ]
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+    }
+
     @AppStorage("shownSplashScreen") var shownSplashScreen = false
     /// Set when the user chose to carry on without iCloud Drive.
     @AppStorage("useLocalStorage") private var useLocalStorage = false

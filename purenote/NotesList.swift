@@ -60,7 +60,6 @@ struct NotesList: View {
                 .showIf(condition: !note.isLocal)
 
         }
-        .padding(.leading, 5.0)
         .sheet(item: $noteToMove) { note in
             MoveNoteSheet(note: note)
                 .environmentObject(data)

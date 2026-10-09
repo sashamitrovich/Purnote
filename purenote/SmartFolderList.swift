@@ -39,40 +39,39 @@ final class SmartFolderList: ObservableObject {
     }
 }
 
-/// The smart-folder rows at the top of the main list, plus the "New Smart
-/// Folder" affordance. A smart folder is a saved filter, not a real directory,
-/// so it gets a tray icon rather than the folder icon real folders use.
+/// The smart-folder rows, listed at the top of the Folders section. A smart
+/// folder is a saved filter, not a real directory, so it gets a tray icon
+/// rather than the folder icon real folders use. Only ever shown at the root,
+/// and only when at least one smart folder exists — creating one happens from
+/// the bottom bar's new-folder menu, not from the list.
 struct SmartFoldersView: View {
     @EnvironmentObject var folders: SmartFolderList
     @EnvironmentObject var index: SearchIndex
-    @State private var editorMode: SmartFolderEditorMode?
+    @State private var editingFolder: SmartFolder?
 
     var body: some View {
-        HStack {
-            Text("Smart Folders")
-                .font(.caption.weight(.semibold))
-                .foregroundColor(Color(UIColor.secondaryLabel))
-                .textCase(.uppercase)
-            Spacer()
-        }
-        .padding(.top, 14)
-        .padding(.leading, 4)
-
         ForEach(folders.folders) { folder in
             NavigationLink(destination: SmartFolderDestination(folder: folder)) {
                 HStack(spacing: 12) {
                     Image(systemName: "tray.full")
                         .systemOrange()
                     Text(folder.name)
-                        .font(.system(size: 21, weight: .semibold, design: .serif))
+                        .font(.title3)
                         .foregroundColor(Color(UIColor.label))
                         .lineLimit(1)
                     Spacer()
+                    Text("\(index.searchByTags(folder.tags).count)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .monospacedDigit()
+                    Image(systemName: "chevron.right")
+                        .font(.footnote)
+                        .foregroundColor(Color(UIColor.tertiaryLabel))
                 }
             }
             .contextMenu {
                 Button {
-                    editorMode = .edit(folder)
+                    editingFolder = folder
                 } label: {
                     Text("Edit Smart Folder")
                     Image(systemName: "pencil")
@@ -86,39 +85,8 @@ struct SmartFoldersView: View {
             }
             .menuRowStyle()
         }
-
-        Button {
-            editorMode = .new
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: "plus")
-                    .font(.body.weight(.medium))
-                    .foregroundColor(Color(UIColor.secondaryLabel))
-                Text("New Smart Folder")
-                    .font(.body)
-                    .foregroundColor(Color(UIColor.secondaryLabel))
-            }
-        }
-        .menuRowStyle()
-        .sheet(item: $editorMode) { mode in
-            switch mode {
-            case .new:
-                SmartFolderEditor(folders: folders, index: index)
-            case .edit(let folder):
-                SmartFolderEditor(folders: folders, index: index, folder: folder)
-            }
-        }
-    }
-}
-
-private enum SmartFolderEditorMode: Identifiable {
-    case new
-    case edit(SmartFolder)
-
-    var id: String {
-        switch self {
-        case .new: return "new"
-        case .edit(let folder): return folder.id.uuidString
+        .sheet(item: $editingFolder) { folder in
+            SmartFolderEditor(folders: folders, index: index, folder: folder)
         }
     }
 }

@@ -12,9 +12,12 @@ struct MenuView: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
     @EnvironmentObject var monitor: iCloudMonitor
+    @EnvironmentObject var folders: SmartFolderList
     @State private var isShowing = false
     @State var showingNewFolder = false
     @State var isCreatingNewNote = false
+    @State private var showingNewSmartFolder = false
+    @State private var newFolderName = ""
     @State var searchText = ""
     // Search lives at the bottom, above the keyboard, where the thumb already
     // is. showSearch swaps the bottom action bar for the search field;
@@ -34,32 +37,36 @@ struct MenuView: View {
                 // As soon as there is a query the same list becomes the results,
                 // in place -- no second screen to push onto.
                 if searchText.isEmpty {
-                    SmartFoldersView()
+                    if hasFolders {
+                        // where the smart folders (saved filters) and the real
+                        // physical folders begin
+                        HStack {
+                            Text("Folders")
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .textCase(.uppercase)
+                            Spacer()
+                        }
+                        .padding(.top, 18)
+                        .padding(.leading, 4)
 
-                    // where the smart folders (saved filters) end and the real
-                    // physical folders begin
-                    HStack {
-                        Text("Folders")
-                            .font(.caption.weight(.semibold))
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            .textCase(.uppercase)
-                        Spacer()
+                        if isRoot {
+                            SmartFoldersView()
+                        }
+
+                        FolderView().environmentObject(data)
+
+                        // where the folders end and the notes begin
+                        HStack {
+                            Text("Notes")
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .textCase(.uppercase)
+                            Spacer()
+                        }
+                        .padding(.top, 18)
+                        .padding(.leading, 4)
                     }
-                    .padding(.top, 18)
-                    .padding(.leading, 4)
-
-                    FolderView().environmentObject(data)
-
-                    // where the folders end and the notes begin
-                    HStack {
-                        Text("Notes")
-                            .font(.caption.weight(.semibold))
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                            .textCase(.uppercase)
-                        Spacer()
-                    }
-                    .padding(.top, 18)
-                    .padding(.leading, 4)
 
                     NotesList()
                         .environmentObject(data)
@@ -88,6 +95,9 @@ struct MenuView: View {
             NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
                 .environmentObject(data)
                 .environmentObject(index)
+        }
+        .sheet(isPresented: $showingNewSmartFolder) {
+            SmartFolderEditor(folders: folders, index: index)
         }
 
         .navigationTitle(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent))
@@ -126,13 +136,15 @@ struct MenuView: View {
             self.isViewDisplayed = false
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showingHelp = true
-                } label: {
-                    Image(systemName: "questionmark.circle")
+            if isRoot {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingHelp = true
+                    } label: {
+                        Image(systemName: "questionmark.circle")
+                    }
+                    .accessibilityLabel("Help")
                 }
-                .accessibilityLabel("Help")
             }
         }
         .sheet(isPresented: $showingHelp) {
@@ -142,7 +154,19 @@ struct MenuView: View {
     
     // MARK: - Bottom bar
 
-    private var orange: Color { Color(UIColor.systemOrange) }
+    private var orange: Color { Color.accentColor }
+
+    /// True when the current list is the storage root — the only place smart
+    /// folders and the Help button belong.
+    private var isRoot: Bool {
+        data.getCurrentUrl().standardizedFileURL.path == index.rootUrl.standardizedFileURL.path
+    }
+
+    /// Whether there is a Folders section to show: real subfolders, or (at the
+    /// root) the saved smart folders.
+    private var hasFolders: Bool {
+        !data.folders.isEmpty || (isRoot && !folders.folders.isEmpty)
+    }
 
     /// Either the three actions, or — once search is tapped — the search field.
     /// Both sit at the bottom; the field version rides up over the keyboard.
@@ -171,7 +195,10 @@ struct MenuView: View {
 
             Spacer()
 
-            Button { showingNewFolder.toggle() } label: {
+            Menu {
+                Button("New Folder") { showingNewFolder.toggle() }
+                Button("New Smart Folder") { showingNewSmartFolder = true }
+            } label: {
                 Image(systemName: "plus.rectangle.on.folder")
             }
             .accessibilityLabel("New folder")
