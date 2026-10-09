@@ -126,12 +126,12 @@ struct NoteBody: View {
     /// rows and the theme cannot drift apart.
     private func checkbox(isCompleted: Bool) -> some View {
         RoundedRectangle(cornerRadius: 5, style: .continuous)
-            .strokeBorder(isCompleted ? Color(UIColor.systemOrange)
+            .strokeBorder(isCompleted ? Color.accentColor
                                       : Color(UIColor.tertiaryLabel),
                           lineWidth: 1.7)
             .background(
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .fill(isCompleted ? Color(UIColor.systemOrange) : .clear)
+                    .fill(isCompleted ? Color.accentColor : .clear)
             )
             .overlay {
                 if isCompleted {

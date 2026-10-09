@@ -140,7 +140,7 @@ extension Theme {
             FontSize(MarkdownTextView.baseFontSize)
         }
         .link {
-            ForegroundColor(Color(UIColor.systemOrange))
+            ForegroundColor(Color.accentColor)
         }
         // a soft, rounded checkbox instead of the default hard SF square --
         // amber when ticked, a quiet hollow box when not
@@ -148,13 +148,13 @@ extension Theme {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .strokeBorder(
                     configuration.isCompleted
-                        ? Color(UIColor.systemOrange)
+                        ? Color.accentColor
                         : Color(UIColor.tertiaryLabel),
                     lineWidth: 1.7
                 )
                 .background(
                     RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(configuration.isCompleted ? Color(UIColor.systemOrange) : .clear)
+                        .fill(configuration.isCompleted ? Color.accentColor : .clear)
                 )
                 .overlay {
                     if configuration.isCompleted {

@@ -61,7 +61,7 @@ private struct MoveFolderLevel: View {
             } label: {
                 HStack(spacing: 12) {
                     Image(systemName: path.isEmpty ? "note.text" : "folder")
-                        .systemOrange()
+                        .accent()
                     Text(path.isEmpty ? "Notes" : "Move to \((path as NSString).lastPathComponent)")
                         .foregroundColor(Color(UIColor.label))
                 }
@@ -73,7 +73,7 @@ private struct MoveFolderLevel: View {
                 } label: {
                     HStack(spacing: 12) {
                         Image(systemName: "folder")
-                            .systemOrange()
+                            .accent()
                         Text((folder as NSString).lastPathComponent)
                             .foregroundColor(Color(UIColor.label))
                     }

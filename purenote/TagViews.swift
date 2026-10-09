@@ -62,10 +62,10 @@ struct TagChipsRow: View {
                     NavigationLink(destination: TagDestination(tag: tag)) {
                         Text("#\(tag)")
                             .font(.footnote.weight(.medium))
-                            .foregroundColor(Color(UIColor.systemOrange))
+                            .foregroundColor(Color.accentColor)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
-                            .background(Color(UIColor.systemOrange).opacity(0.12))
+                            .background(Color.accentColor.opacity(0.12))
                             .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)

@@ -46,7 +46,7 @@ struct FolderView: View {
                     // my own modest Image extension
                     // inspired by
                     // https://stackoverflow.com/a/59974025/1393362
-                    .systemOrange()
+                    .accent()
                 Text(folder.id)
                     .font(.title3)
                     .foregroundColor(Color(UIColor.label))
@@ -68,7 +68,7 @@ struct FolderView: View {
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(dropTargetedFolder == folder.url
-                          ? Color(UIColor.systemOrange).opacity(0.15)
+                          ? Color.accentColor.opacity(0.15)
                           : Color.clear)
             )
             .dropDestination(for: String.self) { paths, _ in

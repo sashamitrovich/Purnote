@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 extension Image {
-     func systemOrange() -> some View {
+     func accent() -> some View {
         return self
             .renderingMode(.template)
-            .foregroundColor(Color(UIColor.systemOrange))
+            .foregroundColor(Color.accentColor)
     }
     
   

@@ -53,7 +53,7 @@ struct MarkdownEditor: View {
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 formattingBar
             }
-            .tint(Color(UIColor.systemOrange))
+            .tint(Color.accentColor)
             .photosPicker(isPresented: $showingPhotoPicker,
                           selection: $photoPickerItem,
                           matching: .images)

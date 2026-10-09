@@ -54,7 +54,7 @@ struct SmartFoldersView: View {
             NavigationLink(destination: SmartFolderDestination(folder: folder)) {
                 HStack(spacing: 12) {
                     Image(systemName: "tray.full")
-                        .systemOrange()
+                        .accent()
                     Text(folder.name)
                         .font(.title3)
                         .foregroundColor(Color(UIColor.label))
@@ -148,7 +148,7 @@ struct SmartFolderEditor: View {
                                     Spacer()
                                     if selectedTags.contains(tag) {
                                         Image(systemName: "checkmark")
-                                            .foregroundColor(Color(UIColor.systemOrange))
+                                            .foregroundColor(Color.accentColor)
                                     }
                                 }
                             }

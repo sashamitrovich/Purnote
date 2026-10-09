@@ -48,7 +48,7 @@ final class FolderPickerViewController: UITableViewController {
         tableView.backgroundColor = .purnotePaper
         tableView.separatorColor = .separator
         // orange checkmarks, matching the app's accent
-        tableView.tintColor = .systemOrange
+        tableView.tintColor = .purnoteAmber
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -56,7 +56,7 @@ final class FolderPickerViewController: UITableViewController {
         appearance.shadowColor = .clear
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.tintColor = .systemOrange
+        navigationController?.navigationBar.tintColor = .purnoteAmber
 
         if path.isEmpty {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -93,7 +93,7 @@ final class FolderPickerViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = path.isEmpty ? "Notes" : "Save to \((path as NSString).lastPathComponent)"
             content.image = UIImage(systemName: path.isEmpty ? "note.text" : "folder")
-            content.imageProperties.tintColor = .systemOrange
+            content.imageProperties.tintColor = .purnoteAmber
             cell.contentConfiguration = content
             cell.accessoryType = (selected == path) ? .checkmark : .none
 
@@ -102,7 +102,7 @@ final class FolderPickerViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = (subfolder as NSString).lastPathComponent
             content.image = UIImage(systemName: "folder")
-            content.imageProperties.tintColor = .systemOrange
+            content.imageProperties.tintColor = .purnoteAmber
             cell.contentConfiguration = content
             cell.accessoryType = .disclosureIndicator
 
@@ -110,7 +110,7 @@ final class FolderPickerViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = "New Folder\u{2026}"
             content.image = UIImage(systemName: "folder.badge.plus")
-            content.imageProperties.tintColor = .systemOrange
+            content.imageProperties.tintColor = .purnoteAmber
             cell.contentConfiguration = content
         }
         return cell

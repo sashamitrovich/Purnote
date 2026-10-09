@@ -63,7 +63,7 @@ struct HelpView: View {
     private func feature(icon: String, text: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
-                .systemOrange()
+                .accent()
                 .frame(width: 26)
             Text(text)
                 .font(.body)

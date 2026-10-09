@@ -36,7 +36,7 @@ final class ShareViewController: UIViewController {
         appearance.shadowColor = .clear
         navBar.standardAppearance = appearance
         navBar.scrollEdgeAppearance = appearance
-        navBar.tintColor = .systemOrange
+        navBar.tintColor = .purnoteAmber
 
         let navItem = UINavigationItem(title: "Save to Purnote")
         navItem.leftBarButtonItem = UIBarButtonItem(
