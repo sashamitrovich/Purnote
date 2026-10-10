@@ -48,7 +48,7 @@ struct FolderView: View {
                     // https://stackoverflow.com/a/59974025/1393362
                     .accent()
                 Text(folder.id)
-                    .font(.title3)
+                    .font(.title2.weight(.medium))
                     .foregroundColor(Color(UIColor.label))
                     .lineLimit(1)
 

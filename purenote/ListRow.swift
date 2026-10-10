@@ -20,7 +20,7 @@ struct ListRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title.isEmpty ? "New note" : title)
-                .font(.system(size: 19, weight: .semibold, design: .serif))
+                .font(.system(size: 21, weight: .semibold, design: .serif))
                 .foregroundColor(title.isEmpty ? .secondary : .primary)
                 .lineLimit(1)
 
