@@ -30,9 +30,16 @@ struct NoteEdit: View {
     /// empty string and every tap opened the note at the very top.
     @State private var draft: String
 
+    /// The text the note had when editing opened (or when it was last
+    /// finished). The file name was derived from its first line, and autosave
+    /// overwrites the stored content while typing, so it has to be kept here to
+    /// tell a name the app made from one the user chose.
+    @State private var titleSource: String
+
     init(note: Note, initialCaret: Int? = nil) {
         _note = State(initialValue: note)
         _draft = State(initialValue: note.content)
+        _titleSource = State(initialValue: note.content)
         self.initialCaret = initialCaret
     }
 
@@ -82,7 +89,13 @@ struct NoteEdit: View {
     /// Editing is over: this is when the file may be renamed to match its
     /// first line.
     func finish() {
-        data.finishEditing(note)
+        data.finishEditing(note, previousContent: titleSource)
+        // from here on the file name stands for what the note says now -- but
+        // only if the rename went through, or there was nothing to rename to
+        if NoteNaming.mayRename(stem: note.url.deletingPathExtension().lastPathComponent,
+                                previousContent: note.content) {
+            titleSource = note.content
+        }
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
     }

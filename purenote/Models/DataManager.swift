@@ -172,24 +172,27 @@ class DataManager: ObservableObject {
         }
     }
 
-    /// Renames a still-generated file to match its first line. Called when
-    /// editing finishes rather than while typing: autosave writes every second,
-    /// and renaming on every keystroke would mean an iCloud move per character
-    /// and a note whose identity changes under the app.
-    func finishEditing(_ note: Note) {
+    /// Renames a note's file to match its first line, when the file name is the
+    /// app's to change (see NoteNaming.mayRename). Called when editing finishes
+    /// rather than while typing: autosave writes every second, and renaming on
+    /// every keystroke would mean an iCloud move per character and a note whose
+    /// identity changes under the app.
+    ///
+    /// `previousContent` is the text the note had when editing opened (or when
+    /// it was last finished), which is what the current file name was derived
+    /// from. A file name given by hand on the Mac is left alone.
+    func finishEditing(_ note: Note, previousContent: String? = nil) {
         persist(note)
 
-        // Rename the file to match the note's first line, so the filename on
-        // disk (and on the Mac) always mirrors the title the user sees. The
-        // first line is the source of truth; a name changed by hand on the Mac
-        // is reverted here when the title says something else.
         let currentStem = note.url.deletingPathExtension().lastPathComponent
-        guard let name = NoteNaming.name(from: note.content),
+        guard NoteNaming.mayRename(stem: currentStem, previousContent: previousContent),
+              let name = NoteNaming.name(from: note.content),
               name != currentStem
         else { return }
 
         let target = NoteNaming.availableURL(named: name,
-                                             in: note.url.deletingLastPathComponent())
+                                             in: note.url.deletingLastPathComponent(),
+                                             excluding: note.url)
         guard target != note.url else { return }
 
         do {
