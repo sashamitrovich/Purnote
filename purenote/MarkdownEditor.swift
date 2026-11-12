@@ -53,7 +53,7 @@ struct MarkdownEditor: View {
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 formattingBar
             }
-            .tint(Color.accentColor)
+            .tint(Color.pn.ribbon)
             .photosPicker(isPresented: $showingPhotoPicker,
                           selection: $photoPickerItem,
                           matching: .images)
@@ -76,7 +76,7 @@ struct MarkdownEditor: View {
             .scrollIndicators(.hidden)
         }
         .frame(height: 46)
-        .background(Color.purnotePaper2)
+        .background(Color.pn.fill)
         .overlay(alignment: .top) {
             Divider()
         }
@@ -122,7 +122,7 @@ struct MarkdownEditor: View {
             } label: {
                 Image(systemName: "ellipsis")
                     .imageScale(.large)
-                    .foregroundColor(Color.accentColor)
+                    .foregroundColor(Color.pn.ribbon)
                     .frame(minWidth: 24, minHeight: 34)
             }
             .accessibilityLabel("More")
@@ -133,7 +133,7 @@ struct MarkdownEditor: View {
     private func icon(for action: Action) -> some View {
         Image(systemName: action.icon)
             .imageScale(.large)
-            .foregroundColor(Color.primary.opacity(0.85))
+            .foregroundColor(Color.pn.ink.opacity(0.85))
             .frame(minWidth: 24, minHeight: 34)
     }
 

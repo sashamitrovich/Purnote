@@ -57,16 +57,16 @@ struct SmartFoldersView: View {
                         .accent()
                     Text(folder.name)
                         .font(.title2.weight(.medium))
-                        .foregroundColor(Color(UIColor.label))
+                        .foregroundColor(Color.pn.ink)
                         .lineLimit(1)
                     Spacer()
                     Text("\(index.searchByTags(folder.tags).count)")
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.pn.ink2)
                         .monospacedDigit()
                     Image(systemName: "chevron.right")
                         .font(.footnote)
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                        .foregroundColor(Color.pn.ink3)
                 }
             }
             .contextMenu {
@@ -125,14 +125,14 @@ struct SmartFolderEditor: View {
             Form {
                 Section {
                     TextField("Name", text: $name)
-                        .listRowBackground(Color.purnotePaper2)
+                        .listRowBackground(Color.pn.fill)
                 }
                 Section("Tags") {
                     let tags = index.allTags()
                     if tags.isEmpty {
                         Text("Type a #tag in any note and it will appear here.")
                             .foregroundColor(Color(UIColor.placeholderText))
-                            .listRowBackground(Color.purnotePaper2)
+                            .listRowBackground(Color.pn.fill)
                     } else {
                         ForEach(tags, id: \.self) { tag in
                             Button {
@@ -144,21 +144,21 @@ struct SmartFolderEditor: View {
                             } label: {
                                 HStack {
                                     Text("#\(tag)")
-                                        .foregroundColor(Color(UIColor.label))
+                                        .foregroundColor(Color.pn.ink)
                                     Spacer()
                                     if selectedTags.contains(tag) {
                                         Image(systemName: "checkmark")
-                                            .foregroundColor(Color.accentColor)
+                                            .foregroundColor(Color.pn.ribbon)
                                     }
                                 }
                             }
-                            .listRowBackground(Color.purnotePaper2)
+                            .listRowBackground(Color.pn.fill)
                         }
                     }
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(Color.purnotePaper)
+            .background(Color.pn.page)
             .navigationTitle(folder == nil ? "New Smart Folder" : "Edit Smart Folder")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

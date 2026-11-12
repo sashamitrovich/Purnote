@@ -45,7 +45,7 @@ struct NoteNew: View {
                 .autosaving(draft, save: { save() }, finish: { finish() })
                 // inside the stack: the NavigationStack paints an opaque
                 // system background over anything set on it from outside
-                .background(Color.purnotePaper.ignoresSafeArea())
+                .background(Color.pn.page.ignoresSafeArea())
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {

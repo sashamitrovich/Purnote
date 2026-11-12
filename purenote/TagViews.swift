@@ -36,7 +36,7 @@ struct FilteredNotesView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 8)
         }
-        .background(Color.purnotePaper)
+        .background(Color.pn.page)
     }
 }
 
@@ -62,10 +62,10 @@ struct TagChipsRow: View {
                     NavigationLink(destination: TagDestination(tag: tag)) {
                         Text("#\(tag)")
                             .font(.footnote.weight(.medium))
-                            .foregroundColor(Color.accentColor)
+                            .foregroundColor(Color.pn.ribbonText)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
-                            .background(Color.accentColor.opacity(0.12))
+                            .background(Color.pn.ribbon.opacity(0.12))
                             .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)

@@ -12,7 +12,7 @@ extension Image {
      func accent() -> some View {
         return self
             .renderingMode(.template)
-            .foregroundColor(Color.accentColor)
+            .foregroundColor(Color.pn.ribbon)
     }
     
   

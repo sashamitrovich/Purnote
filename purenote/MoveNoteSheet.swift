@@ -63,7 +63,7 @@ private struct MoveFolderLevel: View {
                     Image(systemName: path.isEmpty ? "note.text" : "folder")
                         .accent()
                     Text(path.isEmpty ? "Notes" : "Move to \((path as NSString).lastPathComponent)")
-                        .foregroundColor(Color(UIColor.label))
+                        .foregroundColor(Color.pn.ink)
                 }
             }
 
@@ -75,14 +75,14 @@ private struct MoveFolderLevel: View {
                         Image(systemName: "folder")
                             .accent()
                         Text((folder as NSString).lastPathComponent)
-                            .foregroundColor(Color(UIColor.label))
+                            .foregroundColor(Color.pn.ink)
                     }
                 }
             }
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Color.purnotePaper)
+        .background(Color.pn.page)
         .navigationTitle(path.isEmpty ? "Move Note" : (path as NSString).lastPathComponent)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

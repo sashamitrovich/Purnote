@@ -109,7 +109,7 @@ struct NoteView: View {
                     .onChange(of: monitor.changeCount) { reloadFromDisk() }
             }
             .scrollContentBackground(.hidden)
-            .background(Color.purnotePaper)
+            .background(Color.pn.page)
         }
         // the gesture and the cover live on the ScrollView, so the whole
         // visible area is tappable rather than only the rendered text
@@ -132,7 +132,7 @@ struct NoteView: View {
 extension Theme {
     /// Purnote's rendering: the basic theme with a tighter vertical rhythm
     /// (notes usually open with a heading, so 1.5rem of space above it is
-    /// wasted) and links in the app's orange.
+    /// wasted) and links in the app's amber (ribbonText).
     static let purnote = Theme.basic
         // the same base size as the editor, so tapping into a note does not
         // change the size of the words under your finger
@@ -140,7 +140,7 @@ extension Theme {
             FontSize(MarkdownTextView.baseFontSize)
         }
         .link {
-            ForegroundColor(Color.accentColor)
+            ForegroundColor(Color.pn.ribbonText)
         }
         // a soft, rounded checkbox instead of the default hard SF square --
         // amber when ticked, a quiet hollow box when not
@@ -148,13 +148,13 @@ extension Theme {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .strokeBorder(
                     configuration.isCompleted
-                        ? Color.accentColor
-                        : Color(UIColor.tertiaryLabel),
+                        ? Color.pn.ribbon
+                        : Color.pn.ink3,
                     lineWidth: 1.7
                 )
                 .background(
                     RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(configuration.isCompleted ? Color.accentColor : .clear)
+                        .fill(configuration.isCompleted ? Color.pn.ribbon : .clear)
                 )
                 .overlay {
                     if configuration.isCompleted {
@@ -207,7 +207,7 @@ extension Theme {
         .table { configuration in
             configuration.label
                 .fixedSize(horizontal: false, vertical: true)
-                .markdownTableBorderStyle(.init(.insideHorizontalBorders, color: Color(UIColor.separator)))
+                .markdownTableBorderStyle(.init(.insideHorizontalBorders, color: Color.pn.rule))
                 .markdownMargin(top: .zero, bottom: .rem(0.8))
         }
         .tableCell { configuration in
@@ -215,7 +215,7 @@ extension Theme {
                 .markdownTextStyle {
                     if configuration.row == 0 {
                         FontWeight(.semibold)
-                        ForegroundColor(Color(UIColor.secondaryLabel))
+                        ForegroundColor(Color.pn.ink2)
                     }
                     FontSize(.em(0.85))
                     FontDigitVariant(.monospaced)
@@ -237,7 +237,7 @@ extension Theme {
                     }
                     .padding(10)
             }
-            .background(Color.purnotePaper2)
+            .background(Color.pn.fill)
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .markdownMargin(top: .zero, bottom: .rem(0.8))
         }

@@ -48,7 +48,7 @@ struct FolderEdit: View {
             VStack(alignment: .center) {
                 HStack(alignment: .center) {
                     //                    TextField("Enter new folder name", text: $newFolderName)
-                    //                        .foregroundColor(Color(UIColor.label))
+                    //                        .foregroundColor(Color.pn.ink)
                     FolderEditName(newFolderName: $newFolderName)
                         
                         .focused($nameFieldFocused)

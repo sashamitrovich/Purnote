@@ -43,7 +43,7 @@ struct MenuView: View {
                         HStack {
                             Text("Folders")
                                 .font(.caption.weight(.semibold))
-                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .foregroundColor(Color.pn.ink2)
                                 .textCase(.uppercase)
                             Spacer()
                         }
@@ -60,7 +60,7 @@ struct MenuView: View {
                         HStack {
                             Text("Notes")
                                 .font(.caption.weight(.semibold))
-                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .foregroundColor(Color.pn.ink2)
                                 .textCase(.uppercase)
                             Spacer()
                         }
@@ -80,7 +80,7 @@ struct MenuView: View {
         }
         // a clean sheet, not a grey grouped list -- edge-to-edge rows on warm
         // paper, the way a writing app looks
-        .background(Color.purnotePaper)
+        .background(Color.pn.page)
         // the whole bottom bar -- actions, or the search field when searching --
         // rides above the keyboard as a safe-area inset, so everything a thumb
         // needs stays at the bottom of the screen.
@@ -158,7 +158,7 @@ struct MenuView: View {
     
     // MARK: - Bottom bar
 
-    private var orange: Color { Color.accentColor }
+    private var ribbon: Color { Color.pn.ribbon }
 
     /// True when the current list is the storage root — the only place smart
     /// folders and the Help button belong.
@@ -215,14 +215,14 @@ struct MenuView: View {
             .accessibilityLabel("New note")
         }
         .font(.title3)
-        .tint(orange)
+        .tint(ribbon)
     }
 
     private var searchField: some View {
         HStack(spacing: 10) {
             HStack(spacing: 7) {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.pn.ink2)
                 TextField("Search your notes", text: $searchText)
                     .focused($searchFieldFocused)
                     .submitLabel(.search)
@@ -231,18 +231,18 @@ struct MenuView: View {
                 if !searchText.isEmpty {
                     Button { searchText = "" } label: {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.pn.ink2)
                     }
                     .accessibilityLabel("Clear search")
                 }
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
-            .background(Color(UIColor.tertiarySystemFill),
+            .background(Color.pn.fill,
                         in: RoundedRectangle(cornerRadius: 10))
 
             Button("Cancel") { closeSearch() }
-                .foregroundColor(orange)
+                .foregroundColor(Color.pn.ribbonText)
         }
     }
 
@@ -291,7 +291,7 @@ struct MenuView: View {
             // the result count, and the fact that search spans every folder
             Text(results.count == 1 ? "1 result · all folders" : "\(results.count) results · all folders")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.pn.ink2)
                 .padding(.bottom, 2)
 
             ForEach(results) { note in

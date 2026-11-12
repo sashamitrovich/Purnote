@@ -21,7 +21,7 @@ struct RootView: View {
         .tint(Color("AccentColor"))
         // warm paper behind the bar too, so the title area reads as one sheet
         // with the list instead of the system grey/white
-        .toolbarBackground(Color.purnotePaper, for: .navigationBar)
+        .toolbarBackground(Color.pn.page, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }
     

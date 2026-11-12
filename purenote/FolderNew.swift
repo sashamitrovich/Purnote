@@ -34,7 +34,7 @@ struct FolderNew: View {
         
         NavigationStack {
 //                TextField("Enter a name for your new folder", text: $folderName)
-//                    .foregroundColor(Color(UIColor.label))
+//                    .foregroundColor(Color.pn.ink)
                     
             FolderEditName(newFolderName: $folderName)
 

@@ -16,18 +16,18 @@ struct SplashDetail: View {
         HStack(alignment: .center) {
             Image(systemName: imageName)
                 .font(.largeTitle)
-                .foregroundColor(Color(UIColor.orange))
+                .foregroundColor(Color.pn.ribbon)
                 .padding()
                 .accessibility(hidden: true)
             
             VStack(alignment: .leading) {
                 Text(title)
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color.pn.ink)
                     .accessibility(addTraits: .isHeader)
                 Text(subTitle)
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.pn.ink2)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

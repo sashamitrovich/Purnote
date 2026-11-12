@@ -21,18 +21,18 @@ struct ListRow: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title.isEmpty ? "New note" : title)
                 .font(.system(size: 21, weight: .semibold, design: .serif))
-                .foregroundColor(title.isEmpty ? .secondary : .primary)
+                .foregroundColor(title.isEmpty ? Color.pn.ink2 : Color.pn.ink)
                 .lineLimit(1)
 
             HStack(spacing: 5) {
                 Text(location ?? dateText)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.pn.ink2)
 
                 if !preview.isEmpty {
                     Text("·")
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                        .foregroundColor(Color.pn.ink3)
                     Text(preview)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.pn.ink2)
                         .lineLimit(1)
                 }
             }

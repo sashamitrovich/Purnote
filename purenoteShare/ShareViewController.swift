@@ -26,17 +26,17 @@ final class ShareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purnotePaper
+        view.backgroundColor = .pnPage
 
         let navBar = UINavigationBar()
         navBar.translatesAutoresizingMaskIntoConstraints = false
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .purnotePaper
+        appearance.backgroundColor = .pnPage
         appearance.shadowColor = .clear
         navBar.standardAppearance = appearance
         navBar.scrollEdgeAppearance = appearance
-        navBar.tintColor = .purnoteAmber
+        navBar.tintColor = .pnRibbon
 
         let navItem = UINavigationItem(title: "Save to Purnote")
         navItem.leftBarButtonItem = UIBarButtonItem(
@@ -54,7 +54,7 @@ final class ShareViewController: UIViewController {
 
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = .preferredFont(forTextStyle: .body)
-        textView.backgroundColor = .purnotePaper
+        textView.backgroundColor = .pnPage
         textView.textColor = .label
         view.addSubview(textView)
 

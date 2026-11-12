@@ -119,7 +119,7 @@ struct NoteBody: View {
                         // font(for:) assumes the theme's base size.
                         .markdownTextStyle(\.text) {
                             FontSize(MarkdownTextView.baseFontSize)
-                            ForegroundColor(task.isCompleted ? .secondary : .primary)
+                            ForegroundColor(task.isCompleted ? Color.pn.ink2 : Color.pn.ink)
                         }
                         .markdownTheme(.purnote)
                         // the box sits markerVerticalPadding below the row top;
@@ -137,12 +137,12 @@ struct NoteBody: View {
     /// rows and the theme cannot drift apart.
     private func checkbox(isCompleted: Bool) -> some View {
         RoundedRectangle(cornerRadius: 5, style: .continuous)
-            .strokeBorder(isCompleted ? Color.accentColor
-                                      : Color(UIColor.tertiaryLabel),
+            .strokeBorder(isCompleted ? Color.pn.ribbon
+                                      : Color.pn.ink3,
                           lineWidth: 1.7)
             .background(
                 RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .fill(isCompleted ? Color.accentColor : .clear)
+                    .fill(isCompleted ? Color.pn.ribbon : .clear)
             )
             .overlay {
                 if isCompleted {
@@ -226,5 +226,5 @@ struct NoteBody: View {
         NoteBody(source: $text, noteDirectory: URL(fileURLWithPath: "/tmp"))
             .padding(20)
     }
-    .background(Color.purnotePaper)
+    .background(Color.pn.page)
 }

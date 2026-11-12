@@ -26,11 +26,11 @@ struct HelpView: View {
                     Divider()
                     Text(versionText)
                         .font(.footnote)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Color.pn.ink2)
                 }
                 .padding(20)
             }
-            .background(Color.purnotePaper)
+            .background(Color.pn.page)
             .navigationTitle("Help")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -46,7 +46,7 @@ struct HelpView: View {
             Text("Your notes, as plain Markdown files.")
                 .font(.system(size: 21, weight: .semibold, design: .serif))
             Text("Every note is a regular .md file in iCloud Drive. Nothing is locked in — open, edit and back up your notes with anything.")
-                .foregroundColor(.secondary)
+                .foregroundColor(Color.pn.ink2)
         }
     }
 

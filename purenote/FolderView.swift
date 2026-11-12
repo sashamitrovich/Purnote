@@ -49,7 +49,7 @@ struct FolderView: View {
                     .accent()
                 Text(folder.id)
                     .font(.title2.weight(.medium))
-                    .foregroundColor(Color(UIColor.label))
+                    .foregroundColor(Color.pn.ink)
                     .lineLimit(1)
 
                 Spacer()
@@ -57,18 +57,18 @@ struct FolderView: View {
                 // how many notes are inside, the way Notes shows it
                 Text("\(noteCount(in: folder))")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.pn.ink2)
                     .monospacedDigit()
 
                 Image(systemName: "chevron.right")
                     .font(.footnote)
-                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                    .foregroundColor(Color.pn.ink3)
             }
             .menuRowStyle()
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(dropTargetedFolder == folder.url
-                          ? Color.accentColor.opacity(0.15)
+                          ? Color.pn.ribbon.opacity(0.15)
                           : Color.clear)
             )
             .dropDestination(for: String.self) { paths, _ in
