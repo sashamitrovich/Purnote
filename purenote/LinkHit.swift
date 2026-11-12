@@ -25,6 +25,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum LinkHit {
 
@@ -32,11 +33,149 @@ enum LinkHit {
     /// link, or nil when it is not (or the link is not one we open).
     ///
     /// `offset` counts Characters. A value outside `0..<text.count` gives nil.
+    ///
+    /// This tests the Markdown *source*. NoteBody no longer uses it for taps
+    /// (source positions do not match what is drawn); it uses
+    /// `url(at:in:font:width:lineSpacing:)`, which works on the rendered text.
     static func url(at offset: Int, in text: String) -> URL? {
         guard offset >= 0, !text.isEmpty else { return nil }
         let chars = Array(text)
         guard offset < chars.count else { return nil }
         return Scanner(chars: chars).links().first { $0.range.contains(offset) }?.url
+    }
+
+    /// A link in the rendered text: the span of its visible label, in Characters.
+    typealias RenderedLink = (range: Range<Int>, url: URL)
+
+    /// What the reader sees for a block of Markdown, with the links in it.
+    ///
+    /// `plain` drops everything that is markup on the page: emphasis and code
+    /// markers, the `[`, `](destination)` around a link label, heading `#`s,
+    /// blockquote `>`s and list markers, fence lines and images (an image is
+    /// drawn as a picture, so it contributes no text). A soft line break reads
+    /// as a space (MarkdownUI's default); a hard break, a new list item, a
+    /// heading and a code line keep their line break. Link ranges are measured
+    /// in Characters of `plain` and cover the visible label only. Only http,
+    /// https, mailto and tel links are returned.
+    ///
+    /// A table is returned untouched with no links: it is drawn as a grid, so a
+    /// text layout of it cannot say what is under a finger.
+    static func rendered(from text: String) -> (plain: String, links: [RenderedLink]) {
+        let lines = text.split(omittingEmptySubsequences: false, whereSeparator: { $0.isNewline })
+            .map { Array($0) }
+        if let first = lines.first(where: { !$0.allSatisfy { $0.isWhitespace } }),
+           String(first).trimmingCharacters(in: .whitespaces).hasPrefix("|") {
+            return (text, [])
+        }
+
+        var out: [Character] = []
+        var links: [RenderedLink] = []
+        var pending: [Character] = []
+        var hasPending = false
+        var previousWasHeading = false
+        var previousWasHardBreak = false
+        var openFence: (char: Character, length: Int)?
+
+        func flush() {
+            guard hasPending else { return }
+            let inline = Scanner(chars: pending).renderInline()
+            if !out.isEmpty { out.append("\n") }
+            let base = out.count
+            out += inline.plain
+            links += inline.links.map { ((base + $0.range.lowerBound)..<(base + $0.range.upperBound), $0.url) }
+            pending = []
+            hasPending = false
+        }
+
+        for line in lines {
+            let scanner = Scanner(chars: line)
+            if let open = openFence {
+                if let close = scanner.fenceLine(), close.char == open.char,
+                   close.length >= open.length, close.isBare {
+                    openFence = nil
+                } else {
+                    if !out.isEmpty { out.append("\n") }
+                    out += line
+                }
+                continue
+            }
+            if let fence = scanner.fenceLine() {
+                flush()
+                openFence = (fence.char, fence.length)
+                previousWasHeading = false
+                continue
+            }
+            if line.allSatisfy { $0.isWhitespace } {
+                flush()
+                previousWasHeading = false
+                continue
+            }
+
+            var body = Array(line)
+            let hard = body.count >= 2 && body.suffix(2).allSatisfy { $0 == " " }
+                || body.last == "\\"
+            if body.last == "\\" { body.removeLast() }
+            while let last = body.last, last.isWhitespace { body.removeLast() }
+
+            var isBlockStart = false
+            var isHeading = false
+            func dropSpaces() { while body.first?.isWhitespace == true { body.removeFirst() } }
+            dropSpaces()
+            while body.first == ">" {
+                body.removeFirst()
+                dropSpaces()
+            }
+            let hashes = body.prefix(while: { $0 == "#" }).count
+            if (1...6).contains(hashes), hashes == body.count || body[hashes] == " " {
+                body.removeFirst(min(hashes + 1, body.count))
+                dropSpaces()
+                isHeading = true
+                isBlockStart = true
+            } else if body.count >= 2, "-*+".contains(body[0]), body[1] == " " {
+                body.removeFirst(2)
+                dropSpaces()
+                isBlockStart = true
+            } else {
+                let digits = body.prefix(while: { $0.isASCII && $0.isNumber }).count
+                if (1...9).contains(digits), body.count > digits + 1,
+                   body[digits] == "." || body[digits] == ")", body[digits + 1] == " " {
+                    body.removeFirst(digits + 2)
+                    dropSpaces()
+                    isBlockStart = true
+                }
+            }
+
+            if hasPending, isBlockStart || previousWasHeading {
+                flush()
+            }
+            if hasPending {
+                pending.append(previousWasHardBreak ? "\n" : " ")
+            }
+            pending += body
+            hasPending = true
+            previousWasHeading = isHeading
+            previousWasHardBreak = hard
+        }
+        flush()
+        return (String(out), links)
+    }
+
+    /// The URL of the link under `point` when `text` is laid out at `width`
+    /// in `font`, or nil.
+    ///
+    /// The hit test runs on the *rendered* text (see `rendered(from:)`), not on
+    /// the Markdown source, and asks which character contains the point rather
+    /// than which edge is nearest. So words after a link are not the link, even
+    /// though the source carries a long hidden destination after the label.
+    static func url(at point: CGPoint, in text: String, font: UIFont, width: CGFloat,
+                    lineSpacing: CGFloat) -> URL? {
+        let rendered = rendered(from: text)
+        guard !rendered.links.isEmpty,
+              let index = TextHitTest.characterIndex(containing: point, in: rendered.plain,
+                                                     font: font, width: width,
+                                                     lineSpacing: lineSpacing)
+        else { return nil }
+        return rendered.links.first { $0.range.contains(index) }?.url
     }
 
     private static let openableSchemes: Set<String> = ["http", "https", "mailto", "tel"]
@@ -193,7 +332,7 @@ enum LinkHit {
         }
 
         /// `[label](destination "title")` opening at the `[` at `open`.
-        private func inlineLink(at open: Int) -> (end: Int, destination: String)? {
+        private func inlineLink(at open: Int) -> (end: Int, destination: String, label: Range<Int>)? {
             // the label: brackets nest, backslash escapes, code spans hide them
             var depth = 1
             var j = open + 1
@@ -273,7 +412,7 @@ enum LinkHit {
                 p = skipWhitespace(p + 1)
             }
             guard p < n, chars[p] == ")" else { return nil }
-            return (p + 1, destination)
+            return (p + 1, destination, (open + 1)..<j)
         }
 
         // MARK: autolinks and bare URLs
@@ -339,6 +478,119 @@ enum LinkHit {
             }
             guard end > bodyStart, let url = LinkHit.openable(String(chars[i..<end])) else { return nil }
             return (end, url)
+        }
+
+        // MARK: rendering (what the reader sees)
+
+        /// The visible text of an inline run, with the links in it. Markers
+        /// (emphasis, code backticks, escapes, the `[](...)` around a label,
+        /// images) are dropped; link ranges are the visible label in the output.
+        /// Images are dropped entirely (they draw as a picture, not as text).
+        func renderInline() -> (plain: [Character], links: [RenderedLink]) {
+            var out: [Character] = []
+            var links: [RenderedLink] = []
+            var i = 0
+            while i < n {
+                let ch = chars[i]
+                switch ch {
+                case "\\":
+                    if i + 1 < n, chars[i + 1].isPunctuation || chars[i + 1].isSymbol {
+                        out.append(chars[i + 1])
+                        i += 2
+                    } else {
+                        out.append(ch)
+                        i += 1
+                    }
+                case "`":
+                    let length = runLength(of: "`", at: i)
+                    let end = codeSpanEnd(from: i)
+                    if end > i + length {
+                        var content = Array(chars[(i + length)..<(end - length)])
+                        if content.count >= 2, content.first == " ", content.last == " ",
+                           content.contains(where: { $0 != " " }) {
+                            content.removeFirst()
+                            content.removeLast()
+                        }
+                        out += content
+                    } else {
+                        out += chars[i..<end]
+                    }
+                    i = end
+                case "!":
+                    if i + 1 < n, chars[i + 1] == "[", let parsed = inlineLink(at: i + 1) {
+                        i = parsed.end
+                    } else {
+                        out.append(ch)
+                        i += 1
+                    }
+                case "[":
+                    if let parsed = inlineLink(at: i) {
+                        let label = Scanner(chars: Array(chars[parsed.label])).renderInline()
+                        let start = out.count
+                        out += label.plain
+                        if !label.plain.isEmpty, let url = LinkHit.openable(parsed.destination) {
+                            links.append((start..<out.count, url))
+                        }
+                        i = parsed.end
+                    } else {
+                        out.append(ch)
+                        i += 1
+                    }
+                case "<":
+                    if let parsed = autolink(at: i) {
+                        let start = out.count
+                        out += chars[(i + 1)..<(parsed.end - 1)]
+                        if let url = parsed.url { links.append((start..<out.count, url)) }
+                        i = parsed.end
+                    } else {
+                        out.append(ch)
+                        i += 1
+                    }
+                case "h", "H":
+                    if let parsed = bareURL(at: i) {
+                        let start = out.count
+                        out += chars[i..<parsed.end]
+                        links.append((start..<out.count, parsed.url))
+                        i = parsed.end
+                    } else {
+                        out.append(ch)
+                        i += 1
+                    }
+                case "*", "_", "~":
+                    let length = runLength(of: ch, at: i)
+                    if isEmphasisDelimiter(ch, at: i, length: length) {
+                        i += length
+                    } else {
+                        out += chars[i..<(i + length)]
+                        i += length
+                    }
+                default:
+                    out.append(ch)
+                    i += 1
+                }
+            }
+            return (out, links)
+        }
+
+        /// Whether a run of `*`, `_` or `~` is emphasis markup rather than a
+        /// literal character ("2 * 3", snake_case).
+        private func isEmphasisDelimiter(_ ch: Character, at i: Int, length: Int) -> Bool {
+            if ch == "~", length > 2 { return false }
+            let before: Character? = i > 0 ? chars[i - 1] : nil
+            let after: Character? = i + length < n ? chars[i + length] : nil
+            let opens = after.map { !$0.isWhitespace } ?? false
+            let closes = before.map { !$0.isWhitespace } ?? false
+            guard opens || closes else { return false }
+            if ch == "_", let b = before, let a = after,
+               (b.isLetter || b.isNumber), (a.isLetter || a.isNumber) {
+                return false // inside a word
+            }
+            return true
+        }
+
+        /// A fence line (opening or closing), for the line-level pass.
+        func fenceLine() -> (char: Character, length: Int, isBare: Bool)? {
+            fence(onLineAt: 0)
         }
     }
 }

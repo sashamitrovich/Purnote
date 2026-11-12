@@ -59,16 +59,16 @@ struct NoteBody: View {
                                     // at the end of the note
                                     .highPriorityGesture(
                                         SpatialTapGesture().onEnded { tap in
-                                            let inside = offsetInBlock(block,
-                                                                       width: geo.size.width,
-                                                                       at: tap.location)
                                             // a link opens as a link; the
                                             // editor opens only if the tap
                                             // was not on one
-                                            if let url = LinkHit.url(at: inside, in: block.text) {
+                                            if let url = linkURL(in: block,
+                                                                 width: geo.size.width,
+                                                                 at: tap.location) {
                                                 openURL(url)
                                             } else {
-                                                onTapBlock(block.offset + inside)
+                                                onTapBlock(block.offset + offsetInBlock(
+                                                    block, width: geo.size.width, at: tap.location))
                                             }
                                         }
                                     )
@@ -161,6 +161,16 @@ struct NoteBody: View {
     /// the box. The text's first line is nudged the same amount so the box and
     /// the text line up instead of the text floating a little higher.
     private static let markerVerticalPadding: CGFloat = 6
+
+    /// The link under a tap, if any. Decided on the text as the reader sees it
+    /// (no `[](...)` markup), laid out like the block was drawn, so words after
+    /// a link are not mistaken for it. The caret placement below still uses the
+    /// source.
+    private func linkURL(in block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> URL? {
+        let font = Self.font(for: block)
+        return LinkHit.url(at: point, in: block.text, font: font, width: width,
+                           lineSpacing: font.pointSize * 0.2)
+    }
 
     /// Which Character of `block.text` a tap points at (Characters, not UTF-16).
     private func offsetInBlock(_ block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> Int {

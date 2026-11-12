@@ -64,4 +64,81 @@ enum TextHitTest {
 
         return text.characterOffset(ofUTF16: min(utf16, text.utf16.count))
     }
+
+    // MARK: - which character is under the point
+
+    /// Index (in Characters) of the character whose glyph actually contains
+    /// `point`, or nil when the point is on no character -- past the end of a
+    /// line, between lines, below the text.
+    ///
+    /// Unlike `characterOffset`, which answers "where does the caret go" and so
+    /// rounds to the nearest edge, this floors: the right half of a letter is
+    /// still that letter. Used to decide whether a tap landed on a link.
+    static func characterIndex(containing point: CGPoint,
+                               in text: String,
+                               font: UIFont,
+                               width: CGFloat,
+                               lineSpacing: CGFloat) -> Int? {
+        guard width > 0, !text.isEmpty else { return nil }
+        let layout = makeLayout(text, font: font, width: width, lineSpacing: lineSpacing)
+        let manager = layout.manager
+        guard manager.numberOfGlyphs > 0 else { return nil }
+
+        var fraction: CGFloat = 0
+        let glyph = manager.glyphIndex(for: point, in: layout.container,
+                                       fractionOfDistanceThroughGlyph: &fraction)
+        guard glyph < manager.numberOfGlyphs else { return nil }
+
+        let line = manager.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
+        let box = manager.boundingRect(forGlyphRange: NSRange(location: glyph, length: 1),
+                                       in: layout.container)
+        guard point.y >= line.minY, point.y < line.maxY,
+              point.x >= box.minX, point.x < box.maxX
+        else { return nil }
+
+        let utf16 = manager.characterIndexForGlyph(at: glyph)
+        var characters = 0
+        var units = 0
+        for character in text {
+            units += character.utf16.count
+            if utf16 < units { return characters }
+            characters += 1
+        }
+        return nil
+    }
+
+    /// Where the Character at `index` is drawn, in the same layout
+    /// `characterIndex(containing:)` uses. For tests that need a point on a
+    /// particular word.
+    static func characterRect(ofCharacterAt index: Int,
+                              in text: String,
+                              font: UIFont,
+                              width: CGFloat,
+                              lineSpacing: CGFloat) -> CGRect? {
+        guard width > 0, index >= 0, index < text.count else { return nil }
+        let layout = makeLayout(text, font: font, width: width, lineSpacing: lineSpacing)
+        let start = text.index(text.startIndex, offsetBy: index)
+        let range = NSRange(start..<text.index(after: start), in: text)
+        let glyphs = layout.manager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+        return layout.manager.boundingRect(forGlyphRange: glyphs, in: layout.container)
+    }
+
+    private static func makeLayout(_ text: String, font: UIFont, width: CGFloat,
+                                   lineSpacing: CGFloat)
+        -> (storage: NSTextStorage, manager: NSLayoutManager, container: NSTextContainer) {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = lineSpacing
+        let storage = NSTextStorage(string: text, attributes: [
+            .font: font,
+            .paragraphStyle: paragraph,
+        ])
+        let manager = NSLayoutManager()
+        let container = NSTextContainer(size: CGSize(width: width,
+                                                     height: .greatestFiniteMagnitude))
+        container.lineFragmentPadding = 0
+        storage.addLayoutManager(manager)
+        manager.addTextContainer(container)
+        manager.ensureLayout(for: container)
+        return (storage, manager, container)
+    }
 }
