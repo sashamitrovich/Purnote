@@ -84,7 +84,7 @@ struct ICloudItemView: View {
             let content = exists ? try? CoordinatedFile.read(downloaded) : nil
             let date: Date
             if exists {
-                date = (try? FileManager.default.attributesOfItem(atPath: downloaded.path)[.creationDate] as? Date) ?? Date()
+                date = NoteDates.modified(of: downloaded)
             } else {
                 date = Date()
             }

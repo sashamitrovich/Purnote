@@ -2,8 +2,8 @@
 import XCTest
 
 /// Listing a notes directory: classify files vs folders, ignore non-Markdown
-/// and the Trash, sort newest-first, and — the 1.2 hardening — never crash on a
-/// file whose creation date can't be read.
+/// and the Trash, sort newest-edited-first (by modification date), and never crash on a
+/// file whose dates can't be read.
 final class DataManagerTests: XCTestCase {
 
     private var root: URL!
@@ -15,12 +15,24 @@ final class DataManagerTests: XCTestCase {
     }
     override func tearDownWithError() throws { try? FileManager.default.removeItem(at: root) }
 
-    private func write(_ name: String, _ body: String = "x", created: Date? = nil) throws {
+    private func write(_ name: String, _ body: String = "x", modified: Date? = nil) throws {
         let url = root.appendingPathComponent(name)
         try body.write(to: url, atomically: true, encoding: .utf8)
-        if let created {
-            try FileManager.default.setAttributes([.creationDate: created], ofItemAtPath: url.path)
+        if let modified {
+            try FileManager.default.setAttributes([.modificationDate: modified], ofItemAtPath: url.path)
         }
+    }
+
+    private func setModified(_ name: String, _ date: Date) throws {
+        try FileManager.default.setAttributes([.modificationDate: date],
+                                              ofItemAtPath: root.appendingPathComponent(name).path)
+    }
+
+    private func isolatedPreferences() -> SortPreferences {
+        let suite = "purnote-dm-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        addTeardownBlock { defaults.removePersistentDomain(forName: suite) }
+        return SortPreferences(defaults: defaults)
     }
 
     func testListsMarkdownFilesAndFoldersButNotTrashOrOtherFiles() throws {
@@ -40,18 +52,70 @@ final class DataManagerTests: XCTestCase {
         XCTAssertTrue(dm.folders.isEmpty)
     }
 
-    func testNotesAreSortedNewestFirst() throws {
+    func testNotesAreSortedNewestEditedFirst() throws {
         let old = Date(timeIntervalSince1970: 1_000_000)
         let new = Date(timeIntervalSince1970: 2_000_000)
-        try write("older.md", created: old)
-        try write("newer.md", created: new)
+        try write("older.md", modified: old)
+        try write("newer.md", modified: new)
 
-        let dm = DataManager(url: root)
+        let dm = DataManager(url: root, sortPreferences: isolatedPreferences())
         XCTAssertEqual(dm.notes.first?.url.lastPathComponent, "newer.md")
     }
 
+    func testNoteModifiedOnDiskLaterMovesToTopAfterRefresh() throws {
+        try write("a.md", modified: Date(timeIntervalSince1970: 2_000_000))
+        try write("b.md", modified: Date(timeIntervalSince1970: 1_000_000))
+        let dm = DataManager(url: root, sortPreferences: isolatedPreferences())
+        XCTAssertEqual(dm.notes.first?.url.lastPathComponent, "a.md")
+
+        // edited elsewhere (Mac, another app): same file, later modification date
+        try setModified("b.md", Date(timeIntervalSince1970: 3_000_000))
+        dm.refresh(url: root)
+
+        XCTAssertEqual(dm.notes.map { $0.url.lastPathComponent }, ["b.md", "a.md"])
+        XCTAssertEqual(dm.notes.first?.date, Date(timeIntervalSince1970: 3_000_000))
+    }
+
+    func testEqualDatesOrderByTitleThenName() throws {
+        let same = Date(timeIntervalSince1970: 1_500_000)
+        try write("z-file.md", "Apple", modified: same)
+        try write("b-file.md", "Banana", modified: same)
+        try write("a-file.md", "Banana", modified: same)
+        for _ in 0..<3 {
+            let dm = DataManager(url: root, sortPreferences: isolatedPreferences())
+            XCTAssertEqual(dm.notes.map { $0.url.lastPathComponent },
+                           ["z-file.md", "a-file.md", "b-file.md"])
+        }
+    }
+
+    func testFoldersAreSortedCaseInsensitively() throws {
+        for name in ["banana", "Apple", "cherry", "apricot"] {
+            try FileManager.default.createDirectory(at: root.appendingPathComponent(name), withIntermediateDirectories: true)
+        }
+        let dm = DataManager(url: root, sortPreferences: isolatedPreferences())
+        XCTAssertEqual(dm.folders.map(\.id), ["Apple", "apricot", "banana", "cherry"])
+    }
+
+    func testRootUsesItsOwnSortPreferenceAndSubfolderDefaults() throws {
+        let sub = root.appendingPathComponent("Sub")
+        try FileManager.default.createDirectory(at: sub, withIntermediateDirectories: true)
+        for dir in [root!, sub] {
+            try "Zebra".write(to: dir.appendingPathComponent("1.md"), atomically: true, encoding: .utf8)
+            try "Apple".write(to: dir.appendingPathComponent("2.md"), atomically: true, encoding: .utf8)
+            try FileManager.default.setAttributes([.modificationDate: Date(timeIntervalSince1970: 2_000_000)], ofItemAtPath: dir.appendingPathComponent("1.md").path)
+            try FileManager.default.setAttributes([.modificationDate: Date(timeIntervalSince1970: 1_000_000)], ofItemAtPath: dir.appendingPathComponent("2.md").path)
+        }
+        var prefs = isolatedPreferences()
+        prefs.set(.title, forFolder: root, root: root)
+
+        let dm = DataManager(url: root, sortPreferences: prefs)
+        XCTAssertEqual(dm.notes.map { $0.url.lastPathComponent }, ["2.md", "1.md"], "root sorted by title")
+        dm.refresh(url: sub)
+        XCTAssertEqual(dm.notes.map { $0.url.lastPathComponent }, ["1.md", "2.md"], "subfolder keeps the default, date edited")
+    }
+
     func testListingDoesNotCrashOnAssortedFiles() throws {
-        // Exercises the `as? Date ?? Date()` path that replaced a force-cast.
+        // Exercises the date fallback path.
         try write("normal.md")
         try write("weird name.md", "# Title\n\ncontent")
         XCTAssertNoThrow(DataManager(url: root))

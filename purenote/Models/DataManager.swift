@@ -27,6 +27,7 @@ class DataManager: ObservableObject {
     @Published var folders : [Folder]
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
+    private var sortPreferences = SortPreferences()
     
     let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
     
@@ -56,7 +57,7 @@ class DataManager: ObservableObject {
         do {
             
             
-            let newNote: Note = try Note(content: CoordinatedFile.read(url), date: (fm.attributesOfItem(atPath: url.path)[.creationDate] as? Date) ?? Date(), path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
+            let newNote: Note = try Note(content: CoordinatedFile.read(url), date: NoteDates.modified(of: url), path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
             
             
             notes.append(newNote)
@@ -68,7 +69,9 @@ class DataManager: ObservableObject {
         }
     }
     
-    init(url: URL) {
+    init(url: URL, sortPreferences: SortPreferences = SortPreferences()) {
+        self.sortPreferences = sortPreferences
+        self.rootUrl = url
         notes=[]
         folders=[]
 
@@ -111,7 +114,7 @@ class DataManager: ObservableObject {
                     
                     
                     do {
-                        try addNote(newNote: Note(content: url.relativeString, date: (fm.attributesOfItem(atPath: url.path)[.creationDate] as? Date) ?? Date(), path: url.lastPathComponent, isLocal: false, url: url, type: .Note))
+                        try addNote(newNote: Note(content: url.relativeString, date: NoteDates.modified(of: url), path: url.lastPathComponent, isLocal: false, url: url, type: .Note))
                     }
                     catch {
                         /* error handling here */
@@ -137,9 +140,8 @@ class DataManager: ObservableObject {
             }
         }
         
-        notes.sort(by: { lhs, rhs in
-            return lhs.date > rhs.date    
-        })
+        notes = NoteSort.sorted(notes, by: sortPreferences.sort(forFolder: currentUrl, root: rootUrl))
+        folders = FolderSort.sorted(folders)
     
     }
     

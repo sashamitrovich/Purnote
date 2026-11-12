@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A2A00010000000000000002 /* NoteDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00010000000000000001 /* NoteDates.swift */; };
+		5A2A00020000000000000002 /* NoteSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00020000000000000001 /* NoteSort.swift */; };
+		5A2A00030000000000000002 /* NoteGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00030000000000000001 /* NoteGrouping.swift */; };
+		5A2A00040000000000000002 /* NoteSortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00040000000000000001 /* NoteSortTests.swift */; };
+		5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00050000000000000001 /* NoteGroupingTests.swift */; };
 		00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */; };
@@ -143,6 +148,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A2A00010000000000000001 /* NoteDates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteDates.swift; sourceTree = "<group>"; };
+		5A2A00020000000000000001 /* NoteSort.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteSort.swift; sourceTree = "<group>"; };
+		5A2A00030000000000000001 /* NoteGrouping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteGrouping.swift; sourceTree = "<group>"; };
+		5A2A00040000000000000001 /* NoteSortTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteSortTests.swift; sourceTree = "<group>"; };
+		5A2A00050000000000000001 /* NoteGroupingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteGroupingTests.swift; sourceTree = "<group>"; };
 		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
 		05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolderTests.swift; sourceTree = "<group>"; };
 		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
@@ -355,6 +365,9 @@
 				4BA1000625359F7700A67FCF /* Storage.swift */,
 				4BA1000825359F7700A67FCF /* CoordinatedFile.swift */,
 				4BA1001025359F7700A67FCF /* NoteNaming.swift */,
+				5A2A00030000000000000001 /* NoteGrouping.swift */,
+				5A2A00020000000000000001 /* NoteSort.swift */,
+				5A2A00010000000000000001 /* NoteDates.swift */,
 				3220525325359F7700A67FCF /* NoteNew.swift */,
 				3220524E25359F7200A67FCF /* Models */,
 				3220524225359E1E00A67FCF /* purenoteApp.swift */,
@@ -477,6 +490,8 @@
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
+				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
+				5A2A00040000000000000001 /* NoteSortTests.swift */,
 			);
 			path = purenoteTests;
 			sourceTree = "<group>";
@@ -657,6 +672,8 @@
 				821A40E7570A46A0DE23B40B /* SmartFolderTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
+				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
+				5A2A00040000000000000002 /* NoteSortTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +716,9 @@
 				4BA1000725359F7700A67FCF /* Storage.swift in Sources */,
 				4BA1000925359F7700A67FCF /* CoordinatedFile.swift in Sources */,
 				4BA1001125359F7700A67FCF /* NoteNaming.swift in Sources */,
+				5A2A00030000000000000002 /* NoteGrouping.swift in Sources */,
+				5A2A00020000000000000002 /* NoteSort.swift in Sources */,
+				5A2A00010000000000000002 /* NoteDates.swift in Sources */,
 				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
 				4B85F816254836B100755CFC /* AlertTest.swift in Sources */,
 				4B3EAEE7253EE19100CBCB2B /* SearchIndex.swift in Sources */,
