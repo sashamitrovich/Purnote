@@ -19,12 +19,12 @@ enum SampleNotes {
         ("Welcome to Purnote.md", """
         # Welcome to Purnote 👋
 
-        Every note you write is a **plain Markdown file** in your own iCloud Drive — no database, no proprietary format, nothing to export. Ever.
+        Every note you write is a **plain Markdown file** in your own iCloud Drive (or in the Files app on this iPhone, if you use Purnote without iCloud) — no database, no proprietary format, nothing to export. Ever.
 
         ## Why it matters
-        - [x] Your notes are just files
-        - [x] Open them on your Mac, or in any editor
-        - [ ] Never think about lock-in again
+        - Your notes are just files
+        - Open them on your Mac, or in any editor
+        - Never think about lock-in again
 
         ## What you can do
         - Write in **Markdown**, or tap the bar above the keyboard and let it write the syntax for you
@@ -48,16 +48,19 @@ enum SampleNotes {
         ("Managing your notes.md", """
         # Managing your notes
 
-        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. That folder *is* the whole database — there is nothing hidden anywhere else.
+        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. If you use Purnote without iCloud, the notes are in the **Files** app under **On My iPhone → Purnote** instead. That folder *is* the whole database — there is nothing hidden anywhere else.
 
         ## Delete one note
-        Swipe left on it in the list, or open the **Files** app and delete the `.md` file.
+        Touch and hold it in the list, then choose Delete, or open the **Files** app and delete the `.md` file.
+
+        ## Delete the examples
+        The **Examples** folder holds sample notes. Touch and hold the folder, then choose Delete, and they are all gone in one go.
 
         ## Delete everything
         There is no "delete all" button, on purpose — your notes are just files. To wipe the slate clean:
 
         1. Open the **Files** app
-        2. Go to **iCloud Drive → purnote**
+        2. Go to **iCloud Drive → purnote** (or **On My iPhone → Purnote**)
         3. Delete the whole **purnote** folder
 
         Purnote will simply show whatever is left. Because the files are yours, nothing is locked in — and nothing is ever deleted behind your back.
@@ -303,4 +306,27 @@ enum SampleNotes {
         > Attention is the rarest and purest form of generosity.
         """),
     ]
+
+    /// The library a real first launch writes: only the two guide notes at the
+    /// root, every other sample note in a single "Examples" folder so the user
+    /// can remove them in one go. Built from `all`, which stays the full
+    /// library for the screenshots and the UI-test fixture.
+    static let firstRun: [(path: String, content: String)] = {
+        let rootNotes: Set<String> = ["Welcome to Purnote.md", "Managing your notes.md"]
+        var result: [(path: String, content: String)] = all.filter { rootNotes.contains($0.path) }
+        var used = Set<String>()
+        for note in all where !rootNotes.contains(note.path) {
+            let file = (note.path as NSString).lastPathComponent
+            let base = (file as NSString).deletingPathExtension
+            var candidate = "Examples/\(file)"
+            var n = 2
+            while used.contains(candidate) {
+                candidate = "Examples/\(base) \(n).md"
+                n += 1
+            }
+            used.insert(candidate)
+            result.append((path: candidate, content: note.content))
+        }
+        return result
+    }()
 }
