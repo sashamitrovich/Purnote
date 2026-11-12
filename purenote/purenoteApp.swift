@@ -63,11 +63,11 @@ struct PurenoteApp: App {
     /// iCloud on its own once it becomes available: switching underneath the
     /// user would leave whatever they wrote locally somewhere they cannot see.
     private var storage: Connection {
-        useLocalStorage ? Storage.local() : connection
+        (useLocalStorage || Storage.isUITestFixture) ? Storage.local() : connection
     }
 
     private var canStart: Bool {
-        useLocalStorage || connection.connectionAvailable
+        useLocalStorage || Storage.isUITestFixture || connection.connectionAvailable
     }
     
     /// Re-checks iCloud and decides whether to offer the move.
@@ -101,6 +101,8 @@ struct PurenoteApp: App {
     /// is never a blank screen. Only ever touches an empty library, and only
     /// once, so it can never overwrite or resurrect a user's own notes.
     private func seedSampleLibraryIfNeeded() {
+        // the UI test fixture library is already in place and must stay exactly that
+        guard !Storage.isUITestFixture else { return }
         guard !didSeedWelcome else { return }
         didSeedWelcome = true
 

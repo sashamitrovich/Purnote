@@ -18,10 +18,45 @@ enum Storage {
     /// The app's own Documents directory. Private to the app and not synced,
     /// but the notes are still ordinary .md files.
     static func local() -> Connection {
-        let root = fm.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let root = isUITestFixture
+            ? uiTestFixtureRoot
+            : fm.urls(for: .documentDirectory, in: .userDomainMask)[0]
         try? fm.createDirectory(at: root, withIntermediateDirectories: true)
         return Connection(rootUrl: root, connectionAvailable: true, isLocal: true)
     }
+
+    // MARK: - UI test fixture
+
+    /// Launch argument the UI tests pass. It makes the app use local storage in
+    /// a fresh, empty folder created for that launch, holding a fixed set of
+    /// notes, so the tests never depend on what an earlier run (or the
+    /// first-run sample library) left behind. A normal launch never sees it.
+    static let uiTestFixtureArgument = "-UITestFixture"
+
+    static var isUITestFixture: Bool {
+        ProcessInfo.processInfo.arguments.contains(uiTestFixtureArgument)
+    }
+
+    /// Notes the fixture library contains, taken from SampleNotes.all by path.
+    private static let uiTestFixturePaths = [
+        "Marathon training.md",
+        "Journal/Morning pages.md",
+        "Recipes/Sourdough.md",
+    ]
+
+    /// Created once per process: a new empty folder, filled with the fixture
+    /// notes before anything reads it.
+    private static let uiTestFixtureRoot: URL = {
+        let root = fm.temporaryDirectory
+            .appendingPathComponent("purnote-uitest-\(UUID().uuidString)", isDirectory: true)
+        try? fm.createDirectory(at: root, withIntermediateDirectories: true)
+        for note in SampleNotes.all where uiTestFixturePaths.contains(note.path) {
+            let url = root.appendingPathComponent(note.path)
+            try? fm.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try? note.content.write(to: url, atomically: true, encoding: .utf8)
+        }
+        return root
+    }()
 
     static var localIsEmpty: Bool {
         let contents = (try? fm.contentsOfDirectory(atPath: local().rootUrl.path)) ?? []

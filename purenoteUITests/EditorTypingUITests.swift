@@ -20,7 +20,10 @@ final class EditorTypingUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         // the simulator has no iCloud, so start past the first run gate
-        app.launchArguments += ["-useLocalStorage", "YES", "-shownSplashScreen", "YES"]
+        // -UITestFixture: a fresh library folder per launch holding a fixed set
+        // of notes ("Marathon training" plus the Journal and Recipes folders),
+        // independent of the first-run sample library and of earlier runs.
+        app.launchArguments += ["-UITestFixture", "-useLocalStorage", "YES", "-shownSplashScreen", "YES"]
         app.launch()
     }
 
@@ -233,20 +236,11 @@ final class EditorTypingUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 1.5)
     }
 
-    /// The seeded "Marathon training" note, scrolled into view. The list renders
-    /// lazily, and the tests before this one leave new notes above it, so the
-    /// sample can sit below the fold; scroll until it exists rather than
-    /// assuming it is on screen.
+    /// The fixture's "Marathon training" note. The library is fresh for every
+    /// launch, so it is always in the root list.
     private func sampleNote() -> XCUIElement {
         let predicate = NSPredicate(format: "label BEGINSWITH %@", "Marathon training")
-        let note = app.buttons.matching(predicate).firstMatch
-
-        var swipes = 0
-        while !note.exists && swipes < 15 {
-            app.swipeUp()
-            swipes += 1
-        }
-        return note
+        return app.buttons.matching(predicate).firstMatch
     }
 
     /// The reported bug: tapping a checkbox on the rendered page opened the
