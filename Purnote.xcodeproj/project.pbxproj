@@ -19,6 +19,8 @@
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		2B4C07553892920862AF887C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
 		2E3700EB7271C634F78374F5 /* CoordinatedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1000825359F7700A67FCF /* CoordinatedFile.swift */; };
+		A7C3E1D90B4F2A6815DE3C01 /* LinkHit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3E1D90B4F2A6815DE3C02 /* LinkHit.swift */; };
+		A7C3E1D90B4F2A6815DE3C03 /* LinkHitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3E1D90B4F2A6815DE3C04 /* LinkHitTests.swift */; };
 		313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285E2B5BE1504D6232B8253C /* TextHitTest.swift */; };
 		3220524325359E1E00A67FCF /* purenoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220524225359E1E00A67FCF /* purenoteApp.swift */; };
 		3220525725359F7700A67FCF /* NoteEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3220525525359F7700A67FCF /* NoteEdit.swift */; };
@@ -144,6 +146,8 @@
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
 		24F388666FE7CDDE74109E21 /* ShareContentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareContentTests.swift; sourceTree = "<group>"; };
+		A7C3E1D90B4F2A6815DE3C02 /* LinkHit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LinkHit.swift; sourceTree = "<group>"; };
+		A7C3E1D90B4F2A6815DE3C04 /* LinkHitTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LinkHitTests.swift; sourceTree = "<group>"; };
 		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		2FB2D6FC43D9EFD78E209395 /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 				D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */,
 				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
 				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
+				A7C3E1D90B4F2A6815DE3C02 /* LinkHit.swift */,
 				4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */,
 				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 				D75D0112925CF8C1A327519C /* TagScanner.swift */,
@@ -450,6 +455,7 @@
 				1FC685CA064D505099236339 /* ListContinuationTests.swift */,
 				37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */,
 				3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */,
+				A7C3E1D90B4F2A6815DE3C04 /* LinkHitTests.swift */,
 				24F388666FE7CDDE74109E21 /* ShareContentTests.swift */,
 				B80E8780988E51439F977A92 /* SharedInboxTests.swift */,
 				6E48318772647B2A78215AE6 /* TagScannerTests.swift */,
@@ -626,6 +632,7 @@
 				DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */,
 				24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */,
 				209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */,
+				A7C3E1D90B4F2A6815DE3C03 /* LinkHitTests.swift in Sources */,
 				C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */,
 				88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */,
 				A260593B5A73809E50FBFA07 /* TagScannerTests.swift in Sources */,
@@ -693,6 +700,7 @@
 				8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */,
 				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
 				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
+				A7C3E1D90B4F2A6815DE3C01 /* LinkHit.swift in Sources */,
 				D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */,
 				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
 				9BFB9D452F2EB31FE7CA9519 /* TagScanner.swift in Sources */,

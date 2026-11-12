@@ -29,6 +29,9 @@ struct NoteBody: View {
     /// character -- the place the editor should put the caret.
     var onTapBlock: (Int) -> Void = { _ in }
 
+    /// A tap on a link opens the link (see LinkHit) instead of the editor.
+    @Environment(\.openURL) private var openURL
+
     private var blocks: [MarkdownBlock] { MarkdownBlocks.split(source) }
 
     var body: some View {
@@ -56,9 +59,17 @@ struct NoteBody: View {
                                     // at the end of the note
                                     .highPriorityGesture(
                                         SpatialTapGesture().onEnded { tap in
-                                            onTapBlock(caretOffset(in: block,
-                                                                   width: geo.size.width,
-                                                                   at: tap.location))
+                                            let inside = offsetInBlock(block,
+                                                                       width: geo.size.width,
+                                                                       at: tap.location)
+                                            // a link opens as a link; the
+                                            // editor opens only if the tap
+                                            // was not on one
+                                            if let url = LinkHit.url(at: inside, in: block.text) {
+                                                openURL(url)
+                                            } else {
+                                                onTapBlock(block.offset + inside)
+                                            }
                                         }
                                     )
                             }
@@ -151,15 +162,14 @@ struct NoteBody: View {
     /// the text line up instead of the text floating a little higher.
     private static let markerVerticalPadding: CGFloat = 6
 
-    /// Where in the file a tap on `block` points.
-    private func caretOffset(in block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> Int {
+    /// Which Character of `block.text` a tap points at (Characters, not UTF-16).
+    private func offsetInBlock(_ block: MarkdownBlock, width: CGFloat, at point: CGPoint) -> Int {
         let font = Self.font(for: block)
-        let inside = TextHitTest.characterOffset(in: block.text,
-                                                 font: font,
-                                                 width: width,
-                                                 lineSpacing: font.pointSize * 0.2,
-                                                 at: point)
-        return block.offset + inside
+        return TextHitTest.characterOffset(in: block.text,
+                                           font: font,
+                                           width: width,
+                                           lineSpacing: font.pointSize * 0.2,
+                                           at: point)
     }
 
     /// The font a block is drawn in, so it can be laid out again the same way.
