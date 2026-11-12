@@ -118,7 +118,7 @@ struct PurenoteApp: App {
                 .filter { $0 != ".Trash" } ?? []
             guard existing.isEmpty else { return }
 
-            for note in SampleNotes.all {
+            for note in SampleNotes.firstRun {
                 let url = root.appendingPathComponent(note.path)
                 let folder = url.deletingLastPathComponent()
                 if folder.path != root.path, !fm.fileExists(atPath: folder.path) {
