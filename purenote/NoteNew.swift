@@ -14,6 +14,10 @@ struct NoteNew: View {
     @State var newNote: Note
     /// The editor's own copy of the text -- see the note on onChange below.
     @State private var draft = ""
+    /// The text the note had when it was last finished, which its file name
+    /// was derived from -- empty until the first finish, when the file still
+    /// has a generated name.
+    @State private var titleSource = ""
 
     var body: some View {
 
@@ -84,7 +88,13 @@ struct NoteNew: View {
         guard !newNote.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
-        data.finishEditing(newNote)
+        data.finishEditing(newNote, previousContent: titleSource)
+        // from here on the file name stands for what the note says now -- but
+        // only if the rename went through, or there was nothing to rename to
+        if NoteNaming.mayRename(stem: newNote.url.deletingPathExtension().lastPathComponent,
+                                previousContent: newNote.content) {
+            titleSource = newNote.content
+        }
         data.refresh(url: data.getCurrentUrl())
         index.indexall()
     }

@@ -10,6 +10,7 @@
 		00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */; };
 		0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */; };
+		54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A0000000000000000000A2 /* NoteRenameTests.swift */; };
 		1C8EE6D8D5B425968D96968C /* SmartFolderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */; };
 		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1DB6151361D5A7EEFB63A212 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB2D6FC43D9EFD78E209395 /* HelpView.swift */; };
@@ -214,6 +215,7 @@
 		B80E8780988E51439F977A92 /* SharedInboxTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInboxTests.swift; sourceTree = "<group>"; };
 		B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = purenoteTests.swift; sourceTree = "<group>"; };
 		C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteAssetsTests.swift; sourceTree = "<group>"; };
+		54A0000000000000000000A2 /* NoteRenameTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRenameTests.swift; sourceTree = "<group>"; };
 		C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditorTypingUITests.swift; sourceTree = "<group>"; };
 		D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SharedInbox.swift; sourceTree = "<group>"; };
 		D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolderList.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				6E48318772647B2A78215AE6 /* TagScannerTests.swift */,
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
+				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 			);
 			path = purenoteTests;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				A260593B5A73809E50FBFA07 /* TagScannerTests.swift in Sources */,
 				821A40E7570A46A0DE23B40B /* SmartFolderTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
+				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

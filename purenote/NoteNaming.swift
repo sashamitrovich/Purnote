@@ -67,15 +67,62 @@ enum NoteNaming {
         return stem.count >= 12 && stem.allSatisfy(\.isNumber)
     }
 
+    /// Whether the app may rename a note's file to match its first line.
+    ///
+    /// Only a name the app made itself is the app's to change: a generated
+    /// timestamp name, or the name it derived from the first line the note had
+    /// before this edit (optionally followed by the duplicate number " 2",
+    /// " 3", ... that availableURL adds). Anything else was chosen by the user,
+    /// on the phone or on the Mac, and is left alone even when the first line
+    /// changes.
+    ///
+    /// `previousContent` is the text the note had when editing opened. Autosave
+    /// overwrites the stored content while typing, so it has to be captured
+    /// before the first keystroke.
+    static func mayRename(stem: String, previousContent: String?) -> Bool {
+        if isGenerated(stem + ".md") { return true }
+        guard let previousContent, let derived = name(from: previousContent) else { return false }
+        return stem == derived || isNumberedDuplicate(stem, of: derived)
+    }
+
+    /// "Shopping 2", "Shopping 17" are duplicates of "Shopping"; "Shopping 1"
+    /// and "Shopping 2x" are not.
+    private static func isNumberedDuplicate(_ stem: String, of base: String) -> Bool {
+        guard stem.hasPrefix(base + " ") else { return false }
+        let tail = stem.dropFirst(base.count + 1)
+        guard !tail.isEmpty, tail.allSatisfy({ $0.isASCII && $0.isNumber }),
+              let n = Int(tail) else { return false }
+        return n >= 2
+    }
+
     /// The url to rename to, avoiding a name that is already taken.
-    static func availableURL(named name: String, in directory: URL) -> URL {
+    ///
+    /// `excluding` is the note's own file: it does not count as taken, so a
+    /// note called "Shopping 2" asking for the name "Shopping" gets its own
+    /// url back rather than drifting on to "Shopping 3".
+    static func availableURL(named name: String, in directory: URL, excluding: URL? = nil) -> URL {
         let fm = FileManager.default
+
+        func isFree(_ url: URL) -> Bool {
+            if !fm.fileExists(atPath: url.path) { return true }
+            guard let excluding else { return false }
+            if url.standardizedFileURL.path == excluding.standardizedFileURL.path { return true }
+            // a rename that only changes case names the same file on a
+            // case-insensitive volume
+            if url.path.caseInsensitiveCompare(excluding.path) == .orderedSame {
+                let a = try? url.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier
+                let b = try? excluding.resourceValues(forKeys: [.fileResourceIdentifierKey]).fileResourceIdentifier
+                if let a, let b { return a.isEqual(b) }
+            }
+            return false
+        }
+
         let candidate = directory.appendingPathComponent(name).appendingPathExtension("md")
-        if !fm.fileExists(atPath: candidate.path) { return candidate }
+        if isFree(candidate) { return candidate }
 
         for suffix in 2...500 {
             let next = directory.appendingPathComponent("\(name) \(suffix)").appendingPathExtension("md")
-            if !fm.fileExists(atPath: next.path) { return next }
+            if isFree(next) { return next }
         }
         return directory.appendingPathComponent("\(name) \(UUID().uuidString)")
             .appendingPathExtension("md")
