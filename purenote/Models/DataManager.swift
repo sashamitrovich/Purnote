@@ -28,6 +28,11 @@ class DataManager: ObservableObject {
     private var currentUrl = URL(fileURLWithPath: "")
     private var rootUrl = URL(fileURLWithPath: "")
     private var sortPreferences = SortPreferences()
+    /// nil for a DataManager that is not backed by a library (search results,
+    /// the demo library), which then has no pins.
+    private var pinService: PinService?
+    /// The pinned notes' paths, relative to the library root, as last loaded.
+    @Published private(set) var pins = PinList()
     
     let concurrentQueue = DispatchQueue(label: "purenotes.concurrent.queue", attributes: .concurrent)
     
@@ -69,9 +74,15 @@ class DataManager: ObservableObject {
         }
     }
     
-    init(url: URL, sortPreferences: SortPreferences = SortPreferences()) {
+    /// `libraryRoot` is the top of the whole library, which pins are relative
+    /// to. A DataManager for a subfolder is created with `url` set to that
+    /// folder, so it has to be told where the library starts; it defaults to
+    /// `url` for the root level.
+    init(url: URL, sortPreferences: SortPreferences = SortPreferences(), libraryRoot: URL? = nil) {
         self.sortPreferences = sortPreferences
         self.rootUrl = url
+        let root = libraryRoot ?? url
+        self.pinService = root.path == "/" ? nil : PinService(root: root)
         notes=[]
         folders=[]
 
@@ -142,7 +153,7 @@ class DataManager: ObservableObject {
         
         notes = NoteSort.sorted(notes, by: sortPreferences.sort(forFolder: currentUrl, root: rootUrl))
         folders = FolderSort.sorted(folders)
-    
+        reloadPins()
     }
     
     
@@ -199,6 +210,7 @@ class DataManager: ObservableObject {
 
         do {
             try CoordinatedFile.move(from: note.url, to: target)
+            pinsFollowMove(from: note.url, to: target)
             // keep the assets folder beside the note under the new name, and
             // point the references at it
             let rewritten = NoteAssets.renameAssetsFolder(from: note.url, to: target, content: note.content)
@@ -231,11 +243,70 @@ class DataManager: ObservableObject {
 
         do {
             try CoordinatedFile.move(from: note.url, to: destination)
+            pinsFollowMove(from: note.url, to: destination)
             try NoteAssets.moveAssetsFolder(forNoteAt: note.url, to: destination)
         } catch {
             print("Failed to move note to \(folderURL.lastPathComponent): \(error).")
         }
         refresh(url: getCurrentUrl())
+    }
+
+    // MARK: - Pins
+
+    private func pinPath(of note: Note) -> String? {
+        pinService.flatMap { PinPath.relative(of: note.url, in: $0.root) }
+    }
+
+    func isPinned(_ note: Note) -> Bool {
+        pinPath(of: note).map { pins.contains($0) } ?? false
+    }
+
+    func togglePin(_ note: Note) {
+        guard let pinService else { return }
+        pinService.toggle(note.url)
+        reloadPins()
+    }
+
+    /// Re-reads the pins from disk, dropping any whose note no longer exists.
+    func reloadPins() {
+        guard let pinService else { return }
+        let loaded = PinStore.load(from: pinService.root, droppingMissing: true)
+        if loaded != pins { pins = loaded }
+    }
+
+    /// The pinned notes that exist, in pin order, wherever in the library they
+    /// are (not just in the folder this DataManager is showing).
+    func pinnedNotes() -> [Note] {
+        guard let pinService else { return [] }
+        return PinStore.load(from: pinService.root).paths.compactMap { path in
+            let url = pinService.root.appendingPathComponent(path)
+            let placeholder = url.deletingLastPathComponent()
+                .appendingPathComponent(PinPath.placeholderName(for: url.lastPathComponent))
+            if fm.fileExists(atPath: url.path),
+               let content = try? CoordinatedFile.read(url) {
+                return Note(content: content, date: NoteDates.modified(of: url),
+                            path: url.lastPathComponent, isLocal: true, url: url, type: .Note)
+            }
+            if fm.fileExists(atPath: placeholder.path) {
+                // still in iCloud, shown the way the folder listing shows it
+                return Note(content: placeholder.relativeString, date: NoteDates.modified(of: placeholder),
+                            path: placeholder.lastPathComponent, isLocal: false, url: placeholder, type: .Note)
+            }
+            return nil
+        }
+    }
+
+    /// Call after a note or a folder has been renamed or moved, so its pins
+    /// follow it.
+    func pinsFollowMove(from old: URL, to new: URL) {
+        pinService?.moved(from: old, to: new)
+        reloadPins()
+    }
+
+    /// Call after a note or a folder has been deleted, so its pins go.
+    func pinsDrop(at url: URL) {
+        pinService?.removed(at: url)
+        reloadPins()
     }
 
     private func saveNote(note: inout Note) {

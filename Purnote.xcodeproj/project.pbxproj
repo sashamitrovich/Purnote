@@ -80,6 +80,10 @@
 		4BC82D50254AADE40044FA11 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC82D4F254AADE40044FA11 /* NoteView.swift */; };
 		4BC9D9F22538A43800966AD9 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9D9F12538A43800966AD9 /* FolderView.swift */; };
 		5E68FC4F5464201C7448FE38 /* SmartFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB30FC62950369CB24EA9A0 /* SmartFolder.swift */; };
+		B2B0000000000000000000F8 /* PinStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0000000000000000000F7 /* PinStoreTests.swift */; };
+		B2B0000000000000000000F6 /* PinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0000000000000000000F5 /* PinListTests.swift */; };
+		B2B0000000000000000000F4 /* PinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0000000000000000000F3 /* PinStore.swift */; };
+		B2B0000000000000000000F2 /* PinList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0000000000000000000F1 /* PinList.swift */; };
 		67137BAE79C94D6628E904B7 /* iCloudConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CAAEF2542D8F4002019A3 /* iCloudConnection.swift */; };
 		746901B2534EF8565A8705DE /* NoteNaming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA1001025359F7700A67FCF /* NoteNaming.swift */; };
 		7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */; };
@@ -240,6 +244,10 @@
 		6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
 		6E48318772647B2A78215AE6 /* TagScannerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagScannerTests.swift; sourceTree = "<group>"; };
 		8AB30FC62950369CB24EA9A0 /* SmartFolder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolder.swift; sourceTree = "<group>"; };
+		B2B0000000000000000000F7 /* PinStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinStoreTests.swift; sourceTree = "<group>"; };
+		B2B0000000000000000000F5 /* PinListTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinListTests.swift; sourceTree = "<group>"; };
+		B2B0000000000000000000F3 /* PinStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinStore.swift; sourceTree = "<group>"; };
+		B2B0000000000000000000F1 /* PinList.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinList.swift; sourceTree = "<group>"; };
 		8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
@@ -408,6 +416,8 @@
 				D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */,
 				D75D0112925CF8C1A327519C /* TagScanner.swift */,
 				8AB30FC62950369CB24EA9A0 /* SmartFolder.swift */,
+				B2B0000000000000000000F1 /* PinList.swift */,
+				B2B0000000000000000000F3 /* PinStore.swift */,
 				D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */,
 				E7333F24C5BCFECA141EEFE5 /* TagViews.swift */,
 				4D300693CB60D6D68976FE5E /* NoteAssets.swift */,
@@ -500,6 +510,8 @@
 				B80E8780988E51439F977A92 /* SharedInboxTests.swift */,
 				6E48318772647B2A78215AE6 /* TagScannerTests.swift */,
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
+				B2B0000000000000000000F5 /* PinListTests.swift */,
+				B2B0000000000000000000F7 /* PinStoreTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
@@ -685,6 +697,8 @@
 				88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */,
 				A260593B5A73809E50FBFA07 /* TagScannerTests.swift in Sources */,
 				821A40E7570A46A0DE23B40B /* SmartFolderTests.swift in Sources */,
+				B2B0000000000000000000F6 /* PinListTests.swift in Sources */,
+				B2B0000000000000000000F8 /* PinStoreTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
@@ -765,6 +779,8 @@
 				8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */,
 				9BFB9D452F2EB31FE7CA9519 /* TagScanner.swift in Sources */,
 				5E68FC4F5464201C7448FE38 /* SmartFolder.swift in Sources */,
+				B2B0000000000000000000F2 /* PinList.swift in Sources */,
+				B2B0000000000000000000F4 /* PinStore.swift in Sources */,
 				1C8EE6D8D5B425968D96968C /* SmartFolderList.swift in Sources */,
 				FC0538693742B37B210D805B /* TagViews.swift in Sources */,
 				8E8DE5F908BBC182008C05AF /* NoteAssets.swift in Sources */,
