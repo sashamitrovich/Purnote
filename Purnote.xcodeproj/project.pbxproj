@@ -15,7 +15,6 @@
 		1D836F0186C8C68011110AC5 /* purenoteShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6AC5D5781300FBA49CFCA437 /* purenoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1DB6151361D5A7EEFB63A212 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB2D6FC43D9EFD78E209395 /* AboutView.swift */; };
 		F6A0000000000000000000A2 /* NotesLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A0000000000000000000A1 /* NotesLocation.swift */; };
-		20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */; };
 		209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */; };
 		24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */; };
 		2B4C07553892920862AF887C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC5BB902ED1225384CA50B9 /* Foundation.framework */; };
@@ -116,6 +115,7 @@
 		BE8C933A7147BEB0B122EC73 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */; };
 		C0066609767D1FE1AF6BF5DF /* purenoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9BCDD48F5CD8AB4221387FE /* purenoteTests.swift */; };
 		C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F388666FE7CDDE74109E21 /* ShareContentTests.swift */; };
+		D6A1B2C3D4E5F60718293A4B /* ShareSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A1B2C3D4E5F60718293A4C /* ShareSheetTests.swift */; };
 		D4A1EED9FAA9192B1107F9C2 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */; };
 		D890FD36999927685BBED7D8 /* ShareContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20EA32CA9617343F7AB2E9 /* ShareContent.swift */; };
 		DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC685CA064D505099236339 /* ListContinuationTests.swift */; };
@@ -127,6 +127,10 @@
 		E3A100000000000000000008 /* TrashStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000007 /* TrashStoreTests.swift */; };
 		E3A10000000000000000000A /* TrashIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000009 /* TrashIndexTests.swift */; };
 		E3A100000000000000000012 /* StorageMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000011 /* StorageMoveTests.swift */; };
+		6A9000000000000000000002 /* PersistenceGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000001 /* PersistenceGapTests.swift */; };
+		6A9000000000000000000004 /* AssetsRewriteGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000003 /* AssetsRewriteGapTests.swift */; };
+		6A9000000000000000000006 /* ListContinuationOffsetGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */; };
+		6A9000000000000000000008 /* SavedToDiskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000007 /* SavedToDiskUITests.swift */; };
 		E3B100000000000000000002 /* UndoToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000001 /* UndoToast.swift */; };
 		E3B100000000000000000004 /* RecentlyDeletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000003 /* RecentlyDeletedModel.swift */; };
 		E3B100000000000000000006 /* RecentlyDeletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000005 /* RecentlyDeletedView.swift */; };
@@ -201,6 +205,7 @@
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
 		20BB185A94F8502B0E6E2AB1 /* MarkdownFormatterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatterTests.swift; sourceTree = "<group>"; };
 		24F388666FE7CDDE74109E21 /* ShareContentTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareContentTests.swift; sourceTree = "<group>"; };
+		D6A1B2C3D4E5F60718293A4C /* ShareSheetTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareSheetTests.swift; sourceTree = "<group>"; };
 		285E2B5BE1504D6232B8253C /* TextHitTest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TextHitTest.swift; sourceTree = "<group>"; };
 		28A3912D7254CA089DE22720 /* SampleNotes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotes.swift; sourceTree = "<group>"; };
 		2FB2D6FC43D9EFD78E209395 /* AboutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -271,7 +276,6 @@
 		6E48318772647B2A78215AE6 /* TagScannerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagScannerTests.swift; sourceTree = "<group>"; };
 		74D90757C211AC4E2B18B52B /* NoteKicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteKicker.swift; sourceTree = "<group>"; };
 		8AB30FC62950369CB24EA9A0 /* SmartFolder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolder.swift; sourceTree = "<group>"; };
-		8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
 		9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleNotesTests.swift; sourceTree = "<group>"; };
 		9F4E01D888A840D20F10DDB8 /* NoteScreenUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteScreenUITests.swift; sourceTree = "<group>"; };
 		A2AA3D9DDF8B9BA4AE4182E5 /* DataManagerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
@@ -311,6 +315,10 @@
 		E3A100000000000000000007 /* TrashStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashStoreTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000009 /* TrashIndexTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashIndexTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000011 /* StorageMoveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageMoveTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000001 /* PersistenceGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PersistenceGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000003 /* AssetsRewriteGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssetsRewriteGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationOffsetGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000007 /* SavedToDiskUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SavedToDiskUITests.swift; sourceTree = "<group>"; };
 		E3B100000000000000000001 /* UndoToast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UndoToast.swift; sourceTree = "<group>"; };
 		E3B100000000000000000003 /* RecentlyDeletedModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedModel.swift; sourceTree = "<group>"; };
 		E3B100000000000000000005 /* RecentlyDeletedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedView.swift; sourceTree = "<group>"; };
@@ -372,6 +380,7 @@
 				F6A0000000000000000000C1 /* AboutUITests.swift */,
 				E3C100000000000000000007 /* HomeListUITests.swift */,
 				9F4E01D888A840D20F10DDB8 /* NoteScreenUITests.swift */,
+				6A9000000000000000000007 /* SavedToDiskUITests.swift */,
 			);
 			path = purenoteUITests;
 			sourceTree = SOURCE_ROOT;
@@ -559,7 +568,6 @@
 				D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */,
 				4B6CB538D6D055508A193FC8 /* Info.plist */,
 				1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */,
-				8E378D7A09503085D00B8720 /* FolderPickerViewController.swift */,
 				1626C47E78431A3707516E4B /* Theme.swift */,
 			);
 			path = purenoteShare;
@@ -585,6 +593,7 @@
 				F6A0000000000000000000B1 /* NotesLocationTests.swift */,
 				A7C3E1D90B4F2A6815DE3C06 /* LinkRenderTests.swift */,
 				24F388666FE7CDDE74109E21 /* ShareContentTests.swift */,
+				D6A1B2C3D4E5F60718293A4C /* ShareSheetTests.swift */,
 				B80E8780988E51439F977A92 /* SharedInboxTests.swift */,
 				6E48318772647B2A78215AE6 /* TagScannerTests.swift */,
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
@@ -596,6 +605,9 @@
 				E3B100000000000000000009 /* RecentlyDeletedModelTests.swift */,
 				E3B100000000000000000007 /* UndoToastModelTests.swift */,
 				E3A100000000000000000011 /* StorageMoveTests.swift */,
+				6A9000000000000000000001 /* PersistenceGapTests.swift */,
+				6A9000000000000000000003 /* AssetsRewriteGapTests.swift */,
+				6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
@@ -784,6 +796,7 @@
 				F6A0000000000000000000B2 /* NotesLocationTests.swift in Sources */,
 				A7C3E1D90B4F2A6815DE3C05 /* LinkRenderTests.swift in Sources */,
 				C4C52CD1031A9F27AC4CB9D9 /* ShareContentTests.swift in Sources */,
+				D6A1B2C3D4E5F60718293A4B /* ShareSheetTests.swift in Sources */,
 				88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */,
 				A260593B5A73809E50FBFA07 /* TagScannerTests.swift in Sources */,
 				821A40E7570A46A0DE23B40B /* SmartFolderTests.swift in Sources */,
@@ -795,6 +808,9 @@
 				E3B10000000000000000000A /* RecentlyDeletedModelTests.swift in Sources */,
 				E3B100000000000000000008 /* UndoToastModelTests.swift in Sources */,
 				E3A100000000000000000012 /* StorageMoveTests.swift in Sources */,
+				6A9000000000000000000002 /* PersistenceGapTests.swift in Sources */,
+				6A9000000000000000000004 /* AssetsRewriteGapTests.swift in Sources */,
+				6A9000000000000000000006 /* ListContinuationOffsetGapTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
@@ -819,6 +835,7 @@
 				F6A0000000000000000000C2 /* AboutUITests.swift in Sources */,
 				E3C100000000000000000008 /* HomeListUITests.swift in Sources */,
 				2E0770BDB6CEA2EFB797E7F6 /* NoteScreenUITests.swift in Sources */,
+				6A9000000000000000000008 /* SavedToDiskUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,7 +934,6 @@
 				A8E625A624360CDA2C16CD0C /* Connection.swift in Sources */,
 				99BB3AC54741ED0C3C7221C6 /* ShareContent.swift in Sources */,
 				00E7CE3F22509E0CEC67E63A /* SharedInbox.swift in Sources */,
-				20931C34EE5CCED481ADB4AB /* FolderPickerViewController.swift in Sources */,
 				87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

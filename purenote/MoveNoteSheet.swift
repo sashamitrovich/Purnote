@@ -13,6 +13,8 @@ struct MoveNoteSheet: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
     @Environment(\.dismiss) private var dismiss
+    /// A move that did not happen, said here; the sheet stays up.
+    @State private var alert: TrashAlert?
 
     private var allFolders: [String] { SharedInbox.folders(in: index.rootUrl) }
 
@@ -26,6 +28,12 @@ struct MoveNoteSheet: View {
                 }
             }
         }
+        .alert(alert?.title ?? "",
+               isPresented: Binding(get: { alert != nil }, set: { if !$0 { alert = nil } })) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(alert?.message ?? "")
+        }
     }
 
     private func moveNote(to destination: String) {
@@ -34,16 +42,9 @@ struct MoveNoteSheet: View {
         let newURL = targetDirectory.appendingPathComponent(note.id)
         guard newURL != note.url else { dismiss(); return }
 
-        do {
-            try CoordinatedFile.move(from: note.url, to: newURL)
-            data.pinsFollowMove(from: note.url, to: newURL)
-            try NoteAssets.moveAssetsFolder(forNoteAt: note.url, to: newURL)
-        } catch {
-            print("Failed to move note: \(error).")
-        }
-        data.refresh(url: data.getCurrentUrl())
+        let failure = data.move(note: note, to: targetDirectory)
         index.indexall()
-        dismiss()
+        if let failure { alert = failure } else { dismiss() }
     }
 }
 

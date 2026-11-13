@@ -141,6 +141,27 @@ enum SharedInbox {
             .sorted()
     }
 
+    /// The whole catalog as one list for display: each folder is followed by
+    /// its own subfolders (depth first), so the list reads as a tree. Plain
+    /// string order would put "Work 2" between "Work" and "Work/Ideas".
+    /// Anything whose parent is missing from the catalog is appended at the end
+    /// rather than dropped.
+    static func treeOrder(_ folders: [String]) -> [String] {
+        var ordered: [String] = []
+        var seen = Set<String>()
+        func visit(_ path: String) {
+            for child in childFolders(of: path, in: folders) where seen.insert(child).inserted {
+                ordered.append(child)
+                visit(child)
+            }
+        }
+        visit("")
+        for orphan in folders.sorted() where seen.insert(orphan).inserted {
+            ordered.append(orphan)
+        }
+        return ordered
+    }
+
     private static func collectFolders(in directory: URL, relative: String, into result: inout [String]) {
         let fm = FileManager.default
         let children = (try? fm.contentsOfDirectory(at: directory,
