@@ -435,6 +435,11 @@ extension Theme {
         }
         .paragraph { configuration in
             configuration.label
+                // MarkdownUI's basic paragraph style has this line and this
+                // replacement dropped it. Without it a paragraph inside a list
+                // item could be given less height than its wrapped text needs
+                // and was cut to one line with an ellipsis.
+                .fixedSize(horizontal: false, vertical: true)
                 .relativeLineSpacing(.em(0.2))
                 .markdownMargin(top: .zero, bottom: .rem(0.6))
         }
