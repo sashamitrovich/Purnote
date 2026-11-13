@@ -88,6 +88,10 @@ enum Storage {
                 continue
             }
 
+            // the pin list is one shared file: fold it into the destination's
+            // rather than letting it become "pins (from iPhone).json"
+            if PinStore.mergeIncoming(item, into: taken) { moved += 1; continue }
+
             let target = freeName(for: item, in: destination)
             do {
                 try CoordinatedFile.move(from: item, to: target)

@@ -36,6 +36,7 @@ struct MoveNoteSheet: View {
 
         do {
             try CoordinatedFile.move(from: note.url, to: newURL)
+            data.pinsFollowMove(from: note.url, to: newURL)
             try NoteAssets.moveAssetsFolder(forNoteAt: note.url, to: newURL)
         } catch {
             print("Failed to move note: \(error).")

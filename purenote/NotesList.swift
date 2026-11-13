@@ -22,6 +22,7 @@ struct NotesList: View {
             // failed
             print("Failed to delete note: \(error).")
         }
+        data.pinsDrop(at: note.url)
         data.notes.removeAll { $0.id == note.id }
         index.indexall()
     }

@@ -39,7 +39,7 @@ struct FolderView: View {
 
     private func folderRow(_ folder: Folder) -> some View {
         NavigationLink {
-            FolderDestination(url: folder.url)
+            FolderDestination(url: folder.url, libraryRoot: index.rootUrl)
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: "folder")
@@ -142,6 +142,7 @@ struct FolderView: View {
             print("Failed to delete directory: \(error).")
             return
         }
+        data.pinsDrop(at: folder.url)
         data.folders.removeAll { $0.url == folder.url }
     }
 
@@ -176,6 +177,8 @@ struct FolderView: View {
             return
         }
 
+        data.pinsFollowMove(from: folder.url, to: newUrl)
+
         // the url has to move with the name, otherwise the row still points at
         // the old path and navigating into it finds nothing
         if let index = data.folders.firstIndex(where: { $0.url == folder.url }) {
@@ -196,8 +199,8 @@ struct FolderView: View {
 private struct FolderDestination: View {
     @StateObject private var data: DataManager
 
-    init(url: URL) {
-        _data = StateObject(wrappedValue: DataManager(url: url))
+    init(url: URL, libraryRoot: URL) {
+        _data = StateObject(wrappedValue: DataManager(url: url, libraryRoot: libraryRoot))
     }
 
     var body: some View {
