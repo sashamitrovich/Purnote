@@ -82,8 +82,9 @@ struct FolderView: View {
                       let note = data.notes.first(where: { $0.url.path == path }) else {
                     return false
                 }
-                data.move(note: note, to: folder.url)
+                let failure = data.move(note: note, to: folder.url)
                 index.indexall()
+                if failure == nil { UINotificationFeedbackGenerator().notificationOccurred(.success) }
                 return true
             } isTargeted: { targeted in
                 dropTargetedFolder = targeted ? folder.url

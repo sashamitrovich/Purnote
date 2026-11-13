@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 // elegant solutino for avoiding nesting views
 struct MenuView: View {
@@ -30,6 +31,7 @@ struct MenuView: View {
     /// Set when the user chose to carry on without iCloud; says where the notes are.
     @AppStorage("useLocalStorage") private var useLocalStorage = false
     @State private var showingRecentlyDeleted = false
+    @Environment(\.requestReview) private var requestReview
 
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
@@ -183,6 +185,12 @@ struct MenuView: View {
         .onAppear() {
             self.isViewDisplayed = true
             data.refresh(url: data.getCurrentUrl())
+            askForRatingIfDue()
+        }
+        // the editor for a new note covers this screen without removing it, so
+        // coming back from it is not an onAppear
+        .onChange(of: isCreatingNewNote) {
+            if !isCreatingNewNote { askForRatingIfDue() }
         }
         .onDisappear() {
             self.isViewDisplayed = false
@@ -216,6 +224,29 @@ struct MenuView: View {
         }
     }
     
+    // MARK: - Rating
+
+    /// Asks for an App Store rating when RatingPrompt says it is due. Only here,
+    /// on the home list, never while an editor or the search field is up. A
+    /// moment's wait lets the screen settle after the transition back to it;
+    /// everything is checked again after it, and the ask is only used up then.
+    private func askForRatingIfDue() {
+        guard !Storage.isUITestFixture,
+              RatingPrompt().shouldAsk(version: RatingPrompt.currentVersion) else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(1))
+            guard canAskForRating else { return }
+            if RatingPrompt().takeAsk(version: RatingPrompt.currentVersion) {
+                requestReview()
+            }
+        }
+    }
+
+    private var canAskForRating: Bool {
+        isViewDisplayed && !isCreatingNewNote && !showSearch && !searchFieldFocused
+            && !showingRecentlyDeleted && !showingAbout
+    }
+
     // MARK: - Bottom bar
 
     private var ribbon: Color { Color.pn.ribbon }

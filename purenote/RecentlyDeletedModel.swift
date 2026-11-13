@@ -111,15 +111,19 @@ final class RecentlyDeletedModel: ObservableObject {
         hasLoaded = true
     }
 
-    func restore(_ row: Row) async {
-        guard row.isRestorable else { return }
+    /// True when the item was put back.
+    @discardableResult
+    func restore(_ row: Row) async -> Bool {
+        guard row.isRestorable else { return false }
         generation += 1
         do {
             try backend.restore(row.item)
             rows.removeAll { $0.id == row.id }
+            return true
         } catch {
             alert = TrashAlert(title: "Could not restore", message: error.localizedDescription)
             await load()        // it may be gone, or half restored; show what is really there
+            return false
         }
     }
 

@@ -36,6 +36,10 @@ struct NoteEdit: View {
     /// tell a name the app made from one the user chose.
     @State private var titleSource: String
 
+    /// The text the note had when the editor opened, to tell whether Done
+    /// finishes a real edit (see RatingPrompt).
+    private let openedWith: String
+
     /// Undo / Redo state of the editor, shown in the top bar.
     @StateObject private var editor = EditorController()
 
@@ -43,6 +47,7 @@ struct NoteEdit: View {
         _note = State(initialValue: note)
         _draft = State(initialValue: note.content)
         _titleSource = State(initialValue: note.content)
+        openedWith = note.content
         self.initialCaret = initialCaret
     }
 
@@ -69,6 +74,7 @@ struct NoteEdit: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             finish()
+                            if draft != openedWith { RatingPrompt().recordSuccess() }
                             dismiss()
                         } label: {
                             Text("Done").bold()

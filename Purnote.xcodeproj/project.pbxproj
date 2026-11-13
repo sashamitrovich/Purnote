@@ -146,6 +146,8 @@
 		F9B461A05072892E4221FE9B /* NoteKicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D90757C211AC4E2B18B52B /* NoteKicker.swift */; };
 		FC0538693742B37B210D805B /* TagViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7333F24C5BCFECA141EEFE5 /* TagViews.swift */; };
 		FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */; };
+		A7B1000000000000000000A2 /* RatingPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B1000000000000000000A1 /* RatingPrompt.swift */; };
+		A7B1000000000000000000B2 /* RatingPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B1000000000000000000B1 /* RatingPromptTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -326,6 +328,8 @@
 		E3C100000000000000000007 /* HomeListUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeListUITests.swift; sourceTree = "<group>"; };
 		E7333F24C5BCFECA141EEFE5 /* TagViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagViews.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
+		A7B1000000000000000000A1 /* RatingPrompt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RatingPrompt.swift; sourceTree = "<group>"; };
+		A7B1000000000000000000B1 /* RatingPromptTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RatingPromptTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -504,6 +508,7 @@
 				F6A0000000000000000000A1 /* NotesLocation.swift */,
 				74D90757C211AC4E2B18B52B /* NoteKicker.swift */,
 				E2FB07DBB453AD0E4FDBA358 /* NoteDuplicate.swift */,
+				A7B1000000000000000000A1 /* RatingPrompt.swift */,
 			);
 			path = purenote;
 			sourceTree = "<group>";
@@ -609,6 +614,7 @@
 				A2C0DE0000000000000000E1 /* SearchIndexIncrementalTests.swift */,
 				5835F286943FDA8570546779 /* NoteKickerTests.swift */,
 				3CFFCE5E18837F3150508994 /* NoteDuplicateTests.swift */,
+				A7B1000000000000000000B1 /* RatingPromptTests.swift */,
 			);
 			path = purenoteTests;
 			sourceTree = "<group>";
@@ -809,6 +815,7 @@
 				A2C0DE0000000000000000E2 /* SearchIndexIncrementalTests.swift in Sources */,
 				436B69ED8C32F2D89C429E68 /* NoteKickerTests.swift in Sources */,
 				F69602A2F67CA23CC0BEFF8F /* NoteDuplicateTests.swift in Sources */,
+				A7B1000000000000000000B2 /* RatingPromptTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +915,7 @@
 				F6A0000000000000000000A2 /* NotesLocation.swift in Sources */,
 				F9B461A05072892E4221FE9B /* NoteKicker.swift in Sources */,
 				11AC4B58E2E925331B779D3F /* NoteDuplicate.swift in Sources */,
+				A7B1000000000000000000A2 /* RatingPrompt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

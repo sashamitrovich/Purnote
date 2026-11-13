@@ -97,6 +97,7 @@ struct NoteView: View {
 
         liveContent = text
         note.content = text
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let i = data.notes.firstIndex(where: { $0.id == note.id }) {
             data.notes[i].content = text
         }

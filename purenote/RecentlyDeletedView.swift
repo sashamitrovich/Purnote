@@ -27,6 +27,16 @@ struct RecentlyDeletedView: View {
             .foregroundColor(Color.pn.ink2)
     }
 
+    /// Puts a row back. A restored note counts toward the rating prompt, which
+    /// MenuView asks about once the user is back on the home list.
+    private func restore(_ row: RecentlyDeletedModel.Row) {
+        Task {
+            if await model.restore(row), row.item.kind == .note {
+                RatingPrompt().recordSuccess()
+            }
+        }
+    }
+
     var body: some View {
         Group {
             if !model.hasLoaded {
@@ -131,7 +141,7 @@ struct RecentlyDeletedView: View {
             Spacer(minLength: 8)
 
             if row.isRestorable {
-                Button("Restore") { Task { await model.restore(row) } }
+                Button("Restore") { restore(row) }
                     .buttonStyle(.borderless)
                     .font(.subheadline.weight(.semibold))
                     .foregroundColor(Color.pn.ribbonText)
@@ -145,7 +155,7 @@ struct RecentlyDeletedView: View {
         .accessibilityIdentifier("recentlyDeleted.row")
         .contextMenu {
             if row.isRestorable {
-                Button { Task { await model.restore(row) } } label: {
+                Button { restore(row) } label: {
                     Label("Restore", systemImage: "arrow.uturn.backward")
                 }
                 Button(role: .destructive) { rowPendingDelete = row } label: {

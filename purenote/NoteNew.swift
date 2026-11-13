@@ -54,6 +54,9 @@ struct NoteNew: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             finish()
+                            if !draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                RatingPrompt().recordSuccess()
+                            }
                             self.isEditing = false
                         } label: {
                             Text("Done").bold()
