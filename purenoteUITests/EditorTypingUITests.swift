@@ -354,6 +354,10 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertTrue(menuItem.waitForExistence(timeout: 5), "no New Folder menu item")
         menuItem.tap()
 
+        // the fixture library is on the device, so the alert must not say iCloud
+        XCTAssertTrue(app.staticTexts["A real folder, in On My iPhone › Purnote."].firstMatch
+            .waitForExistence(timeout: 5), "the New Folder alert does not name where the folder is created")
+
         let field = app.textFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 5), "no alert text field")
         field.typeText("Test Folder")
@@ -367,6 +371,9 @@ final class EditorTypingUITests: XCTestCase {
         let renameItem = app.buttons["Rename Folder"].firstMatch
         XCTAssertTrue(renameItem.waitForExistence(timeout: 5), "no Rename Folder menu item")
         renameItem.tap()
+
+        XCTAssertTrue(app.staticTexts["The folder is renamed in On My iPhone › Purnote."].firstMatch
+            .waitForExistence(timeout: 5), "the Rename alert does not name where the folder is")
 
         let renameField = app.textFields.firstMatch
         XCTAssertTrue(renameField.waitForExistence(timeout: 5), "no rename text field")

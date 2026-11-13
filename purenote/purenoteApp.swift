@@ -66,6 +66,22 @@ struct PurenoteApp: App {
         (useLocalStorage || Storage.isUITestFixture) ? Storage.local() : connection
     }
 
+    /// Test-only: `-UITestFixture -UITestSplash welcome|noicloud` shows one of the
+    /// first-run screens as if iCloud were available / not, so both can be looked
+    /// at on a simulator, which never has iCloud. Ignored without the fixture
+    /// argument, so a normal launch never sees it.
+    private var splashPreview: SplashPreview? {
+        guard Storage.isUITestFixture else { return nil }
+        let args = ProcessInfo.processInfo.arguments
+        guard let i = args.firstIndex(of: "-UITestSplash"), i + 1 < args.count else { return nil }
+        return SplashPreview(rawValue: args[i + 1])
+    }
+
+    private enum SplashPreview: String {
+        case welcome, noicloud
+        var iCloudAvailable: Bool { self == .welcome }
+    }
+
     private var canStart: Bool {
         useLocalStorage || Storage.isUITestFixture || connection.connectionAvailable
     }
@@ -162,9 +178,9 @@ struct PurenoteApp: App {
         
         WindowGroup {
             
-            if !shownSplashScreen || !canStart {
+            if splashPreview != nil || !shownSplashScreen || !canStart {
                 Splash(shownSplashScreen: $shownSplashScreen,
-                       iCloudAvailable: connection.connectionAvailable,
+                       iCloudAvailable: splashPreview?.iCloudAvailable ?? connection.connectionAvailable,
                        tryAgain: { Task { await refreshConnection() } },
                        continueWithoutICloud: {
                            useLocalStorage = true

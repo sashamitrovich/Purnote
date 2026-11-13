@@ -26,7 +26,9 @@ struct MenuView: View {
     // searchFieldFocused raises the keyboard with it.
     @State private var showSearch = false
     @FocusState private var searchFieldFocused: Bool
-    @State private var showingHelp = false
+    @State private var showingAbout = false
+    /// Set when the user chose to carry on without iCloud; says where the notes are.
+    @AppStorage("useLocalStorage") private var useLocalStorage = false
     @State private var showingRecentlyDeleted = false
 
     // because I want to avoid refreshing all the MenuViews that are instantiated
@@ -93,7 +95,7 @@ struct MenuView: View {
             Button("Create") { createFolder() }
                 .disabled(newFolderName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         } message: {
-            Text("It will appear in iCloud Drive › Purnote.")
+            Text(notesLocation.newFolderMessage)
         }
         .fullScreenCover(isPresented: $isCreatingNewNote) {
             NoteNew(isEditing: $isCreatingNewNote, newNote: Note(type: .Note))
@@ -168,11 +170,11 @@ struct MenuView: View {
                             .accessibilityIdentifier("menu.recentlyDeleted")
 
                             Button {
-                                showingHelp = true
+                                showingAbout = true
                             } label: {
-                                Label("Help", systemImage: "questionmark.circle")
+                                Label("About Purnote", systemImage: "info.circle")
                             }
-                            .accessibilityIdentifier("menu.help")
+                            .accessibilityIdentifier("menu.about")
                         }
                     }
                 } label: {
@@ -184,8 +186,8 @@ struct MenuView: View {
         }
         // the search field takes the bottom edge while it is open
         .toolbar(showSearch ? .hidden : .automatic, for: .bottomBar)
-        .sheet(isPresented: $showingHelp) {
-            HelpView()
+        .navigationDestination(isPresented: $showingAbout) {
+            AboutView(location: notesLocation)
         }
         .navigationDestination(isPresented: $showingRecentlyDeleted) {
             RecentlyDeletedView(root: index.rootUrl, data: data, index: index)
@@ -211,6 +213,11 @@ struct MenuView: View {
     /// root) the saved smart folders.
     private var hasFolders: Bool {
         !data.folders.isEmpty || (isRoot && !folders.folders.isEmpty)
+    }
+
+    /// Where the notes are: iCloud Drive, or this device when the user carried on without iCloud.
+    private var notesLocation: NotesLocation {
+        NotesLocation.current(useLocalStorage: useLocalStorage)
     }
 
     /// What the list shows. Pins are read only at the root, where they are shown.

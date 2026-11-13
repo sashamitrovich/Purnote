@@ -20,6 +20,7 @@ struct FolderView: View {
     @State private var draftName = ""
     @State private var folderPendingDelete: URL?
     @State private var dropTargetedFolder: URL?
+    @AppStorage("useLocalStorage") private var useLocalStorage = false
 
     @Environment(\.dynamicTypeSize) private var typeSize
 
@@ -45,7 +46,7 @@ struct FolderView: View {
             Button("Save") { commitRename() }
                 .disabled(draftName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         } message: {
-            Text("The folder is renamed in iCloud Drive › Purnote.")
+            Text(NotesLocation.current(useLocalStorage: useLocalStorage).renameMessage)
         }
     }
 

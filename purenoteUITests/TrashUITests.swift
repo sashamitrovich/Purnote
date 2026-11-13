@@ -68,7 +68,7 @@ final class TrashUITests: XCTestCase {
         more.tap()
         let recently = app.buttons["menu.recentlyDeleted"].firstMatch
         XCTAssertTrue(recently.waitForExistence(timeout: 5), "no Recently Deleted entry in the menu")
-        XCTAssertTrue(app.buttons["menu.help"].firstMatch.exists, "no Help entry in the menu")
+        XCTAssertTrue(app.buttons["menu.about"].firstMatch.exists, "no About entry in the menu")
         recently.tap()
 
         XCTAssertTrue(app.navigationBars["Recently Deleted"].waitForExistence(timeout: 10), "Recently Deleted did not open")
