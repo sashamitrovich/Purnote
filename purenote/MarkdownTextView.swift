@@ -16,6 +16,16 @@
 //  and the exact replacement, so there is nothing to infer, and the edit can be
 //  made as one change -- which is also what keeps undo to a single step.
 //
+//  Styling (hanging syntax, see HangingSyntax / HangingStyler) is attributes
+//  only. Two rules keep it from costing anything else:
+//    - the view's text is never assigned after creation. When the binding
+//      differs from the view (a formatting-bar edit), only the changed span is
+//      replaced through `replace(_:withText:)`, so the edit lands on the undo
+//      stack as one step. `view.text = ...` would wipe the attributes and the
+//      whole undo history.
+//    - attributes are re-applied in place after every change, with no undo
+//      registered and not at all while a composition (marked text) is open.
+//
 
 import SwiftUI
 import UIKit
@@ -35,16 +45,30 @@ struct MarkdownTextView: UIViewRepresentable {
     var initialCaret: Int?
 
     func makeUIView(context: Context) -> UITextView {
-        let view = UITextView()
-        view.delegate = context.coordinator
-        // A larger base than the 17pt system body -- this is a writing app and
-        // the default read small. Still routed through UIFontMetrics, so the
-        // reader's own Dynamic Type setting scales it from here.
-        view.font = UIFontMetrics(forTextStyle: .body)
-            .scaledFont(for: .systemFont(ofSize: Self.baseFontSize))
-        view.adjustsFontForContentSizeCategory = true
+        let view = Self.makeTextView(text: text, initialCaret: initialCaret,
+                                     coordinator: context.coordinator)
+        DispatchQueue.main.async {
+            view.becomeFirstResponder()
+            view.scrollRangeToVisible(view.selectedRange)
+        }
+        return view
+    }
+
+    /// Builds the configured, styled text view. Separate from `makeUIView` so a
+    /// test can build the same view without a SwiftUI context.
+    static func makeTextView(text: String, initialCaret: Int?, coordinator: Coordinator) -> HangingTextView {
+        let view = HangingTextView()
+        view.delegate = coordinator
+        // New York 17 (PurnoteType.body), the reading view's face and size, so
+        // nothing jumps when you tap into a note. Fonts on the runs come from
+        // HangingStyler and follow Dynamic Type through UIFontMetrics; the
+        // styler is asked again when the size changes (HangingTextView).
+        view.font = PurnoteType.body()
+        view.textColor = PurnoteColor.ink
+        view.adjustsFontForContentSizeCategory = false
         view.backgroundColor = .clear
-        view.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        // the left inset is the styler's to set (6 when hanging, 20 inline)
+        view.textContainerInset = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         view.textContainer.lineFragmentPadding = 0
         view.alwaysBounceVertical = true
         view.keyboardDismissMode = .interactive
@@ -59,16 +83,21 @@ struct MarkdownTextView: UIViewRepresentable {
         let caret = initialCaret ?? text.count
         view.selectedRange = NSRange(location: text.utf16Offset(ofCharacter: caret), length: 0)
 
-        DispatchQueue.main.async {
-            view.becomeFirstResponder()
-            view.scrollRangeToVisible(view.selectedRange)
+        view.onTraitChange = { [weak view, weak coordinator] in
+            guard let view, let coordinator else { return }
+            coordinator.styler.needsFullRestyle = true
+            coordinator.restyle(view, dirty: nil)
         }
+        coordinator.restyle(view, dirty: nil)
         return view
     }
 
     func updateUIView(_ view: UITextView, context: Context) {
+        // Only when the string really differs (a formatting-bar edit), and then
+        // as a replace of the changed span: assigning `view.text` would wipe the
+        // attributes and the undo stack.
         if view.text != text {
-            view.text = text
+            context.coordinator.syncFromBinding(view, to: text)
         }
 
         // The formatting bar asks for the caret explicitly. Apply it on its own
@@ -87,6 +116,48 @@ struct MarkdownTextView: UIViewRepresentable {
         view.scrollRangeToVisible(range)
     }
 
+    /// Makes the view's text equal `newText` by replacing only the span that
+    /// differs, through the text view's own edit path (one undo step). Returns
+    /// the span of the new text that was written, in UTF-16.
+    @discardableResult
+    static func replaceMinimally(in view: UITextView, with newText: String) -> NSRange {
+        let old = (view.text ?? "") as NSString
+        let new = newText as NSString
+
+        // longest common prefix and suffix, in UTF-16 units, backed off so a
+        // surrogate pair or a combined character is never split
+        var prefix = 0
+        let limit = min(old.length, new.length)
+        while prefix < limit && old.character(at: prefix) == new.character(at: prefix) { prefix += 1 }
+        if prefix < old.length { prefix = old.rangeOfComposedCharacterSequence(at: prefix).location }
+
+        var suffix = 0
+        while suffix < limit - prefix
+                && old.character(at: old.length - 1 - suffix) == new.character(at: new.length - 1 - suffix) {
+            suffix += 1
+        }
+        if suffix > 0 {
+            let boundary = old.length - suffix
+            if boundary > 0 && boundary < old.length {
+                let composed = old.rangeOfComposedCharacterSequence(at: boundary)
+                if composed.location < boundary { suffix -= boundary - composed.location }
+            }
+        }
+
+        let oldRange = NSRange(location: prefix, length: old.length - prefix - suffix)
+        let newRange = NSRange(location: prefix, length: new.length - prefix - suffix)
+        guard let from = view.position(from: view.beginningOfDocument, offset: oldRange.location),
+              let to = view.position(from: from, offset: oldRange.length),
+              let target = view.textRange(from: from, to: to) else {
+            // cannot happen for ranges taken from the view's own text; fall back
+            // rather than leave the view out of step with the binding
+            view.text = newText
+            return NSRange(location: 0, length: new.length)
+        }
+        view.replace(target, withText: new.substring(with: newRange))
+        return newRange
+    }
+
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     final class Coordinator: NSObject, UITextViewDelegate {
@@ -95,14 +166,41 @@ struct MarkdownTextView: UIViewRepresentable {
         /// reapply while a fresh ask (even to the same offset) still does.
         var appliedCaretRequest: CaretRequest?
 
+        let styler = HangingStyler()
+        /// The span the user's last keystroke touched, in the coordinates of
+        /// the text after the change, so only those paragraphs are restyled.
+        private var pendingDirty: NSRange?
+        /// True while we are writing the binding's text into the view, so the
+        /// view's own callbacks do not write it straight back.
+        private var applyingBinding = false
+
         init(_ parent: MarkdownTextView) { self.parent = parent }
+
+        /// Re-applies the attributes in place and keeps the typing attributes
+        /// in step, so text typed next is styled as text.
+        func restyle(_ view: UITextView, dirty: NSRange?) {
+            styler.apply(to: view, dirty: dirty)
+            styler.updateTypingAttributes(for: view)
+        }
+
+        /// A change that came from outside the view (the formatting bar).
+        func syncFromBinding(_ view: UITextView, to newText: String) {
+            applyingBinding = true
+            MarkdownTextView.replaceMinimally(in: view, with: newText)
+            applyingBinding = false
+            pendingDirty = nil
+            restyle(view, dirty: nil)
+        }
 
         /// The whole point of this view: decide what Return means before the
         /// newline exists.
         func textView(_ textView: UITextView,
                       shouldChangeTextIn range: NSRange,
                       replacementText replacement: String) -> Bool {
-            guard replacement == "\n", range.length == 0 else { return true }
+            guard replacement == "\n", range.length == 0 else {
+                pendingDirty = NSRange(location: range.location, length: replacement.utf16.count)
+                return true
+            }
 
             // Return can arrive while a word is still being composed -- the
             // grey inline prediction, or a multistage keyboard. That text is
@@ -117,7 +215,10 @@ struct MarkdownTextView: UIViewRepresentable {
 
             let source = textView.text ?? ""
             let caret = source.characterOffset(ofUTF16: textView.selectedRange.location)
-            guard let edit = ListContinuation.edit(source, at: caret) else { return true }
+            guard let edit = ListContinuation.edit(source, at: caret) else {
+                pendingDirty = NSRange(location: textView.selectedRange.location, length: 1)
+                return true
+            }
 
             // as one edit, through the text view itself, so it lands on the
             // undo stack as a single step the user can take back
@@ -140,14 +241,25 @@ struct MarkdownTextView: UIViewRepresentable {
 
             parent.text = textView.text
             parent.selection = edit.caret..<edit.caret
+            // the characters the replace inserted took the marker's attributes
+            // from the line above; restyle, then type as text
+            pendingDirty = nil
+            restyle(textView, dirty: nil)
             return false
         }
 
         func textViewDidChange(_ textView: UITextView) {
-            parent.text = textView.text
+            if !applyingBinding { parent.text = textView.text }
+            let dirty = pendingDirty
+            pendingDirty = nil
+            restyle(textView, dirty: dirty)
         }
 
         func textViewDidChangeSelection(_ textView: UITextView) {
+            // the caret moved: what is typed next takes the style of the
+            // paragraph it lands in, not of the marker it may sit beside
+            styler.updateTypingAttributes(for: textView)
+            guard !applyingBinding else { return }
             let source = textView.text ?? ""
             let lower = source.characterOffset(ofUTF16: textView.selectedRange.location)
             let upper = source.characterOffset(

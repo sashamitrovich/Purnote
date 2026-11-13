@@ -42,9 +42,9 @@ struct MarkdownEditor: View {
 
     var body: some View {
         MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest, initialCaret: initialCaret)
-            // TextEditor sat its text hard against the screen edges; the text
-            // view has its own inset, so this only adds the outer gutter.
-            .padding(.horizontal, 4)
+            // no outer padding: the text view's own insets carry the 20 pt
+            // gutter, and the hanging syntax counts from the screen edge (a
+            // hung marker may sit 8 pt from it)
             // A safe area inset rather than ToolbarItem(placement: .keyboard).
             // The keyboard placement only exists while the keyboard is up, and
             // it did not show at all on device; this is ours, so it is always

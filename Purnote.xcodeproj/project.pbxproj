@@ -80,6 +80,10 @@
 		87B1B8F5239FB343956A0B0D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1626C47E78431A3707516E4B /* Theme.swift */; };
 		88D8312141D60EBD6A0CB9BB /* SharedInboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80E8780988E51439F977A92 /* SharedInboxTests.swift */; };
 		88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08942BE74755E2F1B15845AE /* MarkdownTextView.swift */; };
+		5A5A10000000000000000008 /* HangingEditorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A10000000000000000007 /* HangingEditorUITests.swift */; };
+		5A5A10000000000000000006 /* HangingSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A10000000000000000005 /* HangingSyntaxTests.swift */; };
+		5A5A10000000000000000004 /* HangingStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A10000000000000000003 /* HangingStyler.swift */; };
+		5A5A10000000000000000002 /* HangingSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A10000000000000000001 /* HangingSyntax.swift */; };
 		8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */; };
 		8E7E47A03C90BEBC183271F9 /* SharedInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC6862D78485FE2AA7C925 /* SharedInbox.swift */; };
 		8E8DE5F908BBC182008C05AF /* NoteAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D300693CB60D6D68976FE5E /* NoteAssets.swift */; };
@@ -181,6 +185,10 @@
 		02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownFormatter.swift; sourceTree = "<group>"; };
 		05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SmartFolderTests.swift; sourceTree = "<group>"; };
 		08942BE74755E2F1B15845AE /* MarkdownTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		5A5A10000000000000000007 /* HangingEditorUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HangingEditorUITests.swift; sourceTree = "<group>"; };
+		5A5A10000000000000000005 /* HangingSyntaxTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HangingSyntaxTests.swift; sourceTree = "<group>"; };
+		5A5A10000000000000000003 /* HangingStyler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HangingStyler.swift; sourceTree = "<group>"; };
+		5A5A10000000000000000001 /* HangingSyntax.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HangingSyntax.swift; sourceTree = "<group>"; };
 		1626C47E78431A3707516E4B /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		1C9461AFDA0E0E2E6DEDDFEA /* purenoteShare.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = purenoteShare.entitlements; sourceTree = "<group>"; };
 		1FC685CA064D505099236339 /* ListContinuationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
@@ -350,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */,
+				5A5A10000000000000000007 /* HangingEditorUITests.swift */,
 				E3B10000000000000000000B /* TrashUITests.swift */,
 				E3C100000000000000000007 /* HomeListUITests.swift */,
 				9F4E01D888A840D20F10DDB8 /* NoteScreenUITests.swift */,
@@ -451,6 +460,8 @@
 				02177531573A0883FC3BD0A0 /* MarkdownFormatter.swift */,
 				6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */,
 				08942BE74755E2F1B15845AE /* MarkdownTextView.swift */,
+				5A5A10000000000000000003 /* HangingStyler.swift */,
+				5A5A10000000000000000001 /* HangingSyntax.swift */,
 				D3C8E64C5282B6F65089CB64 /* MarkdownBlocks.swift */,
 				4C0911EFA1CD837D20B64122 /* NoteBody.swift */,
 				285E2B5BE1504D6232B8253C /* TextHitTest.swift */,
@@ -554,6 +565,7 @@
 				9C1A544950E936041FF9C6B7 /* SampleNotesTests.swift */,
 				AF766C78D380C1E73C6C266B /* ModelTests.swift */,
 				1FC685CA064D505099236339 /* ListContinuationTests.swift */,
+				5A5A10000000000000000005 /* HangingSyntaxTests.swift */,
 				37BC10728F8B472AB28F4654 /* ICloudPlaceholderTests.swift */,
 				3B178D1D610BE58FAD66113E /* MarkdownBlocksTests.swift */,
 				A7C3E1D90B4F2A6815DE3C04 /* LinkHitTests.swift */,
@@ -750,6 +762,7 @@
 				09CB33C85349FECBB9FFE71C /* SampleNotesTests.swift in Sources */,
 				E19C52965E3DC49EEBF5EBCE /* ModelTests.swift in Sources */,
 				DA8207058627D868ED5A62AA /* ListContinuationTests.swift in Sources */,
+				5A5A10000000000000000006 /* HangingSyntaxTests.swift in Sources */,
 				24CBCA6CDD2243F696BA8FFD /* ICloudPlaceholderTests.swift in Sources */,
 				209FB2E3CFE878D4DE65CC32 /* MarkdownBlocksTests.swift in Sources */,
 				A7C3E1D90B4F2A6815DE3C03 /* LinkHitTests.swift in Sources */,
@@ -786,6 +799,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */,
+				5A5A10000000000000000008 /* HangingEditorUITests.swift in Sources */,
 				E3B10000000000000000000C /* TrashUITests.swift in Sources */,
 				E3C100000000000000000008 /* HomeListUITests.swift in Sources */,
 				2E0770BDB6CEA2EFB797E7F6 /* NoteScreenUITests.swift in Sources */,
@@ -844,6 +858,8 @@
 				7D3CC61946B43EBB730179CD /* MarkdownFormatter.swift in Sources */,
 				F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */,
 				88DCA51175EB11BE5C212F29 /* MarkdownTextView.swift in Sources */,
+				5A5A10000000000000000004 /* HangingStyler.swift in Sources */,
+				5A5A10000000000000000002 /* HangingSyntax.swift in Sources */,
 				8DF2D60F14242799EF41B1D4 /* MarkdownBlocks.swift in Sources */,
 				F132BCFD26FD4E25994DC2C7 /* NoteBody.swift in Sources */,
 				313AF318CA67DB2DC3318222 /* TextHitTest.swift in Sources */,
