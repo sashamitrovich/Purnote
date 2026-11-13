@@ -141,11 +141,6 @@ struct NoteView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     kickerLine
-                    let tags = TagScanner.tags(in: content)
-                    if !tags.isEmpty {
-                        TagChipsRow(tags: tags)
-                            .padding(.top, 10)
-                    }
                     NoteBody(source: sourceBinding,
                              noteDirectory: note.url.deletingLastPathComponent(),
                              onTapBlock: { offset in
@@ -155,6 +150,11 @@ struct NoteView: View {
                         .environmentObject(data)
                         .environmentObject(index)
                         .onChange(of: monitor.changeCount) { reloadFromDisk() }
+                    let tags = TagScanner.tags(in: content)
+                    if !tags.isEmpty {
+                        TagChipsRow(tags: tags)
+                            .padding(.top, 24)
+                    }
                 }
                 .frame(maxWidth: Self.maxColumnWidth, alignment: .topLeading)
                 .padding(.horizontal, 20.0)

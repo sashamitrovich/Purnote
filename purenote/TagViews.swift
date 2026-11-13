@@ -51,27 +51,40 @@ struct TagDestination: View {
     }
 }
 
-/// A horizontal row of tappable tag chips, shown at the top of a note.
+/// The note's tags, shown under the text: a caps label, a row of tappable
+/// chips and a line saying where tags come from.
 struct TagChipsRow: View {
     let tags: [String]
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(tags, id: \.self) { tag in
-                    NavigationLink(destination: TagDestination(tag: tag)) {
-                        Text("#\(tag)")
-                            .font(.footnote.weight(.medium))
-                            .foregroundColor(Color.pn.ribbonText)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(Color.pn.ribbon.opacity(0.12))
-                            .clipShape(Capsule())
+        VStack(alignment: .leading, spacing: 10) {
+            Rectangle().fill(Color.pn.rule).frame(height: 1)
+            Text("TAGS")
+                .font(PurnoteType.Twin.caps())
+                .tracking(PurnoteType.capsTracking)
+                .foregroundColor(Color.pn.ink2)
+                .padding(.top, 4)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(tags, id: \.self) { tag in
+                        NavigationLink(destination: TagDestination(tag: tag)) {
+                            HStack(spacing: 1) {
+                                Text("#").foregroundColor(Color.pn.ink3)
+                                Text(tag).foregroundColor(Color.pn.ink2)
+                            }
+                            .font(PurnoteType.Twin.ui())
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .overlay(Capsule().stroke(Color.pn.rule, lineWidth: 1))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("#\(tag)")
                     }
-                    .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal, 20)
+            Text("Tags are words in the note that start with #. Tap one to see every note that has it.")
+                .font(PurnoteType.Twin.meta())
+                .foregroundColor(Color.pn.ink2)
         }
     }
 }

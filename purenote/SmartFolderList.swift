@@ -133,42 +133,66 @@ struct SmartFolderEditor: View {
         _selectedTags = State(initialValue: Set(folder?.tags ?? []))
     }
 
+    private var matchingNotes: [Note] {
+        selectedTags.isEmpty ? [] : index.searchByTags(selectedTags.sorted())
+    }
+
+    private func kicker(_ text: String) -> some View {
+        Text(text.uppercased())
+            .font(PurnoteType.Twin.caps())
+            .tracking(PurnoteType.capsTracking)
+            .foregroundColor(Color.pn.ink2)
+    }
+
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    TextField("Name", text: $name)
-                        .listRowBackground(Color.pn.fill)
-                }
-                Section("Tags") {
-                    let tags = index.allTags()
-                    if tags.isEmpty {
-                        Text("Type a #tag in any note and it will appear here.")
-                            .foregroundColor(Color(UIColor.placeholderText))
-                            .listRowBackground(Color.pn.fill)
-                    } else {
-                        ForEach(tags, id: \.self) { tag in
-                            Button {
-                                if selectedTags.contains(tag) {
-                                    selectedTags.remove(tag)
-                                } else {
-                                    selectedTags.insert(tag)
-                                }
-                            } label: {
-                                HStack {
-                                    Text("#\(tag)")
-                                        .foregroundColor(Color.pn.ink)
-                                    Spacer()
-                                    if selectedTags.contains(tag) {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor(Color.pn.ribbon)
-                                    }
+            ScrollView {
+                VStack(alignment: .leading, spacing: 28) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        kicker("Name")
+                        TextField("Name", text: $name)
+                            .font(PurnoteType.Twin.masthead(long: true))
+                            .foregroundColor(Color.pn.ink)
+                            .tint(Color.pn.ribbon)
+                        Rectangle().fill(Color.pn.rule).frame(height: 1)
+                    }
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        kicker("Tags")
+                        let tags = index.allTags()
+                        if tags.isEmpty {
+                            Text("Type a #tag in any note and it will appear here.")
+                                .font(PurnoteType.Twin.ui())
+                                .foregroundColor(Color.pn.ink2)
+                        } else {
+                            SmartFolderFlow(spacing: 10) {
+                                ForEach(tags, id: \.self) { tag in
+                                    tagChip(tag)
                                 }
                             }
-                            .listRowBackground(Color.pn.fill)
                         }
                     }
+
+                    if !selectedTags.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            kicker(matchingNotes.count == 1 ? "1 note matches" : "\(matchingNotes.count) notes match")
+                            if !matchingNotes.isEmpty {
+                                Text(matchingNotes.prefix(8)
+                                        .map { $0.url.deletingPathExtension().lastPathComponent }
+                                        .joined(separator: " \u{00B7} "))
+                                    .font(PurnoteType.Twin.rowPreview())
+                                    .foregroundColor(Color.pn.ink2)
+                            }
+                        }
+                    }
+
+                    Text("A smart folder is a saved search. It is stored in .purnote/smartfolders.json; no note is changed.")
+                        .font(PurnoteType.Twin.meta())
+                        .foregroundColor(Color.pn.ink2)
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+                .padding(.bottom, 32)
             }
             .scrollContentBackground(.hidden)
             .background(Color.pn.page)
@@ -176,14 +200,53 @@ struct SmartFolderEditor: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark")
+                            .font(PurnoteType.Twin.ui(weight: .semibold))
+                            .foregroundColor(Color.pn.ink)
+                    }
+                    .accessibilityLabel("Cancel")
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
-                        .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    let canSave = !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    Button { save() } label: {
+                        Image(systemName: "checkmark")
+                            .font(PurnoteType.Twin.ui(weight: .semibold))
+                            .foregroundColor(canSave ? Color.white : Color.pn.ink3)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.circle)
+                    .tint(canSave ? Color.pn.ribbon : Color.pn.fill)
+                    .accessibilityLabel("Save")
+                    .disabled(!canSave)
                 }
             }
         }
+    }
+
+    private func tagChip(_ tag: String) -> some View {
+        let on = selectedTags.contains(tag)
+        return Button {
+            if on {
+                selectedTags.remove(tag)
+            } else {
+                selectedTags.insert(tag)
+            }
+        } label: {
+            HStack(spacing: 1) {
+                Text("#").foregroundColor(on ? Color.pn.page.opacity(0.7) : Color.pn.ink3)
+                Text(tag).foregroundColor(on ? Color.pn.page : Color.pn.ink2)
+            }
+            .font(PurnoteType.Twin.ui())
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(on ? Color.pn.ink : Color.clear)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(on ? Color.clear : Color.pn.rule, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("#\(tag)")
+        .accessibilityAddTraits(on ? .isSelected : [])
     }
 
     private func save() {
@@ -196,5 +259,40 @@ struct SmartFolderEditor: View {
             folders.add(name: trimmed, tags: tags)
         }
         dismiss()
+    }
+}
+
+/// Lays its children out left to right and wraps to a new line when a row is
+/// full. Used for the tag chips.
+struct SmartFolderFlow: Layout {
+    var spacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        arrange(width: proposal.width ?? .infinity, subviews: subviews).size
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let result = arrange(width: bounds.width, subviews: subviews)
+        for (i, origin) in result.origins.enumerated() {
+            subviews[i].place(at: CGPoint(x: bounds.minX + origin.x, y: bounds.minY + origin.y), proposal: .unspecified)
+        }
+    }
+
+    private func arrange(width: CGFloat, subviews: Subviews) -> (size: CGSize, origins: [CGPoint]) {
+        var origins: [CGPoint] = []
+        var x: CGFloat = 0, y: CGFloat = 0, rowHeight: CGFloat = 0, maxX: CGFloat = 0
+        for sub in subviews {
+            let size = sub.sizeThatFits(.unspecified)
+            if x > 0, x + size.width > width {
+                x = 0
+                y += rowHeight + spacing
+                rowHeight = 0
+            }
+            origins.append(CGPoint(x: x, y: y))
+            x += size.width + spacing
+            rowHeight = max(rowHeight, size.height)
+            maxX = max(maxX, x - spacing)
+        }
+        return (CGSize(width: maxX, height: y + rowHeight), origins)
     }
 }
