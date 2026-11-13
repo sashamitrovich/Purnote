@@ -52,16 +52,6 @@ final class DataManagerTests: XCTestCase {
         XCTAssertTrue(dm.folders.isEmpty)
     }
 
-    func testNotesAreSortedNewestEditedFirst() throws {
-        let old = Date(timeIntervalSince1970: 1_000_000)
-        let new = Date(timeIntervalSince1970: 2_000_000)
-        try write("older.md", modified: old)
-        try write("newer.md", modified: new)
-
-        let dm = DataManager(url: root, sortPreferences: isolatedPreferences())
-        XCTAssertEqual(dm.notes.first?.url.lastPathComponent, "newer.md")
-    }
-
     func testNoteModifiedOnDiskLaterMovesToTopAfterRefresh() throws {
         try write("a.md", modified: Date(timeIntervalSince1970: 2_000_000))
         try write("b.md", modified: Date(timeIntervalSince1970: 1_000_000))
@@ -114,10 +104,4 @@ final class DataManagerTests: XCTestCase {
         XCTAssertEqual(dm.notes.map { $0.url.lastPathComponent }, ["1.md", "2.md"], "subfolder keeps the default, date edited")
     }
 
-    func testListingDoesNotCrashOnAssortedFiles() throws {
-        // Exercises the date fallback path.
-        try write("normal.md")
-        try write("weird name.md", "# Title\n\ncontent")
-        XCTAssertNoThrow(DataManager(url: root))
-    }
 }

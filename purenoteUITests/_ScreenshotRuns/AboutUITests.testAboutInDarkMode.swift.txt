@@ -1,0 +1,11 @@
+// Moved out of AboutUITests.swift (not compiled into any test target).
+// Attaches a dark-mode screenshot of About.
+// It relies on the helpers of its original class; paste it back there to run it.
+
+    func testAboutInDarkMode() throws {
+        XCUIDevice.shared.appearance = .dark
+        addTeardownBlock { XCUIDevice.shared.appearance = .light }
+        openAbout()
+        XCTAssertTrue(element("about.version").waitForExistence(timeout: 10), "the About screen did not open")
+        attach("about-dark")
+    }

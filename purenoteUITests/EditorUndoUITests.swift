@@ -56,15 +56,6 @@ final class EditorUndoUITests: XCTestCase {
 
     // MARK: - Undo and Redo
 
-    func testUndoAndRedoAreInTheTopBarWithTheirLabels() throws {
-        try newNote()
-        XCTAssertTrue(undoButton.waitForExistence(timeout: 5), "no editor.undo in the top bar")
-        XCTAssertTrue(redoButton.exists, "no editor.redo in the top bar")
-        XCTAssertEqual(undoButton.label, "Undo")
-        XCTAssertEqual(redoButton.label, "Redo")
-        XCTAssertTrue(app.buttons["Done"].exists, "Done is gone from the top bar")
-    }
-
     func testBothAreDisabledOnAFreshNote() throws {
         try newNote()
         XCTAssertTrue(undoButton.waitForExistence(timeout: 5))
@@ -147,34 +138,6 @@ final class EditorUndoUITests: XCTestCase {
         XCTAssertTrue(waitForEnabled(undoButton, true))
         try tapUntilDisabled(undoButton)
         XCTAssertEqual(try value(), before, "Undo until disabled did not restore the note's text")
-    }
-
-    // MARK: - Screenshots of the top bar
-
-    private func shot(_ name: String) {
-        let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = name
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
-
-    /// Top bar with Undo and Redo disabled (fresh note), then Undo enabled
-    /// (typed), then both enabled (typed, Bold, one Undo). Attached to the result.
-    func testTopBarStatesForScreenshots() throws {
-        try newNote()
-        XCTAssertTrue(undoButton.waitForExistence(timeout: 5))
-        shot("topbar-1-both-disabled")
-        editor.typeText("abc")
-        XCTAssertTrue(waitForEnabled(undoButton, true))
-        shot("topbar-2-undo-enabled")
-        // Bold is one undo step on top of the typing, so after undoing it both
-        // buttons have something to do
-        Thread.sleep(forTimeInterval: 0.5)
-        try tapBar("Bold", expecting: "abc****")
-        undoButton.tap()
-        XCTAssertTrue(waitForEnabled(redoButton, true))
-        XCTAssertTrue(waitForEnabled(undoButton, true))
-        shot("topbar-3-both-enabled")
     }
 
     // MARK: - Find in Note

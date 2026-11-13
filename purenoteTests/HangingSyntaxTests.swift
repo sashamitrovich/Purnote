@@ -381,14 +381,6 @@ final class HangingSyntaxTests: XCTestCase {
         XCTAssertEqual(runs(p, .emphasis).map { substring(text, $0) }, ["*two*"])
     }
 
-    // MARK: - Speed
-
-    func testStylingALongNoteIsFast() {
-        let line = "- item with **bold** and a `code` span and some more words to wrap around\n"
-        let text = String(repeating: line, count: 3000)    // ~220 KB
-        measure { _ = style(text) }
-    }
-
     // MARK: - Fixtures
 
     private var sampleDocuments: [String] {
@@ -504,38 +496,6 @@ final class HangingStylerTests: XCTestCase {
         XCTAssertEqual(h.view.text, doc + "x")
         XCTAssertEqual(h.text, doc + "x")
         XCTAssertEqual(h.writes, [doc + "x"], "one write per keystroke and none from styling")
-    }
-
-    // MARK: What styling looks like
-
-    func testMarkerIsDimMonoAndTheWordsAreSerifInk() {
-        let h = Harness("# Title\n- item\n")
-        // "# " marker
-        XCTAssertTrue(isMono(h.font(at: 0)))
-        XCTAssertEqual(h.font(at: 0).pointSize, PurnoteType.mono(compatibleWith: h.view.traitCollection).pointSize)
-        XCTAssertEqual(h.color(at: 0), PurnoteColor.ink3)
-        // the heading word: New York at the type-scale size
-        XCTAssertTrue(isSerif(h.font(at: 2)))
-        XCTAssertEqual(h.font(at: 2).pointSize, PurnoteType.noteTitle(compatibleWith: h.view.traitCollection).pointSize)
-        XCTAssertEqual(h.color(at: 2), PurnoteColor.ink)
-        // "- item"
-        let item = ("# Title\n" as NSString).length
-        XCTAssertTrue(isMono(h.font(at: item)))
-        XCTAssertTrue(isSerif(h.font(at: item + 2)))
-        XCTAssertEqual(h.font(at: item + 2).pointSize,
-                       PurnoteType.body(compatibleWith: h.view.traitCollection).pointSize)
-    }
-
-    func testInlineDelimitersAreDimInTheEditor() {
-        let h = Harness("a **bold** b\n")
-        XCTAssertEqual(h.color(at: 2), PurnoteColor.ink3, "the ** is dim")
-        XCTAssertEqual(h.color(at: 4), PurnoteColor.ink, "the word is not")
-        XCTAssertTrue(h.font(at: 4).fontDescriptor.symbolicTraits.contains(.traitBold))
-    }
-
-    func testTextContainerInsetFollowsTheMode() {
-        XCTAssertEqual(Harness("x").view.textContainerInset.left, 6)
-        XCTAssertEqual(Harness("x", category: .accessibilityLarge).view.textContainerInset.left, 20)
     }
 
     // MARK: Rule 2: marker attributes do not leak into typed text

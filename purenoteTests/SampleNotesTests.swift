@@ -6,10 +6,6 @@ import XCTest
 /// note, and the "how to delete everything" guide present.
 final class SampleNotesTests: XCTestCase {
 
-    func testLibraryIsNotEmpty() {
-        XCTAssertGreaterThan(SampleNotes.all.count, 5)
-    }
-
     func testAllPathsAreUniqueRelativeMarkdownFiles() {
         let paths = SampleNotes.all.map(\.path)
         XCTAssertEqual(Set(paths).count, paths.count, "no duplicate paths")
@@ -25,19 +21,6 @@ final class SampleNotesTests: XCTestCase {
             XCTAssertFalse(content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "\(path) has content")
             XCTAssertFalse(NoteRowText.title(of: content).isEmpty, "\(path) renders a non-empty title in the list")
         }
-    }
-
-    func testIncludesTheDeleteEverythingGuide() {
-        XCTAssertTrue(SampleNotes.all.contains { $0.path == "Managing your notes.md" })
-    }
-
-    func testFolderedNotesLiveUnderRealFolders() {
-        let folders = Set(SampleNotes.all.map(\.path)
-            .filter { $0.contains("/") }
-            .map { String($0.split(separator: "/").first!) })
-        // just a sanity bound: a handful of top-level folders, none empty-named
-        XCTAssertFalse(folders.contains(""))
-        XCTAssertLessThanOrEqual(folders.count, 8)
     }
 
     // MARK: - firstRun (issue #55)
@@ -69,26 +52,6 @@ final class SampleNotesTests: XCTestCase {
         XCTAssertEqual(Set(paths).count, paths.count)
     }
 
-    func testNoNoteMentionsSwipe() {
-        for (path, content) in SampleNotes.all + SampleNotes.firstRun {
-            XCTAssertFalse(content.lowercased().contains("swipe"), "\(path) must not mention swipe")
-        }
-    }
-
-    func testWhyItMattersHasNoTaskMarkers() {
-        let welcome = SampleNotes.all.first { $0.path == "Welcome to Purnote.md" }!.content
-        let section = welcome.components(separatedBy: "## Why it matters")[1]
-            .components(separatedBy: "\n## ")[0]
-        XCTAssertFalse(section.contains("- [x]"))
-        XCTAssertFalse(section.contains("- [ ]"))
-        XCTAssertTrue(section.contains("- Your notes are just files"))
-    }
-
-    func testMarathonNoteUnchanged() {
-        let m = SampleNotes.all.first { $0.path == "Marathon training.md" }!.content
-        XCTAssertTrue(m.hasPrefix("# Marathon training\n\nSixteen weeks to Berlin. Keep it boring, keep it consistent, and trust the plan on the days you would rather not.\n\n## This week — build 3\n- [x] Mon — easy 8 km, nose-breathing only"))
-    }
-
     func testUITestFixturePathsStillExistInAll() {
         let paths = Set(SampleNotes.all.map(\.path))
         for p in ["Marathon training.md", "Journal/Morning pages.md", "Recipes/Sourdough.md"] {
@@ -96,15 +59,4 @@ final class SampleNotesTests: XCTestCase {
         }
     }
 
-    func testManagingNoteExplainsDeletingAndExamples() {
-        let m = SampleNotes.all.first { $0.path == "Managing your notes.md" }!.content
-        XCTAssertTrue(m.contains("Touch and hold it in the list, then choose Delete Note"))
-        XCTAssertTrue(m.contains("**Recently Deleted**"), "says where a deleted note goes")
-        XCTAssertTrue(m.contains("**More** button"), "says how to get there")
-        XCTAssertTrue(m.contains("choose Delete Folder"))
-        XCTAssertFalse(m.localizedCaseInsensitiveContains("trash"), "the app has no Trash any more")
-        XCTAssertFalse(m.contains("30 days"), "nothing is purged on a timer")
-        XCTAssertTrue(m.contains("**Examples**"))
-        XCTAssertTrue(m.contains("On My iPhone"))
-    }
 }

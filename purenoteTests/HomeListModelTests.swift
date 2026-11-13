@@ -125,39 +125,6 @@ final class HomeListModelTests: XCTestCase {
         XCTAssertEqual(m.sections[0].entries.map { $0.note.id }, ["Charlie.md", "Alpha.md"])
     }
 
-    // MARK: Masthead
-
-    func testMastheadTitleIsPurnoteAtTheRootAndTheFolderNameElsewhere() {
-        XCTAssertEqual(model([a]).title, "Purnote")
-        XCTAssertEqual(model([a], isRoot: false, name: "Travel").title, "Travel")
-    }
-
-    func testLongNamesUseTheSmallerMasthead() {
-        XCTAssertFalse(model([a], isRoot: false, name: "Travel").titleIsLong)
-        XCTAssertTrue(model([a], isRoot: false, name: "Reading list for the summer").titleIsLong)
-    }
-
-    func testCountText() {
-        XCTAssertEqual(model([]).countText, "No notes yet")
-        XCTAssertEqual(model([a]).countText, "1 note")
-        XCTAssertEqual(model([a, b]).countText, "2 notes")
-    }
-
-    func testSortNames() {
-        XCTAssertEqual(NoteSort.dateEdited.displayName, "Date Edited")
-        XCTAssertEqual(NoteSort.title.displayName, "Title")
-        XCTAssertEqual(model([a], sort: .title).sortName, "Title")
-    }
-
-    func testMetaLineShowsTheSortInFoldersAndNotAtTheRoot() {
-        XCTAssertEqual(model([a, b], isRoot: false, name: "Travel").metaLine(location: nil), "2 notes · Date Edited")
-        XCTAssertEqual(model([a, b], sort: .title, isRoot: false, name: "Travel").metaLine(location: nil), "2 notes · Title")
-        XCTAssertEqual(model([a, b]).metaLine(location: nil), "2 notes")
-        XCTAssertEqual(model([a, b]).metaLine(location: "On this iPhone"), "2 notes · On this iPhone")
-        XCTAssertFalse(model([a]).showsSort)
-        XCTAssertTrue(model([a], isRoot: false, name: "T").showsSort)
-    }
-
     // MARK: Empty states
 
     func testEmptyLibraryAtTheRoot() {

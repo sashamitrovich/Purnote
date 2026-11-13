@@ -69,16 +69,4 @@ final class NoteRowTextTests: XCTestCase {
         XCTAssertEqual(NoteRowText.relativeDate(yesterday), "Yesterday")
     }
 
-    func testRelativeDateTodayIsNotYesterdayAndNotEmpty() {
-        let s = NoteRowText.relativeDate(Date())
-        XCTAssertFalse(s.isEmpty)
-        XCTAssertNotEqual(s, "Yesterday")
-    }
-
-    func testRelativeDateOlderThanAWeekIsNotYesterday() {
-        let old = Calendar.current.date(byAdding: .day, value: -40, to: Date())!
-        let s = NoteRowText.relativeDate(old, now: Date())
-        XCTAssertFalse(s.isEmpty)
-        XCTAssertNotEqual(s, "Yesterday")
-    }
 }

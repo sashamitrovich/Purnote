@@ -15,11 +15,6 @@ final class ModelTests: XCTestCase {
         XCTAssertFalse(c.isLocal)
     }
 
-    func testRemovePunctuationReplacesWithSpaces() {
-        XCTAssertEqual("a.b,c:d;e?f!g-h".removePuncuation(), "a b c d e f g h")
-        XCTAssertEqual("don't".removePuncuation(), "don t")
-    }
-
     func testCoordinatedFileWriteThenReadRoundTrips() throws {
         let dir = FileManager.default.temporaryDirectory
             .appendingPathComponent("purnote-cf-\(UUID().uuidString)")

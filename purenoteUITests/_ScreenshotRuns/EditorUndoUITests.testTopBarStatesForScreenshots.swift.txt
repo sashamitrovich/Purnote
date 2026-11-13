@@ -1,0 +1,23 @@
+// Moved out of EditorUndoUITests.swift (not compiled into any test target).
+// Attaches three top-bar screenshots.
+// It relies on the helpers of its original class; paste it back there to run it.
+
+    /// Top bar with Undo and Redo disabled (fresh note), then Undo enabled
+    /// (typed), then both enabled (typed, Bold, one Undo). Attached to the result.
+    func testTopBarStatesForScreenshots() throws {
+        try newNote()
+        XCTAssertTrue(undoButton.waitForExistence(timeout: 5))
+        shot("topbar-1-both-disabled")
+        editor.typeText("abc")
+        XCTAssertTrue(waitForEnabled(undoButton, true))
+        shot("topbar-2-undo-enabled")
+        // Bold is one undo step on top of the typing, so after undoing it both
+        // buttons have something to do
+        Thread.sleep(forTimeInterval: 0.5)
+        try tapBar("Bold", expecting: "abc****")
+        undoButton.tap()
+        XCTAssertTrue(waitForEnabled(redoButton, true))
+        XCTAssertTrue(waitForEnabled(undoButton, true))
+        shot("topbar-3-both-enabled")
+    }
+

@@ -29,21 +29,6 @@ import UIKit
 
 enum LinkHit {
 
-    /// The URL to open when the Character at `offset` of `text` is inside a
-    /// link, or nil when it is not (or the link is not one we open).
-    ///
-    /// `offset` counts Characters. A value outside `0..<text.count` gives nil.
-    ///
-    /// This tests the Markdown *source*. NoteBody no longer uses it for taps
-    /// (source positions do not match what is drawn); it uses
-    /// `url(at:in:font:width:lineSpacing:)`, which works on the rendered text.
-    static func url(at offset: Int, in text: String) -> URL? {
-        guard offset >= 0, !text.isEmpty else { return nil }
-        let chars = Array(text)
-        guard offset < chars.count else { return nil }
-        return Scanner(chars: chars).links().first { $0.range.contains(offset) }?.url
-    }
-
     /// A link in the rendered text: the span of its visible label, in Characters.
     typealias RenderedLink = (range: Range<Int>, url: URL)
 
@@ -189,95 +174,17 @@ enum LinkHit {
         return url
     }
 
-    private struct Link {
-        let range: Range<Int>
-        let url: URL
-    }
-
     private struct Scanner {
         let chars: [Character]
         var n: Int { chars.count }
 
-        func links() -> [Link] {
-            var found: [Link] = []
-            var i = 0
-            while i < n {
-                if isLineStart(i), let end = fencedCodeEnd(from: i) {
-                    i = end
-                    continue
-                }
-                switch chars[i] {
-                case "\\":
-                    i += 2
-                case "`":
-                    i = codeSpanEnd(from: i)
-                case "!":
-                    // an image is not a link; skip the whole construct so the
-                    // alt text and the address are not looked at
-                    if i + 1 < n, chars[i + 1] == "[", let parsed = inlineLink(at: i + 1) {
-                        i = parsed.end
-                    } else {
-                        i += 1
-                    }
-                case "[":
-                    if let parsed = inlineLink(at: i) {
-                        if let url = LinkHit.openable(parsed.destination) {
-                            found.append(Link(range: i..<parsed.end, url: url))
-                        }
-                        i = parsed.end
-                    } else {
-                        i += 1
-                    }
-                case "<":
-                    if let parsed = autolink(at: i) {
-                        if let url = parsed.url {
-                            found.append(Link(range: i..<parsed.end, url: url))
-                        }
-                        i = parsed.end
-                    } else {
-                        i += 1
-                    }
-                case "h", "H":
-                    if let parsed = bareURL(at: i) {
-                        found.append(Link(range: i..<parsed.end, url: parsed.url))
-                        i = parsed.end
-                    } else {
-                        i += 1
-                    }
-                default:
-                    i += 1
-                }
-            }
-            return found
-        }
-
         // MARK: code
-
-        private func isLineStart(_ i: Int) -> Bool {
-            i == 0 || chars[i - 1].isNewline
-        }
 
         /// Run of `ch` starting at `i`.
         private func runLength(of ch: Character, at i: Int) -> Int {
             var j = i
             while j < n, chars[j] == ch { j += 1 }
             return j - i
-        }
-
-        /// If a fence opens on the line starting at `i`, the index just past
-        /// the line that closes it (or the end of the text if it never closes).
-        private func fencedCodeEnd(from i: Int) -> Int? {
-            guard let open = fence(onLineAt: i) else { return nil }
-            var j = endOfLine(from: i)
-            while j < n {
-                let lineStart = j
-                if let close = fence(onLineAt: lineStart),
-                   close.char == open.char, close.length >= open.length, close.isBare {
-                    return endOfLine(from: lineStart)
-                }
-                j = endOfLine(from: lineStart)
-            }
-            return n
         }
 
         /// Index of the start of the line after the one containing `i`.

@@ -1,0 +1,61 @@
+// Moved out of NoteScreenUITests.swift (not compiled into any test target).
+// Run with TEST_RUNNER_M4A_SHOTS=default|ax.
+// It relies on the helpers of its original class; paste it back there to run it.
+
+    /// Not a check: takes the pictures for the milestone report, light and
+    /// dark, of the Marathon note (headings, list, checklist, table, quote),
+    /// pinned and not, and of a note with a link. Skipped unless asked for.
+    func testShots() throws {
+        let mode = ProcessInfo.processInfo.environment["M4A_SHOTS"]
+        try XCTSkipIf(mode == nil, "screenshots only on request")
+        let size = mode ?? "default"
+        launch(accessibility: size == "ax")
+        XCUIDevice.shared.appearance = .light
+        // leave the simulator in light mode (`.unspecified` is not a value it accepts)
+        defer { XCUIDevice.shared.appearance = .light }
+
+        openMarathon()
+        Thread.sleep(forTimeInterval: 1)
+        attach("note-light-\(size)-top")
+        app.swipeUp(velocity: .fast)
+        app.swipeUp(velocity: .fast)
+        Thread.sleep(forTimeInterval: 0.5)
+        attach("note-light-\(size)-bottom-quote")
+        app.swipeDown(velocity: .fast)
+        app.swipeDown(velocity: .fast)
+        app.swipeDown(velocity: .fast)
+
+        openMoreMenu()
+        let pin = app.buttons["Pin"].firstMatch
+        if pin.waitForExistence(timeout: 5) { pin.tap() }
+        XCTAssertTrue(element("note.ribbon").waitForExistence(timeout: 5))
+        Thread.sleep(forTimeInterval: 0.5)
+        attach("note-light-\(size)-pinned")
+
+        XCUIDevice.shared.appearance = .dark
+        Thread.sleep(forTimeInterval: 1.5)
+        attach("note-dark-\(size)-pinned")
+        app.swipeUp(velocity: .fast)
+        app.swipeUp(velocity: .fast)
+        Thread.sleep(forTimeInterval: 0.5)
+        attach("note-dark-\(size)-bottom-quote")
+
+        openMoreMenu()
+        Thread.sleep(forTimeInterval: 0.8)
+        attach("note-dark-\(size)-menu")
+        XCUIDevice.shared.appearance = .light
+        Thread.sleep(forTimeInterval: 1.0)
+        attach("note-light-\(size)-menu")
+        // close the menu by tapping the page outside it
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.08, dy: 0.97)).tap()
+        Thread.sleep(forTimeInterval: 0.8)
+
+        // back and make the note with a link
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        try makeFieldNotes()
+        Thread.sleep(forTimeInterval: 1)
+        attach("link-note-light-\(size)")
+        XCUIDevice.shared.appearance = .dark
+        Thread.sleep(forTimeInterval: 1.5)
+        attach("link-note-dark-\(size)")
+    }

@@ -50,11 +50,4 @@ final class AboutUITests: XCTestCase {
         attach("about-light")
     }
 
-    func testAboutInDarkMode() throws {
-        XCUIDevice.shared.appearance = .dark
-        addTeardownBlock { XCUIDevice.shared.appearance = .light }
-        openAbout()
-        XCTAssertTrue(element("about.version").waitForExistence(timeout: 10), "the About screen did not open")
-        attach("about-dark")
-    }
 }

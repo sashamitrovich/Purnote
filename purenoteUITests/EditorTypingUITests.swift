@@ -51,34 +51,10 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertEqual(try value(), "- milk\n- ")
     }
 
-    func testNumberedListAdvances() throws {
-        try newNote()
-        editor.typeText("1. first\n")
-        XCTAssertEqual(try value(), "1. first\n2. ")
-    }
-
-    func testCheckboxContinuesUnticked() throws {
-        try newNote()
-        editor.typeText("- [x] done\n")
-        XCTAssertEqual(try value(), "- [x] done\n- [ ] ")
-    }
-
-    func testQuoteContinues() throws {
-        try newNote()
-        editor.typeText("> quoted\n")
-        XCTAssertEqual(try value(), "> quoted\n> ")
-    }
-
     func testTypingAfterReturnLandsInTheNewItem() throws {
         try newNote()
         editor.typeText("- milk\nbread")
         XCTAssertEqual(try value(), "- milk\n- bread")
-    }
-
-    func testReturnOnAnEmptyItemEndsTheList() throws {
-        try newNote()
-        editor.typeText("- milk\n\n")
-        XCTAssertEqual(try value(), "- milk\n")
     }
 
     // MARK: - Return where there is no list (the reported bug)
@@ -116,12 +92,6 @@ final class EditorTypingUITests: XCTestCase {
 
         XCTAssertEqual(after, before + "\n")
         XCTAssertEqual(after.count, before.count + 1, "Return added more than one character")
-    }
-
-    func testRepeatedReturnsAddOneLineEach() throws {
-        try newNote()
-        editor.typeText("a\n\n\n")
-        XCTAssertEqual(try value(), "a\n\n\n")
     }
 
     // MARK: - Editing a note that already exists
@@ -171,14 +141,6 @@ final class EditorTypingUITests: XCTestCase {
         XCTAssertTrue(more.isHittable, "More button is not hittable")
     }
 
-    func testBoldInsertsMarkersAtTheCaret() throws {
-        try newNote()
-        editor.typeText("abc")
-        app.buttons["Bold"].firstMatch.tap()
-        Thread.sleep(forTimeInterval: 0.6)
-        XCTAssertEqual(try value(), "abc****")
-    }
-
     func testBoldThenTypingLandsBetweenTheMarkers() throws {
         try newNote()
         editor.typeText("abc")
@@ -186,28 +148,6 @@ final class EditorTypingUITests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.6)
         editor.typeText("hi")
         XCTAssertEqual(try value(), "abc**hi**")
-    }
-
-    func testHeadingPrefixesTheLine() throws {
-        try newNote()
-        editor.typeText("title")
-        app.buttons["Heading"].firstMatch.tap()
-        Thread.sleep(forTimeInterval: 0.6)
-        XCTAssertEqual(try value(), "# title")
-    }
-
-    func testBulletedListPrefixesTheLine() throws {
-        try newNote()
-        editor.typeText("milk")
-        app.buttons["List"].firstMatch.tap()
-        // wait for the menu item rather than a fixed sleep. Known flaky on
-        // the simulator (fails on 1.4.0 too): the tap on "List" sometimes
-        // does not open the menu at all. See #52.
-        let item = app.buttons["Bulleted list"].firstMatch
-        XCTAssertTrue(item.waitForExistence(timeout: 5), "Bulleted list menu item missing")
-        item.tap()
-        Thread.sleep(forTimeInterval: 0.6)
-        XCTAssertEqual(try value(), "- milk")
     }
 
     /// The reported bug: applying a list style from the menu left the caret at

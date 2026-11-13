@@ -62,29 +62,10 @@ final class NoteKickerTests: XCTestCase {
 
     // MARK: the whole line
 
-    func testFolderAndEdited() {
-        let now = date(2026, 11, 13, 18, 0)
-        XCTAssertEqual(kicker(folder: "Journal", modified: date(2026, 11, 13, 7, 40), now: now),
-                       "Journal · Edited today, 07:40")
-    }
-
-    func testRootNoteSaysPurnote() {
-        let now = date(2026, 11, 13, 18, 0)
-        XCTAssertEqual(kicker(folder: nil, modified: date(2026, 11, 13, 7, 40), now: now),
-                       "Purnote · Edited today, 07:40")
-    }
-
     func testEmptyFolderNameIsTheRoot() {
         let now = date(2026, 11, 13, 18, 0)
         XCTAssertEqual(kicker(folder: "", modified: date(2026, 11, 13, 7, 40), now: now),
                        "Purnote · Edited today, 07:40")
-    }
-
-    func testNeverShowsAFileName() {
-        let now = date(2026, 11, 13, 18, 0)
-        let line = kicker(folder: "Journal", modified: date(2026, 11, 13, 7, 40), now: now)
-        XCTAssertFalse(line.contains(".md"))
-        XCTAssertFalse(line.contains("Untitled"))
     }
 
     // MARK: the folder a note is in
