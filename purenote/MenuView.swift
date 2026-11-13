@@ -34,6 +34,45 @@ struct MenuView: View {
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
 
+    /// The "..." menu: sort, and at the root Recently Deleted and About.
+    @ViewBuilder
+    private var moreMenu: some View {
+        Menu {
+            Section("Sort") {
+                ForEach(NoteSort.allCases, id: \.self) { sort in
+                    SortChoice(sort: sort, current: data.sort, idPrefix: "menu.sort") {
+                        data.setSort(sort)
+                    }
+                }
+            }
+
+            if isRoot {
+                Section {
+                    Button {
+                        showingRecentlyDeleted = true
+                    } label: {
+                        Label("Recently Deleted", systemImage: "trash")
+                    }
+                    .accessibilityIdentifier("menu.recentlyDeleted")
+
+                    Button {
+                        showingAbout = true
+                    } label: {
+                        Label("About Purnote", systemImage: "info.circle")
+                    }
+                    .accessibilityIdentifier("menu.about")
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .font(.title3)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel("More")
+        .accessibilityIdentifier("menu.more")
+    }
+
     @ViewBuilder
     var body: some View {
         let model = homeModel
@@ -44,6 +83,9 @@ struct MenuView: View {
                 // in place -- no second screen to push onto.
                 if searchText.isEmpty {
                     HomeMasthead(model: model, onSort: { data.setSort($0) })
+                        .overlay(alignment: .topTrailing) {
+                            if isRoot { moreMenu }
+                        }
 
                     if isRoot {
                         SmartFoldersView()
@@ -150,42 +192,17 @@ struct MenuView: View {
             ToolbarItem(placement: .principal) {
                 Text("").accessibilityHidden(true)
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Section("Sort") {
-                        ForEach(NoteSort.allCases, id: \.self) { sort in
-                            SortChoice(sort: sort, current: data.sort, idPrefix: "menu.sort") {
-                                data.setSort(sort)
-                            }
-                        }
-                    }
-
-                    if isRoot {
-                        Section {
-                            Button {
-                                showingRecentlyDeleted = true
-                            } label: {
-                                Label("Recently Deleted", systemImage: "trash")
-                            }
-                            .accessibilityIdentifier("menu.recentlyDeleted")
-
-                            Button {
-                                showingAbout = true
-                            } label: {
-                                Label("About Purnote", systemImage: "info.circle")
-                            }
-                            .accessibilityIdentifier("menu.about")
-                        }
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
+            // In a folder the "..." sits in the bar beside the back button. At the
+            // root the bar is hidden and the "..." rides on the masthead's row.
+            if !isRoot {
+                ToolbarItem(placement: .topBarTrailing) {
+                    moreMenu
                 }
-                .accessibilityLabel("More")
-                .accessibilityIdentifier("menu.more")
             }
         }
         // the search field takes the bottom edge while it is open
         .toolbar(showSearch ? .hidden : .automatic, for: .bottomBar)
+        .toolbar(isRoot ? .hidden : .automatic, for: .navigationBar)
         .navigationDestination(isPresented: $showingAbout) {
             AboutView(location: notesLocation)
         }
