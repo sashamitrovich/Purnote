@@ -10,21 +10,14 @@ import SwiftUI
 struct NotesList: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
+    @EnvironmentObject var toast: UndoToastModel
     @State private var noteToMove: Note?
     var isSearching = false
-    
+
+    /// Moves the note to Recently Deleted. The row goes and the Undo toast comes
+    /// up; if the move fails the row stays and an alert says why.
     func delete(_ note: Note) {
-        do {
-            try CoordinatedFile.trash(note.url)
-            try NoteAssets.trashAssetsFolder(forNoteAt: note.url)
-        }
-        catch {
-            // failed
-            print("Failed to delete note: \(error).")
-        }
-        data.pinsDrop(at: note.url)
-        data.notes.removeAll { $0.id == note.id }
-        index.indexall()
+        toast.delete(note: note, from: data, index: index)
     }
     
     var body: some View {

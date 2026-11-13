@@ -56,7 +56,10 @@ enum CoordinatedFile {
         }
     }
 
-    /// Moves to the Trash, so a delete stays recoverable.
+    /// Moves to the system Trash. Not used for notes and folders any more: the
+    /// app deletes through `TrashStore` (its own Recently Deleted folder), because
+    /// the system Trash does not exist on the simulator and the url an item went to
+    /// is thrown away here, so neither testing nor Undo is possible with this.
     static func trash(_ url: URL) throws {
         try coordinateWriting(at: url, options: .forDeleting) { actual in
             try FileManager.default.trashItem(at: actual, resultingItemURL: nil)

@@ -51,10 +51,10 @@ enum SampleNotes {
         Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. If you use Purnote without iCloud, the notes are in the **Files** app under **On My iPhone → Purnote** instead. That folder *is* the whole database — there is nothing hidden anywhere else.
 
         ## Delete one note
-        Touch and hold it in the list, then choose Delete, or open the **Files** app and delete the `.md` file.
+        Touch and hold it in the list, then choose Delete Note. It moves to **Recently Deleted**: tap the **More** button (the circle with three dots) at the top right of the home screen, then **Recently Deleted**. There you can restore a note, or delete it for good. You can also open the **Files** app and delete the `.md` file.
 
         ## Delete the examples
-        The **Examples** folder holds sample notes. Touch and hold the folder, then choose Delete, and they are all gone in one go.
+        The **Examples** folder holds sample notes. Touch and hold the folder, then choose Delete Folder, and the folder and its notes move to **Recently Deleted** in one go.
 
         ## Delete everything
         There is no "delete all" button, on purpose — your notes are just files. To wipe the slate clean:

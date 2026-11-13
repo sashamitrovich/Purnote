@@ -91,9 +91,16 @@ class DataManager: ObservableObject {
         refresh(url: self.currentUrl)
     }
     
-    init(searchNotes: [Note]) {
+    /// A DataManager holding search results. `libraryRoot` is where the library
+    /// starts (the search index's `rootUrl`): without it the results are not
+    /// backed by a library and cannot be deleted from; with it a note found by
+    /// search is trashed, un-pinned and restored the same way as one in a list.
+    init(searchNotes: [Note], libraryRoot: URL? = nil) {
         notes=searchNotes
-        folders = []            
+        folders = []
+        if let libraryRoot, libraryRoot.path != "/" {
+            pinService = PinService(root: libraryRoot)
+        }
     }
     
 

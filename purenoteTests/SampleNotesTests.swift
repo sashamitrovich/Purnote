@@ -98,7 +98,12 @@ final class SampleNotesTests: XCTestCase {
 
     func testManagingNoteExplainsDeletingAndExamples() {
         let m = SampleNotes.all.first { $0.path == "Managing your notes.md" }!.content
-        XCTAssertTrue(m.contains("Touch and hold it in the list, then choose Delete"))
+        XCTAssertTrue(m.contains("Touch and hold it in the list, then choose Delete Note"))
+        XCTAssertTrue(m.contains("**Recently Deleted**"), "says where a deleted note goes")
+        XCTAssertTrue(m.contains("**More** button"), "says how to get there")
+        XCTAssertTrue(m.contains("choose Delete Folder"))
+        XCTAssertFalse(m.localizedCaseInsensitiveContains("trash"), "the app has no Trash any more")
+        XCTAssertFalse(m.contains("30 days"), "nothing is purged on a timer")
         XCTAssertTrue(m.contains("**Examples**"))
         XCTAssertTrue(m.contains("On My iPhone"))
     }

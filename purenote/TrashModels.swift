@@ -125,10 +125,10 @@ extension TrashError: LocalizedError {
         case .outsideLibrary(let url): return "\(url.lastPathComponent) is not inside your notes."
         case .hiddenItem(let url): return "\(url.lastPathComponent) is not a note or a folder of notes."
         case .noLibrary: return "There are no notes to delete from here."
-        case .invalidItem: return "That is not an item in the trash."
-        case .itemGone: return "That item is no longer in the trash."
+        case .invalidItem: return "That is not an item in Recently Deleted."
+        case .itemGone: return "That item is no longer in Recently Deleted."
         case .stillDownloading: return "That item is still downloading from iCloud."
-        case .rollbackFailed(_, let error): return "The note was moved to the trash but its pictures could not be: \(error.localizedDescription)"
+        case .rollbackFailed(_, let error): return "The note was moved to Recently Deleted but its pictures could not be: \(error.localizedDescription)"
         case .partialRestore(_, let error): return "The restore stopped half way: \(error.localizedDescription)"
         }
     }

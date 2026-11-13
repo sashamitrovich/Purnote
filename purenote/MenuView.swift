@@ -13,6 +13,8 @@ struct MenuView: View {
     @EnvironmentObject var index: SearchIndex
     @EnvironmentObject var monitor: iCloudMonitor
     @EnvironmentObject var folders: SmartFolderList
+    /// One toast for this screen: the Undo after a delete, and the alert when a delete fails.
+    @StateObject private var toast = UndoToastModel()
     @State private var isShowing = false
     @State var showingNewFolder = false
     @State var isCreatingNewNote = false
@@ -25,6 +27,7 @@ struct MenuView: View {
     @State private var showSearch = false
     @FocusState private var searchFieldFocused: Bool
     @State private var showingHelp = false
+    @State private var showingRecentlyDeleted = false
 
     // because I want to avoid refreshing all the MenuViews that are instantiated
     @State var isViewDisplayed = false
@@ -85,7 +88,17 @@ struct MenuView: View {
         // rides above the keyboard as a safe-area inset, so everything a thumb
         // needs stays at the bottom of the screen.
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            bottomBar
+            VStack(spacing: 0) {
+                UndoToastHost(model: toast)
+                bottomBar
+            }
+        }
+        .environmentObject(toast)
+        .alert(toast.alert?.title ?? "",
+               isPresented: Binding(get: { toast.alert != nil }, set: { if !$0 { toast.alert = nil } })) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(toast.alert?.message ?? "")
         }
         .alert("New Folder", isPresented: $showingNewFolder) {
             TextField("Name", text: $newFolderName)
@@ -142,17 +155,38 @@ struct MenuView: View {
         .toolbar {
             if isRoot {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingHelp = true
+                    Menu {
+                        Button {
+                            showingRecentlyDeleted = true
+                        } label: {
+                            Label("Recently Deleted", systemImage: "trash")
+                        }
+                        .accessibilityIdentifier("menu.recentlyDeleted")
+
+                        Button {
+                            showingHelp = true
+                        } label: {
+                            Label("Help", systemImage: "questionmark.circle")
+                        }
+                        .accessibilityIdentifier("menu.help")
                     } label: {
-                        Image(systemName: "questionmark.circle")
+                        Image(systemName: "ellipsis.circle")
                     }
-                    .accessibilityLabel("Help")
+                    .accessibilityLabel("More")
+                    .accessibilityIdentifier("menu.more")
                 }
             }
         }
         .sheet(isPresented: $showingHelp) {
             HelpView()
+        }
+        .navigationDestination(isPresented: $showingRecentlyDeleted) {
+            RecentlyDeletedView(root: index.rootUrl, data: data, index: index)
+        }
+        // the screen behind it is where things are restored from, so a toast that
+        // offers to undo one of them would only be stale there
+        .onChange(of: showingRecentlyDeleted) {
+            if showingRecentlyDeleted { toast.dismiss() }
         }
     }
     
@@ -161,7 +195,7 @@ struct MenuView: View {
     private var ribbon: Color { Color.pn.ribbon }
 
     /// True when the current list is the storage root — the only place smart
-    /// folders and the Help button belong.
+    /// folders and the "..." menu (Recently Deleted, Help) belong.
     private var isRoot: Bool {
         data.getCurrentUrl().standardizedFileURL.path == index.rootUrl.standardizedFileURL.path
     }
@@ -303,9 +337,28 @@ struct MenuView: View {
                 ) {
                     ListRow(note: note, location: location(for: note), snippet: result.snippet?.text)
                 }
+                .contextMenu {
+                    Button(role: .destructive) {
+                        deleteFromSearch(note)
+                    } label: {
+                        Text("Delete Note")
+                        Image(systemName: "trash")
+                    }
+                }
                 .menuRowStyle()
             }
         }
+    }
+
+    /// Deletes a search result. A result may live in any folder, so it is the
+    /// library root (the index's `rootUrl`) that says where it is trashed from;
+    /// the folder on screen is used when it knows that root itself, so its own
+    /// list drops the row too.
+    private func deleteFromSearch(_ note: Note) {
+        let source = data.libraryRoot == nil
+            ? DataManager(searchNotes: [note], libraryRoot: index.rootUrl)
+            : data
+        toast.delete(note: note, from: source, index: index)
     }
 
     /// For a search result, the folder it lives in — but only when that is not

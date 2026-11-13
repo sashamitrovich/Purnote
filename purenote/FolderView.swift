@@ -11,6 +11,7 @@ import UIKit
 struct FolderView: View {
     @EnvironmentObject var data: DataManager
     @EnvironmentObject var index: SearchIndex
+    @EnvironmentObject var toast: UndoToastModel
 
     /// The folder currently being renamed, identified by URL rather than by
     /// index or name: the index shifts when the list changes underneath us,
@@ -107,13 +108,13 @@ struct FolderView: View {
             Button("Delete", role: .destructive) { deleteFolder(folder) }
             Button("Cancel", role: .cancel) { }
         } message: {
-            Text("The folder is moved to the Trash")
+            Text("The folder and the notes in it move to Recently Deleted.")
         }
     }
 
     /// The number of notes directly inside a folder. Counts the `.md` files,
     /// including any still showing as iCloud `.icloud` placeholders, and
-    /// ignores nested folders and the Trash.
+    /// ignores nested folders.
     private func noteCount(in folder: Folder) -> Int {
         let contents = (try? FileManager.default.contentsOfDirectory(
             at: folder.url,
@@ -133,17 +134,10 @@ struct FolderView: View {
         )
     }
 
+    /// Moves the folder and its notes to Recently Deleted. The row goes and the
+    /// Undo toast comes up; if the move fails the row stays and an alert says why.
     private func deleteFolder(_ folder: Folder) {
-        do {
-            try CoordinatedFile.trash(folder.url)
-        }
-        catch {
-            // failed
-            print("Failed to delete directory: \(error).")
-            return
-        }
-        data.pinsDrop(at: folder.url)
-        data.folders.removeAll { $0.url == folder.url }
+        toast.delete(folder: folder, from: data, index: index)
     }
 
     // MARK: - Renaming
@@ -213,6 +207,7 @@ struct FolderView_Previews: PreviewProvider {
         List {
             FolderView().environmentObject(DataManager.sampleDataManager())
                 .environmentObject(SearchIndex(rootUrl: URL(fileURLWithPath: "/notes")))
+                .environmentObject(UndoToastModel())
         }
     }
 }

@@ -73,7 +73,8 @@ enum NoteAssets {
         }
     }
 
-    /// Moves the note's assets folder to the Trash alongside the note.
+    /// Moves the note's assets folder to the system Trash. Not used by the app
+    /// any more: `TrashStore` moves the assets folder together with the note.
     static func trashAssetsFolder(forNoteAt noteURL: URL) throws {
         let folder = folderURL(for: noteURL)
         guard FileManager.default.fileExists(atPath: folder.path) else { return }

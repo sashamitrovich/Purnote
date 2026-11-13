@@ -122,6 +122,12 @@
 		E3A100000000000000000008 /* TrashStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000007 /* TrashStoreTests.swift */; };
 		E3A10000000000000000000A /* TrashIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000009 /* TrashIndexTests.swift */; };
 		E3A100000000000000000012 /* StorageMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000011 /* StorageMoveTests.swift */; };
+		E3B100000000000000000002 /* UndoToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000001 /* UndoToast.swift */; };
+		E3B100000000000000000004 /* RecentlyDeletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000003 /* RecentlyDeletedModel.swift */; };
+		E3B100000000000000000006 /* RecentlyDeletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000005 /* RecentlyDeletedView.swift */; };
+		E3B100000000000000000008 /* UndoToastModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000007 /* UndoToastModelTests.swift */; };
+		E3B10000000000000000000A /* RecentlyDeletedModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000009 /* RecentlyDeletedModelTests.swift */; };
+		E3B10000000000000000000C /* TrashUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B10000000000000000000B /* TrashUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,6 +284,12 @@
 		E3A100000000000000000007 /* TrashStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashStoreTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000009 /* TrashIndexTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashIndexTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000011 /* StorageMoveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageMoveTests.swift; sourceTree = "<group>"; };
+		E3B100000000000000000001 /* UndoToast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UndoToast.swift; sourceTree = "<group>"; };
+		E3B100000000000000000003 /* RecentlyDeletedModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedModel.swift; sourceTree = "<group>"; };
+		E3B100000000000000000005 /* RecentlyDeletedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedView.swift; sourceTree = "<group>"; };
+		E3B100000000000000000007 /* UndoToastModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UndoToastModelTests.swift; sourceTree = "<group>"; };
+		E3B100000000000000000009 /* RecentlyDeletedModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedModelTests.swift; sourceTree = "<group>"; };
+		E3B10000000000000000000B /* TrashUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */,
+				E3B10000000000000000000B /* TrashUITests.swift */,
 			);
 			path = purenoteUITests;
 			sourceTree = SOURCE_ROOT;
@@ -432,6 +445,9 @@
 				B2B0000000000000000000F3 /* PinStore.swift */,
 				E3A100000000000000000001 /* TrashModels.swift */,
 				E3A100000000000000000003 /* TrashStore.swift */,
+				E3B100000000000000000005 /* RecentlyDeletedView.swift */,
+				E3B100000000000000000003 /* RecentlyDeletedModel.swift */,
+				E3B100000000000000000001 /* UndoToast.swift */,
 				D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */,
 				E7333F24C5BCFECA141EEFE5 /* TagViews.swift */,
 				4D300693CB60D6D68976FE5E /* NoteAssets.swift */,
@@ -529,6 +545,8 @@
 				E3A100000000000000000005 /* TrashModelsTests.swift */,
 				E3A100000000000000000007 /* TrashStoreTests.swift */,
 				E3A100000000000000000009 /* TrashIndexTests.swift */,
+				E3B100000000000000000009 /* RecentlyDeletedModelTests.swift */,
+				E3B100000000000000000007 /* UndoToastModelTests.swift */,
 				E3A100000000000000000011 /* StorageMoveTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
@@ -720,6 +738,8 @@
 				E3A100000000000000000006 /* TrashModelsTests.swift in Sources */,
 				E3A100000000000000000008 /* TrashStoreTests.swift in Sources */,
 				E3A10000000000000000000A /* TrashIndexTests.swift in Sources */,
+				E3B10000000000000000000A /* RecentlyDeletedModelTests.swift in Sources */,
+				E3B100000000000000000008 /* UndoToastModelTests.swift in Sources */,
 				E3A100000000000000000012 /* StorageMoveTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
@@ -736,6 +756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */,
+				E3B10000000000000000000C /* TrashUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +826,9 @@
 				B2B0000000000000000000F4 /* PinStore.swift in Sources */,
 				E3A100000000000000000002 /* TrashModels.swift in Sources */,
 				E3A100000000000000000004 /* TrashStore.swift in Sources */,
+				E3B100000000000000000006 /* RecentlyDeletedView.swift in Sources */,
+				E3B100000000000000000004 /* RecentlyDeletedModel.swift in Sources */,
+				E3B100000000000000000002 /* UndoToast.swift in Sources */,
 				1C8EE6D8D5B425968D96968C /* SmartFolderList.swift in Sources */,
 				FC0538693742B37B210D805B /* TagViews.swift in Sources */,
 				8E8DE5F908BBC182008C05AF /* NoteAssets.swift in Sources */,
