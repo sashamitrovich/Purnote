@@ -147,7 +147,12 @@ struct MarkdownEditor: View {
     // it), and the editor already dismisses the keyboard by swiping down.
 
     private struct Action: Identifiable {
-        let id = UUID()
+        /// Stable across redraws. This was `UUID()`, which gave every action a
+        /// new identity each time the bar was rebuilt (any selection change
+        /// rebuilds it), so an open List menu was torn down and replaced while
+        /// the finger was still on it: it flashed open and shut again.
+        /// Names are unique among siblings, which is all ForEach needs.
+        var id: String { name }
         let name: String
         let icon: String
         let run: () -> Void
