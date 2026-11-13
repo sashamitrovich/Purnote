@@ -116,6 +116,12 @@
 		F83B463968B35B9F90319527 /* ListContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF11873B0B5E7A3A6F504B6 /* ListContinuation.swift */; };
 		FC0538693742B37B210D805B /* TagViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7333F24C5BCFECA141EEFE5 /* TagViews.swift */; };
 		FD1F1551AF7137902124DD7B /* EditorTypingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36E8C1D813B1E4C4E6B4989 /* EditorTypingUITests.swift */; };
+		E3A100000000000000000002 /* TrashModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000001 /* TrashModels.swift */; };
+		E3A100000000000000000004 /* TrashStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000003 /* TrashStore.swift */; };
+		E3A100000000000000000006 /* TrashModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000005 /* TrashModelsTests.swift */; };
+		E3A100000000000000000008 /* TrashStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000007 /* TrashStoreTests.swift */; };
+		E3A10000000000000000000A /* TrashIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000009 /* TrashIndexTests.swift */; };
+		E3A100000000000000000012 /* StorageMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000011 /* StorageMoveTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -266,6 +272,12 @@
 		D7609F7A3D9EE665601D2E60 /* ShareViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		E7333F24C5BCFECA141EEFE5 /* TagViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TagViews.swift; sourceTree = "<group>"; };
 		FB2CFC7690D7DC3D45ACABFB /* NoteRowText.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteRowText.swift; sourceTree = "<group>"; };
+		E3A100000000000000000001 /* TrashModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashModels.swift; sourceTree = "<group>"; };
+		E3A100000000000000000003 /* TrashStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashStore.swift; sourceTree = "<group>"; };
+		E3A100000000000000000005 /* TrashModelsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashModelsTests.swift; sourceTree = "<group>"; };
+		E3A100000000000000000007 /* TrashStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashStoreTests.swift; sourceTree = "<group>"; };
+		E3A100000000000000000009 /* TrashIndexTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashIndexTests.swift; sourceTree = "<group>"; };
+		E3A100000000000000000011 /* StorageMoveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageMoveTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,6 +430,8 @@
 				8AB30FC62950369CB24EA9A0 /* SmartFolder.swift */,
 				B2B0000000000000000000F1 /* PinList.swift */,
 				B2B0000000000000000000F3 /* PinStore.swift */,
+				E3A100000000000000000001 /* TrashModels.swift */,
+				E3A100000000000000000003 /* TrashStore.swift */,
 				D2BAEB0E91166BE3A9183DF9 /* SmartFolderList.swift */,
 				E7333F24C5BCFECA141EEFE5 /* TagViews.swift */,
 				4D300693CB60D6D68976FE5E /* NoteAssets.swift */,
@@ -512,6 +526,10 @@
 				05A713BE02DEECEFF509EA4A /* SmartFolderTests.swift */,
 				B2B0000000000000000000F5 /* PinListTests.swift */,
 				B2B0000000000000000000F7 /* PinStoreTests.swift */,
+				E3A100000000000000000005 /* TrashModelsTests.swift */,
+				E3A100000000000000000007 /* TrashStoreTests.swift */,
+				E3A100000000000000000009 /* TrashIndexTests.swift */,
+				E3A100000000000000000011 /* StorageMoveTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
@@ -699,6 +717,10 @@
 				821A40E7570A46A0DE23B40B /* SmartFolderTests.swift in Sources */,
 				B2B0000000000000000000F6 /* PinListTests.swift in Sources */,
 				B2B0000000000000000000F8 /* PinStoreTests.swift in Sources */,
+				E3A100000000000000000006 /* TrashModelsTests.swift in Sources */,
+				E3A100000000000000000008 /* TrashStoreTests.swift in Sources */,
+				E3A10000000000000000000A /* TrashIndexTests.swift in Sources */,
+				E3A100000000000000000012 /* StorageMoveTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
@@ -781,6 +803,8 @@
 				5E68FC4F5464201C7448FE38 /* SmartFolder.swift in Sources */,
 				B2B0000000000000000000F2 /* PinList.swift in Sources */,
 				B2B0000000000000000000F4 /* PinStore.swift in Sources */,
+				E3A100000000000000000002 /* TrashModels.swift in Sources */,
+				E3A100000000000000000004 /* TrashStore.swift in Sources */,
 				1C8EE6D8D5B425968D96968C /* SmartFolderList.swift in Sources */,
 				FC0538693742B37B210D805B /* TagViews.swift in Sources */,
 				8E8DE5F908BBC182008C05AF /* NoteAssets.swift in Sources */,

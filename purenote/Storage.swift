@@ -71,7 +71,9 @@ enum Storage {
     /// at, which is a quieter way to lose someone's writing than overwriting
     /// it. Folders of the same name are merged.
     @discardableResult
-    static func move(from source: URL, to destination: URL) -> (moved: Int, renamed: Int, failed: Int) {
+    static func move(from source: URL, to destination: URL,
+                     mover: (_ from: URL, _ to: URL) throws -> Void = { try CoordinatedFile.move(from: $0, to: $1) })
+        -> (moved: Int, renamed: Int, failed: Int) {
         var moved = 0, renamed = 0, failed = 0
 
         let items = (try? fm.contentsOfDirectory(at: source, includingPropertiesForKeys: nil)) ?? []
@@ -79,12 +81,15 @@ enum Storage {
             let taken = destination.appendingPathComponent(item.lastPathComponent)
 
             if item.hasDirectoryPath && fm.fileExists(atPath: taken.path) {
-                let result = move(from: item, to: taken)
+                let result = move(from: item, to: taken, mover: mover)
                 moved += result.moved
                 renamed += result.renamed
                 failed += result.failed
-                // the folder itself is gone once it has been emptied
-                try? fm.removeItem(at: item)
+                // The folder is gone once it has been emptied. Only then: if anything
+                // failed, or anything is left (a skipped .Trash, a file that could not
+                // move), the folder and what is in it stay. This is rmdir, never a
+                // recursive remove -- `.purnote` is on both sides and holds the trash.
+                if result.failed == 0 { try? CoordinatedFile.removeEmptyDirectory(item) }
                 continue
             }
 
@@ -94,7 +99,7 @@ enum Storage {
 
             let target = freeName(for: item, in: destination)
             do {
-                try CoordinatedFile.move(from: item, to: target)
+                try mover(item, target)
                 if target != taken { renamed += 1 } else { moved += 1 }
             }
             catch {

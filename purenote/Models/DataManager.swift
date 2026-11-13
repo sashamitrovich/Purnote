@@ -309,6 +309,87 @@ class DataManager: ObservableObject {
         reloadPins()
     }
 
+    // MARK: - Trash
+
+    /// The top of the library, or nil for a DataManager with no library behind
+    /// it (search results, the demo library).
+    var libraryRoot: URL? { pinService?.root }
+
+    /// Moves a note (and its attachments) into the library's trash, then drops
+    /// its pin, forgets it in the search index and takes it out of `notes`.
+    /// Throws without changing any of those when the move did not happen.
+    @discardableResult
+    func trash(note: Note, index: SearchIndex? = nil) throws -> TrashedItem {
+        guard let root = libraryRoot else { throw TrashError.noLibrary }
+        do {
+            let item = try TrashStore.moveToTrash(note.url, libraryRoot: root)
+            didTrash(url: note.url, isFolder: false, index: index)
+            return item
+        } catch TrashError.rollbackFailed(let item, let underlying) {
+            // the note did move (only its pictures stayed behind), so it is gone from here
+            didTrash(url: note.url, isFolder: false, index: index)
+            throw TrashError.rollbackFailed(item: item, underlying: underlying)
+        }
+    }
+
+    /// Several notes, each on its own: one that fails does not stop the rest.
+    func trash(notes toTrash: [Note], index: SearchIndex? = nil) -> TrashBatch {
+        var batch = TrashBatch()
+        for note in toTrash {
+            do { batch.items.append(try trash(note: note, index: index)) }
+            catch { batch.failures.append(TrashFailure(url: note.url, error: error)) }
+        }
+        return batch
+    }
+
+    /// Moves a whole folder into the trash; pins and index entries under it go.
+    @discardableResult
+    func trash(folder: Folder, index: SearchIndex? = nil) throws -> TrashedItem {
+        guard let root = libraryRoot else { throw TrashError.noLibrary }
+        let item = try TrashStore.moveToTrash(folder.url, libraryRoot: root)
+        didTrash(url: folder.url, isFolder: true, index: index)
+        return item
+    }
+
+    /// Puts a trashed item back (see TrashStore.restore), then makes the index
+    /// know the note, or every note under the folder, at the place it came back
+    /// to, and shows it if that is the folder on screen. Pins are not restored.
+    @discardableResult
+    func restore(_ item: TrashedItem, index: SearchIndex? = nil) throws -> URL {
+        guard let root = libraryRoot else { throw TrashError.noLibrary }
+        do {
+            let url = try TrashStore.restore(item, libraryRoot: root)
+            didRestore(at: url, index: index)
+            return url
+        } catch TrashError.partialRestore(let restored, let underlying) {
+            if let restored { didRestore(at: restored, index: index) }
+            throw TrashError.partialRestore(restored: restored, underlying: underlying)
+        }
+    }
+
+    private func didTrash(url: URL, isFolder: Bool, index: SearchIndex?) {
+        pinsDrop(at: url)
+        if isFolder {
+            index?.remove(folder: url.path)
+            folders.removeAll { $0.url == url }
+        } else {
+            index?.remove(path: url.path)
+            notes.removeAll { $0.url == url }
+        }
+    }
+
+    private func didRestore(at url: URL, index: SearchIndex?) {
+        var isDirectory: ObjCBool = false
+        guard fm.fileExists(atPath: url.path, isDirectory: &isDirectory) else { return }
+        if isDirectory.boolValue { index?.reindex(folder: url.path) } else { index?.update(path: url.path) }
+        // Anywhere under the folder on screen: the item may be in it, or may have brought back
+        // a folder (a recreated parent) that is a new row in it.
+        let current = TrashPath.normalized(currentUrl)
+        if TrashPath.normalized(url).hasPrefix(current == "/" ? "/" : current + "/") {
+            refresh(url: currentUrl)
+        }
+    }
+
     private func saveNote(note: inout Note) {
         
         let documentURL = currentUrl.appendingPathComponent(String(note.id))

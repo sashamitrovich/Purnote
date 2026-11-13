@@ -63,6 +63,26 @@ enum CoordinatedFile {
         }
     }
 
+    /// Deletes one file or folder, with everything in it, through the
+    /// coordinator. Not the system Trash: callers use this only on things they
+    /// are meant to delete for good (the trash's own contents).
+    static func remove(_ url: URL) throws {
+        try coordinateWriting(at: url, options: .forDeleting) { actual in
+            try FileManager.default.removeItem(at: actual)
+        }
+    }
+
+    /// Removes a folder only if it is empty. This is rmdir, which the system
+    /// refuses on a folder with anything in it, so unlike `remove` it can never
+    /// delete content: it is how the trash tidies up an item folder.
+    static func removeEmptyDirectory(_ url: URL) throws {
+        try coordinateWriting(at: url, options: .forDeleting) { actual in
+            if rmdir(actual.path) != 0 {
+                throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
+            }
+        }
+    }
+
     /// Both ends are coordinated: a rename or a move between folders touches
     /// two places, and the daemon may be interested in either.
     static func move(from source: URL, to destination: URL) throws {

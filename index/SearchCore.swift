@@ -189,6 +189,15 @@ struct SearchData: Equatable {
         detach(path)
     }
 
+    /// Removes every note under a folder (whole path components: "/r/Travel"
+    /// does not take in "/r/Travelogue"), terms and tags included.
+    mutating func removeAll(under folder: String) {
+        var base = folder
+        while base.count > 1 && base.hasSuffix("/") { base.removeLast() }
+        let prefix = base == "/" ? "/" : base + "/"
+        for path in entries.keys.filter({ $0.hasPrefix(prefix) }) { detach(path) }
+    }
+
     /// Moves a note, or a folder with every note under it, to a new path
     /// without reading anything.
     mutating func rename(from old: String, to new: String) {
@@ -308,6 +317,16 @@ enum SearchIndexer {
         guard let file = parts.last else { return false }
         return parts.dropLast().allSatisfy { shouldDescend(intoDirectoryNamed: $0) }
             && isIndexableFile(named: file)
+    }
+}
+
+extension SearchIndexer {
+    /// Whether a folder at `path` is one the index descends into: under the
+    /// library root, with no hidden or `.assets` folder on the way down to it.
+    static func isIndexableFolder(path: String, root: String) -> Bool {
+        guard path.hasPrefix(root + "/") else { return false }
+        return path.dropFirst(root.count + 1).split(separator: "/")
+            .allSatisfy { shouldDescend(intoDirectoryNamed: String($0)) }
     }
 }
 

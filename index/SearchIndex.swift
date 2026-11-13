@@ -102,6 +102,26 @@ class SearchIndex : ObservableObject {
         enqueue { $0.remove(path: path) }
     }
 
+    /// A folder was deleted or trashed: forgets every note under it.
+    public func remove(folder: String) {
+        guard !folder.isEmpty else { return }
+        let folder = SearchIndexPath.normalise(folder)
+        enqueue { $0.removeAll(under: folder) }
+    }
+
+    /// A folder came back (restored from the trash): re-reads every note under
+    /// it, replacing whatever the index held for that folder.
+    public func reindex(folder: String) {
+        guard !folder.isEmpty else { return }
+        let root = SearchIndexPath.normalise(rootUrl.path)
+        let folder = SearchIndexPath.normalise(folder)
+        enqueue { data in
+            data.removeAll(under: folder)
+            guard SearchIndexer.isIndexableFolder(path: folder, root: root) else { return }
+            Self.scan(folder: URL(fileURLWithPath: folder), root: root, into: &data)
+        }
+    }
+
     /// A note, or a folder with its notes, was moved on disk. Nothing is re-read.
     public func rename(from old: String, to new: String) {
         guard !old.isEmpty, !new.isEmpty else { return }
