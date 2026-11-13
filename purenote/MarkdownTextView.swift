@@ -43,6 +43,10 @@ struct MarkdownTextView: UIViewRepresentable {
     @Binding var caretRequest: CaretRequest?
     /// Where to put the caret the first time the editor appears.
     var initialCaret: Int?
+    /// The bridge to the SwiftUI top bar (Undo, Redo) and the Find in Note
+    /// item: told about the text view when it is built, and whenever its text
+    /// changes.
+    var controller: EditorController? = nil
 
     func makeUIView(context: Context) -> UITextView {
         let view = Self.makeTextView(text: text, initialCaret: initialCaret,
@@ -78,6 +82,8 @@ struct MarkdownTextView: UIViewRepresentable {
         view.smartDashesType = .no
         view.smartInsertDeleteType = .no
         view.autocorrectionType = .yes
+        // Find in Note (the editor's "More" menu) presents the system find bar
+        view.isFindInteractionEnabled = true
         view.text = text
 
         let caret = initialCaret ?? text.count
@@ -89,6 +95,7 @@ struct MarkdownTextView: UIViewRepresentable {
             coordinator.restyle(view, dirty: nil)
         }
         coordinator.restyle(view, dirty: nil)
+        coordinator.controller?.attach(view)
         return view
     }
 
@@ -174,6 +181,8 @@ struct MarkdownTextView: UIViewRepresentable {
         /// view's own callbacks do not write it straight back.
         private var applyingBinding = false
 
+        var controller: EditorController? { parent.controller }
+
         init(_ parent: MarkdownTextView) { self.parent = parent }
 
         /// Re-applies the attributes in place and keeps the typing attributes
@@ -253,6 +262,9 @@ struct MarkdownTextView: UIViewRepresentable {
             let dirty = pendingDirty
             pendingDirty = nil
             restyle(textView, dirty: dirty)
+            // typing, Undo and Redo all end up here: Undo / Redo may have
+            // changed whether there is anything left to undo or redo
+            parent.controller?.scheduleRefresh()
         }
 
         func textViewDidChangeSelection(_ textView: UITextView) {

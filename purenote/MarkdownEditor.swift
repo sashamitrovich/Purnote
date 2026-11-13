@@ -31,6 +31,10 @@ struct MarkdownEditor: View {
     /// Saves a picked image and returns the Markdown path to reference it.
     var saveImage: (Data, String) throws -> String
 
+    /// Shared with the screen's top bar (Undo, Redo); also what "Find in Note"
+    /// in the More menu goes through. Optional so a preview needs none.
+    var controller: EditorController? = nil
+
     /// The selection in character offsets -- the same units MarkdownFormatter
     /// works in.
     @State private var selection: Range<Int> = 0..<0
@@ -41,7 +45,8 @@ struct MarkdownEditor: View {
     @State private var photoPickerItem: PhotosPickerItem?
 
     var body: some View {
-        MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest, initialCaret: initialCaret)
+        MarkdownTextView(text: $text, selection: $selection, caretRequest: $caretRequest,
+                         initialCaret: initialCaret, controller: controller)
             // no outer padding: the text view's own insets carry the 20 pt
             // gutter, and the hanging syntax counts from the screen edge (a
             // hung marker may sit 8 pt from it)
@@ -202,7 +207,8 @@ struct MarkdownEditor: View {
                 Action(name: "3 × 2", icon: "tablecells") { insertTable(rows: 3, columns: 2) },
                 Action(name: "3 × 3", icon: "tablecells") { insertTable(rows: 3, columns: 3) },
                 Action(name: "4 × 4", icon: "tablecells") { insertTable(rows: 4, columns: 4) },
-            ])
+            ]),
+            Action(name: "Find in Note", icon: "magnifyingglass") { controller?.presentFind() },
         ]
     }
 

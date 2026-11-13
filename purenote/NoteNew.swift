@@ -18,6 +18,8 @@ struct NoteNew: View {
     /// was derived from -- empty until the first finish, when the file still
     /// has a generated name.
     @State private var titleSource = ""
+    /// Undo / Redo state of the editor, shown in the top bar.
+    @StateObject private var editor = EditorController()
 
     var body: some View {
 
@@ -31,7 +33,8 @@ struct NoteNew: View {
 
 
                     MarkdownEditor(text: $draft,
-                                   saveImage: { imageData, ext in try savePickedImage(imageData, ext) })
+                                   saveImage: { imageData, ext in try savePickedImage(imageData, ext) },
+                                   controller: editor)
 
                 }
                 // The buffer has to be a String in @State. Note is a class, so
@@ -47,6 +50,7 @@ struct NoteNew: View {
                 // system background over anything set on it from outside
                 .background(Color.pn.page.ignoresSafeArea())
                 .toolbar {
+                    EditorUndoRedoToolbar(controller: editor)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             finish()

@@ -36,6 +36,9 @@ struct NoteEdit: View {
     /// tell a name the app made from one the user chose.
     @State private var titleSource: String
 
+    /// Undo / Redo state of the editor, shown in the top bar.
+    @StateObject private var editor = EditorController()
+
     init(note: Note, initialCaret: Int? = nil) {
         _note = State(initialValue: note)
         _draft = State(initialValue: note.content)
@@ -47,7 +50,8 @@ struct NoteEdit: View {
         NavigationStack {
 
             MarkdownEditor(text: $draft, initialCaret: initialCaret,
-                           saveImage: { data, ext in try savePickedImage(data, ext) })
+                           saveImage: { data, ext in try savePickedImage(data, ext) },
+                           controller: editor)
                 // the note and the list are kept in step with the buffer, which
                 // is what the old binding's setter used to do on every keystroke
                 .onChange(of: draft) { _, newValue in
@@ -61,6 +65,7 @@ struct NoteEdit: View {
                 // system background over anything set on it from outside
                 .background(Color.pn.page.ignoresSafeArea())
                 .toolbar {
+                    EditorUndoRedoToolbar(controller: editor)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             finish()
