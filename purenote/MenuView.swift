@@ -34,44 +34,28 @@ struct MenuView: View {
 
     @ViewBuilder
     var body: some View {
+        let model = homeModel
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) {
                 // With nothing typed the list is the ordinary folders + notes.
                 // As soon as there is a query the same list becomes the results,
                 // in place -- no second screen to push onto.
                 if searchText.isEmpty {
-                    if hasFolders {
-                        // where the smart folders (saved filters) and the real
-                        // physical folders begin
-                        HStack {
-                            Text("Folders")
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(Color.pn.ink2)
-                                .textCase(.uppercase)
-                            Spacer()
-                        }
-                        .padding(.top, 18)
-                        .padding(.leading, 4)
+                    HomeMasthead(model: model, onSort: { data.setSort($0) })
 
-                        if isRoot {
-                            SmartFoldersView()
-                        }
-
-                        FolderView().environmentObject(data)
-
-                        // where the folders end and the notes begin
-                        HStack {
-                            Text("Notes")
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(Color.pn.ink2)
-                                .textCase(.uppercase)
-                            Spacer()
-                        }
-                        .padding(.top, 18)
-                        .padding(.leading, 4)
+                    if isRoot {
+                        SmartFoldersView()
                     }
 
-                    NotesList()
+                    FolderView().environmentObject(data)
+
+                    if let empty = model.emptyState {
+                        HomeEmptyState(state: empty,
+                                       onNewNote: { isCreatingNewNote.toggle() },
+                                       onNewFolder: { showingNewFolder.toggle() })
+                    }
+
+                    NotesList(model: model)
                         .environmentObject(data)
                         .environmentObject(index)
                 } else {
@@ -117,7 +101,11 @@ struct MenuView: View {
             SmartFolderEditor(folders: folders, index: index)
         }
 
-        .navigationTitle(conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent))
+        // The masthead is the title. The navigation title stays (it names this
+        // screen on the back button of the one pushed from it) but is not drawn
+        // twice: the bar's own title is replaced by an empty principal item.
+        .navigationTitle(isRoot ? "Purnote" : conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent))
+        .navigationBarTitleDisplayMode(.inline)
         
         // because we want to remove the default padding that the navigationBarItems creates
         // https://stackoverflow.com/a/63225776/1393362
@@ -153,28 +141,41 @@ struct MenuView: View {
             self.isViewDisplayed = false
         }
         .toolbar {
-            if isRoot {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Button {
-                            showingRecentlyDeleted = true
-                        } label: {
-                            Label("Recently Deleted", systemImage: "trash")
+            ToolbarItem(placement: .principal) {
+                Text("").accessibilityHidden(true)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Section("Sort") {
+                        ForEach(NoteSort.allCases, id: \.self) { sort in
+                            SortChoice(sort: sort, current: data.sort, idPrefix: "menu.sort") {
+                                data.setSort(sort)
+                            }
                         }
-                        .accessibilityIdentifier("menu.recentlyDeleted")
-
-                        Button {
-                            showingHelp = true
-                        } label: {
-                            Label("Help", systemImage: "questionmark.circle")
-                        }
-                        .accessibilityIdentifier("menu.help")
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
                     }
-                    .accessibilityLabel("More")
-                    .accessibilityIdentifier("menu.more")
+
+                    if isRoot {
+                        Section {
+                            Button {
+                                showingRecentlyDeleted = true
+                            } label: {
+                                Label("Recently Deleted", systemImage: "trash")
+                            }
+                            .accessibilityIdentifier("menu.recentlyDeleted")
+
+                            Button {
+                                showingHelp = true
+                            } label: {
+                                Label("Help", systemImage: "questionmark.circle")
+                            }
+                            .accessibilityIdentifier("menu.help")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
                 }
+                .accessibilityLabel("More")
+                .accessibilityIdentifier("menu.more")
             }
         }
         .sheet(isPresented: $showingHelp) {
@@ -195,7 +196,7 @@ struct MenuView: View {
     private var ribbon: Color { Color.pn.ribbon }
 
     /// True when the current list is the storage root — the only place smart
-    /// folders and the "..." menu (Recently Deleted, Help) belong.
+    /// folders and the "..." menu's Recently Deleted and Help belong.
     private var isRoot: Bool {
         data.getCurrentUrl().standardizedFileURL.path == index.rootUrl.standardizedFileURL.path
     }
@@ -204,6 +205,17 @@ struct MenuView: View {
     /// root) the saved smart folders.
     private var hasFolders: Bool {
         !data.folders.isEmpty || (isRoot && !folders.folders.isEmpty)
+    }
+
+    /// What the list shows. Pins are read only at the root, where they are shown.
+    private var homeModel: HomeListModel {
+        HomeListModel(notes: data.notes,
+                      pinned: isRoot ? data.pinnedNotes() : [],
+                      sort: data.sort,
+                      isRoot: isRoot,
+                      folderName: conditionalNavBarTitle(text: data.getCurrentUrl().lastPathComponent),
+                      hasFolders: hasFolders,
+                      now: Date(), calendar: .current)
     }
 
     /// Either the three actions, or — once search is tapped — the search field.

@@ -19,28 +19,43 @@ struct ListRow: View {
     /// When set, shown in place of the second-line preview: the line of the
     /// note that matched a search.
     var snippet: String? = nil
+    /// False on the home list, where the date lives in the margin column.
+    var showsDate: Bool = true
+    /// How many lines of preview to allow (pinned notes get two).
+    var previewLines: Int = 1
+
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title.isEmpty ? "New note" : title)
-                .font(.system(size: 21, weight: .semibold, design: .serif))
+                .font(PurnoteType.Twin.rowTitle())
                 .foregroundColor(title.isEmpty ? Color.pn.ink2 : Color.pn.ink)
-                .lineLimit(1)
+                .lineLimit(typeSize.isAccessibilitySize ? 3 : 1)
 
-            HStack(spacing: 5) {
-                Text(location ?? dateText)
-                    .foregroundColor(Color.pn.ink2)
-
-                if !preview.isEmpty {
-                    Text("·")
-                        .foregroundColor(Color.pn.ink3)
-                    Text(preview)
+            if showsDate {
+                HStack(spacing: 5) {
+                    Text(location ?? dateText)
+                        .font(PurnoteType.Twin.meta())
                         .foregroundColor(Color.pn.ink2)
-                        .lineLimit(1)
+
+                    if !preview.isEmpty {
+                        Text("·")
+                            .foregroundColor(Color.pn.ink3)
+                        previewText
+                    }
                 }
+            } else if !preview.isEmpty {
+                previewText
             }
-            .font(.system(size: 15))
         }
+    }
+
+    private var previewText: some View {
+        Text(preview)
+            .font(PurnoteType.Twin.rowPreview())
+            .foregroundColor(Color.pn.ink2)
+            .lineLimit(typeSize.isAccessibilitySize ? 3 : previewLines)
     }
 
     // Derived text lives in NoteRowText so it can be unit-tested.

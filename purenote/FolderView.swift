@@ -21,13 +21,24 @@ struct FolderView: View {
     @State private var folderPendingDelete: URL?
     @State private var dropTargetedFolder: URL?
 
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    /// Two columns, like the index of a book. At the accessibility text sizes
+    /// two columns would cut every name short, so it becomes one.
+    private var columns: [GridItem] {
+        typeSize.isAccessibilitySize
+            ? [GridItem(.flexible())]
+            : [GridItem(.flexible(), spacing: 24, alignment: .leading), GridItem(.flexible(), alignment: .leading)]
+    }
+
     @ViewBuilder
     var body: some View {
 
-        ForEach(data.folders) { folder in
-            folderRow(folder)
+        LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
+            ForEach(data.folders) { folder in
+                folderRow(folder)
+            }
         }
-        .listStyle(PlainListStyle())
         .alert("Rename Folder", isPresented: renameAlertPresented) {
             TextField("Name", text: $draftName)
             Button("Cancel", role: .cancel) { cancelRename() }
@@ -42,29 +53,21 @@ struct FolderView: View {
         NavigationLink {
             FolderDestination(url: folder.url, libraryRoot: index.rootUrl)
         } label: {
-            HStack(spacing: 12) {
-                Image(systemName: "folder")
-                    // my own modest Image extension
-                    // inspired by
-                    // https://stackoverflow.com/a/59974025/1393362
-                    .accent()
+            HStack(spacing: 8) {
                 Text(folder.id)
-                    .font(.title2.weight(.medium))
+                    .font(PurnoteType.Twin.ui())
                     .foregroundColor(Color.pn.ink)
                     .lineLimit(1)
 
-                Spacer()
+                Spacer(minLength: 4)
 
                 // how many notes are inside, the way Notes shows it
                 Text("\(noteCount(in: folder))")
-                    .font(.subheadline)
+                    .font(PurnoteType.Twin.meta())
                     .foregroundColor(Color.pn.ink2)
                     .monospacedDigit()
-
-                Image(systemName: "chevron.right")
-                    .font(.footnote)
-                    .foregroundColor(Color.pn.ink3)
             }
+            .padding(.vertical, 5)
             .menuRowStyle()
             .background(
                 RoundedRectangle(cornerRadius: 8)

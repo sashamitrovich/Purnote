@@ -158,7 +158,7 @@ class DataManager: ObservableObject {
             }
         }
         
-        notes = NoteSort.sorted(notes, by: sortPreferences.sort(forFolder: currentUrl, root: rootUrl))
+        notes = NoteSort.sorted(notes, by: sortPreferences.sort(forFolder: currentUrl, root: sortRoot))
         folders = FolderSort.sorted(folders)
         reloadPins()
     }
@@ -256,6 +256,25 @@ class DataManager: ObservableObject {
             print("Failed to move note to \(folderURL.lastPathComponent): \(error).")
         }
         refresh(url: getCurrentUrl())
+    }
+
+    // MARK: - Sort
+
+    /// Sort choices are kept per folder, relative to the top of the library. A
+    /// DataManager made for a subfolder has that folder as its own `rootUrl`,
+    /// so the library root, when it is known, is what the folder is measured
+    /// against; otherwise every subfolder would share the root's key.
+    private var sortRoot: URL { libraryRoot ?? rootUrl }
+
+    /// The sort chosen for the folder on screen.
+    var sort: NoteSort {
+        sortPreferences.sort(forFolder: currentUrl, root: sortRoot)
+    }
+
+    /// Remembers the sort for the folder on screen and lists it again.
+    func setSort(_ sort: NoteSort) {
+        sortPreferences.set(sort, forFolder: currentUrl, root: sortRoot)
+        refresh(url: currentUrl)
     }
 
     // MARK: - Pins

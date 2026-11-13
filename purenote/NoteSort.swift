@@ -65,9 +65,18 @@ enum FolderSort {
 struct SortPreferences {
     private let defaults: UserDefaults
 
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = SortPreferences.defaultStore) {
         self.defaults = defaults
     }
+
+    /// The app's own defaults. A UI-test launch (`-UITestFixture`) gets a store
+    /// of its own that lives only as long as the process, so a test that picks
+    /// "Title" does not leave the next launch sorted by title.
+    static let defaultStore: UserDefaults = {
+        guard Storage.isUITestFixture,
+              let store = UserDefaults(suiteName: "purnote.uitest.\(UUID().uuidString)") else { return .standard }
+        return store
+    }()
 
     static func key(forRelativePath path: String) -> String {
         "noteSort:" + path
