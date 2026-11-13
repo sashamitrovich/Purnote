@@ -39,6 +39,21 @@ final class HomeListUITests: XCTestCase {
         XCTAssertFalse(element("home.pinnedSection").exists, "a Pinned section with nothing pinned")
     }
 
+    // the whole row opens the note, including the empty space beside a short title
+
+    func testTappingTheEmptySpaceBesideTheTitleOpensTheNote() throws {
+        let row = note()
+        XCTAssertTrue(row.waitForExistence(timeout: 20), "the fixture note is not listed")
+        // Far right of the title line, in screen coordinates: before the fix the
+        // row's own frame hugged its text, so a point relative to the row would
+        // always have landed on the title and proved nothing.
+        let window = app.windows.firstMatch.frame
+        let origin = app.windows.firstMatch.coordinate(withNormalizedOffset: .zero)
+        origin.withOffset(CGVector(dx: window.width - 24, dy: row.frame.minY + 16)).tap()
+        XCTAssertTrue(element("note.kicker").waitForExistence(timeout: 10),
+                      "tapping beside the title did not open the note")
+    }
+
     // (b) Sort from the "..." menu: month headings go with Title; a folder keeps its own sort
 
     func testSortFromTheMenuSwitchesToTitleAndIsPerFolder() throws {

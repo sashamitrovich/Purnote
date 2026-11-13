@@ -68,6 +68,7 @@ struct FolderView: View {
                     .monospacedDigit()
             }
             .padding(.vertical, 5)
+            .contentShape(Rectangle())
             .menuRowStyle()
             .background(
                 RoundedRectangle(cornerRadius: 8)
