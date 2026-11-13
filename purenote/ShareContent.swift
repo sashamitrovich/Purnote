@@ -48,4 +48,33 @@ enum ShareContent {
         formatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
         return formatter.string(from: Date())
     }
+
+    /// Where a shared note will land and what its file will be called, for
+    /// the line under the title in the share sheet.
+    ///
+    /// `fileName` is the name `save` will give the file in the inbox (the same
+    /// `NoteNaming` rule as `title(from:)`). It is nil when the content has
+    /// nothing readable to name a file from: the fallback is a timestamp taken
+    /// at the moment of saving, so it cannot be shown before. The app may still
+    /// add a " 2" when it files the note into storage that already holds a note
+    /// of that name; the extension cannot see that storage.
+    struct SaveTarget: Equatable {
+        /// "Notes" for the top level, otherwise the folder's own name.
+        let folderName: String
+        let fileName: String?
+
+        /// "Travel \u{00B7} saves as Tile museum.md", or "Travel \u{00B7} named when saved".
+        var line: String {
+            if let fileName {
+                return "\(folderName) \u{00B7} saves as \(fileName)"
+            }
+            return "\(folderName) \u{00B7} named when saved"
+        }
+    }
+
+    static func saveTarget(folder: String, content: String) -> SaveTarget {
+        let folderName = folder.isEmpty ? "Notes" : (folder as NSString).lastPathComponent
+        let fileName = NoteNaming.name(from: content).map { $0 + ".md" }
+        return SaveTarget(folderName: folderName, fileName: fileName)
+    }
 }
