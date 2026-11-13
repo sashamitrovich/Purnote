@@ -68,13 +68,16 @@ struct MenuView: View {
         // a clean sheet, not a grey grouped list -- edge-to-edge rows on warm
         // paper, the way a writing app looks
         .background(Color.pn.page)
-        // the whole bottom bar -- actions, or the search field when searching --
-        // rides above the keyboard as a safe-area inset, so everything a thumb
-        // needs stays at the bottom of the screen.
+        // The actions are the system's own bottom toolbar (see `.toolbar` below),
+        // which is Liquid Glass on iOS 26 and a plain bar on iOS 18. The toast
+        // and, while searching, the search field ride in a safe-area inset: that
+        // inset sits above the bar, and above the keyboard.
         .safeAreaInset(edge: .bottom, spacing: 0) {
             VStack(spacing: 0) {
                 UndoToastHost(model: toast)
-                bottomBar
+                if showSearch {
+                    searchBar
+                }
             }
         }
         .environmentObject(toast)
@@ -141,6 +144,7 @@ struct MenuView: View {
             self.isViewDisplayed = false
         }
         .toolbar {
+            bottomActions
             ToolbarItem(placement: .principal) {
                 Text("").accessibilityHidden(true)
             }
@@ -178,6 +182,8 @@ struct MenuView: View {
                 .accessibilityIdentifier("menu.more")
             }
         }
+        // the search field takes the bottom edge while it is open
+        .toolbar(showSearch ? .hidden : .automatic, for: .bottomBar)
         .sheet(isPresented: $showingHelp) {
             HelpView()
         }
@@ -218,50 +224,45 @@ struct MenuView: View {
                       now: Date(), calendar: .current)
     }
 
-    /// Either the three actions, or — once search is tapped — the search field.
-    /// Both sit at the bottom; the field version rides up over the keyboard.
-    @ViewBuilder
-    private var bottomBar: some View {
-        Group {
-            if showSearch {
-                searchField
-            } else {
-                actionBar
-            }
-        }
-        .padding(.horizontal, showSearch ? 14 : 34)
-        .padding(.vertical, 8)
-        .background(.bar)
-        .overlay(alignment: .top) { Divider() }
-        .animation(.easeInOut(duration: 0.18), value: showSearch)
-    }
-
-    private var actionBar: some View {
-        HStack {
+    /// The three actions in the system's bottom toolbar: search, new folder,
+    /// compose. The system draws the bar (glass on iOS 26, plain on iOS 18).
+    @ToolbarContentBuilder
+    private var bottomActions: some ToolbarContent {
+        ToolbarItem(placement: .bottomBar) {
             Button { openSearch() } label: {
                 Image(systemName: "magnifyingglass")
             }
+            .tint(ribbon)
             .accessibilityLabel("Search")
-
-            Spacer()
-
+        }
+        ToolbarItem(placement: .bottomBar) { Spacer() }
+        ToolbarItem(placement: .bottomBar) {
             Menu {
                 Button("New Folder") { showingNewFolder.toggle() }
                 Button("New Smart Folder") { showingNewSmartFolder = true }
             } label: {
                 Image(systemName: "plus.rectangle.on.folder")
             }
+            .tint(ribbon)
             .accessibilityLabel("New folder")
-
-            Spacer()
-
+        }
+        ToolbarItem(placement: .bottomBar) { Spacer() }
+        ToolbarItem(placement: .bottomBar) {
             Button { isCreatingNewNote.toggle() } label: {
                 Image(systemName: "square.and.pencil")
             }
+            .modifier(ComposeButtonStyle())
             .accessibilityLabel("New note")
         }
-        .font(.title3)
-        .tint(ribbon)
+    }
+
+    /// The search field, with its Cancel, in a bar of its own while searching.
+    private var searchBar: some View {
+        searchField
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(.bar)
+            .overlay(alignment: .top) { Divider() }
     }
 
     private var searchField: some View {
@@ -403,6 +404,20 @@ struct MenuView: View {
     }
 
     
+}
+
+/// The compose button: amber-prominent glass on iOS 26, an amber icon in the
+/// plain bar before that.
+private struct ComposeButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26, *) {
+            content
+                .buttonStyle(.glassProminent)
+                .tint(Color.pn.ribbon)
+        } else {
+            content.tint(Color.pn.ribbon)
+        }
+    }
 }
 
 struct MenuView_Previews: PreviewProvider {

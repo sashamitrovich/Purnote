@@ -84,4 +84,49 @@ final class HomeListUITests: XCTestCase {
                        "the pinned note is listed twice")
         XCTAssertFalse(element("home.monthHeader").exists, "the month group stayed although its only note is pinned")
     }
+
+    // (d) the bottom toolbar: search swaps in its field and Cancel brings the bar back
+
+    func testSearchReplacesTheBottomBarAndCancelBringsItBack() throws {
+        let search = app.buttons["Search"].firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 20), "no Search button")
+        XCTAssertTrue(app.buttons["New folder"].firstMatch.exists, "no New folder button")
+        XCTAssertTrue(app.buttons["New note"].firstMatch.exists, "no New note button")
+        attach("bottom-bar")
+
+        search.tap()
+        let field = app.textFields["Search your notes"].firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "no search field after tapping Search")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5), "the keyboard did not come up")
+        field.typeText("Berlin")
+        XCTAssertTrue(element("home.masthead").waitForNonExistence(timeout: 5), "results did not replace the list")
+        attach("search-open")
+
+        app.buttons["Cancel"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["Search"].firstMatch.waitForExistence(timeout: 5), "the bar did not come back")
+        XCTAssertTrue(element("home.masthead").waitForExistence(timeout: 5), "the list did not come back")
+    }
+
+    /// The Undo toast must sit above the bottom bar, not behind it.
+    func testUndoToastSitsAboveTheBottomBar() throws {
+        let folder = app.staticTexts["Journal"].firstMatch
+        XCTAssertTrue(folder.waitForExistence(timeout: 20))
+        folder.press(forDuration: 1.2)
+        app.buttons["Delete Folder"].firstMatch.tap()
+        app.alerts.buttons["Delete"].firstMatch.tap()
+        let undo = app.buttons["undo.button"].firstMatch
+        XCTAssertTrue(undo.waitForExistence(timeout: 5), "no Undo toast")
+        attach("undo-toast")
+        let compose = app.buttons["New note"].firstMatch
+        XCTAssertLessThanOrEqual(undo.frame.maxY, compose.frame.minY + 1,
+                                 "the toast overlaps the bottom bar (undo \(undo.frame), compose \(compose.frame))")
+        XCTAssertTrue(undo.isHittable, "the Undo button is covered")
+    }
+
+    private func attach(_ name: String) {
+        let a = XCTAttachment(screenshot: app.screenshot())
+        a.name = name
+        a.lifetime = .keepAlways
+        add(a)
+    }
 }

@@ -163,7 +163,10 @@ final class EditorTypingUITests: XCTestCase {
             XCTAssertTrue(button.waitForExistence(timeout: 5), "\(name) button missing")
             XCTAssertTrue(button.isHittable, "\(name) button is not hittable")
         }
-        let more = app.buttons["More"].firstMatch
+        // the home screen's "..." button (menu.more) is also labelled "More" and
+        // is still in the view hierarchy behind the editor; this is the editor's
+        let more = app.buttons.matching(NSPredicate(
+            format: "label == 'More' AND identifier != 'menu.more'")).firstMatch
         XCTAssertTrue(more.waitForExistence(timeout: 5), "More button missing")
         XCTAssertTrue(more.isHittable, "More button is not hittable")
     }
