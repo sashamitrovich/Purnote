@@ -48,7 +48,7 @@ enum SampleNotes {
         ("Managing your notes.md", """
         # Managing your notes
 
-        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. If you use Purnote without iCloud, the notes are in the **Files** app under **On My iPhone → Purnote** instead. That folder *is* the whole database — there is nothing hidden anywhere else.
+        Every note in Purnote is a plain Markdown file in your iCloud Drive, inside a folder called **purnote**. If you use Purnote without iCloud, the notes are in the **Files** app under **On My iPhone → Purnote** instead. That folder *is* the whole database. The only thing Purnote adds is a small hidden `.purnote` folder inside it, for your pins, smart folders and Recently Deleted.
 
         ## Delete one note
         Touch and hold it in the list, then choose Delete Note. It moves to **Recently Deleted**: tap the **More** button (the circle with three dots) at the top right of the home screen, then **Recently Deleted**. There you can restore a note, or delete it for good. You can also open the **Files** app and delete the `.md` file.

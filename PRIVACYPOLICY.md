@@ -4,7 +4,7 @@
 what the app does and does not do with your data. It is short on purpose,
 because Purnote collects very little.
 
-_Last updated: 22 August 2026._
+_Last updated: 13 November 2026._
 
 ## The short version
 
@@ -49,8 +49,9 @@ Because your notes are plain files in your own iCloud Drive or on your device,
 you are always in full control:
 
 - Open, edit, copy, or back them up with any app you like.
-- Delete a note in Purnote, or delete the whole `purnote` folder in the Files
-  app to remove everything at once.
+- Delete a note in Purnote and it moves to Recently Deleted, where it stays
+  until you delete it there for good. Or delete the whole `purnote` folder in
+  the Files app to remove everything at once.
 - If you ever stop using Purnote, your notes remain — nothing is locked in.
 
 ## Children's privacy
