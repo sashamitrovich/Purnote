@@ -1,3 +1,6 @@
+// NOTE: The current app icons come from design-1.5/direction-b/icons/b-pilcrow-*
+// (Pilcrow design). This script is the OLD generator for the "#" icon; running
+// it would overwrite the Pilcrow files with the old icon. Do not run it.
 //
 //  render-icon.swift
 //  Purnote
