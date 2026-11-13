@@ -11,6 +11,11 @@ import SwiftUI
 struct RecentlyDeletedView: View {
     @StateObject private var model: RecentlyDeletedModel
     @State private var rowPendingDelete: RecentlyDeletedModel.Row?
+    @Environment(\.dynamicTypeSize) private var typeSize
+    // 21 pt at the default size; follows Dynamic Type as .title2 does
+    @ScaledMetric(relativeTo: .title2) private var emptyTitleSize: CGFloat = 21
+    // 15 pt at the default size; follows Dynamic Type as .subheadline does
+    @ScaledMetric(relativeTo: .subheadline) private var detailSize: CGFloat = 15
 
     init(root: URL, data: DataManager, index: SearchIndex) {
         _model = StateObject(wrappedValue: RecentlyDeletedModel(backend: .live(root: root, data: data, index: index)))
@@ -30,8 +35,9 @@ struct RecentlyDeletedView: View {
             } else if model.rows.isEmpty {
                 VStack(spacing: 6) {
                     Text("Nothing deleted.")
-                        .font(.system(size: 21, weight: .semibold, design: .serif))
+                        .font(.system(size: emptyTitleSize, weight: .semibold, design: .serif))
                         .foregroundColor(Color.pn.ink)
+                        .accessibilityAddTraits(.isHeader)
                     keptText
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -110,15 +116,17 @@ struct RecentlyDeletedView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(row.title)
-                    .font(.system(size: 19, weight: .semibold, design: .serif))
+                    .font(PurnoteType.Twin.rowTitle())
                     .foregroundColor(Color.pn.ink)
-                    .lineLimit(1)
+                    .lineLimit(typeSize.isAccessibilitySize ? 3 : 1)
                 Text(row.isRestorable ? "\(row.detail) · Deleted \(row.item.deletedAt.formatted(date: .abbreviated, time: .omitted))"
                                       : "Downloading…")
-                    .font(.system(size: 15))
+                    .font(.system(size: detailSize))
                     .foregroundColor(Color.pn.ink2)
-                    .lineLimit(1)
+                    .lineLimit(typeSize.isAccessibilitySize ? 3 : 1)
             }
+            // title and detail read as one element; Restore stays its own button
+            .accessibilityElement(children: .combine)
 
             Spacer(minLength: 8)
 

@@ -219,6 +219,7 @@ struct NoteView: View {
                 .textCase(.uppercase)
                 .foregroundColor(Color.pn.ink2)
                 .lineLimit(2)
+                .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("note.kicker")
         }
         .padding(.top, 8)
@@ -403,6 +404,7 @@ extension Theme {
         // look of Notes, and it reads warmer for something you sat down to write.
         .heading1 { configuration in
             configuration.label
+                .accessibilityAddTraits(.isHeader)
                 .markdownMargin(top: .rem(0.4), bottom: .rem(0.5))
                 .markdownTextStyle {
                     FontFamily(.system(.serif))
@@ -412,6 +414,7 @@ extension Theme {
         }
         .heading2 { configuration in
             configuration.label
+                .accessibilityAddTraits(.isHeader)
                 .markdownMargin(top: .rem(0.9), bottom: .rem(0.4))
                 .markdownTextStyle {
                     FontFamily(.system(.serif))
@@ -421,6 +424,7 @@ extension Theme {
         }
         .heading3 { configuration in
             configuration.label
+                .accessibilityAddTraits(.isHeader)
                 .markdownMargin(top: .rem(0.8), bottom: .rem(0.3))
                 .markdownTextStyle {
                     FontFamily(.system(.serif))

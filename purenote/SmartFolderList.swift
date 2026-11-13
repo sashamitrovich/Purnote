@@ -68,6 +68,7 @@ struct SmartFoldersView: View {
                         Image(systemName: "tray.full")
                             .font(.footnote)
                             .foregroundColor(Color.pn.ink2)
+                            .accessibilityHidden(true)
                         Text(folder.name)
                             .font(PurnoteType.Twin.ui())
                             .foregroundColor(Color.pn.ink)
@@ -142,6 +143,7 @@ struct SmartFolderEditor: View {
             .font(PurnoteType.Twin.caps())
             .tracking(PurnoteType.capsTracking)
             .foregroundColor(Color.pn.ink2)
+            .accessibilityAddTraits(.isHeader)
     }
 
     var body: some View {

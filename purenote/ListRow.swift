@@ -42,6 +42,7 @@ struct ListRow: View {
                     if !preview.isEmpty {
                         Text("·")
                             .foregroundColor(Color.pn.ink3)
+                            .accessibilityHidden(true)
                         previewText
                     }
                 }
@@ -49,6 +50,8 @@ struct ListRow: View {
                 previewText
             }
         }
+        // title, date and preview read as one element
+        .accessibilityElement(children: .combine)
     }
 
     private var previewText: some View {

@@ -64,6 +64,7 @@ struct TagChipsRow: View {
                 .tracking(PurnoteType.capsTracking)
                 .foregroundColor(Color.pn.ink2)
                 .padding(.top, 4)
+                .accessibilityAddTraits(.isHeader)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(tags, id: \.self) { tag in

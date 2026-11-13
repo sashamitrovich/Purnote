@@ -88,7 +88,10 @@ struct MarkdownEditor: View {
     }
 
     private var barRow: some View {
-        HStack(spacing: 20) {
+        // Each button is a 44 x 44 pt tap target (glyph centres stay 44 pt
+        // apart, as the old 24 pt glyph + 20 pt gap gave), so spacing is 0
+        // and the side padding drops by the 10 pt each target adds.
+        HStack(spacing: 0) {
             ForEach(visibleActions) { action in
                 if let items = action.menuItems {
                     Menu {
@@ -128,18 +131,20 @@ struct MarkdownEditor: View {
                 Image(systemName: "ellipsis")
                     .imageScale(.large)
                     .foregroundColor(Color.pn.ribbon)
-                    .frame(minWidth: 24, minHeight: 34)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .accessibilityLabel("More")
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 10)
     }
 
     private func icon(for action: Action) -> some View {
         Image(systemName: action.icon)
             .imageScale(.large)
             .foregroundColor(Color.pn.ink.opacity(0.85))
-            .frame(minWidth: 24, minHeight: 34)
+            .frame(minWidth: 44, minHeight: 44)
+            .contentShape(Rectangle())
     }
 
     // MARK: - Actions

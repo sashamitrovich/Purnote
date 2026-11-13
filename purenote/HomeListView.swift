@@ -19,6 +19,8 @@ struct HomeMasthead: View {
     /// "iCloud Drive" / "On this iPhone" at the root, when the screen knows it.
     var location: String? = nil
     let onSort: (NoteSort) -> Void
+    // 9 pt at the default size; follows Dynamic Type as .footnote does
+    @ScaledMetric(relativeTo: .footnote) private var chevronSize: CGFloat = 9
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -57,7 +59,7 @@ struct HomeMasthead: View {
                 } label: {
                     HStack(spacing: 3) {
                         Text(model.sortName)
-                        Image(systemName: "chevron.down").font(.system(size: 9, weight: .semibold))
+                        Image(systemName: "chevron.down").font(.system(size: chevronSize, weight: .semibold))
                     }
                     .foregroundColor(Color.pn.ribbonText)
                 }
