@@ -328,12 +328,17 @@ enum TrashStore {
     /// writes or deletes.
     static func listNow(libraryRoot: URL) -> [TrashedItem] {
         let fm = FileManager.default
+        // No `.skipsHiddenFiles`: the trash lives inside the hidden `.purnote`
+        // folder, and on an iPhone that option returns nothing for anything inside
+        // it (seen on a device: the notes were there, the listing was empty). The
+        // item folders are named <date>-<id>, so a name starting with "." is not one.
         guard let entries = try? fm.contentsOfDirectory(at: trashDirectory(in: libraryRoot),
                                                         includingPropertiesForKeys: [.isDirectoryKey],
-                                                        options: [.skipsHiddenFiles]) else { return [] }
+                                                        options: []) else { return [] }
         var items: [TrashedItem] = []
         for entry in entries {
-            guard (try? entry.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true,
+            guard !entry.lastPathComponent.hasPrefix("."),
+                  (try? entry.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true,
                   let item = inspect(folder: entry) else { continue }
             items.append(item)
         }
