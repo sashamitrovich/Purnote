@@ -49,41 +49,54 @@ struct SmartFoldersView: View {
     @EnvironmentObject var index: SearchIndex
     @State private var editingFolder: SmartFolder?
 
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    /// Two columns, like the index of a book. At the accessibility text sizes
+    /// two columns would cut every name short, so it becomes one.
+    private var columns: [GridItem] {
+        typeSize.isAccessibilitySize
+            ? [GridItem(.flexible())]
+            : [GridItem(.flexible(), spacing: 24, alignment: .leading), GridItem(.flexible(), alignment: .leading)]
+    }
+
     var body: some View {
-        ForEach(folders.folders) { folder in
-            NavigationLink(destination: SmartFolderDestination(folder: folder)) {
-                HStack(spacing: 12) {
-                    Image(systemName: "tray.full")
-                        .accent()
-                    Text(folder.name)
-                        .font(.title2.weight(.medium))
-                        .foregroundColor(Color.pn.ink)
-                        .lineLimit(1)
-                    Spacer()
-                    Text("\(index.searchByTags(folder.tags).count)")
-                        .font(.subheadline)
-                        .foregroundColor(Color.pn.ink2)
-                        .monospacedDigit()
-                    Image(systemName: "chevron.right")
-                        .font(.footnote)
-                        .foregroundColor(Color.pn.ink3)
+        LazyVGrid(columns: columns, alignment: .leading, spacing: 0) {
+            ForEach(folders.folders) { folder in
+                NavigationLink(destination: SmartFolderDestination(folder: folder)) {
+                    HStack(spacing: 8) {
+                        // the tray keeps smart folders distinct from real ones
+                        Image(systemName: "tray.full")
+                            .font(.footnote)
+                            .foregroundColor(Color.pn.ink2)
+                        Text(folder.name)
+                            .font(PurnoteType.Twin.ui())
+                            .foregroundColor(Color.pn.ink)
+                            .lineLimit(1)
+                        Spacer(minLength: 4)
+                        Text("\(index.searchByTags(folder.tags).count)")
+                            .font(PurnoteType.Twin.meta())
+                            .foregroundColor(Color.pn.ink2)
+                            .monospacedDigit()
+                    }
+                    .padding(.vertical, 5)
+                    .contentShape(Rectangle())
+                    .menuRowStyle()
+                }
+                .contextMenu {
+                    Button {
+                        editingFolder = folder
+                    } label: {
+                        Text("Edit Smart Folder")
+                        Image(systemName: "pencil")
+                    }
+                    Button(role: .destructive) {
+                        folders.remove(folder)
+                    } label: {
+                        Text("Delete Smart Folder")
+                        Image(systemName: "trash")
+                    }
                 }
             }
-            .contextMenu {
-                Button {
-                    editingFolder = folder
-                } label: {
-                    Text("Edit Smart Folder")
-                    Image(systemName: "pencil")
-                }
-                Button(role: .destructive) {
-                    folders.remove(folder)
-                } label: {
-                    Text("Delete Smart Folder")
-                    Image(systemName: "trash")
-                }
-            }
-            .menuRowStyle()
         }
         .sheet(item: $editingFolder) { folder in
             SmartFolderEditor(folders: folders, index: index, folder: folder)
