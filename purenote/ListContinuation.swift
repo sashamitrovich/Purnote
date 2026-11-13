@@ -103,7 +103,7 @@ enum ListContinuation {
         let caret = min(max(caret, 0), text.count)
         guard !isInsideCodeFence(text, at: caret) else { return nil }
 
-        let lines = text.components(separatedBy: "\n")
+        let (lines, terminators) = splitLines(text)
         let (lineIndex, lineStart) = line(containing: caret, in: lines)
         guard lines.indices.contains(lineIndex) else { return nil }
 
@@ -123,7 +123,9 @@ enum ListContinuation {
 
         // an ordinary continuation: newline, the same indentation, the next
         // marker, and the caret ready to type
-        let insertion = "\n" + marker.indent + marker.next
+        // in the file's own line ending, so a CRLF file stays CRLF
+        let newline = terminators[lineIndex] ?? terminators.compactMap { $0 }.first ?? "\n"
+        let insertion = newline + marker.indent + marker.next
         return Edit(range: caret..<caret,
                     replacement: insertion,
                     caret: caret + insertion.count)
@@ -170,6 +172,31 @@ enum ListContinuation {
     }
 
     // MARK: - Offsets
+
+    /// The lines of `text` without their line endings, and the ending each one
+    /// had (nil for the last line when the text does not end in one).
+    ///
+    /// Split on Characters, not on "\n": Swift reads "\r\n" as ONE Character,
+    /// and every offset here counts Characters. Splitting on the "\n" scalar left
+    /// a "\r" on the end of each line, which made an empty item look like it had
+    /// content and drifted the line starts by one per line.
+    private static func splitLines(_ text: String) -> (lines: [String], terminators: [String?]) {
+        var lines: [String] = []
+        var terminators: [String?] = []
+        var current = ""
+        for ch in text {
+            if ch == "\n" || ch == "\r\n" {
+                lines.append(current)
+                terminators.append(String(ch))
+                current = ""
+            } else {
+                current.append(ch)
+            }
+        }
+        lines.append(current)
+        terminators.append(nil)
+        return (lines, terminators)
+    }
 
     /// The index of the line containing `caret`, and the offset that line
     /// starts at.

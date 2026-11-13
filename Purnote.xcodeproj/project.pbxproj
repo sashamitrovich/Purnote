@@ -127,6 +127,10 @@
 		E3A100000000000000000008 /* TrashStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000007 /* TrashStoreTests.swift */; };
 		E3A10000000000000000000A /* TrashIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000009 /* TrashIndexTests.swift */; };
 		E3A100000000000000000012 /* StorageMoveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A100000000000000000011 /* StorageMoveTests.swift */; };
+		6A9000000000000000000002 /* PersistenceGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000001 /* PersistenceGapTests.swift */; };
+		6A9000000000000000000004 /* AssetsRewriteGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000003 /* AssetsRewriteGapTests.swift */; };
+		6A9000000000000000000006 /* ListContinuationOffsetGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */; };
+		6A9000000000000000000008 /* SavedToDiskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9000000000000000000007 /* SavedToDiskUITests.swift */; };
 		E3B100000000000000000002 /* UndoToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000001 /* UndoToast.swift */; };
 		E3B100000000000000000004 /* RecentlyDeletedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000003 /* RecentlyDeletedModel.swift */; };
 		E3B100000000000000000006 /* RecentlyDeletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B100000000000000000005 /* RecentlyDeletedView.swift */; };
@@ -310,6 +314,10 @@
 		E3A100000000000000000007 /* TrashStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashStoreTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000009 /* TrashIndexTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrashIndexTests.swift; sourceTree = "<group>"; };
 		E3A100000000000000000011 /* StorageMoveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StorageMoveTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000001 /* PersistenceGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PersistenceGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000003 /* AssetsRewriteGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssetsRewriteGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListContinuationOffsetGapTests.swift; sourceTree = "<group>"; };
+		6A9000000000000000000007 /* SavedToDiskUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SavedToDiskUITests.swift; sourceTree = "<group>"; };
 		E3B100000000000000000001 /* UndoToast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UndoToast.swift; sourceTree = "<group>"; };
 		E3B100000000000000000003 /* RecentlyDeletedModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedModel.swift; sourceTree = "<group>"; };
 		E3B100000000000000000005 /* RecentlyDeletedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedView.swift; sourceTree = "<group>"; };
@@ -369,6 +377,7 @@
 				E3B10000000000000000000B /* TrashUITests.swift */,
 				E3C100000000000000000007 /* HomeListUITests.swift */,
 				9F4E01D888A840D20F10DDB8 /* NoteScreenUITests.swift */,
+				6A9000000000000000000007 /* SavedToDiskUITests.swift */,
 			);
 			path = purenoteUITests;
 			sourceTree = SOURCE_ROOT;
@@ -593,6 +602,9 @@
 				E3B100000000000000000009 /* RecentlyDeletedModelTests.swift */,
 				E3B100000000000000000007 /* UndoToastModelTests.swift */,
 				E3A100000000000000000011 /* StorageMoveTests.swift */,
+				6A9000000000000000000001 /* PersistenceGapTests.swift */,
+				6A9000000000000000000003 /* AssetsRewriteGapTests.swift */,
+				6A9000000000000000000005 /* ListContinuationOffsetGapTests.swift */,
 				C050E4F3BE0507CE76635A24 /* NoteAssetsTests.swift */,
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
@@ -792,6 +804,9 @@
 				E3B10000000000000000000A /* RecentlyDeletedModelTests.swift in Sources */,
 				E3B100000000000000000008 /* UndoToastModelTests.swift in Sources */,
 				E3A100000000000000000012 /* StorageMoveTests.swift in Sources */,
+				6A9000000000000000000002 /* PersistenceGapTests.swift in Sources */,
+				6A9000000000000000000004 /* AssetsRewriteGapTests.swift in Sources */,
+				6A9000000000000000000006 /* ListContinuationOffsetGapTests.swift in Sources */,
 				0F2ED3F5A26387C0481E2AF3 /* NoteAssetsTests.swift in Sources */,
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
@@ -815,6 +830,7 @@
 				E3B10000000000000000000C /* TrashUITests.swift in Sources */,
 				E3C100000000000000000008 /* HomeListUITests.swift in Sources */,
 				2E0770BDB6CEA2EFB797E7F6 /* NoteScreenUITests.swift in Sources */,
+				6A9000000000000000000008 /* SavedToDiskUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

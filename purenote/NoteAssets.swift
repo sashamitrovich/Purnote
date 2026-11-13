@@ -67,10 +67,36 @@ enum NoteAssets {
         let newName = newFolder.lastPathComponent
         do {
             try CoordinatedFile.move(from: oldFolder, to: newFolder)
-            return content.replacingOccurrences(of: oldName, with: newName)
+            return rewritingReferences(in: content, from: oldName, to: newName)
         } catch {
             return content
         }
+    }
+
+    /// `content` with every image path under `oldFolder` pointed at `newFolder`.
+    ///
+    /// The one rewriter for renames, duplicates and merges. Only a path is
+    /// rewritten: "<oldFolder>/" where it starts a reference, i.e. at the start
+    /// of a line or right after "(", "<" or a quote. Prose that mentions the
+    /// folder's name, a longer name that merely ends the same way ("Old Trip.assets/"
+    /// next to "Trip.assets/") and a name followed by more letters
+    /// ("Trip.assets2/") are all left alone.
+    static func rewritingReferences(in content: String, from oldFolder: String, to newFolder: String) -> String {
+        let token = oldFolder + "/"
+        guard !oldFolder.isEmpty, oldFolder != newFolder, content.contains(token) else { return content }
+        let boundary: Set<Character> = ["(", "<", "\"", "'", "\n", "\r\n"]
+
+        var out = ""
+        var rest = content[...]
+        while let hit = rest.range(of: token) {
+            let before = rest[rest.startIndex..<hit.lowerBound]
+            let previous = before.last ?? out.last
+            let startsReference = previous.map { boundary.contains($0) } ?? true
+            out += before
+            out += startsReference ? newFolder + "/" : token
+            rest = rest[hit.upperBound...]
+        }
+        return out + rest
     }
 
     /// Moves the note's assets folder to the system Trash. Not used by the app

@@ -77,8 +77,56 @@ enum Storage {
         var moved = 0, renamed = 0, failed = 0
 
         let items = (try? fm.contentsOfDirectory(at: source, includingPropertiesForKeys: nil)) ?? []
+
+        // A note that has to take a new name because its name is taken here
+        // brings its OWN pictures along under the matching new name. Merging
+        // "X.assets" into the other note's "X.assets" would leave the renamed
+        // note pointing at the other note's pictures.
+        var ownAssets: [String: String] = [:]      // old stem -> new stem
+        for item in items where item.pathExtension == "md" && !item.hasDirectoryPath {
+            let stem = item.deletingPathExtension().lastPathComponent
+            let hasPictures = fm.fileExists(atPath: source.appendingPathComponent(stem + ".assets").path)
+            guard hasPictures, fm.fileExists(atPath: destination.appendingPathComponent(item.lastPathComponent).path)
+            else { continue }
+            ownAssets[stem] = freeStem(for: item, in: destination)
+        }
+
         for item in items where item.lastPathComponent != ".Trash" {
             let taken = destination.appendingPathComponent(item.lastPathComponent)
+
+            // handled together with its note, below
+            if item.hasDirectoryPath, item.pathExtension == "assets",
+               ownAssets[item.deletingPathExtension().lastPathComponent] != nil {
+                continue
+            }
+
+            if item.pathExtension == "md", !item.hasDirectoryPath,
+               let newStem = ownAssets[item.deletingPathExtension().lastPathComponent] {
+                let stem = item.deletingPathExtension().lastPathComponent
+                let oldAssets = source.appendingPathComponent(stem + ".assets")
+                let newAssets = destination.appendingPathComponent(newStem + ".assets")
+                let target = destination.appendingPathComponent(newStem).appendingPathExtension("md")
+                do {
+                    try mover(oldAssets, newAssets)
+                    do { try mover(item, target) }
+                    catch {
+                        // note and pictures stay together: put the pictures back
+                        try? mover(newAssets, oldAssets)
+                        throw error
+                    }
+                    renamed += 1
+                    // the copy of the note now says where its pictures went
+                    if let text = try? CoordinatedFile.read(target) {
+                        let fixed = NoteAssets.rewritingReferences(in: text, from: stem + ".assets",
+                                                                   to: newStem + ".assets")
+                        if fixed != text { try CoordinatedFile.write(fixed, to: target) }
+                    }
+                } catch {
+                    print("Failed to move \(item.lastPathComponent) to iCloud: \(error).")
+                    failed += 1
+                }
+                continue
+            }
 
             if item.hasDirectoryPath && fm.fileExists(atPath: taken.path) {
                 let result = move(from: item, to: taken, mover: mover)
@@ -110,6 +158,21 @@ enum Storage {
         }
 
         return (moved, renamed, failed)
+    }
+
+    /// The stem for an incoming note that clashes: `note` -> `note (from iPhone)`,
+    /// then `note (from iPhone 2)`, where neither the note nor its `.assets`
+    /// folder is taken in `destination`.
+    private static func freeStem(for item: URL, in destination: URL) -> String {
+        let stem = item.deletingPathExtension().lastPathComponent
+        for suffix in 1...500 {
+            let name = suffix == 1 ? "\(stem) (from iPhone)" : "\(stem) (from iPhone \(suffix))"
+            if !fm.fileExists(atPath: destination.appendingPathComponent(name + ".md").path),
+               !fm.fileExists(atPath: destination.appendingPathComponent(name + ".assets").path) {
+                return name
+            }
+        }
+        return "\(stem) (from iPhone \(UUID().uuidString))"
     }
 
     /// `note.md` -> `note (from iPhone).md`, then `note (from iPhone 2).md`.
