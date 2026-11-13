@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2C0DE0000000000000000A2 /* SearchCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C0DE0000000000000000A1 /* SearchCore.swift */; };
+		A2C0DE0000000000000000B2 /* RecentSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C0DE0000000000000000B1 /* RecentSearches.swift */; };
+		A2C0DE0000000000000000C2 /* SearchCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C0DE0000000000000000C1 /* SearchCoreTests.swift */; };
+		A2C0DE0000000000000000D2 /* RecentSearchesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C0DE0000000000000000D1 /* RecentSearchesTests.swift */; };
+		A2C0DE0000000000000000E2 /* SearchIndexIncrementalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C0DE0000000000000000E1 /* SearchIndexIncrementalTests.swift */; };
 		5A2A00010000000000000002 /* NoteDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00010000000000000001 /* NoteDates.swift */; };
 		5A2A00020000000000000002 /* NoteSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00020000000000000001 /* NoteSort.swift */; };
 		5A2A00030000000000000002 /* NoteGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2A00030000000000000001 /* NoteGrouping.swift */; };
@@ -148,6 +153,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A2C0DE0000000000000000A1 /* SearchCore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCore.swift; sourceTree = "<group>"; };
+		A2C0DE0000000000000000B1 /* RecentSearches.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentSearches.swift; sourceTree = "<group>"; };
+		A2C0DE0000000000000000C1 /* SearchCoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchCoreTests.swift; sourceTree = "<group>"; };
+		A2C0DE0000000000000000D1 /* RecentSearchesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecentSearchesTests.swift; sourceTree = "<group>"; };
+		A2C0DE0000000000000000E1 /* SearchIndexIncrementalTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SearchIndexIncrementalTests.swift; sourceTree = "<group>"; };
 		5A2A00010000000000000001 /* NoteDates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteDates.swift; sourceTree = "<group>"; };
 		5A2A00020000000000000001 /* NoteSort.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteSort.swift; sourceTree = "<group>"; };
 		5A2A00030000000000000001 /* NoteGrouping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteGrouping.swift; sourceTree = "<group>"; };
@@ -420,6 +430,8 @@
 			isa = PBXGroup;
 			children = (
 				4B3EAEE6253EE19000CBCB2B /* SearchIndex.swift */,
+				A2C0DE0000000000000000A1 /* SearchCore.swift */,
+				A2C0DE0000000000000000B1 /* RecentSearches.swift */,
 			);
 			path = index;
 			sourceTree = "<group>";
@@ -492,6 +504,9 @@
 				54A0000000000000000000A2 /* NoteRenameTests.swift */,
 				5A2A00050000000000000001 /* NoteGroupingTests.swift */,
 				5A2A00040000000000000001 /* NoteSortTests.swift */,
+				A2C0DE0000000000000000C1 /* SearchCoreTests.swift */,
+				A2C0DE0000000000000000D1 /* RecentSearchesTests.swift */,
+				A2C0DE0000000000000000E1 /* SearchIndexIncrementalTests.swift */,
 			);
 			path = purenoteTests;
 			sourceTree = "<group>";
@@ -674,6 +689,9 @@
 				54A0000000000000000000A1 /* NoteRenameTests.swift in Sources */,
 				5A2A00050000000000000002 /* NoteGroupingTests.swift in Sources */,
 				5A2A00040000000000000002 /* NoteSortTests.swift in Sources */,
+				A2C0DE0000000000000000C2 /* SearchCoreTests.swift in Sources */,
+				A2C0DE0000000000000000D2 /* RecentSearchesTests.swift in Sources */,
+				A2C0DE0000000000000000E2 /* SearchIndexIncrementalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,6 +740,8 @@
 				4BC41066253DB00000AC8293 /* Image.swift in Sources */,
 				4B85F816254836B100755CFC /* AlertTest.swift in Sources */,
 				4B3EAEE7253EE19100CBCB2B /* SearchIndex.swift in Sources */,
+				A2C0DE0000000000000000A2 /* SearchCore.swift in Sources */,
+				A2C0DE0000000000000000B2 /* RecentSearches.swift in Sources */,
 				3220525D25359F8000A67FCF /* ListRow.swift in Sources */,
 				4B337C55253856290094A19F /* SampleData.swift in Sources */,
 				4BC82D4C254AAAE80044FA11 /* NotesList.swift in Sources */,

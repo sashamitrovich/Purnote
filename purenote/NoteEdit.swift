@@ -76,7 +76,8 @@ struct NoteEdit: View {
     func save() {
         data.persist(note)
         data.refresh(url: data.getCurrentUrl())
-        index.indexall()
+        // only this note is re-read, off the main thread
+        index.update(path: note.url.path)
     }
 
     /// Saves a picked image into the note's assets folder. The note is
@@ -89,6 +90,7 @@ struct NoteEdit: View {
     /// Editing is over: this is when the file may be renamed to match its
     /// first line.
     func finish() {
+        let pathBefore = note.url.path
         data.finishEditing(note, previousContent: titleSource)
         // from here on the file name stands for what the note says now -- but
         // only if the rename went through, or there was nothing to rename to
@@ -97,7 +99,9 @@ struct NoteEdit: View {
             titleSource = note.content
         }
         data.refresh(url: data.getCurrentUrl())
-        index.indexall()
+        // the file may have been renamed to match its first line
+        if note.url.path != pathBefore { index.rename(from: pathBefore, to: note.url.path) }
+        index.update(path: note.url.path)
     }
 }
 

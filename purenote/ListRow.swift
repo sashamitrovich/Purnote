@@ -16,6 +16,9 @@ struct ListRow: View {
     /// When set, shown in place of the relative date — used by search results
     /// for a note living in another folder, so it is clear where it lives.
     var location: String? = nil
+    /// When set, shown in place of the second-line preview: the line of the
+    /// note that matched a search.
+    var snippet: String? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -42,7 +45,7 @@ struct ListRow: View {
 
     // Derived text lives in NoteRowText so it can be unit-tested.
     private var title: String { NoteRowText.title(of: note.content) }
-    private var preview: String { NoteRowText.preview(of: note.content) }
+    private var preview: String { snippet ?? NoteRowText.preview(of: note.content) }
     private var dateText: String { NoteRowText.relativeDate(note.date) }
 }
 

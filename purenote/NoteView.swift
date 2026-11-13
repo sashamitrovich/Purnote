@@ -64,7 +64,7 @@ struct NoteView: View {
                     // worth an alert, and the next edit will carry it
                     print("Failed to write toggled checkbox: \(error).")
                 }
-                index.indexall()
+                index.update(path: note.url.path)
             }
         )
     }

@@ -104,7 +104,8 @@ final class SearchIndexTests: XCTestCase {
         try write("# Lisbon\nTram 28 early", to: "root.md")
         try write("# Packing\nPassport and charger", to: "Travel/packing.md")
 
-        let index = SearchIndex(rootUrl: tempRoot) // indexes on init
+        let index = SearchIndex(rootUrl: tempRoot) // indexes on init, off the calling thread
+        index.waitUntilIdle()
 
         XCTAssertEqual(index.search(phrase: "passport").count, 1)
         XCTAssertEqual(index.search(phrase: "tram").count, 1)

@@ -72,7 +72,7 @@ struct NoteNew: View {
         }
         data.persist(newNote)
         data.refresh(url: data.getCurrentUrl())
-        index.indexall()
+        index.update(path: newNote.url.path)
     }
 
     /// Saves a picked image into the new note's assets folder, persisting the
@@ -88,6 +88,7 @@ struct NoteNew: View {
         guard !newNote.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
+        let pathBefore = newNote.url.path
         data.finishEditing(newNote, previousContent: titleSource)
         // from here on the file name stands for what the note says now -- but
         // only if the rename went through, or there was nothing to rename to
@@ -96,7 +97,8 @@ struct NoteNew: View {
             titleSource = newNote.content
         }
         data.refresh(url: data.getCurrentUrl())
-        index.indexall()
+        if newNote.url.path != pathBefore { index.rename(from: pathBefore, to: newNote.url.path) }
+        index.update(path: newNote.url.path)
     }
 }
 

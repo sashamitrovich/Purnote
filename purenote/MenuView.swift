@@ -280,7 +280,7 @@ struct MenuView: View {
     /// tapping a row still opens it in the usual NoteView.
     @ViewBuilder
     private var searchResults: some View {
-        let results = index.search(phrase: searchText)
+        let results = index.search(phrase: searchText, scope: .all)
 
         if results.isEmpty {
             HStack {
@@ -294,13 +294,14 @@ struct MenuView: View {
                 .foregroundColor(Color.pn.ink2)
                 .padding(.bottom, 2)
 
-            ForEach(results) { note in
+            ForEach(results) { result in
+                let note = result.note
                 NavigationLink(destination:
                     NoteView(note: note)
                         .environmentObject(data)
                         .environmentObject(index)
                 ) {
-                    ListRow(note: note, location: location(for: note))
+                    ListRow(note: note, location: location(for: note), snippet: result.snippet?.text)
                 }
                 .menuRowStyle()
             }
