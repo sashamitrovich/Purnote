@@ -64,21 +64,50 @@ struct NoteView: View {
             get: { content },
             set: { newValue in
                 guard newValue != content else { return }
-                liveContent = newValue
-                note.content = newValue
-                if let i = data.notes.firstIndex(where: { $0.id == note.id }) {
-                    data.notes[i].content = newValue
-                }
-                do {
-                    try CoordinatedFile.write(newValue, to: note.url)
-                } catch {
-                    // the tick stays on screen but did not reach the file; not
-                    // worth an alert, and the next edit will carry it
-                    print("Failed to write toggled checkbox: \(error).")
-                }
-                index.update(path: note.url.path)
+                writeTick(from: content, to: newValue)
             }
         )
+    }
+
+    /// A tick changes exactly one line of the text this page shows. The same
+    /// line is changed in what is on disk NOW and that is what gets written:
+    /// the page may be minutes old, and writing its text back would undo
+    /// whatever the Mac (or iCloud) did to the file since. If the line is no
+    /// longer there the file was changed under the tap, so nothing is written
+    /// and the page shows the file as it is.
+    private func writeTick(from shown: String, to ticked: String) {
+        let shownLines = shown.components(separatedBy: "\n")
+        let tickedLines = ticked.components(separatedBy: "\n")
+        var text = ticked
+        if shownLines.count == tickedLines.count,
+           let changed = shownLines.indices.first(where: { shownLines[$0] != tickedLines[$0] }),
+           let fresh = try? CoordinatedFile.read(note.url) {
+            let freshLines = fresh.components(separatedBy: "\n")
+            let line: Int?
+            if freshLines.indices.contains(changed), freshLines[changed] == shownLines[changed] {
+                line = changed
+            } else {
+                let same = freshLines.indices.filter { freshLines[$0] == shownLines[changed] }
+                line = same.count == 1 ? same[0] : nil
+            }
+            guard let line else { reloadFromDisk(); return }
+            text = MarkdownBlocks.toggleTask(in: fresh, line: line)
+            guard text != fresh else { reloadFromDisk(); return }
+        }
+
+        liveContent = text
+        note.content = text
+        if let i = data.notes.firstIndex(where: { $0.id == note.id }) {
+            data.notes[i].content = text
+        }
+        do {
+            try CoordinatedFile.write(text, to: note.url)
+        } catch {
+            // the tick stays on screen but did not reach the file; not
+            // worth an alert, and the next edit will carry it
+            print("Failed to write toggled checkbox: \(error).")
+        }
+        index.update(path: note.url.path)
     }
 
     private func reloadFromDisk() {

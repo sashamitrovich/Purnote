@@ -217,14 +217,6 @@ class DataManager: ObservableObject {
 
         do {
             try CoordinatedFile.move(from: note.url, to: target)
-            pinsFollowMove(from: note.url, to: target)
-            // keep the assets folder beside the note under the new name, and
-            // point the references at it
-            let rewritten = NoteAssets.renameAssetsFolder(from: note.url, to: target, content: note.content)
-            if rewritten != note.content {
-                note.content = rewritten
-                try CoordinatedFile.write(rewritten, to: target)
-            }
         }
         catch {
             // failed -- the note keeps the name it has, which is not worth
@@ -233,29 +225,86 @@ class DataManager: ObservableObject {
             return
         }
 
-        if let index = notes.firstIndex(where: { $0.id == note.id }) {
-            notes.remove(at: index)
-        }
+        // The file is at `target` now, so the note has to say so before anything
+        // else can fail: a note still pointing at the old path would be written
+        // back there by the next save, leaving two copies.
+        pinsFollowMove(from: note.url, to: target)
+        let oldURL = note.url
+        let oldID = note.id
         note.url = target
         note.id = target.lastPathComponent
         note.label = note.id
+
+        // keep the assets folder beside the note under the new name, and
+        // point the references at it
+        let rewritten = NoteAssets.renameAssetsFolder(from: oldURL, to: target, content: note.content)
+        if rewritten != note.content {
+            note.content = rewritten
+            do { try CoordinatedFile.write(rewritten, to: target) }
+            catch {
+                // the note already points at its new file, so the next save
+                // writes the rewritten text there
+                print("Could not rewrite image references in \(target.lastPathComponent): \(error).")
+            }
+        }
+
+        if let index = notes.firstIndex(where: { $0 === note || $0.id == oldID }) {
+            notes.remove(at: index)
+        }
         notes.insert(note, at: 0)
     }
 
     /// Moves a note (and its attachments folder, if any) into another folder.
-    /// The same move the "Move Note" picker makes, driven here by a drop.
-    func move(note: Note, to folderURL: URL) {
+    /// The one move, used by the "Move Note" picker and by a drop.
+    ///
+    /// Never half-done: an assets folder of that name already in the target
+    /// folder is somebody else's and is neither merged nor replaced, so then
+    /// nothing moves; if the assets move fails after the note moved, the note
+    /// is moved back. Returns what to tell the user when the note did not move
+    /// (or could not be put back), nil on success.
+    @discardableResult
+    func move(note: Note, to folderURL: URL,
+              moveAssets: (_ noteURL: URL, _ destination: URL) throws -> Void =
+                  { try NoteAssets.moveAssetsFolder(forNoteAt: $0, to: $1) }) -> TrashAlert? {
         let destination = folderURL.appendingPathComponent(note.id)
-        guard destination.path != note.url.path else { return }
+        guard destination.path != note.url.path else { return nil }
 
-        do {
-            try CoordinatedFile.move(from: note.url, to: destination)
-            pinsFollowMove(from: note.url, to: destination)
-            try NoteAssets.moveAssetsFolder(forNoteAt: note.url, to: destination)
-        } catch {
-            print("Failed to move note to \(folderURL.lastPathComponent): \(error).")
+        let source = note.url
+        let assets = NoteAssets.folderURL(for: source)
+        let assetsTarget = folderURL.appendingPathComponent(assets.lastPathComponent)
+        let folderName = folderURL.lastPathComponent
+        var failure: TrashAlert?
+
+        if fm.fileExists(atPath: assets.path), fm.fileExists(atPath: assetsTarget.path) {
+            failure = TrashAlert(title: "Could not move",
+                                 message: "\(folderName) already has a folder named \(assets.lastPathComponent). Nothing was moved.")
+        } else {
+            do {
+                try CoordinatedFile.move(from: source, to: destination)
+                pinsFollowMove(from: source, to: destination)
+                do {
+                    try moveAssets(source, destination)
+                } catch {
+                    print("Failed to move the pictures of \(note.id): \(error). Moving the note back.")
+                    do {
+                        try CoordinatedFile.move(from: destination, to: source)
+                        pinsFollowMove(from: destination, to: source)
+                        failure = TrashAlert(title: "Could not move",
+                                             message: "\(error.localizedDescription) Nothing was moved.")
+                    } catch let rollback {
+                        print("Could not move \(note.id) back: \(rollback).")
+                        failure = TrashAlert(title: "Could not move all of the note",
+                                             message: "The note is in \(folderName), but its pictures are still in the old folder (\(error.localizedDescription)).")
+                    }
+                }
+            } catch {
+                print("Failed to move note to \(folderName): \(error).")
+                failure = TrashAlert(title: "Could not move",
+                                     message: "\(error.localizedDescription) Nothing was moved.")
+            }
         }
         refresh(url: getCurrentUrl())
+        return failure
     }
 
     // MARK: - Sort

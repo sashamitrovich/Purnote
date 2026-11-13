@@ -33,10 +33,11 @@ enum NoteDuplicate {
     }
 
     /// `content` with every image path under the old assets folder moved to the
-    /// new one. Only "<folder>/" is rewritten, so the folder's name appearing
-    /// in ordinary prose is left alone.
+    /// new one. Only a reference "<folder>/" is rewritten, so the folder's name
+    /// appearing in ordinary prose, or inside a longer folder name, is left
+    /// alone (see NoteAssets.rewritingReferences).
     static func rewritingReferences(in content: String, from oldFolder: String, to newFolder: String) -> String {
-        content.replacingOccurrences(of: oldFolder + "/", with: newFolder + "/")
+        NoteAssets.rewritingReferences(in: content, from: oldFolder, to: newFolder)
     }
 
     typealias AssetsCopier = (_ from: URL, _ to: URL) throws -> Void
