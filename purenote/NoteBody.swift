@@ -118,7 +118,9 @@ struct NoteBody: View {
                         // ignored. Keep the FontSize -- the hit-testing in
                         // font(for:) assumes the theme's base size.
                         .markdownTextStyle(\.text) {
-                            FontSize(MarkdownTextView.baseFontSize)
+                            // this style replaces the theme's text style, family included
+                            FontFamily(.system(NoteBodyStyle.usesSerifBody ? .serif : .default))
+                            FontSize(NoteBodyStyle.baseSize)
                             ForegroundColor(task.isCompleted ? Color.pn.ink2 : Color.pn.ink)
                         }
                         .markdownTheme(.purnote)
@@ -183,26 +185,45 @@ struct NoteBody: View {
     }
 
     /// The font a block is drawn in, so it can be laid out again the same way.
-    /// These mirror Theme.purnote -- if the theme's sizes change, these have to
-    /// change with them or taps land a line or two out.
+    /// These mirror Theme.purnote through NoteBodyStyle -- if the theme's sizes
+    /// change, they change together or taps land a line or two out.
     private static func font(for block: MarkdownBlock) -> UIFont {
-        let base = MarkdownTextView.baseFontSize
+        let base = NoteBodyStyle.baseSize
         let heading = block.text.prefix(while: { $0 == "#" }).count
-        let isTable = block.text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("|")
+        let trimmed = block.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let isTable = trimmed.hasPrefix("|")
+        let isQuote = trimmed.hasPrefix(">")
 
         let font: UIFont
         if isTable {
-            // table cells render at 0.85em (see Theme.purnote's .tableCell)
-            font = .systemFont(ofSize: base * 0.85)
+            // table cells are SF (see Theme.purnote's .tableCell)
+            font = .systemFont(ofSize: base * NoteBodyStyle.tableScale)
         } else {
             switch heading {
-            case 1: font = .systemFont(ofSize: base * 1.8, weight: .bold)
-            case 2: font = .systemFont(ofSize: base * 1.4, weight: .semibold)
-            case 3: font = .systemFont(ofSize: base * 1.15, weight: .semibold)
-            default: font = .systemFont(ofSize: base)
+            case 1: font = serif(base * NoteBodyStyle.h1Scale, .bold)
+            case 2: font = serif(base * NoteBodyStyle.h2Scale, .semibold)
+            case 3: font = serif(base * NoteBodyStyle.h3Scale, .semibold)
+            default:
+                if isQuote {
+                    font = serif(base * NoteBodyStyle.quoteScale, .regular, italic: true)
+                } else if NoteBodyStyle.usesSerifBody {
+                    font = serif(base, .regular)
+                } else {
+                    font = .systemFont(ofSize: base)
+                }
             }
         }
         return UIFontMetrics(forTextStyle: .body).scaledFont(for: font)
+    }
+
+    /// New York at a size and weight, the face MarkdownUI's `.system(.serif)` draws.
+    private static func serif(_ size: CGFloat, _ weight: UIFont.Weight, italic: Bool = false) -> UIFont {
+        var descriptor = UIFont.systemFont(ofSize: size, weight: weight).fontDescriptor
+        if let withDesign = descriptor.withDesign(.serif) { descriptor = withDesign }
+        if italic, let it = descriptor.withSymbolicTraits(descriptor.symbolicTraits.union(.traitItalic)) {
+            descriptor = it
+        }
+        return UIFont(descriptor: descriptor, size: size)
     }
 
     private func toggle(_ task: TaskItem) {

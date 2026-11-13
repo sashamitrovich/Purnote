@@ -25,6 +25,9 @@ enum PurnoteType {
     static let noteTitleTracking: CGFloat = -0.6
     static let capsTracking: CGFloat = 0.8
 
+    /// The reading body's size at the Large content size (see `body`).
+    static let bodyPoints: CGFloat = 17
+
     // MARK: Builders
 
     private static func make(size: CGFloat, weight: UIFont.Weight, design: UIFontDescriptor.SystemDesign,

@@ -103,6 +103,24 @@ enum CoordinatedFile {
         if let moveError { throw moveError }
     }
 
+    /// Copies a file or folder. The destination is written under coordination;
+    /// the source is read under coordination too, since the daemon may be
+    /// replacing it.
+    static func copy(from source: URL, to destination: URL) throws {
+        var coordinationError: NSError?
+        var copyError: Error?
+
+        NSFileCoordinator().coordinate(readingItemAt: source, options: [],
+                                       writingItemAt: destination, options: .forReplacing,
+                                       error: &coordinationError) { fromURL, toURL in
+            do { try FileManager.default.copyItem(at: fromURL, to: toURL) }
+            catch { copyError = error }
+        }
+
+        if let coordinationError { throw coordinationError }
+        if let copyError { throw copyError }
+    }
+
     private static func coordinateWriting(at url: URL,
                                           options: NSFileCoordinator.WritingOptions,
                                           _ body: @escaping (URL) throws -> Void) throws {

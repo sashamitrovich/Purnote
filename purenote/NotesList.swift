@@ -44,7 +44,7 @@ struct NotesList: View {
     private func row(_ entry: HomeListModel.Entry) -> some View {
         let note = entry.note
         if note.isLocal {
-            NavigationLink(destination: NoteDestination(note: note, screenData: data, libraryRoot: index.rootUrl)
+            NavigationLink(destination: NoteDestination(note: note, screenData: data, libraryRoot: index.rootUrl, toast: toast)
                             .environmentObject(index)) {
                 HomeNoteRow(entry: entry)
             }
@@ -94,30 +94,34 @@ private struct NoteDestination: View {
     let note: Note
     let screenData: DataManager
     let libraryRoot: URL
+    /// The toast of the list this note was opened from (see NoteView.toast).
+    let toast: UndoToastModel
     @EnvironmentObject var index: SearchIndex
 
     var body: some View {
         if note.url.deletingLastPathComponent().standardizedFileURL.path
             == screenData.getCurrentUrl().standardizedFileURL.path {
-            NoteView(note: note).environmentObject(screenData).environmentObject(index)
+            NoteView(note: note, toast: toast).environmentObject(screenData).environmentObject(index)
         } else {
-            FolderNote(note: note, libraryRoot: libraryRoot)
+            FolderNote(note: note, libraryRoot: libraryRoot, toast: toast)
         }
     }
 }
 
 private struct FolderNote: View {
     let note: Note
+    let toast: UndoToastModel
     @StateObject private var folderData: DataManager
     @EnvironmentObject var index: SearchIndex
 
-    init(note: Note, libraryRoot: URL) {
+    init(note: Note, libraryRoot: URL, toast: UndoToastModel) {
         self.note = note
+        self.toast = toast
         _folderData = StateObject(wrappedValue: DataManager(url: note.url.deletingLastPathComponent(),
                                                             libraryRoot: libraryRoot))
     }
 
     var body: some View {
-        NoteView(note: note).environmentObject(folderData).environmentObject(index)
+        NoteView(note: note, toast: toast).environmentObject(folderData).environmentObject(index)
     }
 }

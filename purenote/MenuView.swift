@@ -344,7 +344,7 @@ struct MenuView: View {
             ForEach(results) { result in
                 let note = result.note
                 NavigationLink(destination:
-                    NoteView(note: note)
+                    NoteView(note: note, toast: toast)
                         .environmentObject(data)
                         .environmentObject(index)
                 ) {
