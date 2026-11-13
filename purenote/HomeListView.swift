@@ -191,6 +191,9 @@ struct HomeNoteRow: View {
                 ListRow(note: entry.note, showsDate: false, previewLines: isPinned ? 2 : 1)
             }
             .padding(.vertical, 5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            // a short title leaves empty space in the row; it has to open the note too
+            .contentShape(Rectangle())
         } else {
             HStack(alignment: .top, spacing: 0) {
                 MarginColumn(margin: entry.margin)
@@ -199,6 +202,8 @@ struct HomeNoteRow: View {
                 ListRow(note: entry.note, showsDate: false, previewLines: isPinned ? 2 : 1)
             }
             .padding(.vertical, 5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
         }
     }
 }
